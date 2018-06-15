@@ -53,8 +53,8 @@ curseforge {
         releaseType = "release"
         addGameVersion mcVersion
 
-        mainArtifact(file("build/libs/SteveKunG\'s-Lib-" + mcVersion + "-" + version + ".jar")) {
-            displayName = "SteveKunG"s-Lib-" + mcVersion + "-" + version
+        mainArtifact(file("build/libs/SteveKunG's-Lib-" + mcVersion + "-" + version + ".jar")) {
+            displayName = "SteveKunG's-Lib-" + mcVersion + "-" + version
         }
     }
 }
@@ -72,7 +72,7 @@ task buildJar(type: SignJar, dependsOn: "processJar") {
 // processing jar
 task processJar(type: Jar, dependsOn: "rePackAllJar") {
     outputs.upToDateWhen { false }
-    baseName = "SteveKunG"s-Lib-" + mcVersion
+    baseName = "SteveKunG's-Lib-" + mcVersion
 
     from(zipTree(project.ext.coreJar)) {
         includes.addAll(project.ext.coreFiles)
