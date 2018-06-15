@@ -6,15 +6,17 @@ import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.ModMetadata;
+import net.minecraftforge.fml.common.event.FMLFingerprintViolationEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import stevekung.mods.stevekunglib.client.event.ClientEventHandler;
 import stevekung.mods.stevekunglib.utils.ColorUtils;
 import stevekung.mods.stevekunglib.utils.CommonUtils;
+import stevekung.mods.stevekunglib.utils.ModLogger;
 import stevekung.mods.stevekunglib.utils.client.ClientUtils;
 
-@Mod(modid = SteveKunGLib.MOD_ID, name = SteveKunGLib.NAME, version = SteveKunGLib.VERSION, dependencies = SteveKunGLib.FORGE_VERSION, updateJSON = SteveKunGLib.JSON_URL, acceptableRemoteVersions = "*")
+@Mod(modid = SteveKunGLib.MOD_ID, name = SteveKunGLib.NAME, version = SteveKunGLib.VERSION, dependencies = SteveKunGLib.FORGE_VERSION, updateJSON = SteveKunGLib.JSON_URL, certificateFingerprint = SteveKunGLib.CERTIFICATE)
 public class SteveKunGLib
 {
     protected static final String NAME = "SteveKunG's Lib";
@@ -25,6 +27,7 @@ public class SteveKunGLib
     public static final String VERSION = SteveKunGLib.MAJOR_VERSION + "." + SteveKunGLib.MINOR_VERSION + "." + SteveKunGLib.BUILD_VERSION;
     protected static final String FORGE_VERSION = "after:forge@[14.23.2.2654,);";
     protected static final String JSON_URL = "https://raw.githubusercontent.com/SteveKunG/VersionCheckLibrary/master/stevekung's_lib_version.json";
+    protected static final String CERTIFICATE = "@FINGERPRINT@";
     private static final String URL = "https://minecraft.curseforge.com/projects/stevekung's-lib";
     public static boolean isDevelopment;
 
@@ -60,6 +63,19 @@ public class SteveKunGLib
         if (ClientUtils.isEffectiveClient())
         {
             ColorUtils.init();
+        }
+    }
+
+    @EventHandler
+    public void onFingerprintViolation(FMLFingerprintViolationEvent event)
+    {
+        if (SteveKunGLib.isDevelopment)
+        {
+            ModLogger.info("Development environment detected! Ignore certificate check.");
+        }
+        else
+        {
+            throw new RuntimeException("Invalid fingerprint detected! This version will NOT be supported by the author!");
         }
     }
 
