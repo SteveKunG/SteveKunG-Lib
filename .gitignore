@@ -1,0 +1,17 @@
+# folder
+.settings
+.gradle
+.gradle_data
+bin
+build
+eclipse
+run
+src/main/java/stevekung/mods/indicatia/extra
+src/main/resources/assets/indicatia/sounds
+
+# file
+*.launch
+.metadata
+.classpath
+.project
+sounds.json
