@@ -1,2 +1,2 @@
 # SteveKunG-Lib
-An library used by SteveKunG's mods
+A library used by SteveKunG's mods
