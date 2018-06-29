@@ -5,12 +5,12 @@ buildscript {
     }
     dependencies {
         classpath "net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT"
-        classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.0.10"
+        classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.0.11"
     }
 }
 
 plugins {
-    id "com.matthewprenger.cursegradle" version "1.0.10"
+    id "com.matthewprenger.cursegradle" version "1.0.11"
 }
 
 def api = new groovy.json.JsonSlurper().parseText(file("${api_token_path}").text)
@@ -21,11 +21,11 @@ apply plugin: "net.minecraftforge.gradle.forge"
 
 version = project.version
 group = "stevekung.mods.stevekunglib"
-archivesBaseName = "SteveKunG's-Lib-All"
-sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
+archivesBaseName = "SteveKunG's-Lib"
+sourceCompatibility = targetCompatibility = 1.8
 
 minecraft {
-    version = "1.12.2-14.23.4.2708"
+    version = "1.12.2-14.23.4.2725"
     runDir = "run"
     mappings = "snapshot_20171003"
     makeObfSourceJar = false
@@ -41,9 +41,16 @@ repositories {
     }
 }
 
-ext.finalJar = "build/libs/SteveKunG's-Lib-" + mcVersion + "-" + version + ".jar"
-ext.coreJar = "build/libs/" + archivesBaseName + "-" + version + ".jar"
-ext.coreFiles = ["stevekung/mods/stevekunglib/**", "META-INF/stevekunglib_at.cfg"]
+jar {
+    include "stevekung/mods/stevekunglib/**"
+    include "META-INF/stevekunglib_at.cfg"
+    include "license.txt"
+
+    manifest {
+        attributes("FMLAT": "stevekunglib_at.cfg", "FMLCorePluginContainsFMLMod": "true")
+    }
+    baseName = "SteveKunG's-Lib-" + mcVersion
+}
 
 curseforge {
     apiKey = api.stevekung_lib
@@ -60,50 +67,21 @@ curseforge {
     }
 }
 
-// signing jar first
-task buildJar(type: SignJar, dependsOn: "processJar") {
+task signJar(type: SignJar, dependsOn: reobfJar) {
     keyStore = keystore.keystore_path
     alias = keystore.alias
     storePass = keystore.keystore_pass
     keyPass = keystore.keystore_pass
-    inputFile = project.ext.finalJar
-    outputFile = project.ext.finalJar
+    inputFile = jar.archivePath
+    outputFile = jar.archivePath
 }
 
-// processing jar
-task processJar(type: Jar, dependsOn: "rePackAllJar") {
-    outputs.upToDateWhen { false }
-    baseName = "SteveKunG's-Lib-" + mcVersion
-
-    from(zipTree(project.ext.coreJar)) {
-        includes.addAll(project.ext.coreFiles)
-    }
-    manifest {
-        attributes.put("FMLAT", "stevekunglib_at.cfg")
-        attributes.put("FMLCorePluginContainsFMLMod", "true")
-    }
-}
-
-task rePackAllJar(type: Jar, dependsOn: "copyModFiles") {
-    from "temporary"
-}
-
-task copyModFiles(type: Copy, dependsOn: "reobfJar") {
-    from(zipTree(project.ext.coreJar))
-    into "temporary"
-}
-
-task deleteTemporary(type: Delete) {
-    delete "temporary"
-}
-
-task buildDeobfJar(type: Jar) {
+task deobfJar(type: Jar) {
     from sourceSets.main.output
     classifier = "deobf"
     manifest {
-        attributes.put("FMLAT", "stevekunglib_at.cfg")
-        attributes.put("FMLCorePluginContainsFMLMod", "true")
+        attributes("FMLAT": "stevekunglib_at.cfg", "FMLCorePluginContainsFMLMod": "true")
     }
 }
 
-buildJar.finalizedBy(deleteTemporary)
+build.dependsOn signJar
