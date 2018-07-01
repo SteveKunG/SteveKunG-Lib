@@ -10,7 +10,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class ColoredFontRenderer extends FontRenderer
+public class ColoredFontRendererUnicode extends FontRenderer
 {
     private static final int MARKER = 59136;
     private boolean dropShadow;
@@ -19,9 +19,9 @@ public class ColoredFontRenderer extends FontRenderer
     private int green;
     private int blue;
 
-    public ColoredFontRenderer(GameSettings gameSettings, ResourceLocation location, TextureManager textureManager)
+    public ColoredFontRendererUnicode(GameSettings gameSettings, ResourceLocation location, TextureManager textureManager)
     {
-        super(gameSettings, location, textureManager, false);
+        super(gameSettings, location, textureManager, true);
     }
 
     @Override
@@ -66,18 +66,18 @@ public class ColoredFontRenderer extends FontRenderer
     public void onResourceManagerReload(IResourceManager resourceManager)
     {
         super.onResourceManagerReload(resourceManager);
-        this.setUnicodeFlag(Minecraft.getMinecraft().getLanguageManager().isCurrentLocaleUnicode() || Minecraft.getMinecraft().gameSettings.forceUnicodeFont);
+        this.setUnicodeFlag(true);
         this.setBidiFlag(Minecraft.getMinecraft().getLanguageManager().isCurrentLanguageBidirectional());
     }
 
     public static String color(int r, int g, int b)
     {
-        return String.format("%c%c%c", (char) (ColoredFontRenderer.MARKER + (r & 255)), (char) (ColoredFontRenderer.MARKER + (g & 255)), (char) (ColoredFontRenderer.MARKER + (b & 255)));
+        return String.format("%c%c%c", (char) (ColoredFontRendererUnicode.MARKER + (r & 255)), (char) (ColoredFontRendererUnicode.MARKER + (g & 255)), (char) (ColoredFontRendererUnicode.MARKER + (b & 255)));
     }
 
     private float renderColoredChar(int charac, float defaultValue)
     {
-        if (charac >= ColoredFontRenderer.MARKER && charac <= ColoredFontRenderer.MARKER + 255)
+        if (charac >= ColoredFontRendererUnicode.MARKER && charac <= ColoredFontRendererUnicode.MARKER + 255)
         {
             int value = charac & 255;
 
@@ -149,7 +149,7 @@ public class ColoredFontRenderer extends FontRenderer
                 {
                     s = s + "\u00a7" + c0;
                 }
-                else if (c0 >= ColoredFontRenderer.MARKER && c0 <= ColoredFontRenderer.MARKER + 255)
+                else if (c0 >= ColoredFontRendererUnicode.MARKER && c0 <= ColoredFontRendererUnicode.MARKER + 255)
                 {
                     s = String.format("%s%s%s", c0, text.charAt(i + 1), text.charAt(i + 2));
                     i += 2;

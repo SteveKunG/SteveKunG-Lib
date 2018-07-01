@@ -8,23 +8,29 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import stevekung.mods.stevekunglib.client.event.ClientEventHandler;
 import stevekung.mods.stevekunglib.utils.client.ClientUtils;
 import stevekung.mods.stevekunglib.utils.client.ColoredFontRenderer;
+import stevekung.mods.stevekunglib.utils.client.ColoredFontRendererUnicode;
 
 public class ColorUtils
 {
     public static ColoredFontRenderer coloredFontRenderer;
+    public static ColoredFontRendererUnicode coloredFontRendererUnicode;
 
     @SideOnly(Side.CLIENT)
     public static void init()
     {
         Minecraft mc = Minecraft.getMinecraft();
         ColorUtils.coloredFontRenderer = new ColoredFontRenderer(mc.gameSettings, new ResourceLocation("textures/font/ascii.png"), mc.renderEngine);
+        ColorUtils.coloredFontRendererUnicode = new ColoredFontRendererUnicode(mc.gameSettings, new ResourceLocation("textures/font/ascii.png"), mc.renderEngine);
 
         if (mc.gameSettings.language != null)
         {
             ColorUtils.coloredFontRenderer.setUnicodeFlag(mc.getLanguageManager().isCurrentLocaleUnicode() || mc.gameSettings.forceUnicodeFont);
             ColorUtils.coloredFontRenderer.setBidiFlag(mc.getLanguageManager().isCurrentLanguageBidirectional());
+            ColorUtils.coloredFontRendererUnicode.setUnicodeFlag(true);
+            ColorUtils.coloredFontRendererUnicode.setBidiFlag(mc.getLanguageManager().isCurrentLanguageBidirectional());
         }
         ((IReloadableResourceManager)mc.getResourceManager()).registerReloadListener(ColorUtils.coloredFontRenderer);
+        ((IReloadableResourceManager)mc.getResourceManager()).registerReloadListener(ColorUtils.coloredFontRendererUnicode);
     }
 
     public static int rgbToDecimal(int r, int g, int b)
