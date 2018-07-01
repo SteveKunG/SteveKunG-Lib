@@ -13,7 +13,7 @@ public class BlockItemRemapper
             if (mappings.key.getResourceDomain().equals(modid) && mappings.key.getResourcePath().equals(oldName))
             {
                 mappings.remap(block);
-                ModLogger.info("Remapping Block Complete (From {} to {})", mappings.key, block.getRegistryName());
+                ModLogger.info("Remapping 'Block' from {} to {}", mappings.key, block.getRegistryName());
             }
         });
     }
@@ -25,7 +25,7 @@ public class BlockItemRemapper
             if (mappings.key.getResourceDomain().equals(modid) && mappings.key.getResourcePath().equals(oldName))
             {
                 mappings.remap(Item.getItemFromBlock(block));
-                ModLogger.info("Remapping Block Complete (From {} to {})", mappings.key, block.getRegistryName());
+                ModLogger.info("Remapping 'ItemBlock' from {} to {}", mappings.key, block.getRegistryName());
             }
         });
     }
@@ -37,7 +37,7 @@ public class BlockItemRemapper
             if (mappings.key.getResourceDomain().equals(modid) && mappings.key.getResourcePath().equals(oldName))
             {
                 mappings.remap(item);
-                ModLogger.info("Remapping Block Complete (From {} to {})", mappings.key, item.getRegistryName());
+                ModLogger.info("Remapping 'Item' from {} to {}", mappings.key, item.getRegistryName());
             }
         });
     }
