@@ -36,9 +36,21 @@ public class ClientUtils
         Minecraft.getMinecraft().ingameGUI.setOverlayMessage(message, false);
     }
 
+    public static void setOverlayMessage(String message, int delay)
+    {
+        Minecraft.getMinecraft().ingameGUI.setOverlayMessage(message, false);
+        Minecraft.getMinecraft().ingameGUI.overlayMessageTime = delay;
+    }
+
     public static void setOverlayMessage(ITextComponent component)
     {
         Minecraft.getMinecraft().ingameGUI.setOverlayMessage(component.getFormattedText(), false);
+    }
+
+    public static void setOverlayMessage(ITextComponent component, int delay)
+    {
+        Minecraft.getMinecraft().ingameGUI.setOverlayMessage(component.getFormattedText(), false);
+        Minecraft.getMinecraft().ingameGUI.overlayMessageTime = delay;
     }
 
     public static void printClientMessage(String text)
