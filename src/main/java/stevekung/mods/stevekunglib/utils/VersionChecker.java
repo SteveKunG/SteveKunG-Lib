@@ -12,20 +12,17 @@ import net.minecraftforge.fml.common.versioning.ComparableVersion;
 
 public class VersionChecker
 {
-    private Object mod;
-    private String modName;
-    private String changeLog;
+    private final Object mod;
+    private final String modName;
+    private final String url;
     private String latestVersion;
-    private String url;
-    private String command;
     private boolean failed;
 
-    public VersionChecker(Object mod, String modName, String url, String command)
+    public VersionChecker(Object mod, String modName, String url)
     {
         this.mod = mod;
         this.modName = modName;
         this.url = url;
-        this.command = command;
     }
 
     public void startCheck()
@@ -35,7 +32,6 @@ public class VersionChecker
         for (Map.Entry<ComparableVersion, String> entry : result.changes.entrySet())
         {
             ComparableVersion version = entry.getKey();
-            this.changeLog = entry.getValue();
 
             if (result.status == ForgeVersion.Status.OUTDATED)
             {
@@ -62,15 +58,6 @@ public class VersionChecker
             String text = String.format("New version of %s is available %s for %s", this.formatText(TextFormatting.AQUA, this.modName), this.formatText(TextFormatting.GREEN, "v" + this.latestVersion), this.formatText(TextFormatting.BLUE, "Minecraft " + ForgeVersion.mcVersion));
             player.sendMessage(JsonUtils.create(text));
             player.sendMessage(JsonUtils.create("Download Link ").setStyle(JsonUtils.style().setColor(TextFormatting.YELLOW)).appendSibling(JsonUtils.create("[CLICK HERE]").setStyle(JsonUtils.style().setColor(TextFormatting.RED).setHoverEvent(JsonUtils.hover(HoverEvent.Action.SHOW_TEXT, JsonUtils.create("Click Here!").setStyle(JsonUtils.style().setColor(TextFormatting.DARK_GREEN)))).setClickEvent(JsonUtils.click(ClickEvent.Action.OPEN_URL, this.url)))));
-        }
-    }
-
-    public void printChangeLog(EntityPlayerSP player)
-    {
-        if (this.changeLog != null)
-        {
-            player.sendMessage(JsonUtils.create(this.changeLog).setStyle(JsonUtils.gray()));
-            player.sendMessage(JsonUtils.create("To read " + this.modName + " full change log. Use /" + this.command + " command!").setStyle(JsonUtils.gray().setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/" + this.command))));
         }
     }
 
