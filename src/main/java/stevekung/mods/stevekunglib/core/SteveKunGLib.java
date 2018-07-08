@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import stevekung.mods.stevekunglib.client.event.ClientEventHandler;
 import stevekung.mods.stevekunglib.utils.ColorUtils;
 import stevekung.mods.stevekunglib.utils.CommonUtils;
-import stevekung.mods.stevekunglib.utils.ModLogger;
+import stevekung.mods.stevekunglib.utils.LoggerSL;
 import stevekung.mods.stevekunglib.utils.client.ClientUtils;
 
 @Mod(modid = SteveKunGLib.MOD_ID, name = SteveKunGLib.NAME, version = SteveKunGLib.VERSION, dependencies = SteveKunGLib.FORGE_VERSION, updateJSON = SteveKunGLib.JSON_URL, certificateFingerprint = SteveKunGLib.CERTIFICATE)
@@ -71,7 +71,7 @@ public class SteveKunGLib
     {
         if (SteveKunGLib.isDevelopment)
         {
-            ModLogger.info("Development environment detected! Ignore certificate check.");
+            LoggerSL.info("Development environment detected! Ignore certificate check.");
         }
         else
         {

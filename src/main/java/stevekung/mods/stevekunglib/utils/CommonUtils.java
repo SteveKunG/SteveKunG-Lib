@@ -41,7 +41,7 @@ public class CommonUtils
         }
         catch (Exception e)
         {
-            ModLogger.info("Couldn't open link {}", url);
+            LoggerSL.info("Couldn't open link {}", url);
             e.printStackTrace();
         }
     }
