@@ -3,7 +3,6 @@ package stevekung.mods.stevekunglib.utils.client;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -47,6 +46,8 @@ public class ColoredFontRendererUnicode extends FontRenderer
     public int renderString(String text, float x, float y, int color, boolean dropShadow)
     {
         this.dropShadow = dropShadow;
+        this.setUnicodeFlag(true);
+        this.setBidiFlag(Minecraft.getMinecraft().getLanguageManager().isCurrentLanguageBidirectional());
         return super.renderString(text, x, y, color, dropShadow);
     }
 
@@ -60,14 +61,6 @@ public class ColoredFontRendererUnicode extends FontRenderer
     protected float renderDefaultChar(int charac, boolean italic)
     {
         return this.renderColoredChar(charac, super.renderDefaultChar(charac, italic));
-    }
-
-    @Override
-    public void onResourceManagerReload(IResourceManager resourceManager)
-    {
-        super.onResourceManagerReload(resourceManager);
-        this.setUnicodeFlag(true);
-        this.setBidiFlag(Minecraft.getMinecraft().getLanguageManager().isCurrentLanguageBidirectional());
     }
 
     public static String color(int r, int g, int b)
