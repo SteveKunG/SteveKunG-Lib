@@ -1,10 +1,20 @@
 package stevekung.mods.stevekunglib.client.gui;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiChat;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.JsonToNBT;
+import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.NBTException;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.event.HoverEvent;
 
 public class GuiChatBase extends GuiChat
 {
@@ -19,21 +29,21 @@ public class GuiChatBase extends GuiChat
     public void initGui()
     {
         super.initGui();
-        GuiChatRegistry.getGuiChatList().stream().forEach(IGuiChat::initGui);
+        GuiChatRegistry.getGuiChatList().stream().forEach(gui -> gui.initGui(this.buttonList, this.width, this.height));
     }
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         super.drawScreen(mouseX, mouseY, partialTicks);
-        GuiChatRegistry.getGuiChatList().stream().forEach(gui -> gui.drawScreen(mouseX, mouseY, partialTicks));
+        GuiChatRegistry.getGuiChatList().stream().forEach(gui -> gui.drawScreen(this.buttonList, mouseX, mouseY, partialTicks));
     }
 
     @Override
     public void updateScreen()
     {
         super.updateScreen();
-        GuiChatRegistry.getGuiChatList().stream().forEach(IGuiChat::updateScreen);
+        GuiChatRegistry.getGuiChatList().stream().forEach(gui -> gui.updateScreen(this.buttonList, this.width, this.height));
     }
 
     @Override
@@ -125,20 +135,97 @@ public class GuiChatBase extends GuiChat
     }
 
     @Override
-    protected void handleComponentHover(ITextComponent component, int mouseX, int mouseY)
+    public void handleComponentHover(ITextComponent component, int mouseX, int mouseY)
     {
-        GuiChatRegistry.getGuiChatList().stream().forEach(gui -> gui.handleComponentHover(component, mouseX, mouseY));
+        if (component != null && component.getStyle().getHoverEvent() != null)
+        {
+            HoverEvent hover = component.getStyle().getHoverEvent();
+
+            if (hover.getAction() == HoverEvent.Action.SHOW_ITEM)
+            {
+                ItemStack itemStack = ItemStack.EMPTY;
+
+                try
+                {
+                    NBTBase nbt = JsonToNBT.getTagFromJson(hover.getValue().getUnformattedText());
+
+                    if (nbt instanceof NBTTagCompound)
+                    {
+                        itemStack = new ItemStack((NBTTagCompound)nbt);
+                    }
+                }
+                catch (NBTException e) {}
+
+                if (itemStack.isEmpty())
+                {
+                    this.drawHoveringText(TextFormatting.RED + "Invalid Item!", mouseX, mouseY);
+                }
+                else
+                {
+                    this.renderToolTip(itemStack, mouseX, mouseY);
+                }
+            }
+            else if (hover.getAction() == HoverEvent.Action.SHOW_ENTITY)
+            {
+                if (this.mc.gameSettings.advancedItemTooltips)
+                {
+                    try
+                    {
+                        NBTTagCompound compound = JsonToNBT.getTagFromJson(hover.getValue().getUnformattedText());
+                        List<String> list = new ArrayList<>();
+                        String name = compound.getString("name");
+
+                        for (IEntityHoverChat entity : GuiChatRegistry.getEntityHoverChatList())
+                        {
+                            name = entity.addEntityComponent(name);
+                        }
+
+                        list.add(name);
+
+                        if (compound.hasKey("type", 8))
+                        {
+                            String s = compound.getString("type");
+                            list.add("Type: " + s);
+                        }
+                        list.add(compound.getString("id"));
+                        this.drawHoveringText(list, mouseX, mouseY);
+                    }
+                    catch (NBTException e)
+                    {
+                        this.drawHoveringText(TextFormatting.RED + "Invalid Entity!", mouseX, mouseY);
+                    }
+                }
+            }
+            else if (hover.getAction() == HoverEvent.Action.SHOW_TEXT)
+            {
+                this.drawHoveringText(this.mc.fontRenderer.listFormattedStringToWidth(hover.getValue().getFormattedText(), Math.max(this.width / 2, 200)), mouseX, mouseY);
+            }
+            GlStateManager.disableLighting();
+        }
     }
 
     @Override
     public void onGuiClosed()
     {
+        super.onGuiClosed();
         GuiChatRegistry.getGuiChatList().stream().forEach(IGuiChat::onGuiClosed);
     }
 
     @Override
     public void handleMouseInput() throws IOException
     {
-        GuiChatRegistry.getGuiChatList().stream().forEach(IGuiChat::handleMouseInput);
+        super.handleMouseInput();
+
+        GuiChatRegistry.getGuiChatList().stream().forEach(gui ->
+        {
+            try
+            {
+                gui.handleMouseInput(this.width, this.height);
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        });
     }
 }
