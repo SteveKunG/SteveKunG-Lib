@@ -61,6 +61,10 @@ curseforge {
         releaseType = "release"
         addGameVersion mcVersion
 
+        afterEvaluate { //TODO Temp fix
+            gameVersionStrings.remove('Java 9')
+        }
+
         mainArtifact(file("build/libs/SteveKunG's-Lib-" + mcVersion + "-" + version + ".jar")) {
             displayName = "SteveKunG's-Lib-" + mcVersion + "-" + version
         }
