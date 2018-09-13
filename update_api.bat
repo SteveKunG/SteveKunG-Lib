@@ -1,4 +1,4 @@
-xcopy /s /Y "M:\Modding\SteveKunG-Lib\1.12.2\src" "M:\Modding\MorePlanets\1.13\dependencies"
+xcopy /s /Y "M:\Modding\SteveKunG-Lib\1.12.2\src" "M:\Modding\MorePlanets\1.13-pre\dependencies"
 xcopy /s /Y "M:\Modding\SteveKunG-Lib\1.12.2\src" "M:\Modding\Indicatia\1.13-pre\dependencies"
 
 rd /s /q "M:\Modding\SteveKunG-Lib\1.12.2\build\classes"
