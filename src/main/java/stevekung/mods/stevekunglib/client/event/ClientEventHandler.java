@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import stevekung.mods.stevekunglib.client.gui.GuiChatBase;
 import stevekung.mods.stevekunglib.client.gui.GuiSleepMPBase;
+import stevekung.mods.stevekunglib.config.ConfigManagerLib;
 
 public class ClientEventHandler
 {
@@ -42,13 +43,16 @@ public class ClientEventHandler
                 ClientEventHandler.ticksPaused++;
             }
         }
-        ClientEventHandler.replaceGuiChat(this.mc, this.mc.currentScreen);
+        if (ConfigManagerLib.stevekung_lib_general.replaceGuiIngame)
+        {
+            ClientEventHandler.replaceGuiChat(this.mc, this.mc.currentScreen);
+        }
     }
 
     @SubscribeEvent
     public void onPressKey(InputEvent.KeyInputEvent event)
     {
-        if (this.mc.currentScreen == null && this.mc.gameSettings.keyBindCommand.isPressed())
+        if (ConfigManagerLib.stevekung_lib_general.replaceGuiIngame && this.mc.currentScreen == null && this.mc.gameSettings.keyBindCommand.isPressed())
         {
             GuiChatBase chatGuiSlash = new GuiChatBase("/");
             this.mc.displayGuiScreen(chatGuiSlash);
