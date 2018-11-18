@@ -16,6 +16,6 @@ public class ConfigManagerLib
         public boolean enableDebugLog = true;
 
         @Config.Name(value = "Replaced All GuiIngame")
-        public boolean replaceGuiIngame = true;
+        public boolean replaceGuiIngame = false;
     }
 }
