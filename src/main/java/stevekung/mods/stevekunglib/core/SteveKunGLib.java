@@ -23,9 +23,9 @@ public class SteveKunGLib
     public static final String MOD_ID = "stevekung's_lib";
     protected static final int MAJOR_VERSION = 1;
     protected static final int MINOR_VERSION = 0;
-    protected static final int BUILD_VERSION = 3;
+    protected static final int BUILD_VERSION = 4;
     public static final String VERSION = SteveKunGLib.MAJOR_VERSION + "." + SteveKunGLib.MINOR_VERSION + "." + SteveKunGLib.BUILD_VERSION;
-    protected static final String FORGE_VERSION = "after:forge@[14.23.4.2705,);";
+    protected static final String FORGE_VERSION = "after:forge@[14.23.5.2768,);";
     protected static final String JSON_URL = "https://raw.githubusercontent.com/SteveKunG/VersionCheckLibrary/master/stevekung's_lib_version.json";
     protected static final String CERTIFICATE = "@FINGERPRINT@";
     private static final String URL = "https://minecraft.curseforge.com/projects/stevekungs-lib";
