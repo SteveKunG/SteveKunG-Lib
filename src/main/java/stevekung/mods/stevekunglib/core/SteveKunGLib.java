@@ -3,6 +3,9 @@ package stevekung.mods.stevekunglib.core;
 import java.util.Arrays;
 
 import net.minecraft.launchwrapper.Launch;
+import net.minecraftforge.common.config.Config;
+import net.minecraftforge.common.config.ConfigManager;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.ModMetadata;
@@ -10,6 +13,7 @@ import net.minecraftforge.fml.common.event.FMLFingerprintViolationEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import stevekung.mods.stevekunglib.client.event.ClientEventHandler;
 import stevekung.mods.stevekunglib.utils.ColorUtils;
 import stevekung.mods.stevekunglib.utils.CommonUtils;
@@ -23,7 +27,7 @@ public class SteveKunGLib
     public static final String MOD_ID = "stevekung's_lib";
     protected static final int MAJOR_VERSION = 1;
     protected static final int MINOR_VERSION = 0;
-    protected static final int BUILD_VERSION = 4;
+    protected static final int BUILD_VERSION = 5;
     public static final String VERSION = SteveKunGLib.MAJOR_VERSION + "." + SteveKunGLib.MINOR_VERSION + "." + SteveKunGLib.BUILD_VERSION;
     protected static final String FORGE_VERSION = "after:forge@[14.23.5.2768,);";
     protected static final String JSON_URL = "https://raw.githubusercontent.com/SteveKunG/VersionCheckLibrary/master/stevekung's_lib_version.json";
@@ -44,6 +48,7 @@ public class SteveKunGLib
     public void preInit(FMLPreInitializationEvent event)
     {
         SteveKunGLib.init(event.getModMetadata());
+        CommonUtils.registerEventHandler(this);
 
         if (ClientUtils.isEffectiveClient())
         {
@@ -76,6 +81,15 @@ public class SteveKunGLib
         else
         {
             throw new RuntimeException("Invalid fingerprint detected! This version will NOT be supported by the author!");
+        }
+    }
+
+    @SubscribeEvent
+    public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event)
+    {
+        if (event.getModID().equals(SteveKunGLib.MOD_ID))
+        {
+            ConfigManager.sync(SteveKunGLib.MOD_ID, Config.Type.INSTANCE);
         }
     }
 
