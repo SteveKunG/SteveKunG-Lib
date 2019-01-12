@@ -8,12 +8,12 @@ public class RenderUtils
 {
     public static void bindTexture(ResourceLocation resource)
     {
-        Minecraft.getMinecraft().getTextureManager().bindTexture(resource);
+        Minecraft.getInstance().getTextureManager().bindTexture(resource);
     }
 
     public static void bindTexture(String resource)
     {
-        Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(resource));
+        Minecraft.getInstance().getTextureManager().bindTexture(new ResourceLocation(resource));
     }
 
     public static void disableLighting()

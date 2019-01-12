@@ -1,11 +1,10 @@
 package stevekung.mods.stevekunglib.utils;
 
-import java.awt.Desktop;
-import java.net.URI;
-
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.network.IGuiHandler;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
+
+import java.awt.*;
+import java.net.URI;
 
 public class CommonUtils
 {
@@ -21,7 +20,7 @@ public class CommonUtils
 
     public static void registerGuiHandler(Object obj, IGuiHandler handler)
     {
-        NetworkRegistry.INSTANCE.registerGuiHandler(obj, handler);
+        //        NetworkRegistry.INSTANCE.registerGuiHandler(obj, handler);TODO
     }
 
     public static String ticksToElapsedTime(int ticks)

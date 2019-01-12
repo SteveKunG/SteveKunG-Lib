@@ -5,18 +5,18 @@ import java.util.List;
 
 import net.minecraft.client.gui.GuiButton;
 
-public interface IGuiChat
+interface IGuiChat
 {
-    public void initGui(List<GuiButton> buttonList, int width, int height);
-    public void drawScreen(List<GuiButton> buttonList, int mouseX, int mouseY, float partialTicks);
-    public void updateScreen(List<GuiButton> buttonList, int width, int height);
-    public void keyTypedScrollDown();
-    public void keyTypedScrollUp();
-    public void mouseClicked(int mouseX, int mouseY, int mouseButton);
-    public void mouseReleased(int mouseX, int mouseY, int state);
-    public void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick);
-    public void actionPerformed(GuiButton button);
-    public void onGuiClosed();
-    public void handleMouseInput(int width, int height) throws IOException;
-    public void getSentHistory(int msgPos);
+    void initGui(List<GuiButton> buttonList, int width, int height);
+    void drawScreen(List<GuiButton> buttonList, int mouseX, int mouseY, float partialTicks);
+    void updateScreen(List<GuiButton> buttonList, int width, int height);
+    void keyTypedScrollDown();
+    void keyTypedScrollUp();
+    void mouseClicked(double mouseX, double mouseY, int mouseButton);
+    void mouseReleased(double mouseX, double mouseY, int state);
+    void mouseClickMove(double mouseX, double mouseY, int clickedMouseButton, long timeSinceLastClick);
+    void actionPerformed(GuiButton button);
+    void onGuiClosed();
+    void handleMouseInput(int width, int height) throws IOException;
+    void getSentHistory(int msgPos);
 }

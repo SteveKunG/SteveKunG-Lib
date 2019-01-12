@@ -1,30 +1,39 @@
 package stevekung.mods.stevekunglib.utils.client;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.client.settings.GameSettings;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import java.util.ArrayList;
+import java.util.List;
 
-@SideOnly(Side.CLIENT)
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.fonts.Font;
+import net.minecraft.client.gui.fonts.IGlyph;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
+@OnlyIn(Dist.CLIENT)
 public class ColoredFontRenderer extends FontRenderer
 {
+    private final TextureManager textureManager;
+    private final Font font;
     private static final int MARKER = 59136;
-    private boolean dropShadow;
     private int state = 0;
-    private int red;
-    private int green;
-    private int blue;
 
-    public ColoredFontRenderer(GameSettings gameSettings, ResourceLocation location, TextureManager textureManager)
+    public ColoredFontRenderer(TextureManager textureManager, Font font)
     {
-        super(gameSettings, location, textureManager, false);
+        super(textureManager, font);
+        System.out.println(this.getClass().getName() + " is loaded!");
+        this.textureManager = textureManager;
+        this.font = font;
     }
 
     @Override
-    protected String wrapFormattedStringToWidth(String str, int wrapWidth)
+    public String trimStringToWidth(String str, int wrapWidth)
     {
         int i = this.sizeStringToWidth(str, wrapWidth);
 
@@ -34,82 +43,197 @@ public class ColoredFontRenderer extends FontRenderer
         }
         else
         {
-            String s = str.substring(0, i);
-            char c0 = str.charAt(i);
-            boolean flag = c0 == ' ' || c0 == '\n';
-            String s1 = this.getCustomFormatFromString(s) + str.substring(i + (flag ? 1 : 0));
-            return s + "\n" + this.wrapFormattedStringToWidth(s1, wrapWidth);
+            String str2 = str.substring(0, i);
+            char charAt = str.charAt(i);
+            boolean flag = charAt == ' ' || charAt == '\n';
+            String text = this.getCustomFormatFromString(str2) + str.substring(i + (flag ? 1 : 0));
+            return str2 + "\n" + this.wrapFormattedStringToWidth(text, wrapWidth);
         }
     }
 
     @Override
-    public int renderString(String text, float x, float y, int color, boolean dropShadow)
+    protected int renderString(String text, float x, float y, int color, boolean dropShadow)
     {
-        this.dropShadow = dropShadow;
-        this.setUnicodeFlag(Minecraft.getMinecraft().getLanguageManager().isCurrentLocaleUnicode() || Minecraft.getMinecraft().gameSettings.forceUnicodeFont);
-        this.setBidiFlag(Minecraft.getMinecraft().getLanguageManager().isCurrentLanguageBidirectional());
-        return super.renderString(text, x, y, color, dropShadow);
-    }
-
-    @Override
-    protected float renderUnicodeChar(char charac, boolean italic)
-    {
-        return this.renderColoredChar(charac, super.renderUnicodeChar(charac, italic));
-    }
-
-    @Override
-    protected float renderDefaultChar(int charac, boolean italic)
-    {
-        return this.renderColoredChar(charac, super.renderDefaultChar(charac, italic));
-    }
-
-    public static String color(int r, int g, int b)
-    {
-        return String.format("%c%c%c", (char) (ColoredFontRenderer.MARKER + (r & 255)), (char) (ColoredFontRenderer.MARKER + (g & 255)), (char) (ColoredFontRenderer.MARKER + (b & 255)));
-    }
-
-    private float renderColoredChar(int charac, float defaultValue)
-    {
-        if (charac >= ColoredFontRenderer.MARKER && charac <= ColoredFontRenderer.MARKER + 255)
+        if (text == null)
         {
-            int value = charac & 255;
-
-            switch (this.state)
+            return 0;
+        }
+        else
+        {
+            if (this.bidiFlag)
             {
-            case 0:
-                this.red = value;
-                break;
-            case 1:
-                this.green = value;
-                break;
-            case 2:
-                this.blue = value;
-                break;
-            default:
-                this.setColor(1.0F, 1.0F, 1.0F, 1.0F);
-                return 0.0F;
+                text = this.bidiReorder(text);
             }
-
-            this.state = ++this.state % 3;
-            int color = this.red << 16 | this.green << 8 | this.blue | 255 << 24;
 
             if ((color & -67108864) == 0)
             {
                 color |= -16777216;
             }
-            if (this.dropShadow)
+
+            if (dropShadow)
             {
-                color = (color & 16579836) >> 2 | color & -16777216;
+                this.renderStringAtPos(text, x, y, color, true);
             }
-            this.setColor((color >> 16 & 255) / 255.0F, (color >> 8 & 255) / 255.0F, (color >> 0 & 255) / 255.0F, (color >> 24 & 255) / 255.0F);
-            return 0.0F;
+            x = this.renderStringAtPos(text, x, y, color, false);
+            return (int)x + (dropShadow ? 1 : 0);
         }
-        if (this.state != 0)
+    }
+
+    private float renderStringAtPos(String text, float x, float y, int color, boolean dropShadow)
+    {
+        float shadowAlpha = dropShadow ? 0.25F : 1.0F;
+        float rawRed = (float)(color >> 16 & 255) / 255.0F * shadowAlpha;
+        float rawGreen = (float)(color >> 8 & 255) / 255.0F * shadowAlpha;
+        float rawBlue = (float)(color & 255) / 255.0F * shadowAlpha;
+        float red = rawRed;
+        float green = rawGreen;
+        float blue = rawBlue;
+        float alpha = (float)(color >> 24 & 255) / 255.0F;
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder buffer = tessellator.getBuffer();
+        ResourceLocation resource = null;
+        buffer.begin(GLConstants.QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
+        boolean obfuscated = false;
+        boolean bold = false;
+        boolean italic = false;
+        boolean underline = false;
+        boolean strike = false;
+        List<Entry> entries = new ArrayList<>();
+
+        for (int i = 0; i < text.length(); ++i)
         {
-            this.state = 0;
-            this.setColor(1.0F, 1.0F, 1.0F, 1.0F);
+            char charAt = text.charAt(i);
+            int charIndex = i + 1;
+
+            if (charAt == 167 && charIndex < text.length())
+            {
+                TextFormatting format = TextFormatting.fromFormattingCode(text.charAt(charIndex));
+
+                if (format != null)
+                {
+                    if (format.isNormalStyle())
+                    {
+                        obfuscated = false;
+                        bold = false;
+                        strike = false;
+                        underline = false;
+                        italic = false;
+                        red = rawRed;
+                        green = rawGreen;
+                        blue = rawBlue;
+                    }
+
+                    if (format.getColor() != null)
+                    {
+                        int rawColor = format.getColor();
+                        red = (float)(rawColor >> 16 & 255) / 255.0F * shadowAlpha;
+                        green = (float)(rawColor >> 8 & 255) / 255.0F * shadowAlpha;
+                        blue = (float)(rawColor & 255) / 255.0F * shadowAlpha;
+                    }
+                    else if (charIndex >= ColoredFontRenderer.MARKER && charIndex <= ColoredFontRenderer.MARKER + 255)
+                    {
+                        int value = charIndex & 255;
+
+                        switch (this.state)
+                        {
+                        case 0:
+                            red = value;
+                            break;
+                        case 1:
+                            green = value;
+                            break;
+                        case 2:
+                            blue = value;
+                            break;
+                        }
+                        this.state = ++this.state % 3;
+                    }
+                    else if (format == TextFormatting.OBFUSCATED)
+                    {
+                        obfuscated = true;
+                    }
+                    else if (format == TextFormatting.BOLD)
+                    {
+                        bold = true;
+                    }
+                    else if (format == TextFormatting.STRIKETHROUGH)
+                    {
+                        strike = true;
+                    }
+                    else if (format == TextFormatting.UNDERLINE)
+                    {
+                        underline = true;
+                    }
+                    else if (format == TextFormatting.ITALIC)
+                    {
+                        italic = true;
+                    }
+                }
+                ++i;
+            }
+            else
+            {
+                IGlyph glyph = this.font.getGlyph(charAt);
+
+                if (obfuscated && charAt != ' ')
+                {
+                    glyph = this.font.obfuscate(glyph);
+                }
+
+                float width = glyph.getWidth();
+                ResourceLocation glyphResource = glyph.getTextureLocation();
+                float boldOffset;
+
+                if (glyphResource != null)
+                {
+                    if (resource != glyphResource)
+                    {
+                        tessellator.draw();
+                        this.textureManager.bindTexture(glyphResource);
+                        buffer.begin(GLConstants.QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
+                        resource = glyphResource;
+                    }
+                    boldOffset = bold ? glyph.getBoldXOffset() : 0.0F;
+                    float boldShadow = dropShadow ? glyph.getShadowOffset() : 0.0F;
+                    this.renderGlyph(glyph, bold, italic, boldOffset, x + boldShadow, y + boldShadow, buffer, red, green, blue, alpha);
+                    width += boldOffset;
+                }
+
+                boldOffset = dropShadow ? 1.0F : 0.0F;
+
+                if (strike)
+                {
+                    entries.add(new Entry(x + boldOffset - 1.0F, y + boldOffset + (float)this.FONT_HEIGHT / 2.0F, x + boldOffset + width, y + boldOffset + (float)this.FONT_HEIGHT / 2.0F - 1.0F, red, green, blue, alpha));
+                }
+
+                if (underline)
+                {
+                    entries.add(new Entry(x + boldOffset - 1.0F, y + boldOffset + (float)this.FONT_HEIGHT, x + boldOffset + width, y + boldOffset + (float)this.FONT_HEIGHT - 1.0F, red, green, blue, alpha));
+                }
+                x += width;
+            }
         }
-        return defaultValue;
+
+        tessellator.draw();
+
+        if (!entries.isEmpty())
+        {
+            GlStateManager.disableTexture2D();
+            buffer.begin(GLConstants.QUADS, DefaultVertexFormats.POSITION_COLOR);
+
+            for (Entry entry : entries)
+            {
+                entry.pipe(buffer);
+            }
+            tessellator.draw();
+            GlStateManager.enableTexture2D();
+        }
+        return x;
+    }
+
+    public static String color(int r, int g, int b)
+    {
+        return String.format("%c%c%c", (char)(ColoredFontRenderer.MARKER + (r & 255)), (char)(ColoredFontRenderer.MARKER + (g & 255)), (char)(ColoredFontRenderer.MARKER + (b & 255)));
     }
 
     private boolean isFormatColor(char colorChar)
@@ -124,7 +248,7 @@ public class ColoredFontRenderer extends FontRenderer
 
     private String getCustomFormatFromString(String text)
     {
-        String s = "";
+        StringBuilder builder = new StringBuilder();
         int i = -1;
         int j = text.length();
 
@@ -136,19 +260,29 @@ public class ColoredFontRenderer extends FontRenderer
 
                 if (this.isFormatColor(c0))
                 {
-                    s = "\u00a7" + c0;
+                    builder = new StringBuilder("\u00a7" + c0);
                 }
                 else if (this.isFormatSpecial(c0))
                 {
-                    s = s + "\u00a7" + c0;
+                    builder.append("\u00a7").append(c0);
                 }
                 else if (c0 >= ColoredFontRenderer.MARKER && c0 <= ColoredFontRenderer.MARKER + 255)
                 {
-                    s = String.format("%s%s%s", c0, text.charAt(i + 1), text.charAt(i + 2));
+                    builder = new StringBuilder(String.format("%s%s%s", c0, text.charAt(i + 1), text.charAt(i + 2)));
                     i += 2;
                 }
             }
         }
-        return s;
+        return builder.toString();
+    }
+
+    private void renderGlyph(IGlyph glyph, boolean bold, boolean italic, float boldOffset, float xBoldShadow, float yBoldShadow, BufferBuilder buffer, float red, float green, float blue, float alpha)
+    {
+        glyph.render(this.textureManager, italic, xBoldShadow, yBoldShadow, buffer, red, green, blue, alpha);
+
+        if (bold)
+        {
+            glyph.render(this.textureManager, italic, xBoldShadow + boldOffset, yBoldShadow, buffer, red, green, blue, alpha);
+        }
     }
 }

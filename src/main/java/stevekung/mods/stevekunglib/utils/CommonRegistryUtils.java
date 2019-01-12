@@ -1,36 +1,31 @@
 package stevekung.mods.stevekunglib.utils;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.google.common.base.Function;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.IBehaviorDispenseItem;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving.SpawnPlacementType;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
-import net.minecraft.entity.monster.EntityEnderman;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.potion.Potion;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tags.Tag;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fml.common.registry.EntityRegistry;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.registries.ForgeRegistries;
 import stevekung.mods.stevekunglib.utils.enums.EnumEntityTrackerType;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class CommonRegistryUtils
 {
-    private static int ID;
     private final String resourcePath;
 
     public CommonRegistryUtils(@Nonnull String resourcePath)
@@ -38,41 +33,46 @@ public class CommonRegistryUtils
         this.resourcePath = resourcePath;
     }
 
-    public void registerBlock(Block block)
+    public void registerBlock(Block block, String name, ItemGroup group)
     {
-        this.registerBlock(block, ItemBlock::new);
+        this.registerBlock(block, name, group, true);
     }
 
-    public void registerBlock(Block block, @Nullable Function<Block, ItemBlock> itemBlock)
+    public void registerBlock(Block block, String name, @Nullable ItemGroup group, boolean useItemBlock)
     {
-        String name = block.getUnlocalizedName().substring(5);
-        ForgeRegistries.BLOCKS.register(block.setRegistryName(name));
+        ForgeRegistries.BLOCKS.register(block.setRegistryName(this.resourcePath + ":" + name));
 
-        if (itemBlock != null)
+        if (useItemBlock)
         {
-            ForgeRegistries.ITEMS.register(itemBlock.apply(block).setRegistryName(block.getRegistryName()));
+            ItemBlock itemBlock = new ItemBlock(block, new Item.Builder().group(group));
+            ForgeRegistries.ITEMS.register(itemBlock.setRegistryName(this.resourcePath + ":" + name));
         }
     }
 
-    public void registerItem(Item item)
+    public void registerBlock(Block block, String name, ItemBlock itemBlock)
     {
-        String name = item.getUnlocalizedName().substring(5);
-        ForgeRegistries.ITEMS.register(item.setRegistryName(name));
+        ForgeRegistries.BLOCKS.register(block.setRegistryName(this.resourcePath + ":" + name));
+        ForgeRegistries.ITEMS.register(itemBlock.setRegistryName(this.resourcePath + ":" + name));
+    }
+
+    public void registerItem(Item item, String name)
+    {
+        ForgeRegistries.ITEMS.register(item.setRegistryName(this.resourcePath + ":" + name));
     }
 
     public void registerFluid(Fluid fluid)
     {
-        FluidRegistry.registerFluid(fluid);
+        //        FluidRegistry.registerFluid(fluid);TODO
     }
 
     public void registerForgeBucket(Fluid fluid)
     {
-        FluidRegistry.addBucketForFluid(fluid);
+        //        FluidRegistry.addBucketForFluid(fluid);
     }
 
-    public void registerTileEntity(Class<? extends TileEntity> tile, String name)
+    public void registerTileEntity(TileEntityType<?> tile, String name)
     {
-        GameRegistry.registerTileEntity(tile, new ResourceLocation(this.resourcePath + ":" + name));
+        ForgeRegistries.TILE_ENTITIES.register(tile.setRegistryName(this.resourcePath + ":" + name));
     }
 
     public void registerPotion(Potion potion, String name)
@@ -91,53 +91,50 @@ public class CommonRegistryUtils
 
         if (biome.isMutation()) // should put to mutation after registered biomes
         {
-            Biome.MUTATION_TO_BASE_ID_MAP.put(biome, Biome.getIdForBiome(ForgeRegistries.BIOMES.getValue(new ResourceLocation(this.resourcePath + ":" + biome.baseBiomeRegName))));
+            Biome.MUTATION_TO_BASE_ID_MAP.put(biome, Biome.getIdForBiome(ForgeRegistries.BIOMES.getValue(new ResourceLocation(this.resourcePath + ":" + biome.parent))));
         }
     }
 
-    public void registerEntity(Class<? extends Entity> entity, String name, int backgroundColor, int foregroundColor)
+    public void registerEntity(EntityType<?> entity, String name, int backgroundColor, int foregroundColor)
     {
         this.registerEntity(entity, name, backgroundColor, foregroundColor, EnumEntityTrackerType.NORMAL);
     }
 
-    public void registerEntity(Class<? extends Entity> entity, String name, int backgroundColor, int foregroundColor, EnumEntityTrackerType type)
+    public void registerEntity(EntityType<?> entity, String name, int backgroundColor, int foregroundColor, EnumEntityTrackerType type)
     {
         this.registerEntity(entity, name, backgroundColor, foregroundColor, type.getTrackingRange(), type.getUpdateFrequency());
     }
 
-    public void registerEntity(Class<? extends Entity> entity, String name, int backgroundColor, int foregroundColor, int trackingRange, int updateFrequency)
+    public void registerEntity(EntityType<?> entity, String name, int backgroundColor, int foregroundColor, int trackingRange, int updateFrequency)
     {
-        EntityRegistry.registerModEntity(new ResourceLocation(this.resourcePath + ":" + name), entity, this.resourcePath + "." + name, ID++, this.resourcePath, trackingRange, updateFrequency, true, backgroundColor, foregroundColor);
+        ForgeRegistries.ENTITIES.register(entity.setRegistryName(this.resourcePath + ":" + name));
+        //        EntityRegistry.registerModEntity(new ResourceLocation(this.resourcePath + ":" + name), entity, this.resourcePath + "." + name, ID++, this.resourcePath, trackingRange, updateFrequency, true, backgroundColor, foregroundColor);
     }
 
-    public void registerNonMobEntity(Class<? extends Entity> entity, String name)
+    public void registerNonMobEntity(EntityType<?> entity, String name)
     {
         this.registerNonMobEntity(entity, name, EnumEntityTrackerType.NORMAL);
     }
 
-    public void registerNonMobEntity(Class<? extends Entity> entity, String name, EnumEntityTrackerType type)
+    public void registerNonMobEntity(EntityType<?> entity, String name, EnumEntityTrackerType type)
     {
         this.registerNonMobEntity(entity, name, type.getTrackingRange(), type.getUpdateFrequency(), type.sendsVelocityUpdates());
     }
 
-    public void registerNonMobEntity(Class<? extends Entity> entity, String name, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates)
+    public void registerNonMobEntity(EntityType<?> entity, String name, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates)
     {
-        EntityRegistry.registerModEntity(new ResourceLocation(this.resourcePath + ":" + name), entity, this.resourcePath + "." + name, ID++, this.resourcePath, trackingRange, updateFrequency, sendsVelocityUpdates);
+        ForgeRegistries.ENTITIES.register(entity.setRegistryName(this.resourcePath + ":" + name));
+        //        EntityRegistry.registerModEntity(new ResourceLocation(this.resourcePath + ":" + name), entity, this.resourcePath + "." + name, ID++, this.resourcePath, trackingRange, updateFrequency, sendsVelocityUpdates);TODO
     }
 
-    public void registerEntityPlacement(Class<? extends Entity> entity, SpawnPlacementType type)
+    public void registerEntityPlacement(EntityType<?> entity, EntitySpawnPlacementRegistry.SpawnPlacementType placementType, Heightmap.Type heightMapType, Tag<Block> tag)
     {
-        EntitySpawnPlacementRegistry.setPlacementType(entity, type);
-    }
-
-    public void registerCarriable(Block block)
-    {
-        EntityEnderman.setCarriable(block, true);
+        EntitySpawnPlacementRegistry.register(entity, placementType, heightMapType, tag);
     }
 
     public void registerProjectileDispense(Item item, IBehaviorDispenseItem projectile)
     {
-        BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(item, projectile);
+        BlockDispenser.registerDispenseBehavior(item, projectile);
     }
 
     public SoundEvent registerSound(String name)

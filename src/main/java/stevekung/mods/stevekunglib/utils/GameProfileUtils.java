@@ -1,19 +1,19 @@
 package stevekung.mods.stevekunglib.utils;
 
-import java.util.UUID;
-
 import net.minecraft.client.Minecraft;
+
+import java.util.UUID;
 
 public class GameProfileUtils
 {
     public static String getUsername()
     {
-        return Minecraft.getMinecraft().getSession().getProfile().getName();
+        return Minecraft.getInstance().getSession().getProfile().getName();
     }
 
     public static UUID getUUID()
     {
-        return Minecraft.getMinecraft().getSession().getProfile().getId();
+        return Minecraft.getInstance().getSession().getProfile().getId();
     }
 
     public static boolean isSteveKunG()

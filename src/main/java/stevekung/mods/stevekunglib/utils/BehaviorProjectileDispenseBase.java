@@ -30,11 +30,14 @@ public class BehaviorProjectileDispenseBase extends BehaviorProjectileDispense
         {
             try
             {
-                EntityArrow arrow = (EntityArrow) this.projectile.getConstructor(World.class, double.class, double.class, double.class).newInstance(world, pos.getX(), pos.getY(), pos.getZ());
+                EntityArrow arrow = (EntityArrow)this.projectile.getConstructor(World.class, double.class, double.class, double.class).newInstance(world, pos.getX(), pos.getY(), pos.getZ());
                 arrow.pickupStatus = EntityArrow.PickupStatus.ALLOWED;
                 return arrow;
             }
-            catch (Exception e) {}
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
         }
         else
         {
@@ -42,7 +45,10 @@ public class BehaviorProjectileDispenseBase extends BehaviorProjectileDispense
             {
                 return this.projectile.getConstructor(World.class, double.class, double.class, double.class).newInstance(world, pos.getX(), pos.getY(), pos.getZ());
             }
-            catch (Exception e) {}
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
         }
         return null;
     }

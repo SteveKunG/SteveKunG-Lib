@@ -1,20 +1,18 @@
 package stevekung.mods.stevekunglib.client.gui;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import net.minecraft.client.gui.GuiButton;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.INBTBase;
 import net.minecraft.nbt.JsonToNBT;
-import net.minecraft.nbt.NBTBase;
-import net.minecraft.nbt.NBTException;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GuiChatBase extends GuiChat
 {
@@ -29,77 +27,77 @@ public class GuiChatBase extends GuiChat
     public void initGui()
     {
         super.initGui();
-        GuiChatRegistry.getGuiChatList().stream().forEach(gui -> gui.initGui(this.buttonList, this.width, this.height));
+        GuiChatRegistry.getGuiChatList().stream().forEach(gui -> gui.initGui(this.buttons, this.width, this.height));
     }
 
     @Override
-    public void drawScreen(int mouseX, int mouseY, float partialTicks)
+    public void render(int mouseX, int mouseY, float partialTicks)
     {
-        super.drawScreen(mouseX, mouseY, partialTicks);
-        GuiChatRegistry.getGuiChatList().stream().forEach(gui -> gui.drawScreen(this.buttonList, mouseX, mouseY, partialTicks));
+        super.render(mouseX, mouseY, partialTicks);
+        GuiChatRegistry.getGuiChatList().stream().forEach(gui -> gui.drawScreen(this.buttons, mouseX, mouseY, partialTicks));
     }
 
     @Override
-    public void updateScreen()
+    public void tick()
     {
-        super.updateScreen();
-        GuiChatRegistry.getGuiChatList().stream().forEach(gui -> gui.updateScreen(this.buttonList, this.width, this.height));
+        super.tick();
+        GuiChatRegistry.getGuiChatList().stream().forEach(gui -> gui.updateScreen(this.buttons, this.width, this.height));
     }
 
-    @Override
-    protected void keyTyped(char typedChar, int keyCode) throws IOException
-    {
-        this.tabCompleter.resetRequested();
-
-        if (keyCode == 15)
-        {
-            this.tabCompleter.complete();
-        }
-        else
-        {
-            this.tabCompleter.resetDidComplete();
-        }
-
-        if (keyCode == 1)
-        {
-            this.mc.displayGuiScreen(null);
-        }
-        else if (keyCode != 28 && keyCode != 156)
-        {
-            if (keyCode == 200)
-            {
-                this.getSentHistory(-1);
-            }
-            else if (keyCode == 208)
-            {
-                this.getSentHistory(1);
-            }
-            else if (keyCode == 201)
-            {
-                this.mc.ingameGUI.getChatGUI().scroll(this.mc.ingameGUI.getChatGUI().getLineCount() - 1);
-                GuiChatRegistry.getGuiChatList().stream().forEach(IGuiChat::keyTypedScrollDown);
-            }
-            else if (keyCode == 209)
-            {
-                this.mc.ingameGUI.getChatGUI().scroll(-this.mc.ingameGUI.getChatGUI().getLineCount() + 1);
-                GuiChatRegistry.getGuiChatList().stream().forEach(IGuiChat::keyTypedScrollUp);
-            }
-            else
-            {
-                this.inputField.textboxKeyTyped(typedChar, keyCode);
-            }
-        }
-        else
-        {
-            String text = this.inputField.getText().trim();
-
-            if (!text.isEmpty())
-            {
-                this.sendChatMessage(text);
-            }
-            this.mc.displayGuiScreen(null);
-        }
-    }
+    //    @Override
+    //    public boolean charTyped(char typedChar, int keyCode)TODO
+    //    {
+    //        this.suggestions.resetRequested();
+    //
+    //        if (keyCode == 15)
+    //        {
+    //            this.tabCompleter.complete();
+    //        }
+    //        else
+    //        {
+    //            this.tabCompleter.resetDidComplete();
+    //        }
+    //
+    //        if (keyCode == 1)
+    //        {
+    //            this.mc.displayGuiScreen(null);
+    //        }
+    //        else if (keyCode != 28 && keyCode != 156)
+    //        {
+    //            if (keyCode == 200)
+    //            {
+    //                this.getSentHistory(-1);
+    //            }
+    //            else if (keyCode == 208)
+    //            {
+    //                this.getSentHistory(1);
+    //            }
+    //            else if (keyCode == 201)
+    //            {
+    //                this.mc.ingameGUI.getChatGUI().scroll(this.mc.ingameGUI.getChatGUI().getLineCount() - 1);
+    //                GuiChatRegistry.getGuiChatList().stream().forEach(IGuiChat::keyTypedScrollDown);
+    //            }
+    //            else if (keyCode == 209)
+    //            {
+    //                this.mc.ingameGUI.getChatGUI().scroll(-this.mc.ingameGUI.getChatGUI().getLineCount() + 1);
+    //                GuiChatRegistry.getGuiChatList().stream().forEach(IGuiChat::keyTypedScrollUp);
+    //            }
+    //            else
+    //            {
+    //                this.inputField.textboxKeyTyped(typedChar, keyCode);
+    //            }
+    //        }
+    //        else
+    //        {
+    //            String text = this.inputField.getText().trim();
+    //
+    //            if (!text.isEmpty())
+    //            {
+    //                this.sendChatMessage(text);
+    //            }
+    //            this.mc.displayGuiScreen(null);
+    //        }
+    //    }
 
     @Override
     public void getSentHistory(int msgPos)
@@ -109,30 +107,31 @@ public class GuiChatBase extends GuiChat
     }
 
     @Override
-    protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
+    public boolean mouseClicked(double mouseX, double mouseY, int mouseButton)
     {
-        super.mouseClicked(mouseX, mouseY, mouseButton);
         GuiChatRegistry.getGuiChatList().stream().forEach(gui -> gui.mouseClicked(mouseX, mouseY, mouseButton));
+        return super.mouseClicked(mouseX, mouseY, mouseButton);
     }
 
     @Override
-    protected void mouseReleased(int mouseX, int mouseY, int state)
+    public boolean mouseReleased(double mouseX, double mouseY, int state)
     {
-        super.mouseReleased(mouseX, mouseY, state);
         GuiChatRegistry.getGuiChatList().stream().forEach(gui -> gui.mouseReleased(mouseX, mouseY, state));
+        return super.mouseReleased(mouseX, mouseY, state);
     }
 
-    @Override
-    protected void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick)
-    {
-        GuiChatRegistry.getGuiChatList().stream().forEach(gui -> gui.mouseClickMove(mouseX, mouseY, clickedMouseButton, timeSinceLastClick));
-    }
+    //    @Override
+    //    public boolean mouseClickMove(double mouseX, double mouseY, int clickedMouseButton, long timeSinceLastClick)TODO
+    //    {
+    //        GuiChatRegistry.getGuiChatList().stream().forEach(gui -> gui.mouseClickMove(mouseX, mouseY, clickedMouseButton, timeSinceLastClick));
+    //        return super.mou
+    //    }
 
-    @Override
-    protected void actionPerformed(GuiButton button)
-    {
-        GuiChatRegistry.getGuiChatList().stream().forEach(gui -> gui.actionPerformed(button));
-    }
+    //    @Override
+    //    protected void actionPerformed(GuiButton button)TODO
+    //    {
+    //        GuiChatRegistry.getGuiChatList().stream().forEach(gui -> gui.actionPerformed(button));
+    //    }
 
     @Override
     public void handleComponentHover(ITextComponent component, int mouseX, int mouseY)
@@ -147,14 +146,14 @@ public class GuiChatBase extends GuiChat
 
                 try
                 {
-                    NBTBase nbt = JsonToNBT.getTagFromJson(hover.getValue().getUnformattedText());
+                    INBTBase nbt = JsonToNBT.getTagFromJson(hover.getValue().getString());
 
                     if (nbt instanceof NBTTagCompound)
                     {
-                        itemStack = new ItemStack((NBTTagCompound)nbt);
+                        itemStack = ItemStack.read((NBTTagCompound)nbt);
                     }
                 }
-                catch (NBTException e) {}
+                catch (CommandSyntaxException e) {}
 
                 if (itemStack.isEmpty())
                 {
@@ -171,7 +170,7 @@ public class GuiChatBase extends GuiChat
                 {
                     try
                     {
-                        NBTTagCompound compound = JsonToNBT.getTagFromJson(hover.getValue().getUnformattedText());
+                        NBTTagCompound compound = JsonToNBT.getTagFromJson(hover.getValue().getString());
                         List<String> list = new ArrayList<>();
                         String name = compound.getString("name");
 
@@ -182,7 +181,7 @@ public class GuiChatBase extends GuiChat
 
                         list.add(name);
 
-                        if (compound.hasKey("type", 8))
+                        if (compound.contains("type", 8))
                         {
                             String s = compound.getString("type");
                             list.add("Type: " + s);
@@ -190,7 +189,7 @@ public class GuiChatBase extends GuiChat
                         list.add(compound.getString("id"));
                         this.drawHoveringText(list, mouseX, mouseY);
                     }
-                    catch (NBTException e)
+                    catch (CommandSyntaxException e)
                     {
                         this.drawHoveringText(TextFormatting.RED + "Invalid Entity!", mouseX, mouseY);
                     }
@@ -211,21 +210,21 @@ public class GuiChatBase extends GuiChat
         GuiChatRegistry.getGuiChatList().stream().forEach(IGuiChat::onGuiClosed);
     }
 
-    @Override
-    public void handleMouseInput() throws IOException
-    {
-        super.handleMouseInput();
-
-        GuiChatRegistry.getGuiChatList().stream().forEach(gui ->
-        {
-            try
-            {
-                gui.handleMouseInput(this.width, this.height);
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-        });
-    }
+    //    @Override
+    //    public void handleMouseInput() throws IOException TODO
+    //    {
+    //        super.handleMouseInput();
+    //
+    //        GuiChatRegistry.getGuiChatList().stream().forEach(gui ->
+    //        {
+    //            try
+    //            {
+    //                gui.handleMouseInput(this.width, this.height);
+    //            }
+    //            catch (IOException e)
+    //            {
+    //                e.printStackTrace();
+    //            }
+    //        });
+    //    }
 }

@@ -1,26 +1,26 @@
 package stevekung.mods.stevekunglib.utils.client;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.StringUtils;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class GuiUtils
 {
     public static void drawHoveringSingleTextInGUI(String comment, int mouseX, int mouseY)
     {
-        List<String> textLines = Arrays.asList(comment);
+        List<String> textLines = Collections.singletonList(comment);
 
         if (!textLines.isEmpty())
         {
-            int screenWidth = Minecraft.getMinecraft().currentScreen.width;
-            int screenHeight = Minecraft.getMinecraft().currentScreen.height;
-            FontRenderer font = Minecraft.getMinecraft().fontRenderer;
-            GlStateManager.disableDepth();
+            int screenWidth = Minecraft.getInstance().currentScreen.width;
+            int screenHeight = Minecraft.getInstance().currentScreen.height;
+            FontRenderer font = Minecraft.getInstance().fontRenderer;
+            GlStateManager.disableDepthTest();
             int tooltipTextWidth = 0;
 
             for (String textLine : textLines)
@@ -49,7 +49,7 @@ public class GuiUtils
                 {
                     if (mouseX > screenWidth / 2)
                     {
-                        tooltipTextWidth = mouseX - 12 - 8;
+                        tooltipTextWidth = mouseX - 20;
                     }
                     else
                     {
@@ -64,15 +64,10 @@ public class GuiUtils
                 int wrappedTooltipWidth = 0;
                 List<String> wrappedTextLines = new ArrayList<>();
 
-                for (int i = 0; i < textLines.size(); i++)
+                for (String textLine : textLines)
                 {
-                    String textLine = textLines.get(i);
                     List<String> wrappedLine = font.listFormattedStringToWidth(textLine, tooltipTextWidth);
-
-                    if (i == 0)
-                    {
-                        titleLinesCount = wrappedLine.size();
-                    }
+                    titleLinesCount = wrappedLine.size();
 
                     for (String line : wrappedLine)
                     {
@@ -146,7 +141,7 @@ public class GuiUtils
                 }
                 tooltipY += 10;
             }
-            GlStateManager.enableDepth();
+            GlStateManager.enableDepthTest();
         }
     }
 }

@@ -2,11 +2,11 @@ package stevekung.mods.stevekunglib.client.gui;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiTextField;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import stevekung.mods.stevekunglib.utils.NumberUtils;
 
-@SideOnly(Side.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class GuiNumberField extends GuiTextField
 {
     public GuiNumberField(int id, FontRenderer font, int x, int y, int width, int height)

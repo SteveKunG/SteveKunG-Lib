@@ -2,13 +2,15 @@ package stevekung.mods.stevekunglib.utils;
 
 import java.util.Map;
 
+import org.apache.maven.artifact.versioning.ComparableVersion;
+
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
-import net.minecraftforge.common.ForgeVersion;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.versioning.ComparableVersion;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.loading.moddiscovery.ModInfo;
+import net.minecraftforge.versions.mcp.MCPVersion;
 
 public class VersionChecker
 {
@@ -27,13 +29,13 @@ public class VersionChecker
 
     public void startCheck()
     {
-        ForgeVersion.CheckResult result = ForgeVersion.getResult(Loader.instance().getModObjectList().inverse().get(this.mod));
+        net.minecraftforge.fml.VersionChecker.CheckResult result = net.minecraftforge.fml.VersionChecker.getResult((ModInfo)ModList.get().getModContainerByObject(this.mod).get().getModInfo());
 
         for (Map.Entry<ComparableVersion, String> entry : result.changes.entrySet())
         {
             ComparableVersion version = entry.getKey();
 
-            if (result.status == ForgeVersion.Status.OUTDATED)
+            if (result.status == net.minecraftforge.fml.VersionChecker.Status.OUTDATED)
             {
                 this.latestVersion = version.toString();
             }
@@ -42,8 +44,8 @@ public class VersionChecker
 
     public void startCheckIfFailed()
     {
-        ForgeVersion.CheckResult result = ForgeVersion.getResult(Loader.instance().getModObjectList().inverse().get(this.mod));
-        this.failed = result.status == ForgeVersion.Status.FAILED || result.status == ForgeVersion.Status.PENDING;
+        net.minecraftforge.fml.VersionChecker.CheckResult result = net.minecraftforge.fml.VersionChecker.getResult((ModInfo)ModList.get().getModContainerByObject(this.mod).get().getModInfo());
+        this.failed = result.status == net.minecraftforge.fml.VersionChecker.Status.FAILED || result.status == net.minecraftforge.fml.VersionChecker.Status.PENDING;
     }
 
     public void printInfo(EntityPlayerSP player)
@@ -55,7 +57,7 @@ public class VersionChecker
         }
         if (this.latestVersion != null)
         {
-            String text = String.format("New version of %s is available %s for %s", this.formatText(TextFormatting.AQUA, this.modName), this.formatText(TextFormatting.GREEN, "v" + this.latestVersion), this.formatText(TextFormatting.BLUE, "Minecraft " + ForgeVersion.mcVersion));
+            String text = String.format("New version of %s is available %s for %s", this.formatText(TextFormatting.AQUA, this.modName), this.formatText(TextFormatting.GREEN, "v" + this.latestVersion), this.formatText(TextFormatting.BLUE, "Minecraft " + MCPVersion.getMCVersion()));
             player.sendMessage(JsonUtils.create(text));
             player.sendMessage(JsonUtils.create("Download Link ").setStyle(JsonUtils.style().setColor(TextFormatting.YELLOW)).appendSibling(JsonUtils.create("[CLICK HERE]").setStyle(JsonUtils.style().setColor(TextFormatting.RED).setHoverEvent(JsonUtils.hover(HoverEvent.Action.SHOW_TEXT, JsonUtils.create("Click Here!").setStyle(JsonUtils.style().setColor(TextFormatting.DARK_GREEN)))).setClickEvent(JsonUtils.click(ClickEvent.Action.OPEN_URL, this.url)))));
         }

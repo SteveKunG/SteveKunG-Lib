@@ -1,36 +1,49 @@
 package stevekung.mods.stevekunglib.utils;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.IReloadableResourceManager;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.resources.IReloadableResourceManager;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import stevekung.mods.stevekunglib.client.event.ClientEventHandler;
+import stevekung.mods.stevekunglib.core.SteveKunGLib;
 import stevekung.mods.stevekunglib.utils.client.ClientUtils;
-import stevekung.mods.stevekunglib.utils.client.ColoredFontRenderer;
-import stevekung.mods.stevekunglib.utils.client.ColoredFontRendererUnicode;
+import stevekung.mods.stevekunglib.utils.client.ColoredFontResourceManager;
 
 public class ColorUtils
 {
-    public static ColoredFontRenderer coloredFontRenderer;
-    public static ColoredFontRendererUnicode coloredFontRendererUnicode;
+    public static FontRenderer coloredFontRenderer;
+    public static FontRenderer coloredFontRendererUnicode;
 
-    @SideOnly(Side.CLIENT)
+    private static ColoredFontResourceManager coloredFontResourceMananger;
+    private static ColoredFontResourceManager coloredFontResourceManangerU;
+
+    public static final ResourceLocation DEFAULT_FONT_RENDERER_NAME = new ResourceLocation(SteveKunGLib.MOD_ID, "default");
+
+    @OnlyIn(Dist.CLIENT)
     public static void init()
     {
-        Minecraft mc = Minecraft.getMinecraft();
-        ColorUtils.coloredFontRenderer = new ColoredFontRenderer(mc.gameSettings, new ResourceLocation("textures/font/ascii.png"), mc.renderEngine);
-        ColorUtils.coloredFontRendererUnicode = new ColoredFontRendererUnicode(mc.gameSettings, new ResourceLocation("textures/font/ascii.png"), mc.renderEngine);
+        Minecraft mc = Minecraft.getInstance();
+
+        ColorUtils.coloredFontRenderer = mc.fontRenderer;
+        ColorUtils.coloredFontRendererUnicode = mc.fontRenderer;
+
+        //TODO Fix resource loading
+        /*ColorUtils.coloredFontResourceMananger = new ColoredFontResourceManager(mc.getTextureManager(), mc.getForceUnicodeFont());
+        ((IReloadableResourceManager)mc.getResourceManager()).addReloadListener(ColorUtils.coloredFontResourceMananger);
+        ColorUtils.coloredFontRenderer = ColorUtils.coloredFontResourceMananger.getColoredFontRenderer(ColorUtils.DEFAULT_FONT_RENDERER_NAME);
+
+        ColorUtils.coloredFontResourceManangerU = new ColoredFontResourceManager(mc.getTextureManager(), true);
+        ((IReloadableResourceManager)mc.getResourceManager()).addReloadListener(ColorUtils.coloredFontResourceManangerU);
+        ColorUtils.coloredFontRendererUnicode = ColorUtils.coloredFontResourceManangerU.getColoredFontRenderer(ColorUtils.DEFAULT_FONT_RENDERER_NAME);
+        ColorUtils.coloredFontResourceManangerU.setForceUnicodeFont(true);
 
         if (mc.gameSettings.language != null)
         {
-            ColorUtils.coloredFontRenderer.setUnicodeFlag(mc.getLanguageManager().isCurrentLocaleUnicode() || mc.gameSettings.forceUnicodeFont);
             ColorUtils.coloredFontRenderer.setBidiFlag(mc.getLanguageManager().isCurrentLanguageBidirectional());
-            ColorUtils.coloredFontRendererUnicode.setUnicodeFlag(true);
             ColorUtils.coloredFontRendererUnicode.setBidiFlag(mc.getLanguageManager().isCurrentLanguageBidirectional());
-        }
-        ((IReloadableResourceManager)mc.getResourceManager()).registerReloadListener(ColorUtils.coloredFontRenderer);
-        ((IReloadableResourceManager)mc.getResourceManager()).registerReloadListener(ColorUtils.coloredFontRendererUnicode);
+        }*/
     }
 
     public static int rgbToDecimal(int r, int g, int b)
@@ -148,22 +161,22 @@ public class ColorUtils
 
         public int packedRed()
         {
-            return (int) (this.red * 255.0F);
+            return (int)(this.red * 255.0F);
         }
 
         public int packedGreen()
         {
-            return (int) (this.green * 255.0F);
+            return (int)(this.green * 255.0F);
         }
 
         public int packedBlue()
         {
-            return (int) (this.blue * 255.0F);
+            return (int)(this.blue * 255.0F);
         }
 
         public int packedAlpha()
         {
-            return (int) (this.alpha * 255.0F);
+            return (int)(this.alpha * 255.0F);
         }
 
         public float floatRed()
@@ -188,22 +201,22 @@ public class ColorUtils
 
         public int red()
         {
-            return (int) this.red;
+            return (int)this.red;
         }
 
         public int green()
         {
-            return (int) this.green;
+            return (int)this.green;
         }
 
         public int blue()
         {
-            return (int) this.blue;
+            return (int)this.blue;
         }
 
         public int alpha()
         {
-            return (int) this.alpha;
+            return (int)this.alpha;
         }
 
         public String toColoredFont()
@@ -230,7 +243,7 @@ public class ColorUtils
         private String formatColored(int r, int g, int b)
         {
             int marker = 59136;
-            return String.format("%c%c%c", (char) (marker + (r & 255)), (char) (marker + (g & 255)), (char) (marker + (b & 255)));
+            return String.format("%c%c%c", (char)(marker + (r & 255)), (char)(marker + (g & 255)), (char)(marker + (b & 255)));
         }
     }
 }

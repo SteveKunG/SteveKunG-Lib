@@ -1,59 +1,49 @@
 package stevekung.mods.stevekunglib.client.gui;
 
-import java.io.IOException;
-
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.network.play.client.CPacketEntityAction;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import stevekung.mods.stevekunglib.utils.LangUtils;
 
-@SideOnly(Side.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class GuiSleepMPBase extends GuiChatBase
 {
     @Override
     public void initGui()
     {
         super.initGui();
-        this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height - 40, LangUtils.translate("multiplayer.stopSleeping")));
+        this.addButton(new GuiButton(1, this.width / 2 - 100, this.height - 40, LangUtils.translate("multiplayer.stopSleeping"))
+        {
+            @Override
+            public void onClick(double mouseX, double mouseY)
+            {
+                GuiSleepMPBase.this.wakeFromSleep();
+            }
+        });
     }
 
     @Override
-    protected void keyTyped(char typedChar, int keyCode) throws IOException
+    public boolean keyPressed(int keyCode, int p_keyPressed_2_, int p_keyPressed_3_)
     {
-        if (keyCode == 1)
+        if (keyCode == 256)
         {
             this.wakeFromSleep();
         }
-        else if (keyCode != 28 && keyCode != 156)
+        else if (keyCode == 257 || keyCode == 335)
         {
-            super.keyTyped(typedChar, keyCode);
-        }
-        else
-        {
-            String text = this.inputField.getText().trim();
+            String s = this.inputField.getText().trim();
 
-            if (!text.isEmpty())
+            if (!s.isEmpty())
             {
-                this.sendChatMessage(text);
+                this.sendChatMessage(s);
             }
             this.inputField.setText("");
             this.mc.ingameGUI.getChatGUI().resetScroll();
+            return true;
         }
-    }
-
-    @Override
-    protected void actionPerformed(GuiButton button)
-    {
-        if (button.id == 1)
-        {
-            this.wakeFromSleep();
-        }
-        else
-        {
-            super.actionPerformed(button);
-        }
+        return super.keyPressed(keyCode, p_keyPressed_2_, p_keyPressed_3_);
     }
 
     private void wakeFromSleep()

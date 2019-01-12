@@ -12,7 +12,7 @@ public enum EnumEntityTrackerType
     private int updateFrequency;
     private boolean sendsVelocityUpdates;
 
-    private EnumEntityTrackerType(int trackingRange, int updateFrequency, boolean sendsVelocityUpdates)
+    EnumEntityTrackerType(int trackingRange, int updateFrequency, boolean sendsVelocityUpdates)
     {
         this.trackingRange = trackingRange;
         this.updateFrequency = updateFrequency;

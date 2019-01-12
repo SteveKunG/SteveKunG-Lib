@@ -1,13 +1,8 @@
 package stevekung.mods.stevekunglib.utils;
 
-import java.io.IOException;
-import java.io.Writer;
-import java.lang.reflect.Type;
-
 import com.google.gson.*;
 import com.google.gson.internal.Streams;
 import com.google.gson.stream.JsonWriter;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
@@ -15,6 +10,9 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
+
+import java.io.Writer;
+import java.lang.reflect.Type;
 
 public class JsonUtils
 {
@@ -24,13 +22,13 @@ public class JsonUtils
 
         try
         {
-            json = ITextComponent.Serializer.jsonToComponent("[{" + raw + "}]");
+            json = ITextComponent.Serializer.fromJson("[{" + raw + "}]");
         }
         catch (JsonParseException e)
         {
-            if (Minecraft.getMinecraft().player.ticksExisted % 300 == 0)
+            if (Minecraft.getInstance().player.ticksExisted % 300 == 0)
             {
-                Minecraft.getMinecraft().player.sendMessage(create(e.getMessage()).setStyle(red()));
+                Minecraft.getInstance().player.sendMessage(create(e.getMessage()).setStyle(red()));
             }
         }
         return json;
@@ -136,7 +134,7 @@ public class JsonUtils
         return style().setColor(TextFormatting.WHITE);
     }
 
-    public static void toJson(Object src, Appendable writer) throws JsonIOException
+    public static void toJson(Object src, Appendable writer)
     {
         if (src != null)
         {
@@ -148,7 +146,7 @@ public class JsonUtils
         }
     }
 
-    private static void toJson(Object src, Type typeOfSrc, Appendable writer) throws JsonIOException
+    private static void toJson(Object src, Type typeOfSrc, Appendable writer)
     {
         try
         {
@@ -156,13 +154,13 @@ public class JsonUtils
             JsonWriter jsonWriter = newJsonWriter(Streams.writerForAppendable(writer));
             gson.toJson(src, typeOfSrc, jsonWriter);
         }
-        catch (IOException e)
+        catch (JsonIOException e)
         {
             throw new JsonIOException(e);
         }
     }
 
-    private static JsonWriter newJsonWriter(Writer writer) throws IOException
+    private static JsonWriter newJsonWriter(Writer writer)
     {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         JsonWriter jsonWriter = new JsonWriter(writer);

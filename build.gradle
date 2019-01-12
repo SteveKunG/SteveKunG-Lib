@@ -1,10 +1,11 @@
 buildscript {
     repositories {
-        jcenter()
         maven { url = "https://files.minecraftforge.net/maven" }
+        jcenter()
+        mavenCentral()
     }
     dependencies {
-        classpath "net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT"
+        classpath group: "net.minecraftforge.gradle", name: "ForgeGradle", version: "3.+", changing: true
         classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.1.2"
     }
 }
@@ -14,24 +15,33 @@ plugins {
 }
 
 def api = new groovy.json.JsonSlurper().parseText(file("${api_token_path}").text)
-def keystore = new groovy.json.JsonSlurper().parseText(file("${keystore_path}").text)
 def mcVersion = project.mc_version
 
-apply plugin: "net.minecraftforge.gradle.forge"
+apply plugin: "net.minecraftforge.gradle"
 
 version = project.version
 group = "stevekung.mods.stevekunglib"
 archivesBaseName = "SteveKunG's-Lib"
-sourceCompatibility = targetCompatibility = 1.8
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = 1.8
+compileJava.options.encoding = "UTF-8"
 
 minecraft {
-    version = "1.12.2-14.23.5.2775"
-    runDir = "run"
-    mappings = "snapshot_20171003"
-    makeObfSourceJar = false
+    mappings channel: "snapshot", version: "20180921-1.13"
+    accessTransformer = file "src/main/resources/META-INF/accesstransformer.cfg"
 
-    replace "@FINGERPRINT@", keystore.sha1
-    replaceIn "SteveKunGLib.java"
+    runs {
+        client = {
+            workingDirectory project.file("run").canonicalPath
+            source sourceSets.main
+        }
+        server = {
+            workingDirectory project.file("run").canonicalPath
+        }
+    }
+}
+
+dependencies {
+    minecraft "net.minecraftforge.test:forge:1.13-24.0.68-1.13-pre"
 }
 
 repositories {
@@ -44,11 +54,7 @@ repositories {
 jar {
     include "stevekung/mods/stevekunglib/**"
     include "META-INF/stevekunglib_at.cfg"
-    include "license.txt"
-
-    manifest {
-        attributes("FMLAT": "stevekunglib_at.cfg", "FMLCorePluginContainsFMLMod": "true")
-    }
+    include "META-INF/mods.toml"
     baseName = "SteveKunG's-Lib-" + mcVersion
 }
 
@@ -67,21 +73,7 @@ curseforge {
     }
 }
 
-task signJar(type: SignJar, dependsOn: reobfJar) {
-    keyStore = keystore.keystore_path
-    alias = keystore.alias
-    storePass = keystore.keystore_pass
-    keyPass = keystore.keystore_pass
-    inputFile = jar.archivePath
-    outputFile = jar.archivePath
-}
-
 task deobfJar(type: Jar) {
     from sourceSets.main.output
     classifier = "deobf"
-    manifest {
-        attributes("FMLAT": "stevekunglib_at.cfg", "FMLCorePluginContainsFMLMod": "true")
-    }
 }
-
-build.dependsOn signJar

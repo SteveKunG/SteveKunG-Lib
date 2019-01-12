@@ -1,8 +1,8 @@
 package stevekung.mods.stevekunglib.utils;
 
-import java.util.List;
-
 import net.minecraft.item.ItemStack;
+
+import java.util.List;
 
 public interface IItemDescription
 {

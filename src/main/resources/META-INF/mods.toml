@@ -1,0 +1,20 @@
+modLoader="javafml"
+loaderVersion="[24,)"
+updateJSONURL="https://raw.githubusercontent.com/SteveKunG/VersionCheckLibrary/master/stevekung's_lib_version.json"
+issueTrackerURL="https://github.com/SteveKunG/SteveKunG-Lib/issues"
+displayURL="https://minecraft.curseforge.com/projects/stevekungs-lib"
+logoFile="examplemod.png" #optional
+authors="SteveKunG"
+
+[[mods]]
+modId="stevekungs_lib"
+version="2.0.0"
+displayName="SteveKunG's Lib"
+description="Code and Utilities for SteveKunG's mods!"
+
+[[dependencies.stevekungs_lib]]
+    modId="forge"
+    mandatory=true
+    versionRange="[24,)"
+    ordering="NONE"
+    side="BOTH"
