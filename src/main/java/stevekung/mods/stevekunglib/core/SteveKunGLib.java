@@ -1,6 +1,5 @@
 package stevekung.mods.stevekunglib.core;
 
-import net.minecraft.client.Minecraft;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -9,6 +8,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.javafmlmod.FMLModLoadingContext;
 import stevekung.mods.stevekunglib.client.event.ClientEventHandler;
+import stevekung.mods.stevekunglib.config.SteveKunGsLibConfig;
 import stevekung.mods.stevekunglib.utils.ColorUtils;
 import stevekung.mods.stevekunglib.utils.CommonUtils;
 import stevekung.mods.stevekunglib.utils.client.ClientUtils;
@@ -25,6 +25,7 @@ public class SteveKunGLib
         FMLModLoadingContext.get().getModEventBus().addListener(this::postInit);
 
         CommonUtils.registerEventHandler(this);
+        SteveKunGsLibConfig.load();
     }
 
     private void preInit(FMLPreInitializationEvent event)

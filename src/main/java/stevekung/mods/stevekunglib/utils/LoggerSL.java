@@ -3,6 +3,8 @@ package stevekung.mods.stevekunglib.utils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import stevekung.mods.stevekunglib.config.SteveKunGsLibConfig;
+
 public class LoggerSL
 {
     private static final Logger LOG = LogManager.getLogger("SteveKunG's Lib");
@@ -25,10 +27,10 @@ public class LoggerSL
 
     public static void debug(String message)
     {
-        /*if (ConfigManagerLib.stevekung_lib_general.enableDebugLog)TODO
+        if (SteveKunGsLibConfig.INSTANCE.configData.getOrElse("enableDebugLog", true))
         {
             LoggerSL.LOG_DEBUG.info(message);
-        }*/
+        }
     }
 
     public static void info(String message, Object... obj)
@@ -48,9 +50,9 @@ public class LoggerSL
 
     public static void debug(String message, Object... obj)
     {
-        /*if (ConfigManagerLib.stevekung_lib_general.enableDebugLog)TODO
+        if (SteveKunGsLibConfig.INSTANCE.configData.getOrElse("enableDebugLog", true))
         {
             LoggerSL.LOG_DEBUG.info(message, obj);
-        }*/
+        }
     }
 }
