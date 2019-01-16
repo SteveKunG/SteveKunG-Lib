@@ -18,12 +18,12 @@ public class GuiChatRegistry
         }
     }
 
-    public static List<IGuiChat> getGuiChatList()
+    static List<IGuiChat> getGuiChatList()
     {
         return GuiChatRegistry.guiChat;
     }
 
-    public static List<IEntityHoverChat> getEntityHoverChatList()
+    static List<IEntityHoverChat> getEntityHoverChatList()
     {
         return GuiChatRegistry.entityHoverChat;
     }

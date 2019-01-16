@@ -1,22 +1,20 @@
 package stevekung.mods.stevekunglib.client.gui;
 
-import java.io.IOException;
-import java.util.List;
-
 import net.minecraft.client.gui.GuiButton;
+
+import java.util.List;
 
 interface IGuiChat
 {
     void initGui(List<GuiButton> buttonList, int width, int height);
-    void drawScreen(List<GuiButton> buttonList, int mouseX, int mouseY, float partialTicks);
-    void updateScreen(List<GuiButton> buttonList, int width, int height);
+    void render(List<GuiButton> buttonList, int mouseX, int mouseY, float partialTicks);
+    void tick(List<GuiButton> buttonList, int width, int height);
     void keyTypedScrollDown();
     void keyTypedScrollUp();
     void mouseClicked(double mouseX, double mouseY, int mouseButton);
     void mouseReleased(double mouseX, double mouseY, int state);
-    void mouseClickMove(double mouseX, double mouseY, int clickedMouseButton, long timeSinceLastClick);
-    void actionPerformed(GuiButton button);
+    void mouseDragged(double mouseX, double mouseY, int mouseEvent, double dragX, double dragY);
+    boolean mouseScrolled(double wheel);
     void onGuiClosed();
-    void handleMouseInput(int width, int height) throws IOException;
     void getSentHistory(int msgPos);
 }

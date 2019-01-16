@@ -25,7 +25,7 @@ public class GuiSleepMPBase extends GuiChatBase
     }
 
     @Override
-    public boolean keyPressed(int keyCode, int p_keyPressed_2_, int p_keyPressed_3_)
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers)
     {
         if (keyCode == 256)
         {
@@ -33,17 +33,17 @@ public class GuiSleepMPBase extends GuiChatBase
         }
         else if (keyCode == 257 || keyCode == 335)
         {
-            String s = this.inputField.getText().trim();
+            String text = this.inputField.getText().trim();
 
-            if (!s.isEmpty())
+            if (!text.isEmpty())
             {
-                this.sendChatMessage(s);
+                this.sendChatMessage(text);
             }
             this.inputField.setText("");
             this.mc.ingameGUI.getChatGUI().resetScroll();
             return true;
         }
-        return super.keyPressed(keyCode, p_keyPressed_2_, p_keyPressed_3_);
+        return super.keyPressed(keyCode, scanCode, modifiers);
     }
 
     private void wakeFromSleep()

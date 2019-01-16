@@ -43,7 +43,7 @@ public class ClientEventHandler
                 ClientEventHandler.ticksPaused++;
             }
         }
-        if (SteveKunGsLibConfig.INSTANCE.configData.getOrElse("replaceGuiIngame", false))
+        if (SteveKunGsLibConfig.GENERAL.replaceGuiIngame.get())
         {
             ClientEventHandler.replaceGuiChat(this.mc, this.mc.currentScreen);
         }
@@ -52,7 +52,7 @@ public class ClientEventHandler
     @SubscribeEvent
     public void onPressKey(InputEvent.KeyInputEvent event)
     {
-        if (SteveKunGsLibConfig.INSTANCE.configData.getOrElse("replaceGuiIngame", false) && this.mc.currentScreen == null && this.mc.gameSettings.keyBindCommand.isPressed())
+        if (SteveKunGsLibConfig.GENERAL.replaceGuiIngame.get() && this.mc.currentScreen == null && this.mc.gameSettings.keyBindCommand.isPressed())
         {
             GuiChatBase chatGuiSlash = new GuiChatBase("/");
             this.mc.displayGuiScreen(chatGuiSlash);

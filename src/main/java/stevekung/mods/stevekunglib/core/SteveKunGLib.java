@@ -3,11 +3,10 @@ package stevekung.mods.stevekunglib.core;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.javafmlmod.FMLModLoadingContext;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import stevekung.mods.stevekunglib.client.event.ClientEventHandler;
+import stevekung.mods.stevekunglib.config.ConfigManagerBase;
 import stevekung.mods.stevekunglib.config.SteveKunGsLibConfig;
 import stevekung.mods.stevekunglib.utils.ColorUtils;
 import stevekung.mods.stevekunglib.utils.CommonUtils;
@@ -20,15 +19,13 @@ public class SteveKunGLib
 
     public SteveKunGLib()
     {
-        FMLModLoadingContext.get().getModEventBus().addListener(this::preInit);
-        FMLModLoadingContext.get().getModEventBus().addListener(this::init);
-        FMLModLoadingContext.get().getModEventBus().addListener(this::postInit);
-
+        CommonUtils.addModListener(this::setup);
+        CommonUtils.addModListener(this::postInit);
         CommonUtils.registerEventHandler(this);
-        SteveKunGsLibConfig.load();
+        new ConfigManagerBase(SteveKunGLib.MOD_ID, SteveKunGsLibConfig.GENERAL_BUILDER).load();
     }
 
-    private void preInit(FMLPreInitializationEvent event)
+    private void setup(FMLClientSetupEvent event)
     {
         CommonUtils.registerEventHandler(this);
 
@@ -38,7 +35,7 @@ public class SteveKunGLib
         }
     }
 
-    private void init(FMLInitializationEvent event)
+    private void postInit(InterModProcessEvent event)
     {
         if (ClientUtils.isClient())
         {
@@ -46,17 +43,12 @@ public class SteveKunGLib
         }
     }
 
-    private void postInit(FMLPostInitializationEvent event)
-    {
-
-    }
-
     @SubscribeEvent
     public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event)
     {
         if (event.getModID().equals(SteveKunGLib.MOD_ID))
         {
-            //ConfigManager.sync(SteveKunGLib.MOD_ID, Config.Type.INSTANCE);
+            //ConfigManager.sync(SteveKunGLib.MOD_ID, Config.Type.INSTANCE);TODO
         }
     }
 }

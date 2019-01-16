@@ -1,51 +1,34 @@
 package stevekung.mods.stevekunglib.config;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import com.electronwill.nightconfig.core.file.CommentedFileConfig;
-import com.electronwill.nightconfig.core.io.WritingMode;
-
-import net.minecraftforge.common.config.ForgeConfigSpec;
-import stevekung.mods.stevekunglib.utils.LoggerSL;
+import net.minecraftforge.common.ForgeConfigSpec;
 
 public class SteveKunGsLibConfig
 {
-    public static SteveKunGsLibConfig INSTANCE = new SteveKunGsLibConfig();
-    private static ForgeConfigSpec BUILDER = new ForgeConfigSpec.Builder()
-            //General
-            .comment("General settings")
-            .push("general")
-            .comment("Display debug log for easy bug finding!")
-            .translation("stevekungs_lib.configgui.debug_log")
-            .define("enableDebugLog", true)
+    public static final ForgeConfigSpec.Builder GENERAL_BUILDER = new ForgeConfigSpec.Builder();
+    public static final SteveKunGsLibConfig.General GENERAL = new SteveKunGsLibConfig.General(SteveKunGsLibConfig.GENERAL_BUILDER);
 
-            .comment("Replace current Chat GUI and make functionality for GuiChatRegistry works.")
-            .translation("stevekungs_lib.configgui.replace_gui_chat")
-            .worldRestart()
-            .define("replaceGuiIngame", false)
-            .pop()
-
-            .build();
-    public CommentedFileConfig configData;
-
-    public static void load()
+    public static class General
     {
-        SteveKunGsLibConfig.INSTANCE.loadFrom(Paths.get("config"));
-    }
+        public final ForgeConfigSpec.BooleanValue enableDebugLog;
+        public final ForgeConfigSpec.BooleanValue replaceGuiIngame;
 
-    private void loadFrom(final Path configRoot)
-    {
-        Path configFile = configRoot.resolve("stevekungs_lib.toml");
-        this.configData = CommentedFileConfig.builder(configFile).sync().autosave().writingMode(WritingMode.REPLACE).build();
-        this.configData.load();
-
-        if (!SteveKunGsLibConfig.BUILDER.isCorrect(this.configData))
+        General(ForgeConfigSpec.Builder builder)
         {
-            LoggerSL.warning("Configuration file {} is not correct. Correcting", configRoot);
-            SteveKunGsLibConfig.BUILDER.correct(this.configData, (action, path, incorrectValue, correctedValue) -> LoggerSL.warning("Incorrect key {} was corrected from {} to {}", path, incorrectValue, correctedValue));
-            this.configData.save();
+            builder.comment("General settings")
+                    .push("general");
+
+            this.enableDebugLog = builder
+                    .comment("Display debug log for easy bug finding!")
+                    .translation("stevekungs_lib.configgui.debug_log")
+                    .define("enableDebugLog", true);
+
+            this.replaceGuiIngame = builder
+                    .comment("Replace current Chat GUI and make functionality for GuiChatRegistry works.")
+                    .translation("stevekungs_lib.configgui.replace_gui_chat")
+                    .worldRestart() //TODO MC Restart
+                    .define("replaceGuiIngame", false);
+
+            builder.pop();
         }
-        LoggerSL.warning("Loaded config from {}", configFile);
     }
 }
