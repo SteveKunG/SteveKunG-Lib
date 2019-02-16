@@ -186,7 +186,7 @@ public class ColoredFontRenderer extends FontRenderer
                     {
                         tessellator.draw();
                         this.textureManager.bindTexture(glyphResource);
-                        buffer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
+                        buffer.begin(GLConstants.QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
                         resource = glyphResource;
                     }
                     boldOffset = bold ? glyph.getBoldOffset() : 0.0F;

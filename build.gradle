@@ -53,9 +53,6 @@ repositories {
 }
 
 jar {
-    include "stevekung/mods/stevekungslib/**"
-    include "META-INF/accesstransformer.cfg"
-    include "META-INF/mods.toml"
     baseName = "SteveKunG's-Lib-" + mcVersion
 
     manifest {
