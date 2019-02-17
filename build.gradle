@@ -58,7 +58,7 @@ jar {
     manifest {
         attributes(["Specification-Title": "stevekungslib",
                     "Specification-Vendor": "SteveKunG",
-                    "Specification-Version": "25.0",
+                    "Specification-Version": "1",
                     "Implementation-Title": "SteveKunG's Lib",
                     "Implementation-Version": "${version}",
                     "Implementation-Vendor" : "SteveKunG",
