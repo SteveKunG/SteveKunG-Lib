@@ -1,4 +1,5 @@
 # folder
+.settings
 .gradle
 .idea
 bin
@@ -6,3 +7,8 @@ build
 dependencies
 out
 run
+
+# file
+.classpath
+.project
+*.launch

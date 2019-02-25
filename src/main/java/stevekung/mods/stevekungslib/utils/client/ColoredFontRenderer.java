@@ -1,5 +1,8 @@
 package stevekung.mods.stevekungslib.utils.client;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.fonts.Font;
 import net.minecraft.client.gui.fonts.IGlyph;
@@ -13,9 +16,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @OnlyIn(Dist.CLIENT)
 public class ColoredFontRenderer extends FontRenderer
@@ -83,13 +83,13 @@ public class ColoredFontRenderer extends FontRenderer
     private float renderStringAtPos(String text, float x, float y, int color, boolean dropShadow)
     {
         float shadowAlpha = dropShadow ? 0.25F : 1.0F;
-        float rawRed = (float)(color >> 16 & 255) / 255.0F * shadowAlpha;
-        float rawGreen = (float)(color >> 8 & 255) / 255.0F * shadowAlpha;
-        float rawBlue = (float)(color & 255) / 255.0F * shadowAlpha;
+        float rawRed = (color >> 16 & 255) / 255.0F * shadowAlpha;
+        float rawGreen = (color >> 8 & 255) / 255.0F * shadowAlpha;
+        float rawBlue = (color & 255) / 255.0F * shadowAlpha;
         float red = rawRed;
         float green = rawGreen;
         float blue = rawBlue;
-        float alpha = (float)(color >> 24 & 255) / 255.0F;
+        float alpha = (color >> 24 & 255) / 255.0F;
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder buffer = tessellator.getBuffer();
         ResourceLocation resource = null;
@@ -127,9 +127,9 @@ public class ColoredFontRenderer extends FontRenderer
                     if (format.getColor() != null)
                     {
                         int rawColor = format.getColor();
-                        red = (float)(rawColor >> 16 & 255) / 255.0F * shadowAlpha;
-                        green = (float)(rawColor >> 8 & 255) / 255.0F * shadowAlpha;
-                        blue = (float)(rawColor & 255) / 255.0F * shadowAlpha;
+                        red = (rawColor >> 16 & 255) / 255.0F * shadowAlpha;
+                        green = (rawColor >> 8 & 255) / 255.0F * shadowAlpha;
+                        blue = (rawColor & 255) / 255.0F * shadowAlpha;
                     }
                     else if (charIndex >= ColoredFontRenderer.MARKER && charIndex <= ColoredFontRenderer.MARKER + 255)
                     {
@@ -199,11 +199,11 @@ public class ColoredFontRenderer extends FontRenderer
 
                 if (strike)
                 {
-                    entries.add(new FontRenderer.Entry(x + shadowOffset - 1.0F, y + shadowOffset + (float)this.FONT_HEIGHT / 2.0F, x + shadowOffset + boldOffset, y + shadowOffset + (float)this.FONT_HEIGHT / 2.0F - 1.0F, red, green, blue, alpha));
+                    entries.add(new FontRenderer.Entry(x + shadowOffset - 1.0F, y + shadowOffset + this.FONT_HEIGHT / 2.0F, x + shadowOffset + boldOffset, y + shadowOffset + this.FONT_HEIGHT / 2.0F - 1.0F, red, green, blue, alpha));
                 }
                 if (underline)
                 {
-                    entries.add(new FontRenderer.Entry(x + shadowOffset - 1.0F, y + shadowOffset + (float)this.FONT_HEIGHT, x + shadowOffset + boldOffset, y + shadowOffset + (float)this.FONT_HEIGHT - 1.0F, red, green, blue, alpha));
+                    entries.add(new FontRenderer.Entry(x + shadowOffset - 1.0F, y + shadowOffset + this.FONT_HEIGHT, x + shadowOffset + boldOffset, y + shadowOffset + this.FONT_HEIGHT - 1.0F, red, green, blue, alpha));
                 }
                 x += boldOffset;
             }

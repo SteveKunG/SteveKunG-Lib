@@ -1,5 +1,7 @@
 package stevekung.mods.stevekungslib.utils.client;
 
+import org.lwjgl.glfw.GLFW;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.text.ITextComponent;
@@ -8,7 +10,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.thread.EffectiveSide;
 import net.minecraftforge.fml.loading.FMLLoader;
-import org.lwjgl.glfw.GLFW;
 import stevekung.mods.stevekungslib.utils.JsonUtils;
 
 public class ClientUtils

@@ -1,8 +1,8 @@
 package stevekung.mods.stevekungslib.utils;
 
-import net.minecraft.client.Minecraft;
-
 import java.util.UUID;
+
+import net.minecraft.client.Minecraft;
 
 public class GameProfileUtils
 {

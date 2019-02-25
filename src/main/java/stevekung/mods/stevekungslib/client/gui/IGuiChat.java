@@ -1,8 +1,8 @@
 package stevekung.mods.stevekungslib.client.gui;
 
-import net.minecraft.client.gui.GuiButton;
-
 import java.util.List;
+
+import net.minecraft.client.gui.GuiButton;
 
 interface IGuiChat
 {

@@ -15,7 +15,7 @@ public class SteveKunGsLibConfig
         General(ForgeConfigSpec.Builder builder)
         {
             builder.comment("General settings")
-                    .push("general");
+            .push("general");
 
             this.enableDebugLog = builder
                     .comment("Display debug log for easy bug finding!")

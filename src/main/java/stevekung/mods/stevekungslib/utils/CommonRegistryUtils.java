@@ -1,5 +1,8 @@
 package stevekung.mods.stevekungslib.utils;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.IBehaviorDispenseItem;
@@ -21,9 +24,6 @@ import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.registries.ForgeRegistries;
 import stevekung.mods.stevekungslib.utils.enums.EnumEntityTrackerType;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public class CommonRegistryUtils
 {

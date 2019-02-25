@@ -1,5 +1,7 @@
 package stevekung.mods.stevekungslib.utils.client;
 
+import javax.annotation.Nonnull;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.color.IBlockColor;
@@ -14,8 +16,6 @@ import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-
-import javax.annotation.Nonnull;
 
 public class ClientRegistryUtils
 {

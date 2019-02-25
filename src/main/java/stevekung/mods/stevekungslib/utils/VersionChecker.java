@@ -1,14 +1,15 @@
 package stevekung.mods.stevekungslib.utils;
 
+import java.util.Map;
+
+import org.apache.maven.artifact.versioning.ComparableVersion;
+
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.versions.mcp.MCPVersion;
-import org.apache.maven.artifact.versioning.ComparableVersion;
-
-import java.util.Map;
 
 public class VersionChecker
 {

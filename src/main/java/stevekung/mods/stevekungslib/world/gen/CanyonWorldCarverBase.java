@@ -1,5 +1,9 @@
 package stevekung.mods.stevekungslib.world.gen;
 
+import java.util.BitSet;
+import java.util.Random;
+import java.util.Set;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.fluid.Fluid;
@@ -10,10 +14,6 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.gen.carver.WorldCarver;
 import net.minecraft.world.gen.feature.ProbabilityConfig;
-
-import java.util.BitSet;
-import java.util.Random;
-import java.util.Set;
 
 public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
 {
@@ -41,9 +41,9 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
     public boolean carve(IWorld world, Random rand, int chunkX, int chunkZ, int originalX, int originalZ, BitSet bitSet, ProbabilityConfig config)
     {
         int var9 = (this.func_202520_b() * 2 - 1) * 16;
-        double var10 = (double)(chunkX * 16 + rand.nextInt(16));
-        double var12 = (double)(rand.nextInt(rand.nextInt(40) + 8) + 20);
-        double var14 = (double)(chunkZ * 16 + rand.nextInt(16));
+        double var10 = chunkX * 16 + rand.nextInt(16);
+        double var12 = rand.nextInt(rand.nextInt(40) + 8) + 20;
+        double var14 = chunkZ * 16 + rand.nextInt(16);
         float var16 = rand.nextFloat() * 6.2831855F;
         float var17 = (rand.nextFloat() - 0.5F) * 2.0F / 8.0F;
         float var20 = (rand.nextFloat() * 2.0F + rand.nextFloat()) * 2.0F;
@@ -55,8 +55,8 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
     @Override
     protected boolean carveAtTarget(IWorld world, long seed, int chunkX, int chunkZ, double var6, double var8, double var10, double var12, double var14, BitSet bitSet)
     {
-        double var17 = (double)(chunkX * 16 + 8);
-        double var19 = (double)(chunkZ * 16 + 8);
+        double var17 = chunkX * 16 + 8;
+        double var19 = chunkZ * 16 + 8;
 
         if (var6 >= var17 - 16.0D - var12 * 2.0D && var10 >= var19 - 16.0D - var12 * 2.0D && var6 <= var17 + 16.0D + var12 * 2.0D && var10 <= var19 + 16.0D + var12 * 2.0D)
         {
@@ -81,12 +81,12 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
                 for (int var31 = var21; var31 < var22; ++var31)
                 {
                     int var32 = var31 + chunkX * 16;
-                    double var33 = ((double)var32 + 0.5D - var6) / var12;
+                    double var33 = (var32 + 0.5D - var6) / var12;
 
                     for (int var35 = var25; var35 < var26; ++var35)
                     {
                         int var36 = var35 + chunkZ * 16;
-                        double var37 = ((double)var36 + 0.5D - var10) / var12;
+                        double var37 = (var36 + 0.5D - var10) / var12;
 
                         if (var33 * var33 + var37 * var37 < 1.0D)
                         {
@@ -94,9 +94,9 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
 
                             for (int var40 = var24; var40 > var23; --var40)
                             {
-                                double var41 = ((double)(var40 - 1) + 0.5D - var8) / var14;
+                                double var41 = (var40 - 1 + 0.5D - var8) / var14;
 
-                                if ((var33 * var33 + var37 * var37) * (double)this.field_202536_i[var40 - 1] + var41 * var41 / 6.0D < 1.0D)
+                                if ((var33 * var33 + var37 * var37) * this.field_202536_i[var40 - 1] + var41 * var41 / 6.0D < 1.0D)
                                 {
                                     int var43 = var31 | var35 << 4 | var40 << 8;
 
@@ -169,15 +169,15 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
 
         for (int var24 = 0; var24 < var16; ++var24)
         {
-            double var25 = 1.5D + (double)(MathHelper.sin((float)var24 * 3.1415927F / (float)var16) * var12);
+            double var25 = 1.5D + MathHelper.sin(var24 * 3.1415927F / var16) * var12;
             double var27 = var25 * 3.0D;
-            var25 *= (double)rand.nextFloat() * 0.25D + 0.75D;
-            var27 *= (double)rand.nextFloat() * 0.25D + 0.75D;
+            var25 *= rand.nextFloat() * 0.25D + 0.75D;
+            var27 *= rand.nextFloat() * 0.25D + 0.75D;
             float var29 = MathHelper.cos(var14);
             float var30 = MathHelper.sin(var14);
-            var6 += (double)(MathHelper.cos(var13) * var29);
-            var8 += (double)var30;
-            var10 += (double)(MathHelper.sin(var13) * var29);
+            var6 += MathHelper.cos(var13) * var29;
+            var8 += var30;
+            var10 += MathHelper.sin(var13) * var29;
             var14 *= 0.7F;
             var14 += var23 * 0.05F;
             var13 += var31 * 0.05F;

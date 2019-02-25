@@ -1,5 +1,7 @@
 package stevekung.mods.stevekungslib.utils;
 
+import java.util.function.Consumer;
+
 import net.minecraft.util.Util;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
@@ -8,8 +10,6 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-
-import java.util.function.Consumer;
 
 public class CommonUtils
 {

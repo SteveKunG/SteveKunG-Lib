@@ -1,7 +1,11 @@
 package stevekung.mods.stevekungslib.client.gui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gson.JsonSyntaxException;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
@@ -11,9 +15,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
 import stevekung.mods.stevekungslib.utils.client.ClientUtils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class GuiChatBase extends GuiChat
 {
@@ -71,13 +72,13 @@ public class GuiChatBase extends GuiChat
             }
             else if (keyCode == 266)
             {
-                this.mc.ingameGUI.getChatGUI().func_194813_a((double)(this.mc.ingameGUI.getChatGUI().getLineCount() - 1));
+                this.mc.ingameGUI.getChatGUI().func_194813_a(this.mc.ingameGUI.getChatGUI().getLineCount() - 1);
                 GuiChatRegistry.getGuiChatList().forEach(IGuiChat::keyTypedScrollDown);
                 return true;
             }
             else if (keyCode == 267)
             {
-                this.mc.ingameGUI.getChatGUI().func_194813_a((double)(-this.mc.ingameGUI.getChatGUI().getLineCount() + 1));
+                this.mc.ingameGUI.getChatGUI().func_194813_a(-this.mc.ingameGUI.getChatGUI().getLineCount() + 1);
                 GuiChatRegistry.getGuiChatList().forEach(IGuiChat::keyTypedScrollUp);
                 return true;
             }

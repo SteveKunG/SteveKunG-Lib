@@ -1,5 +1,9 @@
 package stevekung.mods.stevekungslib.world.gen;
 
+import java.util.BitSet;
+import java.util.Random;
+import java.util.Set;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.fluid.Fluid;
@@ -10,10 +14,6 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.gen.carver.WorldCarver;
 import net.minecraft.world.gen.feature.ProbabilityConfig;
-
-import java.util.BitSet;
-import java.util.Random;
-import java.util.Set;
 
 public class WorldCarverBase extends WorldCarver<ProbabilityConfig>
 {
@@ -44,9 +44,9 @@ public class WorldCarverBase extends WorldCarver<ProbabilityConfig>
 
         for (int var11 = 0; var11 < var10; ++var11)
         {
-            double var12 = (double)(chunkX * 16 + rand.nextInt(16));
-            double var14 = (double)rand.nextInt(rand.nextInt(120) + 8);
-            double var16 = (double)(chunkZ * 16 + rand.nextInt(16));
+            double var12 = chunkX * 16 + rand.nextInt(16);
+            double var14 = rand.nextInt(rand.nextInt(120) + 8);
+            double var16 = chunkZ * 16 + rand.nextInt(16);
             int var18 = 1;
             float var21;
 
@@ -78,8 +78,8 @@ public class WorldCarverBase extends WorldCarver<ProbabilityConfig>
     @Override
     protected boolean carveAtTarget(IWorld world, long seed, int chunkX, int chunkZ, double var6, double var8, double var10, double var12, double var14, BitSet bitSet)
     {
-        double var17 = (double)(chunkX * 16 + 8);
-        double var19 = (double)(chunkZ * 16 + 8);
+        double var17 = chunkX * 16 + 8;
+        double var19 = chunkZ * 16 + 8;
 
         if (var6 >= var17 - 16.0D - var12 * 2.0D && var10 >= var19 - 16.0D - var12 * 2.0D && var6 <= var17 + 16.0D + var12 * 2.0D && var10 <= var19 + 16.0D + var12 * 2.0D)
         {
@@ -104,12 +104,12 @@ public class WorldCarverBase extends WorldCarver<ProbabilityConfig>
                 for (int var31 = var21; var31 < var22; ++var31)
                 {
                     int var32 = var31 + chunkX * 16;
-                    double var33 = ((double)var32 + 0.5D - var6) / var12;
+                    double var33 = (var32 + 0.5D - var6) / var12;
 
                     for (int var35 = var25; var35 < var26; ++var35)
                     {
                         int var36 = var35 + chunkZ * 16;
-                        double var37 = ((double)var36 + 0.5D - var10) / var12;
+                        double var37 = (var36 + 0.5D - var10) / var12;
 
                         if (var33 * var33 + var37 * var37 < 1.0D)
                         {
@@ -117,7 +117,7 @@ public class WorldCarverBase extends WorldCarver<ProbabilityConfig>
 
                             for (int var40 = var24; var40 > var23; --var40)
                             {
-                                double var41 = ((double)var40 - 0.5D - var8) / var14;
+                                double var41 = (var40 - 0.5D - var8) / var14;
 
                                 if (var41 > -0.7D && var33 * var33 + var41 * var41 + var37 * var37 < 1.0D)
                                 {
@@ -175,7 +175,7 @@ public class WorldCarverBase extends WorldCarver<ProbabilityConfig>
 
     private void addRoom(IWorld world, long seed, int var4, int var5, double var6, double var8, double var10, float var12, BitSet bitSet)
     {
-        double var16 = 1.5D + (double)(MathHelper.sin(1.5707964F) * var12);
+        double var16 = 1.5D + MathHelper.sin(1.5707964F) * var12;
         double var18 = var16 * 0.5D;
         this.carveAtTarget(world, seed, var4, var5, var6 + 1.0D, var8, var10, var16, var18, bitSet);
     }
@@ -190,12 +190,12 @@ public class WorldCarverBase extends WorldCarver<ProbabilityConfig>
 
         for (int var25 = var15; var25 < var16; ++var25)
         {
-            double var26 = 1.5D + (double)(MathHelper.sin(3.1415927F * (float)var25 / (float)var16) * var12);
+            double var26 = 1.5D + MathHelper.sin(3.1415927F * var25 / var16) * var12;
             double var28 = var26 * 1.0D;
             float var30 = MathHelper.cos(var14);
-            var6 += (double)(MathHelper.cos(var13) * var30);
-            var8 += (double)MathHelper.sin(var14);
-            var10 += (double)(MathHelper.sin(var13) * var30);
+            var6 += MathHelper.cos(var13) * var30;
+            var8 += MathHelper.sin(var14);
+            var10 += MathHelper.sin(var13) * var30;
             var14 *= var22 ? 0.92F : 0.7F;
             var14 += var24 * 0.1F;
             var13 += var23 * 0.1F;

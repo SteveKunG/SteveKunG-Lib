@@ -1,8 +1,12 @@
 package stevekung.mods.stevekungslib.utils;
 
+import java.io.Writer;
+import java.lang.reflect.Type;
+
 import com.google.gson.*;
 import com.google.gson.internal.Streams;
 import com.google.gson.stream.JsonWriter;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
@@ -10,9 +14,6 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
-
-import java.io.Writer;
-import java.lang.reflect.Type;
 
 public class JsonUtils
 {

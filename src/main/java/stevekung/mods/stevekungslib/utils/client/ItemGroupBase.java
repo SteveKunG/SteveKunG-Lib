@@ -1,12 +1,12 @@
 package stevekung.mods.stevekungslib.utils.client;
 
+import java.util.Comparator;
+
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
-import java.util.Comparator;
 
 public class ItemGroupBase extends ItemGroup
 {
