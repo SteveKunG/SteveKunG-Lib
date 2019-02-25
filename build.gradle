@@ -19,6 +19,7 @@ def keystore = new groovy.json.JsonSlurper().parseText(file("${keystore_path}").
 def mcVersion = project.mc_version
 
 apply plugin: "net.minecraftforge.gradle"
+apply plugin: "eclipse"
 
 import net.minecraftforge.gradle.common.task.SignJar
 
@@ -57,7 +58,7 @@ minecraft {
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:1.13.2-25.0.32"
+    minecraft "net.minecraftforge:forge:1.13.2-25.0.54"
 }
 
 repositories {
