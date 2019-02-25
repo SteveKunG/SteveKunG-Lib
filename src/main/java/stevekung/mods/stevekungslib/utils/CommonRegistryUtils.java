@@ -1,11 +1,15 @@
 package stevekung.mods.stevekungslib.utils;
 
+import java.util.function.Function;
+import java.util.function.Supplier;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.IBehaviorDispenseItem;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
@@ -13,10 +17,12 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.potion.Potion;
 import net.minecraft.tags.Tag;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.registry.IRegistry;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.storage.loot.LootTableList;
@@ -68,12 +74,12 @@ public class CommonRegistryUtils
 
     public void registerForgeBucket(Fluid fluid)
     {
-        //        FluidRegistry.addBucketForFluid(fluid);
+        //        FluidRegistry.addBucketForFluid(fluid);TODO
     }
 
-    public void registerTileEntity(TileEntityType<?> tile, String name)
+    public <T extends TileEntity> void registerTileEntity(Supplier<? extends T> factory, String name)
     {
-        ForgeRegistries.TILE_ENTITIES.register(tile.setRegistryName(this.resourcePath + ":" + name));
+        TileEntityType.Builder.create(factory).build(null).setRegistryName(this.resourcePath + ":" + name);
     }
 
     public void registerPotion(Potion potion, String name)
@@ -86,6 +92,7 @@ public class CommonRegistryUtils
         ForgeRegistries.BIOMES.register(biome.setRegistryName(this.resourcePath + ":" + name));
     }
 
+    @SuppressWarnings("deprecation")
     public void registerBiomeType(Biome biome, @Nonnull BiomeDictionary.Type... biomeType)
     {
         BiomeDictionary.addTypes(biome, biomeType);
@@ -96,36 +103,19 @@ public class CommonRegistryUtils
         }
     }
 
-    public void registerEntity(EntityType<?> entity, String name, int backgroundColor, int foregroundColor)
+    public <T extends Entity> void registerEntity(Class<? extends T> entity, Function<? super World, ? extends T> factory, String name)
     {
-        this.registerEntity(entity, name, backgroundColor, foregroundColor, EnumEntityTrackerType.NORMAL);
+        this.registerEntity(entity, factory, name, EnumEntityTrackerType.NORMAL);
     }
 
-    public void registerEntity(EntityType<?> entity, String name, int backgroundColor, int foregroundColor, EnumEntityTrackerType type)
+    public <T extends Entity> void registerEntity(Class<? extends T> entity, Function<? super World, ? extends T> factory, String name, EnumEntityTrackerType type)
     {
-        this.registerEntity(entity, name, backgroundColor, foregroundColor, type.getTrackingRange(), type.getUpdateFrequency());
+        this.registerEntity(entity, factory, name, type.getTrackingRange(), type.getUpdateFrequency(), type.sendsVelocityUpdates());
     }
 
-    public void registerEntity(EntityType<?> entity, String name, int backgroundColor, int foregroundColor, int trackingRange, int updateFrequency)
+    public <T extends Entity> void registerEntity(Class<? extends T> entity, Function<? super World, ? extends T> factory, String name, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates)
     {
-        ForgeRegistries.ENTITIES.register(entity.setRegistryName(this.resourcePath + ":" + name));
-        //        EntityRegistry.registerModEntity(new ResourceLocation(this.resourcePath + ":" + name), entity, this.resourcePath + "." + name, ID++, this.resourcePath, trackingRange, updateFrequency, true, backgroundColor, foregroundColor);
-    }
-
-    public void registerNonMobEntity(EntityType<?> entity, String name)
-    {
-        this.registerNonMobEntity(entity, name, EnumEntityTrackerType.NORMAL);
-    }
-
-    public void registerNonMobEntity(EntityType<?> entity, String name, EnumEntityTrackerType type)
-    {
-        this.registerNonMobEntity(entity, name, type.getTrackingRange(), type.getUpdateFrequency(), type.sendsVelocityUpdates());
-    }
-
-    public void registerNonMobEntity(EntityType<?> entity, String name, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates)
-    {
-        ForgeRegistries.ENTITIES.register(entity.setRegistryName(this.resourcePath + ":" + name));
-        //        EntityRegistry.registerModEntity(new ResourceLocation(this.resourcePath + ":" + name), entity, this.resourcePath + "." + name, ID++, this.resourcePath, trackingRange, updateFrequency, sendsVelocityUpdates);TODO
+        EntityType.Builder.create(entity, factory).tracker(trackingRange, updateFrequency, sendsVelocityUpdates).build(this.resourcePath + ":" + name);
     }
 
     public void registerEntityPlacement(EntityType<?> entity, EntitySpawnPlacementRegistry.SpawnPlacementType placementType, Heightmap.Type heightMapType, Tag<Block> tag)
