@@ -241,8 +241,9 @@ public class ColorUtils
 
         private String formatColored(int r, int g, int b)
         {
-            int marker = 59136;
-            return String.format("%c%c%c", (char)(marker + (r & 255)), (char)(marker + (g & 255)), (char)(marker + (b & 255)));
+            //int marker = 59136; TODO
+            //return String.format("%c%c%c", (char)(marker + (r & 255)), (char)(marker + (g & 255)), (char)(marker + (b & 255)));
+            return "";
         }
     }
 }
