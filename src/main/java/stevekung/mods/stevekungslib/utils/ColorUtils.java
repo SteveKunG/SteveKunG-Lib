@@ -97,7 +97,7 @@ public class ColorUtils
         {
             if (printException)
             {
-                LoggerSL.error("Invalid RGB Color format at option {}!", optionName);
+                SteveKunGLib.LOGGER.error("Invalid RGB Color format at option {}!", optionName);
                 ClientUtils.printClientMessage("Invalid RGB Color format at option " + optionName + "!", JsonUtils.red());
                 e.printStackTrace();
             }
@@ -120,7 +120,7 @@ public class ColorUtils
         {
             if (printException)
             {
-                LoggerSL.error("Invalid RGB Color format at option {}!", optionName);
+                SteveKunGLib.LOGGER.error("Invalid RGB Color format at option {}!", optionName);
                 ClientUtils.printClientMessage("Invalid RGB Color format at option " + optionName + "!", JsonUtils.red());
                 e.printStackTrace();
             }

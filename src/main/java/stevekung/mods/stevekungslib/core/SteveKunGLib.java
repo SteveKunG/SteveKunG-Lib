@@ -8,15 +8,18 @@ import stevekung.mods.stevekungslib.client.event.ClientEventHandler;
 import stevekung.mods.stevekungslib.config.SteveKunGsLibConfig;
 import stevekung.mods.stevekungslib.utils.ColorUtils;
 import stevekung.mods.stevekungslib.utils.CommonUtils;
+import stevekung.mods.stevekungslib.utils.LoggerBase;
 import stevekung.mods.stevekungslib.utils.client.ClientUtils;
 
 @Mod(SteveKunGLib.MOD_ID)
 public class SteveKunGLib
 {
     public static final String MOD_ID = "stevekungs_lib";
+    public static LoggerBase LOGGER;
 
     public SteveKunGLib()
     {
+        SteveKunGLib.LOGGER = new LoggerBase("SteveKunG's Lib", SteveKunGsLibConfig.GENERAL.enableDebugLog.get());
         CommonUtils.registerConfig(ModConfig.Type.CLIENT, SteveKunGsLibConfig.GENERAL_BUILDER);
         CommonUtils.registerModEventBus(SteveKunGsLibConfig.class);
 

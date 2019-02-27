@@ -3,6 +3,7 @@ package stevekung.mods.stevekungslib.utils;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
+import stevekung.mods.stevekungslib.core.SteveKunGLib;
 
 public class BlockItemRemapper
 {
@@ -13,7 +14,7 @@ public class BlockItemRemapper
             if (mappings.key.getNamespace().equals(modid) && mappings.key.getPath().equals(oldName))
             {
                 mappings.remap(block);
-                LoggerSL.info("Remapping 'Block' from {} to {}", mappings.key, block.getRegistryName());
+                SteveKunGLib.LOGGER.info("Remapping 'Block' from {} to {}", mappings.key, block.getRegistryName());
             }
         });
     }
@@ -26,7 +27,7 @@ public class BlockItemRemapper
             if (mappings.key.getNamespace().equals(modid) && mappings.key.getPath().equals(oldName))
             {
                 mappings.remap(Item.getItemFromBlock(block));
-                LoggerSL.info("Remapping 'ItemBlock' from {} to {}", mappings.key, block.getRegistryName());
+                SteveKunGLib.LOGGER.info("Remapping 'ItemBlock' from {} to {}", mappings.key, block.getRegistryName());
             }
         });
     }
@@ -38,7 +39,7 @@ public class BlockItemRemapper
             if (mappings.key.getNamespace().equals(modid) && mappings.key.getPath().equals(oldName))
             {
                 mappings.remap(item);
-                LoggerSL.info("Remapping 'Item' from {} to {}", mappings.key, item.getRegistryName());
+                SteveKunGLib.LOGGER.info("Remapping 'Item' from {} to {}", mappings.key, item.getRegistryName());
             }
         });
     }

@@ -35,8 +35,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.resource.IResourceType;
 import net.minecraftforge.resource.ISelectiveResourceReloadListener;
 import net.minecraftforge.resource.VanillaResourceType;
+import stevekung.mods.stevekungslib.core.SteveKunGLib;
 import stevekung.mods.stevekungslib.utils.ColorUtils;
-import stevekung.mods.stevekungslib.utils.LoggerSL;
 
 @OnlyIn(Dist.CLIENT)
 public class ColoredFontResourceManager implements ISelectiveResourceReloadListener
@@ -96,7 +96,7 @@ public class ColoredFontResourceManager implements ISelectiveResourceReloadListe
                                 }
                                 catch (RuntimeException e)
                                 {
-                                    LoggerSL.warning("Unable to read definition '{}' in fonts.json in resourcepack: '{}': {}", glyphResource, iResource.getPackName(), e.getMessage());
+                                    SteveKunGLib.LOGGER.warning("Unable to read definition '{}' in fonts.json in resourcepack: '{}': {}", glyphResource, iResource.getPackName(), e.getMessage());
                                 }
                             }
                         }
@@ -126,13 +126,13 @@ public class ColoredFontResourceManager implements ISelectiveResourceReloadListe
                     }
                     catch (RuntimeException e)
                     {
-                        LoggerSL.warning("Unable to load font '{}' in fonts.json in resourcepack: '{}': {}", glyphResource, iResource.getPackName(), e.getMessage());
+                        SteveKunGLib.LOGGER.warning("Unable to load font '{}' in fonts.json in resourcepack: '{}': {}", glyphResource, iResource.getPackName(), e.getMessage());
                     }
                 }
             }
             catch (IOException e)
             {
-                LoggerSL.warning("Unable to load font '{}' in fonts.json: {}", glyphResource, e.getMessage());
+                SteveKunGLib.LOGGER.warning("Unable to load font '{}' in fonts.json: {}", glyphResource, e.getMessage());
             }
         }
 
