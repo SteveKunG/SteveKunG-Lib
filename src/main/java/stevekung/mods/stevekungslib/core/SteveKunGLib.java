@@ -19,7 +19,6 @@ public class SteveKunGLib
 
     public SteveKunGLib()
     {
-        SteveKunGLib.LOGGER = new LoggerBase("SteveKunG's Lib", SteveKunGsLibConfig.GENERAL.enableDebugLog.get());
         CommonUtils.registerConfig(ModConfig.Type.CLIENT, SteveKunGsLibConfig.GENERAL_BUILDER);
         CommonUtils.registerModEventBus(SteveKunGsLibConfig.class);
 
@@ -30,6 +29,7 @@ public class SteveKunGLib
 
     private void setup(FMLClientSetupEvent event)
     {
+        SteveKunGLib.LOGGER = new LoggerBase("SteveKunG's Lib", SteveKunGsLibConfig.GENERAL.enableDebugLog.get());
         CommonUtils.registerEventHandler(this);
 
         if (ClientUtils.isClient())
