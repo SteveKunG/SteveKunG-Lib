@@ -4,5 +4,8 @@ import net.minecraft.util.text.ITextComponent;
 
 public interface IEntityHoverChat extends IGuiChat
 {
-    ITextComponent addEntityComponent(ITextComponent component);
+    default ITextComponent addEntityComponent(ITextComponent component)
+    {
+        return component;
+    }
 }
