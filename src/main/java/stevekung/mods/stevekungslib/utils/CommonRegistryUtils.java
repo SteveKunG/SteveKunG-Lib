@@ -29,7 +29,7 @@ import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.registries.ForgeRegistries;
-import stevekung.mods.stevekungslib.utils.enums.EnumEntityTrackerType;
+import stevekung.mods.stevekungslib.utils.enums.EntityTrackerType;
 
 public class CommonRegistryUtils
 {
@@ -105,10 +105,10 @@ public class CommonRegistryUtils
 
     public <T extends Entity> void registerEntity(Class<? extends T> entity, Function<? super World, ? extends T> factory, String name)
     {
-        this.registerEntity(entity, factory, name, EnumEntityTrackerType.NORMAL);
+        this.registerEntity(entity, factory, name, EntityTrackerType.NORMAL);
     }
 
-    public <T extends Entity> void registerEntity(Class<? extends T> entity, Function<? super World, ? extends T> factory, String name, EnumEntityTrackerType type)
+    public <T extends Entity> void registerEntity(Class<? extends T> entity, Function<? super World, ? extends T> factory, String name, EntityTrackerType type)
     {
         this.registerEntity(entity, factory, name, type.getTrackingRange(), type.getUpdateFrequency(), type.sendsVelocityUpdates());
     }

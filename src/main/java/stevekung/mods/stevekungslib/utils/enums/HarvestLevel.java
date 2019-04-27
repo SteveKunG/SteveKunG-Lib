@@ -1,6 +1,6 @@
 package stevekung.mods.stevekungslib.utils.enums;
 
-public enum EnumHarvestLevel
+public enum HarvestLevel
 {
     PICKAXE,
     AXE,

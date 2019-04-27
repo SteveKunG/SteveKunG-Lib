@@ -1,6 +1,6 @@
 package stevekung.mods.stevekungslib.utils.enums;
 
-public enum EnumEntityTrackerType
+public enum EntityTrackerType
 {
     NORMAL(80, 3, true),
     THROWABLE_SMALL(64, 10, false),
@@ -12,7 +12,7 @@ public enum EnumEntityTrackerType
     private int updateFrequency;
     private boolean sendsVelocityUpdates;
 
-    EnumEntityTrackerType(int trackingRange, int updateFrequency, boolean sendsVelocityUpdates)
+    EntityTrackerType(int trackingRange, int updateFrequency, boolean sendsVelocityUpdates)
     {
         this.trackingRange = trackingRange;
         this.updateFrequency = updateFrequency;
