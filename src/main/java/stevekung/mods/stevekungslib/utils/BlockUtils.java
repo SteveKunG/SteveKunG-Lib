@@ -17,7 +17,7 @@ public class BlockUtils
 
     public static void setBlockHarvestLevel(Block block, HarvestLevel harvestLevel, int level)
     {
-        //        block.setHarvestLevel(harvestLevel.toString(), level);
+        //        block.setHarvestLevel(harvestLevel.toString(), level);TODO
     }
 
     public static void setToolHarvestLevel(Item item, HarvestLevel harvestLevel, int level)
@@ -27,6 +27,6 @@ public class BlockUtils
 
     public static boolean isFluid(World world, BlockPos pos)
     {
-        return world.getBlockState(pos.up()).getMaterial().isLiquid();//TODO
+        return world.getBlockState(pos.up()).getMaterial().isLiquid();
     }
 }
