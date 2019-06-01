@@ -25,9 +25,9 @@ archivesBaseName = "SteveKunG's-Lib"
 sourceCompatibility = targetCompatibility = 1.8
 
 minecraft {
-    version = "1.12.2-14.23.5.2838"
+    version = "${forge_version}"
     runDir = "run"
-    mappings = "snapshot_20171003"
+    mappings = "${mcp_mapping}"
     makeObfSourceJar = false
 
     replace "@FINGERPRINT@", keystore.sha1
