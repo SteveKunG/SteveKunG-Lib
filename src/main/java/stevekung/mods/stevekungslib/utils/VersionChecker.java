@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.apache.maven.artifact.versioning.ComparableVersion;
 
-import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
@@ -56,7 +56,7 @@ public class VersionChecker
         this.failed = result.status == net.minecraftforge.fml.VersionChecker.Status.FAILED || result.status == net.minecraftforge.fml.VersionChecker.Status.PENDING;
     }
 
-    public void printInfo(EntityPlayerSP player)
+    public void printInfo(ClientPlayerEntity player)
     {
         if (this.failed)
         {

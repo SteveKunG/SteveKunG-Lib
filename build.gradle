@@ -20,6 +20,7 @@ def mcVersion = project.mc_version
 
 apply plugin: "net.minecraftforge.gradle"
 apply plugin: "eclipse"
+apply plugin: "maven-publish"
 
 import net.minecraftforge.gradle.common.task.SignJar
 

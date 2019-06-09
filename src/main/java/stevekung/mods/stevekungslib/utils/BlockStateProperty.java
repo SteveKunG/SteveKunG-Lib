@@ -4,8 +4,8 @@ import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.IntegerProperty;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumFacing.Axis;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Direction.Axis;
 import net.minecraft.util.IStringSerializable;
 import stevekung.mods.stevekungslib.utils.enums.CachedEnum;
 
@@ -25,7 +25,7 @@ public class BlockStateProperty
     /**
      * Used for Custom Block Facing
      */
-    public static final DirectionProperty FACING_HORIZON = DirectionProperty.create("facing", EnumFacing.Plane.HORIZONTAL);
+    public static final DirectionProperty FACING_HORIZON = DirectionProperty.create("facing", Direction.Plane.HORIZONTAL);
     public static final DirectionProperty FACING_ALL = DirectionProperty.create("facing");
 
     /**

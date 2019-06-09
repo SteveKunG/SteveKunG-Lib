@@ -8,15 +8,14 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import stevekung.mods.stevekungslib.client.event.ClientEventHandler;
 import stevekung.mods.stevekungslib.core.SteveKunGLib;
 import stevekung.mods.stevekungslib.utils.client.ClientUtils;
-import stevekung.mods.stevekungslib.utils.client.ColoredFontResourceManager;
 
 public class ColorUtils
 {
     public static FontRenderer coloredFontRenderer;
     public static FontRenderer coloredFontRendererUnicode;
 
-    private static ColoredFontResourceManager coloredFontResourceMananger;
-    private static ColoredFontResourceManager coloredFontResourceManangerU;
+    // private static ColoredFontResourceManager coloredFontResourceMananger;
+    // private static ColoredFontResourceManager coloredFontResourceManangerU;
 
     public static final ResourceLocation DEFAULT_FONT_RENDERER_NAME = new ResourceLocation(SteveKunGLib.MOD_ID, "default");
 

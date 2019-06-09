@@ -28,7 +28,7 @@ import net.minecraft.client.gui.fonts.providers.IGlyphProvider;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.resources.IResource;
 import net.minecraft.resources.IResourceManager;
-import net.minecraft.util.JsonUtils;
+import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -74,15 +74,15 @@ public class ColoredFontResourceManager implements ISelectiveResourceReloadListe
 
                         try
                         {
-                            JsonArray array = JsonUtils.getJsonArray(JsonUtils.fromJson(gson, IOUtils.toString(stream, StandardCharsets.UTF_8), JsonObject.class), "providers");
+                            JsonArray array = JSONUtils.getJsonArray(JSONUtils.fromJson(gson, IOUtils.toString(stream, StandardCharsets.UTF_8), JsonObject.class), "providers");
 
                             for (int i = array.size() - 1; i >= 0; --i)
                             {
-                                JsonObject obj = JsonUtils.getJsonObject(array.get(i), "providers[" + i + "]");
+                                JsonObject obj = JSONUtils.getJsonObject(array.get(i), "providers[" + i + "]");
 
                                 try
                                 {
-                                    GlyphProviderTypes types = GlyphProviderTypes.byName(JsonUtils.getString(obj, "type"));
+                                    GlyphProviderTypes types = GlyphProviderTypes.byName(JSONUtils.getString(obj, "type"));
 
                                     if (!this.forceUnicodeFont || types == GlyphProviderTypes.LEGACY_UNICODE || !glyphResource.equals(ColorUtils.DEFAULT_FONT_RENDERER_NAME))
                                     {

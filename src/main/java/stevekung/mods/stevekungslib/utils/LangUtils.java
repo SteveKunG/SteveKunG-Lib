@@ -1,7 +1,7 @@
 package stevekung.mods.stevekungslib.utils;
 
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class LangUtils
 {
@@ -12,7 +12,7 @@ public class LangUtils
 
     public static String translate(String key, Object... obj)
     {
-        return new TextComponentTranslation(key, obj).getFormattedText();
+        return new TranslationTextComponent(key, obj).getFormattedText();
     }
 
     public static ITextComponent translateComponent(String key)
@@ -22,6 +22,6 @@ public class LangUtils
 
     public static ITextComponent translateComponent(String key, Object... obj)
     {
-        return new TextComponentTranslation(key, obj);
+        return new TranslationTextComponent(key, obj);
     }
 }

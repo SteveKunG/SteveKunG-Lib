@@ -3,7 +3,7 @@ package stevekung.mods.stevekungslib.utils.client;
 import org.lwjgl.glfw.GLFW;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraftforge.api.distmarker.Dist;
@@ -36,34 +36,34 @@ public class ClientUtils
 
     public static boolean isShiftKeyDown()
     {
-        return GuiScreen.isShiftKeyDown();
+        return Screen.hasShiftDown();
     }
 
     public static boolean isControlKeyDown()
     {
-        return GuiScreen.isCtrlKeyDown();
+        return Screen.hasControlDown();
     }
 
     public static void setOverlayMessage(String message)
     {
-        Minecraft.getInstance().ingameGUI.setOverlayMessage(message, false);
+        Minecraft.getInstance().field_71456_v.setOverlayMessage(message, false);
     }
 
     public static void setOverlayMessage(String message, int delay)
     {
-        Minecraft.getInstance().ingameGUI.setOverlayMessage(message, false);
-        Minecraft.getInstance().ingameGUI.overlayMessageTime = delay;
+        Minecraft.getInstance().field_71456_v.setOverlayMessage(message, false);
+        Minecraft.getInstance().field_71456_v.overlayMessageTime = delay;
     }
 
     public static void setOverlayMessage(ITextComponent component)
     {
-        Minecraft.getInstance().ingameGUI.setOverlayMessage(component.getFormattedText(), false);
+        Minecraft.getInstance().field_71456_v.setOverlayMessage(component.getFormattedText(), false);
     }
 
     public static void setOverlayMessage(ITextComponent component, int delay)
     {
-        Minecraft.getInstance().ingameGUI.setOverlayMessage(component.getFormattedText(), false);
-        Minecraft.getInstance().ingameGUI.overlayMessageTime = delay;
+        Minecraft.getInstance().field_71456_v.setOverlayMessage(component.getFormattedText(), false);
+        Minecraft.getInstance().field_71456_v.overlayMessageTime = delay;
     }
 
     public static void printClientMessage(String text)

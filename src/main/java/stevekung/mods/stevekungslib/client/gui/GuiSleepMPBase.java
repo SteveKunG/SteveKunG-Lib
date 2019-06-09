@@ -1,8 +1,8 @@
 package stevekung.mods.stevekungslib.client.gui;
 
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.network.NetHandlerPlayClient;
-import net.minecraft.network.play.client.CPacketEntityAction;
+import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.client.network.play.ClientPlayNetHandler;
+import net.minecraft.network.play.client.CEntityActionPacket;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import stevekung.mods.stevekungslib.utils.LangUtils;
@@ -10,18 +10,16 @@ import stevekung.mods.stevekungslib.utils.LangUtils;
 @OnlyIn(Dist.CLIENT)
 public class GuiSleepMPBase extends GuiChatBase
 {
-    @Override
-    public void initGui()
+    public GuiSleepMPBase(String input)
     {
-        super.initGui();
-        this.addButton(new GuiButton(1, this.width / 2 - 100, this.height - 40, LangUtils.translate("multiplayer.stopSleeping"))
-        {
-            @Override
-            public void onClick(double mouseX, double mouseY)
-            {
-                GuiSleepMPBase.this.wakeFromSleep();
-            }
-        });
+        super(input);
+    }
+
+    @Override
+    public void init()
+    {
+        super.init();
+        this.addButton(new Button(this.width / 2 - 100, this.height - 40, 200, 20, LangUtils.translate("multiplayer.stopSleeping"), button -> GuiSleepMPBase.this.wakeFromSleep()));
     }
 
     @Override
@@ -33,14 +31,14 @@ public class GuiSleepMPBase extends GuiChatBase
         }
         else if (keyCode == 257 || keyCode == 335)
         {
-            String text = this.inputField.getText().trim();
+            String text = this.field_146415_a.getText().trim();
 
             if (!text.isEmpty())
             {
-                this.sendChatMessage(text);
+                this.sendMessage(text);
             }
-            this.inputField.setText("");
-            this.mc.ingameGUI.getChatGUI().resetScroll();
+            this.field_146415_a.setText("");
+            this.minecraft.field_71456_v.getChatGUI().resetScroll();
             return true;
         }
         return super.keyPressed(keyCode, scanCode, modifiers);
@@ -48,7 +46,7 @@ public class GuiSleepMPBase extends GuiChatBase
 
     private void wakeFromSleep()
     {
-        NetHandlerPlayClient connection = this.mc.player.connection;
-        connection.sendPacket(new CPacketEntityAction(this.mc.player, CPacketEntityAction.Action.STOP_SLEEPING));
+        ClientPlayNetHandler connection = this.minecraft.player.field_71174_a;
+        connection.sendPacket(new CEntityActionPacket(this.minecraft.player, CEntityActionPacket.Action.STOP_SLEEPING));
     }
 }

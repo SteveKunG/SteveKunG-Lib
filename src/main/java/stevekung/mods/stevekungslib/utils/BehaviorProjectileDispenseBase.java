@@ -1,13 +1,13 @@
 package stevekung.mods.stevekungslib.utils;
 
-import net.minecraft.dispenser.BehaviorProjectileDispense;
 import net.minecraft.dispenser.IPosition;
+import net.minecraft.dispenser.ProjectileDispenseBehavior;
 import net.minecraft.entity.IProjectile;
-import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class BehaviorProjectileDispenseBase extends BehaviorProjectileDispense
+public class BehaviorProjectileDispenseBase extends ProjectileDispenseBehavior
 {
     private final Class<? extends IProjectile> projectile;
     private final boolean isArrow;
@@ -30,8 +30,8 @@ public class BehaviorProjectileDispenseBase extends BehaviorProjectileDispense
         {
             try
             {
-                EntityArrow arrow = (EntityArrow)this.projectile.getConstructor(World.class, double.class, double.class, double.class).newInstance(world, pos.getX(), pos.getY(), pos.getZ());
-                arrow.pickupStatus = EntityArrow.PickupStatus.ALLOWED;
+                ArrowEntity arrow = (ArrowEntity)this.projectile.getConstructor(World.class, double.class, double.class, double.class).newInstance(world, pos.getX(), pos.getY(), pos.getZ());
+                arrow.field_70251_a = ArrowEntity.PickupStatus.ALLOWED;
                 return arrow;
             }
             catch (Exception e)

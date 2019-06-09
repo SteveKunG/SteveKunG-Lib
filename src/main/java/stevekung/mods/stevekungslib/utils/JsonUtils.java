@@ -9,8 +9,8 @@ import com.google.gson.stream.JsonWriter;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
@@ -35,9 +35,9 @@ public class JsonUtils
         return json;
     }
 
-    public static TextComponentString create(String text)
+    public static StringTextComponent create(String text)
     {
-        return new TextComponentString(text);
+        return new StringTextComponent(text);
     }
 
     public static Style style()

@@ -1,17 +1,17 @@
 package stevekung.mods.stevekungslib.client.gui;
 
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import stevekung.mods.stevekungslib.utils.NumberUtils;
 
 @OnlyIn(Dist.CLIENT)
-public class GuiNumberField extends GuiTextField
+public class GuiNumberField extends TextFieldWidget
 {
-    public GuiNumberField(int id, FontRenderer font, int x, int y, int width, int height)
+    public GuiNumberField(FontRenderer font, int x, int y, int width, int height)
     {
-        super(id, font, x, y, width, height);
+        super(font, x, y, width, height, "Number Field");
     }
 
     @Override

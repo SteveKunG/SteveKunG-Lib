@@ -45,7 +45,7 @@ public class CommonUtils
 
     public static void registerGuiHandler(Object obj, IGuiHandler handler)
     {
-        //        NetworkRegistry.INSTANCE.registerGuiHandler(obj, handler);TODO
+        //NetworkRegistry.INSTANCE.registerGuiHandler(obj, handler);TODO
     }
 
     public static String ticksToElapsedTime(int ticks)

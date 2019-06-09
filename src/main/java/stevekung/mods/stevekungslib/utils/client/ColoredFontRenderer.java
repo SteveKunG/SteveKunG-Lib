@@ -3,12 +3,13 @@ package stevekung.mods.stevekungslib.utils.client;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.fonts.Font;
 import net.minecraft.client.gui.fonts.IGlyph;
 import net.minecraft.client.gui.fonts.TexturedGlyph;
 import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -16,6 +17,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import stevekung.mods.stevekungslib.core.SteveKunGLib;
 
 @OnlyIn(Dist.CLIENT)
 public class ColoredFontRenderer extends FontRenderer
@@ -28,7 +30,7 @@ public class ColoredFontRenderer extends FontRenderer
     public ColoredFontRenderer(TextureManager textureManager, Font font)
     {
         super(textureManager, font);
-        System.out.println(this.getClass().getName() + " is loaded!");
+        SteveKunGLib.LOGGER.info(this.getClass().getName() + " is loaded!");
         this.textureManager = textureManager;
         this.font = font;
     }
@@ -61,7 +63,7 @@ public class ColoredFontRenderer extends FontRenderer
         }
         else
         {
-            if (this.bidiFlag)
+            if (this.getBidiFlag())
             {
                 text = this.bidiReorder(text);
             }
@@ -213,7 +215,7 @@ public class ColoredFontRenderer extends FontRenderer
 
         if (!entries.isEmpty())
         {
-            GlStateManager.disableTexture2D();
+            GlStateManager.disableTexture();
             buffer.begin(GLConstants.QUADS, DefaultVertexFormats.POSITION_COLOR);
 
             for (Entry entry : entries)
@@ -221,7 +223,7 @@ public class ColoredFontRenderer extends FontRenderer
                 entry.pipe(buffer);
             }
             tessellator.draw();
-            GlStateManager.enableTexture2D();
+            GlStateManager.enableTexture();
         }
         return x;
     }

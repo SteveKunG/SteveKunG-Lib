@@ -1,10 +1,10 @@
 package stevekung.mods.stevekungslib.client.event;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiChat;
-import net.minecraft.client.gui.GuiMainMenu;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiSleepMP;
+import net.minecraft.client.gui.screen.ChatScreen;
+import net.minecraft.client.gui.screen.MainMenuScreen;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.SleepInMultiplayerScreen;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
@@ -28,7 +28,7 @@ public class ClientEventHandler
     @SubscribeEvent
     public void onClientTick(ClientTickEvent event)
     {
-        if (this.mc.currentScreen instanceof GuiMainMenu)
+        if (this.mc.field_71462_r instanceof MainMenuScreen)
         {
             ClientEventHandler.ticks = 0;
             ClientEventHandler.ticksPaused = 0;
@@ -45,35 +45,35 @@ public class ClientEventHandler
         }
         if (SteveKunGsLibConfig.GENERAL.replaceGuiIngame.get())
         {
-            ClientEventHandler.replaceGuiChat(this.mc, this.mc.currentScreen);
+            ClientEventHandler.replaceGuiChat(this.mc, this.mc.field_71462_r);
         }
     }
 
     @SubscribeEvent
     public void onPressKey(InputEvent.KeyInputEvent event)
     {
-        if (SteveKunGsLibConfig.GENERAL.replaceGuiIngame.get() && this.mc.currentScreen == null && this.mc.gameSettings.keyBindCommand.isPressed())
+        if (SteveKunGsLibConfig.GENERAL.replaceGuiIngame.get() && this.mc.field_71462_r == null && this.mc.gameSettings.keyBindCommand.isPressed())
         {
             GuiChatBase chatGuiSlash = new GuiChatBase("/");
             this.mc.displayGuiScreen(chatGuiSlash);
         }
     }
 
-    private static void replaceGuiChat(Minecraft mc, GuiScreen currentScreen)
+    private static void replaceGuiChat(Minecraft mc, Screen field_71462_r)
     {
-        if (currentScreen != null)
+        if (field_71462_r != null)
         {
-            if (currentScreen instanceof GuiChat && !(currentScreen instanceof GuiChatBase || currentScreen instanceof GuiSleepMP))
+            if (field_71462_r instanceof ChatScreen && !(field_71462_r instanceof GuiChatBase || field_71462_r instanceof SleepInMultiplayerScreen))
             {
-                GuiChatBase chatGui = new GuiChatBase();
+                GuiChatBase chatGui = new GuiChatBase("");
                 mc.displayGuiScreen(chatGui);
             }
-            if (currentScreen instanceof GuiSleepMP && !(currentScreen instanceof GuiSleepMPBase))
+            if (field_71462_r instanceof SleepInMultiplayerScreen && !(field_71462_r instanceof GuiSleepMPBase))
             {
-                GuiSleepMPBase sleepGui = new GuiSleepMPBase();
+                GuiSleepMPBase sleepGui = new GuiSleepMPBase("");
                 mc.displayGuiScreen(sleepGui);
             }
-            if (currentScreen instanceof GuiSleepMPBase && !mc.player.isPlayerSleeping())
+            if (field_71462_r instanceof GuiSleepMPBase && !mc.player.isPlayerSleeping())
             {
                 mc.displayGuiScreen(null);
             }

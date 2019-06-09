@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.StringUtils;
 
 public class GuiUtils
@@ -17,8 +18,8 @@ public class GuiUtils
 
         if (!textLines.isEmpty())
         {
-            int screenWidth = Minecraft.getInstance().currentScreen.width;
-            int screenHeight = Minecraft.getInstance().currentScreen.height;
+            int screenWidth = Minecraft.getInstance().field_71462_r.width;
+            int screenHeight = Minecraft.getInstance().field_71462_r.height;
             FontRenderer font = Minecraft.getInstance().fontRenderer;
             GlStateManager.disableDepthTest();
             int tooltipTextWidth = 0;

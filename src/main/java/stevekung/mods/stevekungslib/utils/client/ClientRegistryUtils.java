@@ -28,7 +28,7 @@ public class ClientRegistryUtils
 
     public void registerSpriteTexture(TextureStitchEvent.Pre event, String texture)
     {
-        event.getMap().registerSprite(Minecraft.getInstance().getResourceManager(), new ResourceLocation(this.resourcePath + ":" + texture));
+        event.getMap().func_215244_a(Minecraft.getInstance().getTextureManager(), Minecraft.getInstance().getResourceManager(), new ResourceLocation(this.resourcePath + ":" + texture), Minecraft.getInstance());
     }
 
     public static <E extends Entity> void registerEntityRendering(Class<E> entity, IRenderFactory<E> render)
