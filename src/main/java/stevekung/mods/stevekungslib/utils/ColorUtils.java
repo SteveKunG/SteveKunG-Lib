@@ -14,8 +14,8 @@ public class ColorUtils
     public static FontRenderer coloredFontRenderer;
     public static FontRenderer coloredFontRendererUnicode;
 
-    // private static ColoredFontResourceManager coloredFontResourceMananger;
-    // private static ColoredFontResourceManager coloredFontResourceManangerU;
+    //private static ColoredFontResourceManager coloredFontResourceMananger;
+    //private static ColoredFontResourceManager coloredFontResourceManangerU;
 
     public static final ResourceLocation DEFAULT_FONT_RENDERER_NAME = new ResourceLocation(SteveKunGLib.MOD_ID, "default");
 
@@ -26,6 +26,8 @@ public class ColorUtils
 
         ColorUtils.coloredFontRenderer = mc.fontRenderer;
         ColorUtils.coloredFontRendererUnicode = mc.fontRenderer;
+
+        //((IReloadableResourceManager)mc.getResourceManager()).func_219534_a(ColorUtils.coloredFontResourceMananger.getReloadListener());
 
         //TODO Fix resource loading
         /*ColorUtils.coloredFontResourceMananger = new ColoredFontResourceManager(mc.getTextureManager(), mc.getForceUnicodeFont());
