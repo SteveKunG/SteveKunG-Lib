@@ -16,14 +16,13 @@ import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.carver.WorldCarver;
 import net.minecraft.world.gen.feature.ProbabilityConfig;
 
-public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
+public class CaveWorldCarverBase extends WorldCarver<ProbabilityConfig>
 {
-    private final float[] field_202536_i = new float[1024];
     private Set<Block> surfaceBlocks;
     private Set<Block> subSurfaceBlocks;
     private IFluidState lava;
 
-    public CanyonWorldCarverBase(Set<Block> terrainBlocks, Set<Fluid> terrainFluids, Set<Block> surfaceBlocks, Set<Block> subSurfaceBlocks, IFluidState lava)
+    public CaveWorldCarverBase(Set<Block> terrainBlocks, Set<Fluid> terrainFluids, Set<Block> surfaceBlocks, Set<Block> subSurfaceBlocks, IFluidState lava)
     {
         super(ProbabilityConfig::func_214645_a, 256);
         this.field_222718_j = terrainBlocks;
@@ -43,21 +42,38 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
     public boolean func_212867_a_(IChunk world, Random rand, int height, int chunkX, int chunkZ, int originalX, int originalZ, BitSet bitSet, ProbabilityConfig config)
     {
         int i = (this.func_222704_c() * 2 - 1) * 16;
-        double d0 = chunkX * 16 + rand.nextInt(16);
-        double d1 = rand.nextInt(rand.nextInt(40) + 8) + 20;
-        double d2 = chunkZ * 16 + rand.nextInt(16);
-        float f = rand.nextFloat() * ((float)Math.PI * 2F);
-        float f1 = (rand.nextFloat() - 0.5F) * 2.0F / 8.0F;
-        float f2 = (rand.nextFloat() * 2.0F + rand.nextFloat()) * 2.0F;
-        int j = i - rand.nextInt(i / 4);
-        this.calculateCaveShape(world, rand.nextLong(), height, originalX, originalZ, d0, d1, d2, f2, f, f1, 0, j, 3.0D, bitSet);
+        int j = rand.nextInt(rand.nextInt(rand.nextInt(15) + 1) + 1);
+
+        for (int k = 0; k < j; ++k)
+        {
+            double d0 = chunkX * 16 + rand.nextInt(16);
+            double d1 = rand.nextInt(rand.nextInt(120) + 8);
+            double d2 = chunkZ * 16 + rand.nextInt(16);
+            int l = 1;
+
+            if (rand.nextInt(4) == 0)
+            {
+                float f1 = 1.0F + rand.nextFloat() * 6.0F;
+                this.addRoom(world, rand.nextLong(), height, originalX, originalZ, d0, d1, d2, f1, 0.5D, bitSet);
+                l += rand.nextInt(4);
+            }
+
+            for (int k1 = 0; k1 < l; ++k1)
+            {
+                float f = rand.nextFloat() * ((float)Math.PI * 2F);
+                float f3 = (rand.nextFloat() - 0.5F) / 4.0F;
+                float f2 = this.func_222722_a(rand);
+                int i1 = i - rand.nextInt(i / 4);
+                this.addTunnel(world, rand.nextLong(), height, originalX, originalZ, d0, d1, d2, f2, f, f3, 0, i1, 1.0D, bitSet);
+            }
+        }
         return true;
     }
 
     @Override
     protected boolean func_222708_a(double p_222708_1_, double p_222708_3_, double p_222708_5_, int p_222708_7_)
     {
-        return (p_222708_1_ * p_222708_1_ + p_222708_5_ * p_222708_5_) * this.field_202536_i[p_222708_7_ - 1] + p_222708_3_ * p_222708_3_ / 6.0D >= 1.0D;
+        return p_222708_3_ <= -0.7D || p_222708_1_ * p_222708_1_ + p_222708_3_ * p_222708_3_ + p_222708_5_ * p_222708_5_ >= 1.0D;
     }
 
     @Override
@@ -110,50 +126,64 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
         }
     }
 
-    private void calculateCaveShape(IChunk world, long seed, int height, int originalX, int originalZ, double x, double y, double z, float p_222729_13_, float p_222729_14_, float p_222729_15_, int p_222729_16_, int p_222729_17_, double p_222729_18_, BitSet bitSet)
+    private float func_222722_a(Random rand)
+    {
+        float f = rand.nextFloat() * 2.0F + rand.nextFloat();
+
+        if (rand.nextInt(10) == 0)
+        {
+            f *= rand.nextFloat() * rand.nextFloat() * 3.0F + 1.0F;
+        }
+        return f;
+    }
+
+    private void addRoom(IChunk world, long seed, int height, int originalX, int originalZ, double x, double y, double z, float p_222723_13_, double p_222723_14_, BitSet bitSet)
+    {
+        double d0 = 1.5D + MathHelper.sin((float)Math.PI / 2F) * p_222723_13_;
+        double d1 = d0 * p_222723_14_;
+        this.func_222705_a(world, seed, height, originalX, originalZ, x + 1.0D, y, z, d0, d1, bitSet);
+    }
+
+    private void addTunnel(IChunk world, long seed, int height, int originalX, int originalZ, double x, double y, double z, float p_222727_13_, float p_222727_14_, float p_222727_15_, int p_222727_16_, int p_222727_17_, double p_222727_18_, BitSet bitSet)
     {
         Random rand = new Random(seed);
-        float f = 1.0F;
-
-        for (int i = 0; i < 256; ++i)
-        {
-            if (i == 0 || rand.nextInt(3) == 0)
-            {
-                f = 1.0F + rand.nextFloat() * rand.nextFloat();
-            }
-            this.field_202536_i[i] = f * f;
-        }
-
-        float f4 = 0.0F;
+        int i = rand.nextInt(p_222727_17_ / 2) + p_222727_17_ / 4;
+        boolean flag = rand.nextInt(6) == 0;
+        float f = 0.0F;
         float f1 = 0.0F;
 
-        for (int j = p_222729_16_; j < p_222729_17_; ++j)
+        for (int j = 0; j < p_222727_17_; ++j)
         {
-            double d0 = 1.5D + MathHelper.sin(j * (float)Math.PI / p_222729_17_) * p_222729_13_;
-            double d1 = d0 * p_222729_18_;
-            d0 = d0 * (rand.nextFloat() * 0.25D + 0.75D);
-            d1 = d1 * (rand.nextFloat() * 0.25D + 0.75D);
-            float f2 = MathHelper.cos(p_222729_15_);
-            float f3 = MathHelper.sin(p_222729_15_);
-            x += MathHelper.cos(p_222729_14_) * f2;
-            y += f3;
-            z += MathHelper.sin(p_222729_14_) * f2;
-            p_222729_15_ = p_222729_15_ * 0.7F;
-            p_222729_15_ = p_222729_15_ + f1 * 0.05F;
-            p_222729_14_ += f4 * 0.05F;
-            f1 = f1 * 0.8F;
-            f4 = f4 * 0.5F;
+            double d0 = 1.5D + MathHelper.sin((float)Math.PI * j / p_222727_17_) * p_222727_13_;
+            double d1 = d0 * p_222727_18_;
+            float f2 = MathHelper.cos(p_222727_15_);
+            x += MathHelper.cos(p_222727_14_) * f2;
+            y += MathHelper.sin(p_222727_15_);
+            z += MathHelper.sin(p_222727_14_) * f2;
+            p_222727_15_ = p_222727_15_ * (flag ? 0.92F : 0.7F);
+            p_222727_15_ = p_222727_15_ + f1 * 0.1F;
+            p_222727_14_ += f * 0.1F;
+            f1 = f1 * 0.9F;
+            f = f * 0.75F;
             f1 = f1 + (rand.nextFloat() - rand.nextFloat()) * rand.nextFloat() * 2.0F;
-            f4 = f4 + (rand.nextFloat() - rand.nextFloat()) * rand.nextFloat() * 4.0F;
+            f = f + (rand.nextFloat() - rand.nextFloat()) * rand.nextFloat() * 4.0F;
+
+            if (j == i && p_222727_13_ > 1.0F)
+            {
+                this.addTunnel(world, rand.nextLong(), height, originalX, originalZ, x, y, z, rand.nextFloat() * 0.5F + 0.5F, p_222727_14_ - (float)Math.PI / 2F, p_222727_15_ / 3.0F, j, p_222727_17_, 1.0D, bitSet);
+                this.addTunnel(world, rand.nextLong(), height, originalX, originalZ, x, y, z, rand.nextFloat() * 0.5F + 0.5F, p_222727_14_ + (float)Math.PI / 2F, p_222727_15_ / 3.0F, j, p_222727_17_, 1.0D, bitSet);
+                return;
+            }
 
             if (rand.nextInt(4) != 0)
             {
-                if (!this.func_222702_a(originalX, originalZ, x, z, j, p_222729_17_, p_222729_13_))
+                if (!this.func_222702_a(originalX, originalZ, x, z, j, p_222727_17_, p_222727_13_))
                 {
                     return;
                 }
                 this.func_222705_a(world, seed, height, originalX, originalZ, x, y, z, d0, d1, bitSet);
             }
         }
+
     }
 }

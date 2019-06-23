@@ -77,7 +77,7 @@ public class CommonRegistryUtils
 
     public <T extends TileEntity> void registerTileEntity(Supplier<? extends T> factory, String name)
     {
-        TileEntityType.Builder.func_223042_a(factory).build(null).setRegistryName(this.resourcePath + ":" + name);
+        ForgeRegistries.TILE_ENTITIES.register(TileEntityType.Builder.func_223042_a(factory).build(null).setRegistryName(this.resourcePath + ":" + name));
     }
 
     public void registerPotion(Effect potion, String name)
@@ -113,7 +113,7 @@ public class CommonRegistryUtils
 
     public <T extends Entity> void registerEntity(EntityType.IFactory<T> entity, EntityClassification classifi, String name, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates)
     {
-        EntityType.Builder.create(entity, classifi).setTrackingRange(trackingRange).setUpdateInterval(updateFrequency).setShouldReceiveVelocityUpdates(sendsVelocityUpdates).build(this.resourcePath + ":" + name);
+        ForgeRegistries.ENTITIES.register(EntityType.Builder.create(entity, classifi).setTrackingRange(trackingRange).setUpdateInterval(updateFrequency).setShouldReceiveVelocityUpdates(sendsVelocityUpdates).build(this.resourcePath + ":" + name));
     }
 
     public void registerEntityPlacement(EntityType<?> entity, EntitySpawnPlacementRegistry.PlacementType placementType, Heightmap.Type heightMapType)
