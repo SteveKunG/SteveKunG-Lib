@@ -7,17 +7,17 @@ import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class BehaviorProjectileDispenseBase extends ProjectileDispenseBehavior
+public class ProjectileDispenseBehaviorBase extends ProjectileDispenseBehavior
 {
     private final Class<? extends IProjectile> projectile;
     private final boolean isArrow;
 
-    public BehaviorProjectileDispenseBase(Class<? extends IProjectile> projectile)
+    public ProjectileDispenseBehaviorBase(Class<? extends IProjectile> projectile)
     {
         this(projectile, false);
     }
 
-    public BehaviorProjectileDispenseBase(Class<? extends IProjectile> projectile, boolean isArrow)
+    public ProjectileDispenseBehaviorBase(Class<? extends IProjectile> projectile, boolean isArrow)
     {
         this.projectile = projectile;
         this.isArrow = isArrow;

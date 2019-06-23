@@ -10,7 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.util.StringUtils;
 
-public class GuiUtils
+public class ScreenUtils
 {
     public static void drawHoveringSingleTextInGUI(String comment, int mouseX, int mouseY)
     {

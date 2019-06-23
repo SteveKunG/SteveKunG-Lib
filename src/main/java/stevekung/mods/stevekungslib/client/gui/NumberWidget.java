@@ -7,9 +7,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import stevekung.mods.stevekungslib.utils.NumberUtils;
 
 @OnlyIn(Dist.CLIENT)
-public class GuiNumberField extends TextFieldWidget
+public class NumberWidget extends TextFieldWidget
 {
-    public GuiNumberField(FontRenderer font, int x, int y, int width, int height)
+    public NumberWidget(FontRenderer font, int x, int y, int width, int height)
     {
         super(font, x, y, width, height, "Number Field");
     }

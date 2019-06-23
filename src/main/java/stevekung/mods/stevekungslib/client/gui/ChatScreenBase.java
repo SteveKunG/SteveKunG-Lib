@@ -17,9 +17,9 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
 import stevekung.mods.stevekungslib.utils.client.ClientUtils;
 
-public class GuiChatBase extends ChatScreen
+public class ChatScreenBase extends ChatScreen
 {
-    public GuiChatBase(String input)
+    public ChatScreenBase(String input)
     {
         super(input);
     }
@@ -28,21 +28,21 @@ public class GuiChatBase extends ChatScreen
     public void init()
     {
         super.init();
-        GuiChatRegistry.getGuiChatList().forEach(gui -> gui.initGui(this.buttons, this.width, this.height));
+        ChatScreenRegistry.getGuiChatList().forEach(gui -> gui.initGui(this.buttons, this.width, this.height));
     }
 
     @Override
     public void render(int mouseX, int mouseY, float partialTicks)
     {
         super.render(mouseX, mouseY, partialTicks);
-        GuiChatRegistry.getGuiChatList().forEach(gui -> gui.render(this.buttons, mouseX, mouseY, partialTicks));
+        ChatScreenRegistry.getGuiChatList().forEach(gui -> gui.render(this.buttons, mouseX, mouseY, partialTicks));
     }
 
     @Override
     public void tick()
     {
         super.tick();
-        GuiChatRegistry.getGuiChatList().forEach(gui -> gui.tick(this.buttons, this.width, this.height));
+        ChatScreenRegistry.getGuiChatList().forEach(gui -> gui.tick(this.buttons, this.width, this.height));
     }
 
     @Override
@@ -84,13 +84,13 @@ public class GuiChatBase extends ChatScreen
                 else if (keyCode == 266)
                 {
                     this.minecraft.field_71456_v.getChatGUI().func_194813_a(this.minecraft.field_71456_v.getChatGUI().getLineCount() - 1);
-                    GuiChatRegistry.getGuiChatList().forEach(IGuiChat::keyTypedScrollDown);
+                    ChatScreenRegistry.getGuiChatList().forEach(IChatScreen::keyTypedScrollDown);
                     return true;
                 }
                 else if (keyCode == 267)
                 {
                     this.minecraft.field_71456_v.getChatGUI().func_194813_a(-this.minecraft.field_71456_v.getChatGUI().getLineCount() + 1);
-                    GuiChatRegistry.getGuiChatList().forEach(IGuiChat::keyTypedScrollUp);
+                    ChatScreenRegistry.getGuiChatList().forEach(IChatScreen::keyTypedScrollUp);
                     return true;
                 }
                 else
@@ -116,27 +116,27 @@ public class GuiChatBase extends ChatScreen
     public void getSentHistory(int msgPos)
     {
         super.getSentHistory(msgPos);
-        GuiChatRegistry.getGuiChatList().forEach(gui -> gui.getSentHistory(msgPos));
+        ChatScreenRegistry.getGuiChatList().forEach(gui -> gui.getSentHistory(msgPos));
     }
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int mouseButton)
     {
-        GuiChatRegistry.getGuiChatList().forEach(gui -> gui.mouseClicked(mouseX, mouseY, mouseButton));
+        ChatScreenRegistry.getGuiChatList().forEach(gui -> gui.mouseClicked(mouseX, mouseY, mouseButton));
         return super.mouseClicked(mouseX, mouseY, mouseButton);
     }
 
     @Override
     public boolean mouseReleased(double mouseX, double mouseY, int state)
     {
-        GuiChatRegistry.getGuiChatList().forEach(gui -> gui.mouseReleased(mouseX, mouseY, state));
+        ChatScreenRegistry.getGuiChatList().forEach(gui -> gui.mouseReleased(mouseX, mouseY, state));
         return super.mouseReleased(mouseX, mouseY, state);
     }
 
     @Override
     public boolean mouseDragged(double mouseX, double mouseY, int mouseEvent, double dragX, double dragY)
     {
-        GuiChatRegistry.getGuiChatList().forEach(gui -> gui.mouseDragged(mouseX, mouseY, mouseEvent, dragX, dragY));
+        ChatScreenRegistry.getGuiChatList().forEach(gui -> gui.mouseDragged(mouseX, mouseY, mouseEvent, dragX, dragY));
         return super.mouseDragged(mouseX, mouseY, mouseEvent, dragX, dragY);
     }
 
@@ -154,7 +154,7 @@ public class GuiChatBase extends ChatScreen
 
         boolean otherConditions = false;
 
-        for (IGuiChat chat : GuiChatRegistry.getGuiChatList())
+        for (IChatScreen chat : ChatScreenRegistry.getGuiChatList())
         {
             otherConditions = chat.mouseScrolled(wheel);
         }
@@ -225,7 +225,7 @@ public class GuiChatBase extends ChatScreen
 
                             if (itextcomponent != null)
                             {
-                                for (IEntityHoverChat entity : GuiChatRegistry.getEntityHoverChatList())
+                                for (IEntityHoverChat entity : ChatScreenRegistry.getEntityHoverChatList())
                                 {
                                     itextcomponent = entity.addEntityComponent(itextcomponent);
                                 }
@@ -259,6 +259,6 @@ public class GuiChatBase extends ChatScreen
     public void onClose()
     {
         super.onClose();
-        GuiChatRegistry.getGuiChatList().forEach(IGuiChat::onGuiClosed);
+        ChatScreenRegistry.getGuiChatList().forEach(IChatScreen::onGuiClosed);
     }
 }

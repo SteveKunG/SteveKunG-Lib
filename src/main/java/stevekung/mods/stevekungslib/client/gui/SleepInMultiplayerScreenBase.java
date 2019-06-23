@@ -8,9 +8,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import stevekung.mods.stevekungslib.utils.LangUtils;
 
 @OnlyIn(Dist.CLIENT)
-public class GuiSleepMPBase extends GuiChatBase
+public class SleepInMultiplayerScreenBase extends ChatScreenBase
 {
-    public GuiSleepMPBase(String input)
+    public SleepInMultiplayerScreenBase(String input)
     {
         super(input);
     }
@@ -19,7 +19,7 @@ public class GuiSleepMPBase extends GuiChatBase
     public void init()
     {
         super.init();
-        this.addButton(new Button(this.width / 2 - 100, this.height - 40, 200, 20, LangUtils.translate("multiplayer.stopSleeping"), button -> GuiSleepMPBase.this.wakeFromSleep()));
+        this.addButton(new Button(this.width / 2 - 100, this.height - 40, 200, 20, LangUtils.translate("multiplayer.stopSleeping"), button -> SleepInMultiplayerScreenBase.this.wakeFromSleep()));
     }
 
     @Override

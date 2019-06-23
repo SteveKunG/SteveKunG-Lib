@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.minecraft.client.gui.widget.Widget;
 
-public interface IGuiChat
+public interface IChatScreen
 {
     default void initGui(List<Widget> buttonList, int width, int height) {}
     default void render(List<Widget> buttonList, int mouseX, int mouseY, float partialTicks) {}

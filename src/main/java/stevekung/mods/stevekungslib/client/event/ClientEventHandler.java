@@ -9,8 +9,8 @@ import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
-import stevekung.mods.stevekungslib.client.gui.GuiChatBase;
-import stevekung.mods.stevekungslib.client.gui.GuiSleepMPBase;
+import stevekung.mods.stevekungslib.client.gui.ChatScreenBase;
+import stevekung.mods.stevekungslib.client.gui.SleepInMultiplayerScreenBase;
 import stevekung.mods.stevekungslib.config.SteveKunGsLibConfig;
 
 public class ClientEventHandler
@@ -54,26 +54,26 @@ public class ClientEventHandler
     {
         if (SteveKunGsLibConfig.GENERAL.replaceGuiIngame.get() && this.mc.field_71462_r == null && this.mc.gameSettings.keyBindCommand.isPressed())
         {
-            GuiChatBase chatGuiSlash = new GuiChatBase("/");
+            ChatScreenBase chatGuiSlash = new ChatScreenBase("/");
             this.mc.displayGuiScreen(chatGuiSlash);
         }
     }
 
-    private static void replaceGuiChat(Minecraft mc, Screen field_71462_r)
+    private static void replaceGuiChat(Minecraft mc, Screen screen)
     {
-        if (field_71462_r != null)
+        if (screen != null)
         {
-            if (field_71462_r instanceof ChatScreen && !(field_71462_r instanceof GuiChatBase || field_71462_r instanceof SleepInMultiplayerScreen))
+            if (screen instanceof ChatScreen && !(screen instanceof ChatScreenBase || screen instanceof SleepInMultiplayerScreen))
             {
-                GuiChatBase chatGui = new GuiChatBase("");
+                ChatScreenBase chatGui = new ChatScreenBase("");
                 mc.displayGuiScreen(chatGui);
             }
-            if (field_71462_r instanceof SleepInMultiplayerScreen && !(field_71462_r instanceof GuiSleepMPBase))
+            if (screen instanceof SleepInMultiplayerScreen && !(screen instanceof SleepInMultiplayerScreenBase))
             {
-                GuiSleepMPBase sleepGui = new GuiSleepMPBase("");
+                SleepInMultiplayerScreenBase sleepGui = new SleepInMultiplayerScreenBase("");
                 mc.displayGuiScreen(sleepGui);
             }
-            if (field_71462_r instanceof GuiSleepMPBase && !mc.player.isPlayerSleeping())
+            if (screen instanceof SleepInMultiplayerScreenBase && !mc.player.isPlayerSleeping())
             {
                 mc.displayGuiScreen(null);
             }
