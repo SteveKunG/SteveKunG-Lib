@@ -8,10 +8,7 @@ import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.IDispenseItemBehavior;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntitySpawnPlacementRegistry;
-import net.minecraft.entity.EntityType;
+import net.minecraft.entity.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -77,7 +74,7 @@ public class CommonRegistryUtils
 
     public <T extends TileEntity> void registerTileEntity(Supplier<? extends T> factory, String name)
     {
-        ForgeRegistries.TILE_ENTITIES.register(TileEntityType.Builder.func_223042_a(factory).build(null).setRegistryName(this.resourcePath + ":" + name));
+        ForgeRegistries.TILE_ENTITIES.register(TileEntityType.Builder.create(factory).build(null).setRegistryName(this.resourcePath + ":" + name));
     }
 
     public void registerPotion(Effect potion, String name)
@@ -97,7 +94,7 @@ public class CommonRegistryUtils
 
         if (biome.isMutation()) // should put to mutation after registered biomes
         {
-            Biome.MUTATION_TO_BASE_ID_MAP.put(biome, Registry.field_212624_m.getId(ForgeRegistries.BIOMES.getValue(new ResourceLocation(this.resourcePath + ":" + biome.getParent()))));
+            Biome.MUTATION_TO_BASE_ID_MAP.put(biome, Registry.BIOME.getId(ForgeRegistries.BIOMES.getValue(new ResourceLocation(this.resourcePath + ":" + biome.getParent()))));
         }
     }
 
@@ -116,9 +113,9 @@ public class CommonRegistryUtils
         ForgeRegistries.ENTITIES.register(EntityType.Builder.create(entity, classifi).setTrackingRange(trackingRange).setUpdateInterval(updateFrequency).setShouldReceiveVelocityUpdates(sendsVelocityUpdates).build(this.resourcePath + ":" + name));
     }
 
-    public void registerEntityPlacement(EntityType<?> entity, EntitySpawnPlacementRegistry.PlacementType placementType, Heightmap.Type heightMapType)
+    public <T extends MobEntity> void registerEntityPlacement(EntityType<T> entity, EntitySpawnPlacementRegistry.PlacementType placementType, Heightmap.Type heightMapType, EntitySpawnPlacementRegistry.IPlacementPredicate<T> predicate)
     {
-        EntitySpawnPlacementRegistry.register(entity, placementType, heightMapType);
+        EntitySpawnPlacementRegistry.func_209343_a(entity, placementType, heightMapType, predicate);
     }
 
     public void registerProjectileDispense(Item item, IDispenseItemBehavior projectile)

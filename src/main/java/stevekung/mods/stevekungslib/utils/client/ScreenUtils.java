@@ -18,8 +18,8 @@ public class ScreenUtils
 
         if (!textLines.isEmpty())
         {
-            int screenWidth = Minecraft.getInstance().field_71462_r.width;
-            int screenHeight = Minecraft.getInstance().field_71462_r.height;
+            int screenWidth = Minecraft.getInstance().currentScreen.width;
+            int screenHeight = Minecraft.getInstance().currentScreen.height;
             FontRenderer font = Minecraft.getInstance().fontRenderer;
             GlStateManager.disableDepthTest();
             int tooltipTextWidth = 0;

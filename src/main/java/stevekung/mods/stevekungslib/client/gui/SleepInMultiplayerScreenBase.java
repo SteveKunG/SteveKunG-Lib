@@ -31,14 +31,14 @@ public class SleepInMultiplayerScreenBase extends ChatScreenBase
         }
         else if (keyCode == 257 || keyCode == 335)
         {
-            String text = this.field_146415_a.getText().trim();
+            String text = this.inputField.getText().trim();
 
             if (!text.isEmpty())
             {
                 this.sendMessage(text);
             }
-            this.field_146415_a.setText("");
-            this.minecraft.field_71456_v.getChatGUI().resetScroll();
+            this.inputField.setText("");
+            this.minecraft.ingameGUI.getChatGUI().resetScroll();
             return true;
         }
         return super.keyPressed(keyCode, scanCode, modifiers);
@@ -46,7 +46,7 @@ public class SleepInMultiplayerScreenBase extends ChatScreenBase
 
     private void wakeFromSleep()
     {
-        ClientPlayNetHandler connection = this.minecraft.player.field_71174_a;
+        ClientPlayNetHandler connection = this.minecraft.player.connection;
         connection.sendPacket(new CEntityActionPacket(this.minecraft.player, CEntityActionPacket.Action.STOP_SLEEPING));
     }
 }

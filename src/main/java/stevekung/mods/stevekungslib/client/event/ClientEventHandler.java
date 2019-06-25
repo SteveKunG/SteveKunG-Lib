@@ -28,7 +28,7 @@ public class ClientEventHandler
     @SubscribeEvent
     public void onClientTick(ClientTickEvent event)
     {
-        if (this.mc.field_71462_r instanceof MainMenuScreen)
+        if (this.mc.currentScreen instanceof MainMenuScreen)
         {
             ClientEventHandler.ticks = 0;
             ClientEventHandler.ticksPaused = 0;
@@ -45,14 +45,14 @@ public class ClientEventHandler
         }
         if (SteveKunGsLibConfig.GENERAL.replaceGuiIngame.get())
         {
-            ClientEventHandler.replaceGuiChat(this.mc, this.mc.field_71462_r);
+            ClientEventHandler.replaceGuiChat(this.mc, this.mc.currentScreen);
         }
     }
 
     @SubscribeEvent
     public void onPressKey(InputEvent.KeyInputEvent event)
     {
-        if (SteveKunGsLibConfig.GENERAL.replaceGuiIngame.get() && this.mc.field_71462_r == null && this.mc.gameSettings.keyBindCommand.isPressed())
+        if (SteveKunGsLibConfig.GENERAL.replaceGuiIngame.get() && this.mc.currentScreen == null && this.mc.gameSettings.keyBindCommand.isPressed())
         {
             ChatScreenBase chatGuiSlash = new ChatScreenBase("/");
             this.mc.displayGuiScreen(chatGuiSlash);
@@ -73,7 +73,7 @@ public class ClientEventHandler
                 SleepInMultiplayerScreenBase sleepGui = new SleepInMultiplayerScreenBase("");
                 mc.displayGuiScreen(sleepGui);
             }
-            if (screen instanceof SleepInMultiplayerScreenBase && !mc.player.isPlayerSleeping())
+            if (screen instanceof SleepInMultiplayerScreenBase && !mc.player.isSleeping())
             {
                 mc.displayGuiScreen(null);
             }

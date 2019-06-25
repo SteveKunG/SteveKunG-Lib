@@ -46,24 +46,24 @@ public class ClientUtils
 
     public static void setOverlayMessage(String message)
     {
-        Minecraft.getInstance().field_71456_v.setOverlayMessage(message, false);
+        Minecraft.getInstance().ingameGUI.setOverlayMessage(message, false);
     }
 
     public static void setOverlayMessage(String message, int delay)
     {
-        Minecraft.getInstance().field_71456_v.setOverlayMessage(message, false);
-        Minecraft.getInstance().field_71456_v.overlayMessageTime = delay;
+        Minecraft.getInstance().ingameGUI.setOverlayMessage(message, false);
+        Minecraft.getInstance().ingameGUI.overlayMessageTime = delay;
     }
 
     public static void setOverlayMessage(ITextComponent component)
     {
-        Minecraft.getInstance().field_71456_v.setOverlayMessage(component.getFormattedText(), false);
+        Minecraft.getInstance().ingameGUI.setOverlayMessage(component.getFormattedText(), false);
     }
 
     public static void setOverlayMessage(ITextComponent component, int delay)
     {
-        Minecraft.getInstance().field_71456_v.setOverlayMessage(component.getFormattedText(), false);
-        Minecraft.getInstance().field_71456_v.overlayMessageTime = delay;
+        Minecraft.getInstance().ingameGUI.setOverlayMessage(component.getFormattedText(), false);
+        Minecraft.getInstance().ingameGUI.overlayMessageTime = delay;
     }
 
     public static void printClientMessage(String text)

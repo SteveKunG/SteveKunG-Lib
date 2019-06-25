@@ -31,7 +31,7 @@ public class ProjectileDispenseBehaviorBase extends ProjectileDispenseBehavior
             try
             {
                 ArrowEntity arrow = (ArrowEntity)this.projectile.getConstructor(World.class, double.class, double.class, double.class).newInstance(world, pos.getX(), pos.getY(), pos.getZ());
-                arrow.field_70251_a = ArrowEntity.PickupStatus.ALLOWED;
+                arrow.pickupStatus = ArrowEntity.PickupStatus.ALLOWED;
                 return arrow;
             }
             catch (Exception e)

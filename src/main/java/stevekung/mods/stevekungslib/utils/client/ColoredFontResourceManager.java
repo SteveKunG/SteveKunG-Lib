@@ -47,9 +47,9 @@ public class ColoredFontResourceManager implements AutoCloseable
     private final IFutureReloadListener listener = new ReloadListener<Map<ResourceLocation, List<IGlyphProvider>>>()
     {
         @Override
-        protected Map<ResourceLocation, List<IGlyphProvider>> func_212854_a_(IResourceManager manager, IProfiler profiler)
+        protected Map<ResourceLocation, List<IGlyphProvider>> prepare(IResourceManager manager, IProfiler profiler)
         {
-            profiler.func_219894_a();
+            profiler.startTick();
             Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
             Map<ResourceLocation, List<IGlyphProvider>> map = new HashMap<>();
 
@@ -125,14 +125,14 @@ public class ColoredFontResourceManager implements AutoCloseable
                 profiler.endSection();
                 profiler.endSection();
             }
-            profiler.func_219897_b();
+            profiler.endTick();
             return map;
         }
 
         @Override
         protected void func_212853_a_(Map<ResourceLocation, List<IGlyphProvider>> provider, IResourceManager manager, IProfiler profiler)
         {
-            profiler.func_219894_a();
+            profiler.startTick();
             profiler.startSection("reloading");
             Stream.concat(ColoredFontResourceManager.this.fontRenderers.keySet().stream(), provider.keySet().stream()).distinct().forEach(resource ->
             {
@@ -144,7 +144,7 @@ public class ColoredFontResourceManager implements AutoCloseable
             Set<IGlyphProvider> set = ColoredFontResourceManager.this.providers;
             collection.forEach(set::addAll);
             profiler.endSection();
-            profiler.func_219897_b();
+            profiler.endTick();
         }
     };
 
@@ -182,12 +182,12 @@ public class ColoredFontResourceManager implements AutoCloseable
             IFutureReloadListener.IStage stage = new IFutureReloadListener.IStage()
             {
                 @Override
-                public <T> CompletableFuture<T> func_216872_a(T obj)
+                public <T> CompletableFuture<T> markCompleteAwaitingOthers(T obj)
                 {
                     return CompletableFuture.completedFuture(obj);
                 }
             };
-            this.listener.func_215226_a(stage, iresourcemanager, EmptyProfiler.INSTANCE, EmptyProfiler.INSTANCE, executor1, executor2);
+            this.listener.reload(stage, iresourcemanager, EmptyProfiler.INSTANCE, EmptyProfiler.INSTANCE, executor1, executor2);
         }
     }
 

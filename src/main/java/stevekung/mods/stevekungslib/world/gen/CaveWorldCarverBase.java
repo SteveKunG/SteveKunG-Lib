@@ -24,7 +24,7 @@ public class CaveWorldCarverBase extends WorldCarver<ProbabilityConfig>
 
     public CaveWorldCarverBase(Set<Block> terrainBlocks, Set<Fluid> terrainFluids, Set<Block> surfaceBlocks, Set<Block> subSurfaceBlocks, IFluidState lava)
     {
-        super(ProbabilityConfig::func_214645_a, 256);
+        super(ProbabilityConfig::deserialize, 256);
         this.field_222718_j = terrainBlocks;
         this.field_222719_k = terrainFluids;
         this.surfaceBlocks = surfaceBlocks;
@@ -90,7 +90,7 @@ public class CaveWorldCarverBase extends WorldCarver<ProbabilityConfig>
             bitSet.set(i);
             mutablePos1.setPos(x, y, z);
             BlockState blockstate = world.getBlockState(mutablePos1);
-            BlockState blockstate1 = world.getBlockState(mutablePos2.setPos(mutablePos1).move(Direction.UP));
+            BlockState blockstate1 = world.getBlockState(mutablePos2.func_189533_g(mutablePos1).move(Direction.UP));
 
             if (this.surfaceBlocks.stream().anyMatch(block -> blockstate.getBlock() == block.getBlock()))
             {
@@ -109,15 +109,15 @@ public class CaveWorldCarverBase extends WorldCarver<ProbabilityConfig>
                 }
                 else
                 {
-                    world.setBlockState(mutablePos1, field_222715_g, false);
+                    world.setBlockState(mutablePos1, CAVE_AIR, false);
 
                     if (atomicboolean.get())
                     {
-                        mutablePos3.setPos(mutablePos1).move(Direction.DOWN);
+                        mutablePos3.func_189533_g(mutablePos1).move(Direction.DOWN);
 
                         if (this.subSurfaceBlocks.stream().anyMatch(block -> world.getBlockState(mutablePos3).getBlock() == block.getBlock()))
                         {
-                            world.setBlockState(mutablePos3, world.getBiome(mutablePos1).getSurfaceBuilderConfig().getTopMaterial(), false);
+                            world.setBlockState(mutablePos3, world.getBiome(mutablePos1).getSurfaceBuilderConfig().getTop(), false);
                         }
                     }
                 }

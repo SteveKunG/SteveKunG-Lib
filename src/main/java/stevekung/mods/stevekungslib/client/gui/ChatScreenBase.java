@@ -48,7 +48,7 @@ public class ChatScreenBase extends ChatScreen
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers)
     {
-        if (this.field_195139_w != null && this.field_195139_w.keyPressed(keyCode, scanCode, modifiers))
+        if (this.suggestions != null && this.suggestions.keyPressed(keyCode, scanCode, modifiers))
         {
             return true;
         }
@@ -83,13 +83,13 @@ public class ChatScreenBase extends ChatScreen
                 }
                 else if (keyCode == 266)
                 {
-                    this.minecraft.field_71456_v.getChatGUI().func_194813_a(this.minecraft.field_71456_v.getChatGUI().getLineCount() - 1);
+                    this.minecraft.ingameGUI.getChatGUI().func_194813_a(this.minecraft.ingameGUI.getChatGUI().getLineCount() - 1);
                     ChatScreenRegistry.getGuiChatList().forEach(IChatScreen::keyTypedScrollDown);
                     return true;
                 }
                 else if (keyCode == 267)
                 {
-                    this.minecraft.field_71456_v.getChatGUI().func_194813_a(-this.minecraft.field_71456_v.getChatGUI().getLineCount() + 1);
+                    this.minecraft.ingameGUI.getChatGUI().func_194813_a(-this.minecraft.ingameGUI.getChatGUI().getLineCount() + 1);
                     ChatScreenRegistry.getGuiChatList().forEach(IChatScreen::keyTypedScrollUp);
                     return true;
                 }
@@ -100,7 +100,7 @@ public class ChatScreenBase extends ChatScreen
             }
             else
             {
-                String s = this.field_146415_a.getText().trim();
+                String s = this.inputField.getText().trim();
 
                 if (!s.isEmpty())
                 {
@@ -163,7 +163,7 @@ public class ChatScreenBase extends ChatScreen
         {
             return true;
         }
-        else if (this.field_195139_w != null && this.field_195139_w.mouseScrolled(wheel))
+        else if (this.suggestions != null && this.suggestions.mouseScrolled(wheel))
         {
             return true;
         }
@@ -173,7 +173,7 @@ public class ChatScreenBase extends ChatScreen
             {
                 wheel *= 7.0D;
             }
-            this.minecraft.field_71456_v.getChatGUI().func_194813_a(wheel);
+            this.minecraft.ingameGUI.getChatGUI().func_194813_a(wheel);
             return true;
         }
     }
