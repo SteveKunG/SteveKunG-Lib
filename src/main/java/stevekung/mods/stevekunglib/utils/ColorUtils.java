@@ -1,36 +1,30 @@
 package stevekung.mods.stevekunglib.utils;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import stevekung.mods.stevekunglib.client.event.ClientEventHandler;
 import stevekung.mods.stevekunglib.utils.client.ClientUtils;
-import stevekung.mods.stevekunglib.utils.client.ColoredFontRenderer;
-import stevekung.mods.stevekunglib.utils.client.ColoredFontRendererUnicode;
 
 public class ColorUtils
 {
-    public static ColoredFontRenderer coloredFontRenderer;
-    public static ColoredFontRendererUnicode coloredFontRendererUnicode;
+    public static FontRenderer unicodeFontRenderer;
 
     @SideOnly(Side.CLIENT)
     public static void init()
     {
         Minecraft mc = Minecraft.getMinecraft();
-        ColorUtils.coloredFontRenderer = new ColoredFontRenderer(mc.gameSettings, new ResourceLocation("textures/font/ascii.png"), mc.renderEngine);
-        ColorUtils.coloredFontRendererUnicode = new ColoredFontRendererUnicode(mc.gameSettings, new ResourceLocation("textures/font/ascii.png"), mc.renderEngine);
+        ColorUtils.unicodeFontRenderer = new FontRenderer(mc.gameSettings, new ResourceLocation("textures/font/ascii.png"), mc.renderEngine, true);
 
         if (mc.gameSettings.language != null)
         {
-            ColorUtils.coloredFontRenderer.setUnicodeFlag(mc.getLanguageManager().isCurrentLocaleUnicode() || mc.gameSettings.forceUnicodeFont);
-            ColorUtils.coloredFontRenderer.setBidiFlag(mc.getLanguageManager().isCurrentLanguageBidirectional());
-            ColorUtils.coloredFontRendererUnicode.setUnicodeFlag(true);
-            ColorUtils.coloredFontRendererUnicode.setBidiFlag(mc.getLanguageManager().isCurrentLanguageBidirectional());
+            ColorUtils.unicodeFontRenderer.setUnicodeFlag(true);
+            ColorUtils.unicodeFontRenderer.setBidiFlag(mc.getLanguageManager().isCurrentLanguageBidirectional());
         }
-        ((IReloadableResourceManager)mc.getResourceManager()).registerReloadListener(ColorUtils.coloredFontRenderer);
-        ((IReloadableResourceManager)mc.getResourceManager()).registerReloadListener(ColorUtils.coloredFontRendererUnicode);
+        ((IReloadableResourceManager)mc.getResourceManager()).registerReloadListener(ColorUtils.unicodeFontRenderer);
     }
 
     public static int rgbToDecimal(int r, int g, int b)

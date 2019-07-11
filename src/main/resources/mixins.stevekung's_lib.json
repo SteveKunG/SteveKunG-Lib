@@ -1,0 +1,17 @@
+{
+    "required": true,
+    "minVersion": "0.7.11",
+    "compatibilityLevel": "JAVA_8",
+    "package": "stevekung.mods.stevekunglib.mixin",
+    "refmap": "mixin.stevekunglib.refmap.json",
+    "target": "@env(DEFAULT)",
+    "mixins": [],
+    "client": [
+        "GuiChatMixin",
+        "GuiScreenMixin",
+        "ColoredFontRendererMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

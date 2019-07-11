@@ -1,1 +1,1 @@
-xcopy "M:\Modding\SteveKunG-Lib\1.12.2\build\libs\SteveKunG's-Lib-1.0.5-deobf.jar" "M:\Modding\YouTubeChat\1.13-pre\library\SteveKunG's-Lib.jar*"
+xcopy "M:\Modding\SteveKunG-Lib\1.12.2\build\libs\SteveKunG's-Lib-1.0.6-deobf.jar" "M:\Modding\YouTubeChat\1.12.2\library\SteveKunG's-Lib.jar*"

@@ -2,15 +2,17 @@ buildscript {
     repositories {
         jcenter()
         maven { url = "https://files.minecraftforge.net/maven" }
+        maven { url = "https://repo.spongepowered.org/maven" }
     }
     dependencies {
         classpath "net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT"
-        classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.2.0"
+        classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.3.0"
+        classpath "org.spongepowered:mixingradle:0.6-SNAPSHOT"
     }
 }
 
 plugins {
-    id "com.matthewprenger.cursegradle" version "1.2.0"
+    id "com.matthewprenger.cursegradle" version "1.3.0"
 }
 
 def api = new groovy.json.JsonSlurper().parseText(file("${api_token_path}").text)
@@ -18,6 +20,7 @@ def keystore = new groovy.json.JsonSlurper().parseText(file("${keystore_path}").
 def mcVersion = project.mc_version
 
 apply plugin: "net.minecraftforge.gradle.forge"
+apply plugin: "org.spongepowered.mixin"
 
 version = project.version
 group = "stevekung.mods.stevekunglib"
@@ -34,19 +37,44 @@ minecraft {
     replaceIn "SteveKunGLib.java"
 }
 
+configurations {
+    embed
+    implementation.extendsFrom(embed)
+}
+
+dependencies {
+    embed("org.spongepowered:mixin:0.7.11-SNAPSHOT") { transitive = false }
+}
+
 repositories {
     // Curse Gradle
     maven {
         url "https://plugins.gradle.org/m2/"
     }
+    // Mixin
+    maven {
+        url = "http://repo.spongepowered.org/maven/"
+    }
+}
+
+sourceSets {
+    main {
+        ext.refMap = "mixins.stevekung's_lib.refmap.json"
+    }
 }
 
 jar {
-    include "stevekung/mods/stevekunglib/**"
-    include "META-INF/stevekunglib_at.cfg"
+    from(configurations.embed.collect { it.isDirectory() ? it : zipTree(it) }) {
+        exclude "LICENSE.txt", "META-INF/MANIFSET.MF", "META-INF/maven/**", "META-INF/*.RSA", "META-INF/*.SF"
+    }
 
     manifest {
-        attributes("FMLAT": "stevekunglib_at.cfg", "FMLCorePluginContainsFMLMod": "true")
+        attributes("FMLAT": "stevekunglib_at.cfg",
+                   "FMLCorePluginContainsFMLMod": "true",
+                   "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
+                   "MixinConfigs": "mixins.stevekung's_lib.json",
+                   "ForceLoadAsMod": "true"
+        )
     }
     baseName = "SteveKunG's-Lib-" + mcVersion
 }
@@ -79,7 +107,12 @@ task deobfJar(type: Jar) {
     from sourceSets.main.output
     classifier = "deobf"
     manifest {
-        attributes("FMLAT": "stevekunglib_at.cfg", "FMLCorePluginContainsFMLMod": "true")
+        attributes("FMLAT": "stevekunglib_at.cfg",
+                   "FMLCorePluginContainsFMLMod": "true",
+                   "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
+                   "MixinConfigs": "mixins.stevekung's_lib.json",
+                   "ForceLoadAsMod": "true"
+        )
     }
 }
 
