@@ -20,6 +20,9 @@ public abstract class ColoredFontRendererMixin
     private static final int MARKER = 59136;
 
     @Shadow
+    private float alpha;
+
+    @Shadow
     protected abstract void setColor(float r, float g, float b, float a);
 
     @Inject(method = "renderString(Ljava/lang/String;FFIZ)I", at = @At("HEAD"))
@@ -48,12 +51,12 @@ public abstract class ColoredFontRendererMixin
                 this.blueN = value;
                 break;
             default:
-                this.setColor(1.0F, 1.0F, 1.0F, 1.0F);
+                this.setColor(1.0F, 1.0F, 1.0F, this.alpha);
                 return 0.0F;
             }
 
             this.state = ++this.state % 3;
-            int color = this.redN << 16 | this.greenN << 8 | this.blueN | 255 << 24;
+            int color = this.redN << 16 | this.greenN << 8 | this.blueN;
 
             if ((color & -67108864) == 0)
             {
@@ -63,13 +66,13 @@ public abstract class ColoredFontRendererMixin
             {
                 color = (color & 16579836) >> 2 | color & -16777216;
             }
-            this.setColor((color >> 16 & 255) / 255.0F, (color >> 8 & 255) / 255.0F, (color >> 0 & 255) / 255.0F, (color >> 24 & 255) / 255.0F);
+            this.setColor((color >> 16 & 255) / 255.0F, (color >> 8 & 255) / 255.0F, (color >> 0 & 255) / 255.0F, this.alpha);
             return 0.0F;
         }
         if (this.state != 0)
         {
             this.state = 0;
-            this.setColor(1.0F, 1.0F, 1.0F, 1.0F);
+            this.setColor(1.0F, 1.0F, 1.0F, this.alpha);
         }
         return 0.0F;
     }
@@ -93,12 +96,12 @@ public abstract class ColoredFontRendererMixin
                 this.blueN = value;
                 break;
             default:
-                this.setColor(1.0F, 1.0F, 1.0F, 1.0F);
+                this.setColor(1.0F, 1.0F, 1.0F, this.alpha);
                 return 0.0F;
             }
 
             this.state = ++this.state % 3;
-            int color = this.redN << 16 | this.greenN << 8 | this.blueN | 255 << 24;
+            int color = this.redN << 16 | this.greenN << 8 | this.blueN;
 
             if ((color & -67108864) == 0)
             {
@@ -108,13 +111,13 @@ public abstract class ColoredFontRendererMixin
             {
                 color = (color & 16579836) >> 2 | color & -16777216;
             }
-            this.setColor((color >> 16 & 255) / 255.0F, (color >> 8 & 255) / 255.0F, (color >> 0 & 255) / 255.0F, (color >> 24 & 255) / 255.0F);
+            this.setColor((color >> 16 & 255) / 255.0F, (color >> 8 & 255) / 255.0F, (color >> 0 & 255) / 255.0F, this.alpha);
             return 0.0F;
         }
         if (this.state != 0)
         {
             this.state = 0;
-            this.setColor(1.0F, 1.0F, 1.0F, 1.0F);
+            this.setColor(1.0F, 1.0F, 1.0F, this.alpha);
         }
         return 0.0F;
     }
