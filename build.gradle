@@ -105,6 +105,9 @@ task signJar(type: SignJar, dependsOn: reobfJar) {
 
 task deobfJar(type: Jar) {
     from sourceSets.main.output
+    from(configurations.embed.collect { it.isDirectory() ? it : zipTree(it) }) {
+        exclude "LICENSE.txt", "META-INF/MANIFSET.MF", "META-INF/maven/**", "META-INF/*.RSA", "META-INF/*.SF"
+    }
     classifier = "deobf"
     manifest {
         attributes("FMLAT": "stevekunglib_at.cfg",
