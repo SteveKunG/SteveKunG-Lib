@@ -5,11 +5,17 @@
     "package": "stevekung.mods.stevekunglib.mixin",
     "refmap": "mixins.stevekung's_lib.refmap.json",
     "target": "@env(DEFAULT)",
-    "mixins": [],
+    "mixins": [
+        "WorldMixin",
+        "WorldServerMixin"
+    ],
     "client": [
         "GuiChatMixin",
         "GuiScreenMixin",
-        "ColoredFontRendererMixin"
+        "ColoredFontRendererMixin",
+        "EntityRendererMixin",
+        "ItemRendererMixin",
+        "RenderMixin"
     ],
     "injectors": {
         "defaultRequire": 1
