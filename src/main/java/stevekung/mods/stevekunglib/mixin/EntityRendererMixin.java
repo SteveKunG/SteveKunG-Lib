@@ -50,7 +50,7 @@ public class EntityRendererMixin
     }
 
     @Overwrite
-    private void addRainParticles()
+    public void addRainParticles()
     {
         float f = this.mc.world.getRainStrength(1.0F);
 
