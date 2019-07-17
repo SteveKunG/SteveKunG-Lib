@@ -130,7 +130,7 @@ public class ColoredFontResourceManager implements AutoCloseable
         }
 
         @Override
-        protected void func_212853_a_(Map<ResourceLocation, List<IGlyphProvider>> provider, IResourceManager manager, IProfiler profiler)
+        protected void apply(Map<ResourceLocation, List<IGlyphProvider>> provider, IResourceManager manager, IProfiler profiler)
         {
             profiler.startTick();
             profiler.startSection("reloading");

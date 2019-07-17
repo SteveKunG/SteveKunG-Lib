@@ -25,21 +25,21 @@ public class CaveWorldCarverBase extends WorldCarver<ProbabilityConfig>
     public CaveWorldCarverBase(Set<Block> terrainBlocks, Set<Fluid> terrainFluids, Set<Block> surfaceBlocks, Set<Block> subSurfaceBlocks, IFluidState lava)
     {
         super(ProbabilityConfig::deserialize, 256);
-        this.field_222718_j = terrainBlocks;
-        this.field_222719_k = terrainFluids;
+        this.carvableBlocks = terrainBlocks;
+        this.carvableFluids = terrainFluids;
         this.surfaceBlocks = surfaceBlocks;
         this.subSurfaceBlocks = subSurfaceBlocks;
         this.lava = lava;
     }
 
     @Override
-    public boolean func_212868_a_(Random rand, int chunkX, int chunkZ, ProbabilityConfig config)
+    public boolean shouldCarve(Random rand, int chunkX, int chunkZ, ProbabilityConfig config)
     {
         return rand.nextFloat() <= config.probability;
     }
 
     @Override
-    public boolean func_212867_a_(IChunk world, Random rand, int height, int chunkX, int chunkZ, int originalX, int originalZ, BitSet bitSet, ProbabilityConfig config)
+    public boolean carve(IChunk chunk, Random rand, int seaLevel, int chunkX, int chunkZ, int originalX, int originalZ, BitSet carvingMask, ProbabilityConfig config)
     {
         int i = (this.func_222704_c() * 2 - 1) * 16;
         int j = rand.nextInt(rand.nextInt(rand.nextInt(15) + 1) + 1);
@@ -54,7 +54,7 @@ public class CaveWorldCarverBase extends WorldCarver<ProbabilityConfig>
             if (rand.nextInt(4) == 0)
             {
                 float f1 = 1.0F + rand.nextFloat() * 6.0F;
-                this.addRoom(world, rand.nextLong(), height, originalX, originalZ, d0, d1, d2, f1, 0.5D, bitSet);
+                this.addRoom(chunk, rand.nextLong(), seaLevel, originalX, originalZ, d0, d1, d2, f1, 0.5D, carvingMask);
                 l += rand.nextInt(4);
             }
 
@@ -64,7 +64,7 @@ public class CaveWorldCarverBase extends WorldCarver<ProbabilityConfig>
                 float f3 = (rand.nextFloat() - 0.5F) / 4.0F;
                 float f2 = this.func_222722_a(rand);
                 int i1 = i - rand.nextInt(i / 4);
-                this.addTunnel(world, rand.nextLong(), height, originalX, originalZ, d0, d1, d2, f2, f, f3, 0, i1, 1.0D, bitSet);
+                this.addTunnel(chunk, rand.nextLong(), seaLevel, originalX, originalZ, d0, d1, d2, f2, f, f3, 0, i1, 1.0D, carvingMask);
             }
         }
         return true;
@@ -77,27 +77,27 @@ public class CaveWorldCarverBase extends WorldCarver<ProbabilityConfig>
     }
 
     @Override
-    protected boolean func_222703_a(IChunk world, BitSet bitSet, Random rand, BlockPos.MutableBlockPos mutablePos1, BlockPos.MutableBlockPos mutablePos2, BlockPos.MutableBlockPos mutablePos3, int p_222703_7_, int p_222703_8_, int p_222703_9_, int x, int z, int p_222703_12_, int y, int p_222703_14_, AtomicBoolean atomicboolean)
+    protected boolean carveBlock(IChunk chunk, BitSet carvingMask, Random rand, BlockPos.MutableBlockPos mutablePos1, BlockPos.MutableBlockPos mutablePos2, BlockPos.MutableBlockPos mutablePos3, int p_222703_7_, int p_222703_8_, int p_222703_9_, int x, int z, int p_222703_12_, int y, int p_222703_14_, AtomicBoolean atomicboolean)
     {
         int i = p_222703_12_ | p_222703_14_ << 4 | y << 8;
 
-        if (bitSet.get(i))
+        if (carvingMask.get(i))
         {
             return false;
         }
         else
         {
-            bitSet.set(i);
+            carvingMask.set(i);
             mutablePos1.setPos(x, y, z);
-            BlockState blockstate = world.getBlockState(mutablePos1);
-            BlockState blockstate1 = world.getBlockState(mutablePos2.func_189533_g(mutablePos1).move(Direction.UP));
+            BlockState blockstate = chunk.getBlockState(mutablePos1);
+            BlockState blockstate1 = chunk.getBlockState(mutablePos2.setPos(mutablePos1).move(Direction.UP));
 
             if (this.surfaceBlocks.stream().anyMatch(block -> blockstate.getBlock() == block.getBlock()))
             {
                 atomicboolean.set(true);
             }
 
-            if (!this.func_222707_a(blockstate, blockstate1))
+            if (!this.canCarveBlock(blockstate, blockstate1))
             {
                 return false;
             }
@@ -105,19 +105,19 @@ public class CaveWorldCarverBase extends WorldCarver<ProbabilityConfig>
             {
                 if (y < 11)
                 {
-                    world.setBlockState(mutablePos1, this.lava.getBlockState(), false);
+                    chunk.setBlockState(mutablePos1, this.lava.getBlockState(), false);
                 }
                 else
                 {
-                    world.setBlockState(mutablePos1, CAVE_AIR, false);
+                    chunk.setBlockState(mutablePos1, CAVE_AIR, false);
 
                     if (atomicboolean.get())
                     {
-                        mutablePos3.func_189533_g(mutablePos1).move(Direction.DOWN);
+                        mutablePos3.setPos(mutablePos1).move(Direction.DOWN);
 
-                        if (this.subSurfaceBlocks.stream().anyMatch(block -> world.getBlockState(mutablePos3).getBlock() == block.getBlock()))
+                        if (this.subSurfaceBlocks.stream().anyMatch(block -> chunk.getBlockState(mutablePos3).getBlock() == block.getBlock()))
                         {
-                            world.setBlockState(mutablePos3, world.getBiome(mutablePos1).getSurfaceBuilderConfig().getTop(), false);
+                            chunk.setBlockState(mutablePos3, chunk.getBiome(mutablePos1).getSurfaceBuilderConfig().getTop(), false);
                         }
                     }
                 }
@@ -184,6 +184,5 @@ public class CaveWorldCarverBase extends WorldCarver<ProbabilityConfig>
                 this.func_222705_a(world, seed, height, originalX, originalZ, x, y, z, d0, d1, bitSet);
             }
         }
-
     }
 }

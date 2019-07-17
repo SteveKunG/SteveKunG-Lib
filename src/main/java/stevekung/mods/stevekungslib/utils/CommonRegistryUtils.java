@@ -115,7 +115,7 @@ public class CommonRegistryUtils
 
     public <T extends MobEntity> void registerEntityPlacement(EntityType<T> entity, EntitySpawnPlacementRegistry.PlacementType placementType, Heightmap.Type heightMapType, EntitySpawnPlacementRegistry.IPlacementPredicate<T> predicate)
     {
-        EntitySpawnPlacementRegistry.func_209343_a(entity, placementType, heightMapType, predicate);
+        EntitySpawnPlacementRegistry.register(entity, placementType, heightMapType, predicate);
     }
 
     public void registerProjectileDispense(Item item, IDispenseItemBehavior projectile)
