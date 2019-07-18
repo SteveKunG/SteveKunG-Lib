@@ -7,8 +7,8 @@ import org.apache.logging.log4j.MarkerManager;
 
 public class LoggerBase
 {
-    private Logger log;
-    private Logger logDebug;
+    private final Logger log;
+    private final Logger logDebug;
     private static final Marker INFO = MarkerManager.getMarker("INFO");
     private static final Marker ERROR = MarkerManager.getMarker("ERROR");
     private static final Marker WARNING = MarkerManager.getMarker("WARNING");
