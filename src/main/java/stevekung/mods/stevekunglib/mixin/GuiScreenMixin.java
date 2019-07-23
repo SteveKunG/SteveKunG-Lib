@@ -25,7 +25,7 @@ import net.minecraft.util.text.event.HoverEvent;
 import stevekung.mods.stevekunglib.client.gui.GuiChatRegistry;
 import stevekung.mods.stevekunglib.client.gui.IEntityHoverChat;
 
-@Mixin(GuiScreen.class)
+@Mixin(value = GuiScreen.class, priority = 500)
 public abstract class GuiScreenMixin
 {
     @Shadow
