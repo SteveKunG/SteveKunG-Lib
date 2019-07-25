@@ -8,6 +8,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.minecraft.client.gui.FontRenderer;
+import stevekung.mods.stevekunglib.client.gui.GuiChatRegistry;
+import stevekung.mods.stevekunglib.client.gui.IEntityHoverChat;
 
 @Mixin(FontRenderer.class)
 public abstract class ColoredFontRendererMixin
@@ -24,6 +26,15 @@ public abstract class ColoredFontRendererMixin
 
     @Shadow
     protected abstract void setColor(float r, float g, float b, float a);
+
+    @Shadow
+    protected abstract void enableAlpha();
+
+    @Shadow
+    protected abstract void resetStyles();
+
+    @Shadow
+    protected abstract int renderString(String text, float x, float y, int color, boolean dropShadow);
 
     @Inject(method = "renderString(Ljava/lang/String;FFIZ)I", at = @At("HEAD"))
     private int renderString(String text, float x, float y, int color, boolean dropShadow, CallbackInfoReturnable info)
@@ -120,6 +131,30 @@ public abstract class ColoredFontRendererMixin
             this.setColor(1.0F, 1.0F, 1.0F, this.alpha);
         }
         return 0.0F;
+    }
+
+    @Overwrite
+    public int drawString(String text, float x, float y, int color, boolean dropShadow)
+    {
+        for (IEntityHoverChat entity : GuiChatRegistry.getEntityHoverChatList())
+        {
+            text = entity.addEntityComponent(text);
+        }
+
+        this.enableAlpha();
+        this.resetStyles();
+        int i;
+
+        if (dropShadow)
+        {
+            i = this.renderString(text, x + 1.0F, y + 1.0F, color, true);
+            i = Math.max(i, this.renderString(text, x, y, color, false));
+        }
+        else
+        {
+            i = this.renderString(text, x, y, color, false);
+        }
+        return i;
     }
 
     @Overwrite

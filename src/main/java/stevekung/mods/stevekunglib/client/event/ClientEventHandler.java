@@ -2,9 +2,11 @@ package stevekung.mods.stevekunglib.client.event;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMainMenu;
+import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
+import stevekung.mods.stevekunglib.client.gui.GuiChatRegistry;
 
 public class ClientEventHandler
 {
@@ -36,5 +38,11 @@ public class ClientEventHandler
                 ClientEventHandler.ticksPaused++;
             }
         }
+    }
+
+    @SubscribeEvent
+    public void onActionPerformed(GuiScreenEvent.ActionPerformedEvent.Post event)
+    {
+        GuiChatRegistry.getGuiChatList().forEach(gui -> gui.actionPerformed(event.getButton()));
     }
 }
