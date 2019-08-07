@@ -6,9 +6,9 @@ import net.minecraft.client.gui.screen.MainMenuScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.SleepInMultiplayerScreen;
 import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import stevekung.mods.stevekungslib.client.gui.ChatScreenBase;
 import stevekung.mods.stevekungslib.client.gui.SleepInMultiplayerScreenBase;
 import stevekung.mods.stevekungslib.config.SteveKunGsLibConfig;
@@ -26,7 +26,7 @@ public class ClientEventHandler
     }
 
     @SubscribeEvent
-    public void onClientTick(ClientTickEvent event)
+    public void onClientTick(TickEvent.ClientTickEvent event)
     {
         if (this.mc.currentScreen instanceof MainMenuScreen)
         {
