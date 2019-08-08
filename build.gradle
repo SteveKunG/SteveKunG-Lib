@@ -73,6 +73,7 @@ jar {
                    "FMLCorePluginContainsFMLMod": "true",
                    "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
                    "MixinConfigs": "mixins.stevekung's_lib.json",
+                   "FMLCorePlugin": "stevekung.mods.stevekunglib.core.SteveKunGLibPlugin",
                    "ForceLoadAsMod": "true"
         )
     }
@@ -114,6 +115,7 @@ task deobfJar(type: Jar) {
                    "FMLCorePluginContainsFMLMod": "true",
                    "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
                    "MixinConfigs": "mixins.stevekung's_lib.json",
+                   "FMLCorePlugin": "stevekung.mods.stevekunglib.core.SteveKunGLibPlugin",
                    "ForceLoadAsMod": "true"
         )
     }
