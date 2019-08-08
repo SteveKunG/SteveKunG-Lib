@@ -15,7 +15,7 @@ import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
 import stevekung.mods.stevekunglib.utils.EventHooksCommon;
 
-@Mixin(WorldServer.class)
+@Mixin(value = WorldServer.class, priority = 10000)
 public abstract class WorldServerMixin
 {
     private final WorldServer that = (WorldServer) (Object) this;
