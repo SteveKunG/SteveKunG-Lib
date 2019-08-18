@@ -1,1 +1,0 @@
-xcopy /s /Y "M:\Modding\SteveKunG-Lib\1.12.2\build\libs\SteveKunG's-Lib-1.0.6-deobf.jar" "M:\Modding\YouTubeChat\1.12.2\library\SteveKunG's-Lib.jar*"

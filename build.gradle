@@ -6,17 +6,15 @@ buildscript {
     }
     dependencies {
         classpath "net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT"
-        classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.3.0"
+        classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
         classpath "org.spongepowered:mixingradle:0.6-SNAPSHOT"
     }
 }
 
 plugins {
-    id "com.matthewprenger.cursegradle" version "1.3.0"
+    id "com.matthewprenger.cursegradle" version "1.4.0"
 }
 
-def api = new groovy.json.JsonSlurper().parseText(file("${api_token_path}").text)
-def keystore = new groovy.json.JsonSlurper().parseText(file("${keystore_path}").text)
 def mcVersion = project.mc_version
 
 apply plugin: "net.minecraftforge.gradle.forge"
@@ -33,7 +31,7 @@ minecraft {
     mappings = "${mcp_mapping}"
     makeObfSourceJar = false
 
-    replace "@FINGERPRINT@", keystore.sha1
+    replace "@FINGERPRINT@", project.sha1
     replaceIn "SteveKunGLib.java"
 }
 
@@ -65,9 +63,8 @@ sourceSets {
 
 jar {
     from(configurations.embed.collect { it.isDirectory() ? it : zipTree(it) }) {
-        exclude "LICENSE.txt", "META-INF/MANIFSET.MF", "META-INF/maven/**", "META-INF/*.RSA", "META-INF/*.SF"
+        exclude "LICENSE.txt", "META-INF/*.txt", "META-INF/MANIFSET.MF", "META-INF/maven/**", "META-INF/*.RSA", "META-INF/*.SF"
     }
-
     manifest {
         attributes("FMLAT": "stevekunglib_at.cfg",
                    "FMLCorePluginContainsFMLMod": "true",
@@ -80,36 +77,17 @@ jar {
     baseName = "SteveKunG's-Lib-" + mcVersion
 }
 
-curseforge {
-    apiKey = api.stevekung_lib
-    project {
-        id = "296019"
-        changelog = "Change Log"
-        changelogType = "markdown"
-        releaseType = "release"
-        addGameVersion mcVersion
-
-        mainArtifact(file("build/libs/SteveKunG's-Lib-" + mcVersion + "-" + version + ".jar")) {
-            displayName = "SteveKunG's-Lib-" + mcVersion + "-" + version
-        }
-    }
-}
-
-task signJar(type: SignJar, dependsOn: reobfJar) {
-    keyStore = keystore.keystore_path
-    alias = keystore.alias
-    storePass = keystore.keystore_pass
-    keyPass = keystore.keystore_pass
-    inputFile = jar.archivePath
-    outputFile = jar.archivePath
+task sourcesJar(type: Jar) {
+    from sourceSets.main.output
+	baseName = "SteveKunG's-Lib-" + mcVersion
+    classifier = "sources"
 }
 
 task deobfJar(type: Jar) {
     from sourceSets.main.output
     from(configurations.embed.collect { it.isDirectory() ? it : zipTree(it) }) {
-        exclude "LICENSE.txt", "META-INF/MANIFSET.MF", "META-INF/maven/**", "META-INF/*.RSA", "META-INF/*.SF"
+        exclude "LICENSE.txt", "META-INF/*.txt", "META-INF/MANIFSET.MF", "META-INF/maven/**", "META-INF/*.RSA", "META-INF/*.SF"
     }
-    classifier = "deobf"
     manifest {
         attributes("FMLAT": "stevekunglib_at.cfg",
                    "FMLCorePluginContainsFMLMod": "true",
@@ -119,6 +97,39 @@ task deobfJar(type: Jar) {
                    "ForceLoadAsMod": "true"
         )
     }
+    baseName = "SteveKunG's-Lib-" + mcVersion
+    classifier = "deobf"
+}
+
+artifacts {
+    archives sourcesJar
+    archives deobfJar
+}
+
+curseforge {
+    apiKey = project.stevekungs_lib_api
+    project {
+        id = "296019"
+        changelog = "Change Log"
+        changelogType = "text"
+        releaseType = "release"
+        addGameVersion mcVersion
+
+        mainArtifact(jar) {
+            displayName = "SteveKunG's-Lib-" + mcVersion + "-" + version
+        }
+        addArtifact sourcesJar
+        addArtifact deobfJar
+    }
+}
+
+task signJar(type: SignJar, dependsOn: reobfJar) {
+    keyStore = project.keystore_path
+    alias = project.alias
+    storePass = project.keystore_pass
+    keyPass = project.keystore_pass
+    inputFile = jar.archivePath
+    outputFile = jar.archivePath
 }
 
 build.dependsOn signJar
