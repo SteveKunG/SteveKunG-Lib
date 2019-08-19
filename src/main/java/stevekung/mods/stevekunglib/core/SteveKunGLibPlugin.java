@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
+import org.spongepowered.asm.launch.MixinBootstrap;
 import org.spongepowered.asm.mixin.Mixins;
 
 import net.minecraftforge.common.ForgeVersion;
@@ -17,6 +18,7 @@ public class SteveKunGLibPlugin implements IFMLLoadingPlugin
     static
     {
         LoggerSL.info("Initializing SteveKunG's Lib plugin!");
+        MixinBootstrap.init();
         Mixins.addConfiguration("mixins.stevekung's_lib.gui_screen.json");
     }
 
