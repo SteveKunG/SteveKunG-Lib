@@ -30,9 +30,8 @@ public class SteveKunGLib
     private void setup(FMLClientSetupEvent event)
     {
         SteveKunGLib.LOGGER = new LoggerBase("SteveKunG's Lib", SteveKunGsLibConfig.GENERAL.enableDebugLog.get());
-        CommonUtils.registerEventHandler(this);
 
-        if (ClientUtils.isClient())
+        if (ClientUtils.isEffectiveClient())
         {
             CommonUtils.registerEventHandler(new ClientEventHandler());
         }

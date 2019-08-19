@@ -10,6 +10,7 @@ public class SteveKunGsLibConfig
     public static class General
     {
         public final ForgeConfigSpec.BooleanValue enableDebugLog;
+        @Deprecated
         public final ForgeConfigSpec.BooleanValue replaceGuiIngame;
 
         General(ForgeConfigSpec.Builder builder)

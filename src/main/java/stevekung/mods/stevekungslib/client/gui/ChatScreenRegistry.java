@@ -5,26 +5,26 @@ import java.util.List;
 
 public class ChatScreenRegistry
 {
-    private static final List<IChatScreen> guiChat = new ArrayList<>();
-    private static final List<IEntityHoverChat> entityHoverChat = new ArrayList<>();
+    private static final List<IChatScreen> CHAT = new ArrayList<>();
+    private static final List<IEntityHoverChat> ENTITY_CHAT = new ArrayList<>();
 
     public static void register(IChatScreen chat)
     {
-        ChatScreenRegistry.guiChat.add(chat);
+        ChatScreenRegistry.CHAT.add(chat);
 
         if (chat instanceof IEntityHoverChat)
         {
-            ChatScreenRegistry.entityHoverChat.add((IEntityHoverChat)chat);
+            ChatScreenRegistry.ENTITY_CHAT.add((IEntityHoverChat)chat);
         }
     }
 
-    static List<IChatScreen> getGuiChatList()
+    public static List<IChatScreen> getChatList()
     {
-        return ChatScreenRegistry.guiChat;
+        return ChatScreenRegistry.CHAT;
     }
 
-    static List<IEntityHoverChat> getEntityHoverChatList()
+    public static List<IEntityHoverChat> getEntityChatList()
     {
-        return ChatScreenRegistry.entityHoverChat;
+        return ChatScreenRegistry.ENTITY_CHAT;
     }
 }

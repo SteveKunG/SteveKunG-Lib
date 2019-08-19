@@ -50,6 +50,7 @@ public class ClientEventHandler
     }
 
     @SubscribeEvent
+    @Deprecated
     public void onPressKey(InputEvent.KeyInputEvent event)
     {
         if (SteveKunGsLibConfig.GENERAL.replaceGuiIngame.get() && this.mc.currentScreen == null && this.mc.gameSettings.keyBindCommand.isPressed())
@@ -59,6 +60,7 @@ public class ClientEventHandler
         }
     }
 
+    @Deprecated
     private static void replaceGuiChat(Minecraft mc, Screen screen)
     {
         if (screen != null)

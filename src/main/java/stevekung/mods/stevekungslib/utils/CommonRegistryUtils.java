@@ -3,7 +3,9 @@ package stevekung.mods.stevekungslib.utils;
 import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
+import com.mojang.datafixers.DataFixUtils;
+import com.mojang.datafixers.types.Type;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.DispenserBlock;
@@ -16,7 +18,10 @@ import net.minecraft.potion.Effect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SharedConstants;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.datafix.DataFixesManager;
+import net.minecraft.util.datafix.TypeReferences;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.Heightmap;
@@ -40,7 +45,7 @@ public class CommonRegistryUtils
         this.registerBlock(block, name, group, true);
     }
 
-    public void registerBlock(Block block, String name, @Nullable ItemGroup group, boolean useBlockItem)
+    public void registerBlock(Block block, String name, ItemGroup group, boolean useBlockItem)
     {
         ForgeRegistries.BLOCKS.register(block.setRegistryName(this.resourcePath + ":" + name));
 
@@ -74,7 +79,8 @@ public class CommonRegistryUtils
 
     public <T extends TileEntity> void registerTileEntity(Supplier<? extends T> factory, String name)
     {
-        ForgeRegistries.TILE_ENTITIES.register(TileEntityType.Builder.create(factory).build(null).setRegistryName(this.resourcePath + ":" + name));
+        Type type = DataFixesManager.getDataFixer().getSchema(DataFixUtils.makeKey(SharedConstants.getVersion().getWorldVersion())).getChoiceType(TypeReferences.BLOCK_ENTITY, name);
+        ForgeRegistries.TILE_ENTITIES.register(TileEntityType.Builder.create(factory).build(type).setRegistryName(this.resourcePath + ":" + name));
     }
 
     public void registerPotion(Effect potion, String name)
@@ -88,7 +94,7 @@ public class CommonRegistryUtils
     }
 
     @SuppressWarnings("deprecation")
-    public void registerBiomeType(Biome biome, @Nonnull BiomeDictionary.Type... biomeType)
+    public void registerBiomeType(Biome biome, BiomeDictionary.Type... biomeType)
     {
         BiomeDictionary.addTypes(biome, biomeType);
 

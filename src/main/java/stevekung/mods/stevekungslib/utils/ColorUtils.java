@@ -2,7 +2,8 @@ package stevekung.mods.stevekungslib.utils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.gui.fonts.FontResourceManager;
+import net.minecraft.resources.IReloadableResourceManager;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import stevekung.mods.stevekungslib.client.event.ClientEventHandler;
@@ -11,39 +12,22 @@ import stevekung.mods.stevekungslib.utils.client.ClientUtils;
 
 public class ColorUtils
 {
-    public static FontRenderer coloredFontRenderer;
-    public static FontRenderer coloredFontRendererUnicode;
-
-    //private static ColoredFontResourceManager coloredFontResourceMananger;
-    //private static ColoredFontResourceManager coloredFontResourceManangerU;
-
-    public static final ResourceLocation DEFAULT_FONT_RENDERER_NAME = new ResourceLocation(SteveKunGLib.MOD_ID, "default");
+    public static FontRenderer unicodeFontRenderer;
+    public static FontResourceManager unicodeFontResourceMananger;
 
     @OnlyIn(Dist.CLIENT)
     public static void init()
     {
         Minecraft mc = Minecraft.getInstance();
 
-        ColorUtils.coloredFontRenderer = mc.fontRenderer;
-        ColorUtils.coloredFontRendererUnicode = mc.fontRenderer;
-
-        //((IReloadableResourceManager)mc.getResourceManager()).func_219534_a(ColorUtils.coloredFontResourceMananger.getReloadListener());
-
-        //TODO Fix resource loading
-        /*ColorUtils.coloredFontResourceMananger = new ColoredFontResourceManager(mc.getTextureManager(), mc.getForceUnicodeFont());
-        ((IReloadableResourceManager)mc.getResourceManager()).addReloadListener(ColorUtils.coloredFontResourceMananger);
-        ColorUtils.coloredFontRenderer = ColorUtils.coloredFontResourceMananger.getColoredFontRenderer(ColorUtils.DEFAULT_FONT_RENDERER_NAME);
-
-        ColorUtils.coloredFontResourceManangerU = new ColoredFontResourceManager(mc.getTextureManager(), true);
-        ((IReloadableResourceManager)mc.getResourceManager()).addReloadListener(ColorUtils.coloredFontResourceManangerU);
-        ColorUtils.coloredFontRendererUnicode = ColorUtils.coloredFontResourceManangerU.getColoredFontRenderer(ColorUtils.DEFAULT_FONT_RENDERER_NAME);
-        ColorUtils.coloredFontResourceManangerU.setForceUnicodeFont(true);
+        ColorUtils.unicodeFontResourceMananger = new FontResourceManager(mc.textureManager, true);
+        ((IReloadableResourceManager)mc.getResourceManager()).addReloadListener(ColorUtils.unicodeFontResourceMananger.func_216884_a());
+        ColorUtils.unicodeFontRenderer = ColorUtils.unicodeFontResourceMananger.getFontRenderer(Minecraft.DEFAULT_FONT_RENDERER_NAME);
 
         if (mc.gameSettings.language != null)
         {
-            ColorUtils.coloredFontRenderer.setBidiFlag(mc.getLanguageManager().isCurrentLanguageBidirectional());
-            ColorUtils.coloredFontRendererUnicode.setBidiFlag(mc.getLanguageManager().isCurrentLanguageBidirectional());
-        }*/
+            ColorUtils.unicodeFontRenderer.setBidiFlag(mc.getLanguageManager().isCurrentLanguageBidirectional());
+        }
     }
 
     public static int rgbToDecimal(int r, int g, int b)

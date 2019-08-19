@@ -7,6 +7,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import stevekung.mods.stevekungslib.utils.LangUtils;
 
+@Deprecated
 @OnlyIn(Dist.CLIENT)
 public class SleepInMultiplayerScreenBase extends ChatScreenBase
 {
