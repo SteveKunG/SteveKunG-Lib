@@ -1,5 +1,7 @@
 package com.stevekung.stevekungslib.utils;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
 import net.minecraft.util.Util;
@@ -12,6 +14,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 public class CommonUtils
 {
+    private static final ExecutorService POOL = Executors.newCachedThreadPool();
+
     public static void registerEventHandler(Object event)
     {
         MinecraftForge.EVENT_BUS.register(event);
@@ -53,5 +57,10 @@ public class CommonUtils
     public static void openLink(String url)
     {
         Util.getOSType().openURI(url);
+    }
+
+    public static void execute(Runnable runnable)
+    {
+        CommonUtils.POOL.execute(runnable);
     }
 }
