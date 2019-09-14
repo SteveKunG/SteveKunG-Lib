@@ -60,7 +60,6 @@ dependencies {
 }
 
 repositories {
-    // Curse Gradle
     maven {
         url "https://plugins.gradle.org/m2/"
     }
