@@ -45,11 +45,9 @@ dependencies {
 }
 
 repositories {
-    // Curse Gradle
     maven {
         url "https://plugins.gradle.org/m2/"
     }
-    // Mixin
     maven {
         url = "http://repo.spongepowered.org/maven/"
     }
