@@ -18,9 +18,9 @@ import net.minecraft.world.gen.feature.ProbabilityConfig;
 
 public class CaveWorldCarverBase extends WorldCarver<ProbabilityConfig>
 {
-    private Set<Block> surfaceBlocks;
-    private Set<Block> subSurfaceBlocks;
-    private IFluidState lava;
+    private final Set<Block> surfaceBlocks;
+    private final Set<Block> subSurfaceBlocks;
+    private final IFluidState lava;
 
     public CaveWorldCarverBase(Set<Block> terrainBlocks, Set<Fluid> terrainFluids, Set<Block> surfaceBlocks, Set<Block> subSurfaceBlocks, IFluidState lava)
     {
@@ -62,9 +62,9 @@ public class CaveWorldCarverBase extends WorldCarver<ProbabilityConfig>
             {
                 float f = rand.nextFloat() * ((float)Math.PI * 2F);
                 float f3 = (rand.nextFloat() - 0.5F) / 4.0F;
-                float f2 = this.func_222722_a(rand);
+                float f2 = this.generateCaveRadius(rand);
                 int i1 = i - rand.nextInt(i / 4);
-                this.addTunnel(chunk, rand.nextLong(), seaLevel, originalX, originalZ, d0, d1, d2, f2, f, f3, 0, i1, 1.0D, carvingMask);
+                this.carveTunnel(chunk, rand.nextLong(), seaLevel, originalX, originalZ, d0, d1, d2, f2, f, f3, 0, i1, 1.0D, carvingMask);
             }
         }
         return true;
@@ -126,7 +126,7 @@ public class CaveWorldCarverBase extends WorldCarver<ProbabilityConfig>
         }
     }
 
-    private float func_222722_a(Random rand)
+    private float generateCaveRadius(Random rand)
     {
         float f = rand.nextFloat() * 2.0F + rand.nextFloat();
 
@@ -144,7 +144,7 @@ public class CaveWorldCarverBase extends WorldCarver<ProbabilityConfig>
         this.func_222705_a(world, seed, height, originalX, originalZ, x + 1.0D, y, z, d0, d1, bitSet);
     }
 
-    private void addTunnel(IChunk world, long seed, int height, int originalX, int originalZ, double x, double y, double z, float p_222727_13_, float p_222727_14_, float p_222727_15_, int p_222727_16_, int p_222727_17_, double p_222727_18_, BitSet bitSet)
+    private void carveTunnel(IChunk chunk, long seed, int height, int originalX, int originalZ, double x, double y, double z, float radius, float p_222727_14_, float p_222727_15_, int p_222727_16_, int p_222727_17_, double p_222727_18_, BitSet bitSet)
     {
         Random rand = new Random(seed);
         int i = rand.nextInt(p_222727_17_ / 2) + p_222727_17_ / 4;
@@ -154,7 +154,7 @@ public class CaveWorldCarverBase extends WorldCarver<ProbabilityConfig>
 
         for (int j = 0; j < p_222727_17_; ++j)
         {
-            double d0 = 1.5D + MathHelper.sin((float)Math.PI * j / p_222727_17_) * p_222727_13_;
+            double d0 = 1.5D + MathHelper.sin((float)Math.PI * j / p_222727_17_) * radius;
             double d1 = d0 * p_222727_18_;
             float f2 = MathHelper.cos(p_222727_15_);
             x += MathHelper.cos(p_222727_14_) * f2;
@@ -168,20 +168,20 @@ public class CaveWorldCarverBase extends WorldCarver<ProbabilityConfig>
             f1 = f1 + (rand.nextFloat() - rand.nextFloat()) * rand.nextFloat() * 2.0F;
             f = f + (rand.nextFloat() - rand.nextFloat()) * rand.nextFloat() * 4.0F;
 
-            if (j == i && p_222727_13_ > 1.0F)
+            if (j == i && radius > 1.0F)
             {
-                this.addTunnel(world, rand.nextLong(), height, originalX, originalZ, x, y, z, rand.nextFloat() * 0.5F + 0.5F, p_222727_14_ - (float)Math.PI / 2F, p_222727_15_ / 3.0F, j, p_222727_17_, 1.0D, bitSet);
-                this.addTunnel(world, rand.nextLong(), height, originalX, originalZ, x, y, z, rand.nextFloat() * 0.5F + 0.5F, p_222727_14_ + (float)Math.PI / 2F, p_222727_15_ / 3.0F, j, p_222727_17_, 1.0D, bitSet);
+                this.carveTunnel(chunk, rand.nextLong(), height, originalX, originalZ, x, y, z, rand.nextFloat() * 0.5F + 0.5F, p_222727_14_ - (float)Math.PI / 2F, p_222727_15_ / 3.0F, j, p_222727_17_, 1.0D, bitSet);
+                this.carveTunnel(chunk, rand.nextLong(), height, originalX, originalZ, x, y, z, rand.nextFloat() * 0.5F + 0.5F, p_222727_14_ + (float)Math.PI / 2F, p_222727_15_ / 3.0F, j, p_222727_17_, 1.0D, bitSet);
                 return;
             }
 
             if (rand.nextInt(4) != 0)
             {
-                if (!this.func_222702_a(originalX, originalZ, x, z, j, p_222727_17_, p_222727_13_))
+                if (!this.func_222702_a(originalX, originalZ, x, z, j, p_222727_17_, radius))
                 {
                     return;
                 }
-                this.func_222705_a(world, seed, height, originalX, originalZ, x, y, z, d0, d1, bitSet);
+                this.func_222705_a(chunk, seed, height, originalX, originalZ, x, y, z, d0, d1, bitSet);
             }
         }
     }

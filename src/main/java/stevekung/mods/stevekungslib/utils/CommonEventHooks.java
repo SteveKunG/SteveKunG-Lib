@@ -5,7 +5,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import stevekung.mods.stevekungslib.utils.event.WeatherTickEvent;
 
-public class EventHooksCommon
+public class CommonEventHooks
 {
     public static void onWeatherTick(World world, int chunkX, int chunkZ, BlockPos strikePos)
     {

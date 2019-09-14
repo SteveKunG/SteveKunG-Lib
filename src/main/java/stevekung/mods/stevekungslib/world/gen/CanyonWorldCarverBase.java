@@ -19,9 +19,9 @@ import net.minecraft.world.gen.feature.ProbabilityConfig;
 public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
 {
     private final float[] field_202536_i = new float[1024];
-    private Set<Block> surfaceBlocks;
-    private Set<Block> subSurfaceBlocks;
-    private IFluidState lava;
+    private final Set<Block> surfaceBlocks;
+    private final Set<Block> subSurfaceBlocks;
+    private final IFluidState lava;
 
     public CanyonWorldCarverBase(Set<Block> terrainBlocks, Set<Fluid> terrainFluids, Set<Block> surfaceBlocks, Set<Block> subSurfaceBlocks, IFluidState lava)
     {
@@ -50,7 +50,7 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
         float f1 = (rand.nextFloat() - 0.5F) * 2.0F / 8.0F;
         float f2 = (rand.nextFloat() * 2.0F + rand.nextFloat()) * 2.0F;
         int j = i - rand.nextInt(i / 4);
-        this.calculateCaveShape(chunk, rand.nextLong(), seaLevel, originalX, originalZ, d0, d1, d2, f2, f, f1, 0, j, 3.0D, carvingMask);
+        this.carveTunnel(chunk, rand.nextLong(), seaLevel, originalX, originalZ, d0, d1, d2, f2, f, f1, 0, j, 3.0D, carvingMask);
         return true;
     }
 
@@ -110,7 +110,7 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
         }
     }
 
-    private void calculateCaveShape(IChunk chunk, long seed, int seaLevel, int originalX, int originalZ, double x, double y, double z, float p_222729_13_, float p_222729_14_, float p_222729_15_, int p_222729_16_, int p_222729_17_, double p_222729_18_, BitSet bitSet)
+    private void carveTunnel(IChunk chunk, long seed, int seaLevel, int originalX, int originalZ, double x, double y, double z, float radius, float p_222729_14_, float p_222729_15_, int p_222729_16_, int p_222729_17_, double p_222729_18_, BitSet bitSet)
     {
         Random rand = new Random(seed);
         float f = 1.0F;
@@ -129,7 +129,7 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
 
         for (int j = p_222729_16_; j < p_222729_17_; ++j)
         {
-            double d0 = 1.5D + MathHelper.sin(j * (float)Math.PI / p_222729_17_) * p_222729_13_;
+            double d0 = 1.5D + MathHelper.sin(j * (float)Math.PI / p_222729_17_) * radius;
             double d1 = d0 * p_222729_18_;
             d0 = d0 * (rand.nextFloat() * 0.25D + 0.75D);
             d1 = d1 * (rand.nextFloat() * 0.25D + 0.75D);
@@ -148,7 +148,7 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
 
             if (rand.nextInt(4) != 0)
             {
-                if (!this.func_222702_a(originalX, originalZ, x, z, j, p_222729_17_, p_222729_13_))
+                if (!this.func_222702_a(originalX, originalZ, x, z, j, p_222729_17_, radius))
                 {
                     return;
                 }

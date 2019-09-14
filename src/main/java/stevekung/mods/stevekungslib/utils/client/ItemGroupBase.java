@@ -11,7 +11,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class ItemGroupBase extends ItemGroup
 {
     private ItemStack itemStack;
-    private Comparator<ItemStack> tabSorter;
+    private Comparator<ItemStack> sorter;
 
     public ItemGroupBase(String name)
     {
@@ -31,11 +31,11 @@ public class ItemGroupBase extends ItemGroup
     {
         super.fill(list);
 
-        if (this.tabSorter != null)
+        if (this.sorter != null)
         {
             try
             {
-                list.sort(this.tabSorter);
+                list.sort(this.sorter);
             }
             catch (Exception e)
             {
@@ -46,7 +46,7 @@ public class ItemGroupBase extends ItemGroup
 
     public void setTabSorter(Comparator<ItemStack> tabSorter)
     {
-        this.tabSorter = tabSorter;
+        this.sorter = tabSorter;
     }
 
     public void setDisplayItemStack(ItemStack itemStack)

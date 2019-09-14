@@ -1,9 +1,7 @@
 package stevekung.mods.stevekungslib.utils;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.fonts.FontResourceManager;
-import net.minecraft.resources.IReloadableResourceManager;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import stevekung.mods.stevekungslib.client.event.ClientEventHandler;
@@ -18,7 +16,7 @@ public class ColorUtils
     @OnlyIn(Dist.CLIENT)
     public static void init()
     {
-        Minecraft mc = Minecraft.getInstance();
+        /*Minecraft mc = Minecraft.getInstance();
 
         ColorUtils.unicodeFontResourceMananger = new FontResourceManager(mc.textureManager, true);
         ((IReloadableResourceManager)mc.getResourceManager()).addReloadListener(ColorUtils.unicodeFontResourceMananger.func_216884_a());
@@ -27,7 +25,7 @@ public class ColorUtils
         if (mc.gameSettings.language != null)
         {
             ColorUtils.unicodeFontRenderer.setBidiFlag(mc.getLanguageManager().isCurrentLanguageBidirectional());
-        }
+        }*/
     }
 
     public static int rgbToDecimal(int r, int g, int b)
@@ -35,14 +33,19 @@ public class ColorUtils
         return b + 256 * g + 65536 * r;
     }
 
+    public static int hexToDecimal(String color)
+    {
+        return ColorUtils.rgbToDecimal(Integer.valueOf(color.substring(1, 3), 16), Integer.valueOf(color.substring(3, 5), 16), Integer.valueOf(color.substring(5, 7), 16));
+    }
+
+    public static RGB hexToRGB(String color)
+    {
+        return new RGB(Integer.valueOf(color.substring(1, 3), 16), Integer.valueOf(color.substring(3, 5), 16), Integer.valueOf(color.substring(5, 7), 16), 255);
+    }
+
     public static float[] rgbToFloatArray(int r, int g, int b)
     {
         return new float[] { r / 255.0F, g / 255.0F, b / 255.0F };
-    }
-
-    public static int hexToRgb(String color)
-    {
-        return ColorUtils.rgbToDecimal(Integer.valueOf(color.substring(1, 3), 16), Integer.valueOf(color.substring(3, 5), 16), Integer.valueOf(color.substring(5, 7), 16));
     }
 
     public static int to32BitColor(int a, int r, int g, int b)
@@ -58,12 +61,12 @@ public class ColorUtils
         return ColorUtils.stringToRGB(color, false, null);
     }
 
-    public static RGB stringToFullRGB(String color)
+    public static RGB stringToRGBA(String color)
     {
-        return ColorUtils.stringToFullRGB(color, false, null);
+        return ColorUtils.stringToRGBA(color, false, null);
     }
 
-    public static RGB intToRGB(int red, int green, int blue, int alpha)
+    public static RGB colorToRGB(int red, int green, int blue, int alpha)
     {
         return new RGB(red, green, blue, alpha);
     }
@@ -83,14 +86,14 @@ public class ColorUtils
             if (printException)
             {
                 SteveKunGLib.LOGGER.error("Invalid RGB Color format at option {}!", optionName);
-                ClientUtils.printClientMessage("Invalid RGB Color format at option " + optionName + "!", JsonUtils.red());
+                ClientUtils.printClientMessage("Invalid RGB Color format at option " + optionName + "!", JsonUtils.RED);
                 e.printStackTrace();
             }
             return new RGB(true);
         }
     }
 
-    public static RGB stringToFullRGB(String color, boolean printException, String optionName)
+    public static RGB stringToRGBA(String color, boolean printException, String optionName)
     {
         try
         {
@@ -106,7 +109,7 @@ public class ColorUtils
             if (printException)
             {
                 SteveKunGLib.LOGGER.error("Invalid RGB Color format at option {}!", optionName);
-                ClientUtils.printClientMessage("Invalid RGB Color format at option " + optionName + "!", JsonUtils.red());
+                ClientUtils.printClientMessage("Invalid RGB Color format at option " + optionName + "!", JsonUtils.RED);
                 e.printStackTrace();
             }
             return new RGB(true);
@@ -138,29 +141,29 @@ public class ColorUtils
             this.alpha = alpha;
         }
 
-        RGB(boolean error)
+        private RGB(boolean error)
         {
             this.error = error;
         }
 
         public int packedRed()
         {
-            return (int)(this.red * 255.0F);
+            return (int)(this.red * 255);
         }
 
         public int packedGreen()
         {
-            return (int)(this.green * 255.0F);
+            return (int)(this.green * 255);
         }
 
         public int packedBlue()
         {
-            return (int)(this.blue * 255.0F);
+            return (int)(this.blue * 255);
         }
 
         public int packedAlpha()
         {
-            return (int)(this.alpha * 255.0F);
+            return (int)(this.alpha * 255);
         }
 
         public float floatRed()

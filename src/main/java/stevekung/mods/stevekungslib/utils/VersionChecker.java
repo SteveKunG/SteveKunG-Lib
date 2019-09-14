@@ -60,14 +60,14 @@ public class VersionChecker
     {
         if (this.failed)
         {
-            player.sendMessage(JsonUtils.create("Unable to check latest version of " + this.formatText(TextFormatting.DARK_RED, this.modName) + "!, Please check your internet connection.").setStyle(JsonUtils.red().setBold(true)));
+            player.sendMessage(JsonUtils.create("Unable to check latest version of " + this.formatText(TextFormatting.DARK_RED, this.modName) + "!, Please check your internet connection.").setStyle(JsonUtils.RED.setBold(true)));
             return;
         }
         if (this.latestVersion != null)
         {
             String text = String.format("New version of %s is available %s for %s", this.formatText(TextFormatting.AQUA, this.modName), this.formatText(TextFormatting.GREEN, "v" + this.latestVersion), this.formatText(TextFormatting.BLUE, "Minecraft " + MCPVersion.getMCVersion()));
             player.sendMessage(JsonUtils.create(text));
-            player.sendMessage(JsonUtils.create("Download Link ").setStyle(JsonUtils.style().setColor(TextFormatting.YELLOW)).appendSibling(JsonUtils.create("[CLICK HERE]").setStyle(JsonUtils.style().setColor(TextFormatting.RED).setHoverEvent(JsonUtils.hover(HoverEvent.Action.SHOW_TEXT, JsonUtils.create("Click Here!").setStyle(JsonUtils.style().setColor(TextFormatting.DARK_GREEN)))).setClickEvent(JsonUtils.click(ClickEvent.Action.OPEN_URL, this.url)))));
+            player.sendMessage(JsonUtils.create("Download Link ").setStyle(JsonUtils.YELLOW).appendSibling(JsonUtils.create("[CLICK HERE]").setStyle(JsonUtils.RED.setHoverEvent(JsonUtils.hover(HoverEvent.Action.SHOW_TEXT, JsonUtils.create("Click Here!").setStyle(JsonUtils.DARK_GREEN))).setClickEvent(JsonUtils.click(ClickEvent.Action.OPEN_URL, this.url)))));
         }
     }
 

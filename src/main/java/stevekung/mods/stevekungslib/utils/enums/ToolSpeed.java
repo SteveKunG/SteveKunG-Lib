@@ -7,7 +7,7 @@ public enum ToolSpeed
 
     private final float speed;
 
-    ToolSpeed(float speed)
+    private ToolSpeed(float speed)
     {
         this.speed = speed;
     }

@@ -26,7 +26,6 @@ version = project.version
 group = "stevekung.mods.stevekungslib"
 archivesBaseName = "SteveKunG's-Lib"
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = 1.8
-compileJava.options.encoding = "UTF-8"
 
 minecraft {
     mappings channel: "snapshot", version: "${mcp_mapping}"

@@ -7,7 +7,6 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -43,17 +42,12 @@ public class CommonUtils
         ModLoadingContext.get().registerConfig(type, builder.build());
     }
 
-    public static void registerGuiHandler(Object obj, IGuiHandler handler)
-    {
-        //NetworkRegistry.INSTANCE.registerGuiHandler(obj, handler);TODO
-    }
-
     public static String ticksToElapsedTime(int ticks)
     {
-        int i = ticks / 20;
-        int j = i / 60;
-        i = i % 60;
-        return i < 10 ? j + ":0" + i : j + ":" + i;
+        int seconds = ticks / 20;
+        int minutes = seconds / 60;
+        seconds = seconds % 60;
+        return seconds < 10 ? minutes + ":0" + seconds : minutes + ":" + seconds;
     }
 
     public static void openLink(String url)

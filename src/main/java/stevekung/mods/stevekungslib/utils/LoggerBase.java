@@ -13,7 +13,6 @@ public class LoggerBase
     private static final Marker ERROR = MarkerManager.getMarker("ERROR");
     private static final Marker WARNING = MarkerManager.getMarker("WARNING");
     private static final Marker DEBUG = MarkerManager.getMarker("DEBUG");
-
     private final String modName;
     private final boolean debug;
 

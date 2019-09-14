@@ -10,10 +10,8 @@ public class SteveKunGsLibConfig
     public static class General
     {
         public final ForgeConfigSpec.BooleanValue enableDebugLog;
-        @Deprecated
-        public final ForgeConfigSpec.BooleanValue replaceGuiIngame;
 
-        General(ForgeConfigSpec.Builder builder)
+        private General(ForgeConfigSpec.Builder builder)
         {
             builder.comment("General settings")
             .push("general");
@@ -22,13 +20,6 @@ public class SteveKunGsLibConfig
                     .comment("Display debug log for easy bug finding!")
                     .translation("stevekungs_lib.configgui.debug_log")
                     .define("enableDebugLog", true);
-
-            this.replaceGuiIngame = builder
-                    .comment("Replace current Chat GUI and make functionality for GuiChatRegistry works.")
-                    .translation("stevekungs_lib.configgui.replace_gui_chat")
-                    .worldRestart() //TODO MC Restart
-                    .define("replaceGuiIngame", false);
-
             builder.pop();
         }
     }

@@ -8,11 +8,11 @@ public enum EntityTrackerType
     ARROW(64, 20, true),
     FISHING_HOOK(64, 5, true);
 
-    private int trackingRange;
-    private int updateFrequency;
-    private boolean sendsVelocityUpdates;
+    private final int trackingRange;
+    private final int updateFrequency;
+    private final boolean sendsVelocityUpdates;
 
-    EntityTrackerType(int trackingRange, int updateFrequency, boolean sendsVelocityUpdates)
+    private EntityTrackerType(int trackingRange, int updateFrequency, boolean sendsVelocityUpdates)
     {
         this.trackingRange = trackingRange;
         this.updateFrequency = updateFrequency;

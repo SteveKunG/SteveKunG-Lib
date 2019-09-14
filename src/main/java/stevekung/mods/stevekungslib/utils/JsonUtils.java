@@ -7,19 +7,40 @@ import com.google.gson.*;
 import com.google.gson.internal.Streams;
 import com.google.gson.stream.JsonWriter;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
+import stevekung.mods.stevekungslib.client.event.ClientEventHandler;
+import stevekung.mods.stevekungslib.utils.client.ClientUtils;
 
 public class JsonUtils
 {
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+    private static final Style STYLE = new Style();
+    public static final Style BLACK = JsonUtils.STYLE.setColor(TextFormatting.BLACK);
+    public static final Style DARK_BLUE = JsonUtils.STYLE.setColor(TextFormatting.DARK_BLUE);
+    public static final Style DARK_GREEN = JsonUtils.STYLE.setColor(TextFormatting.DARK_GREEN);
+    public static final Style DARK_AQUA = JsonUtils.STYLE.setColor(TextFormatting.DARK_AQUA);
+    public static final Style DARK_RED = JsonUtils.STYLE.setColor(TextFormatting.DARK_RED);
+    public static final Style DARK_PURPLE = JsonUtils.STYLE.setColor(TextFormatting.DARK_PURPLE);
+    public static final Style GOLD = JsonUtils.STYLE.setColor(TextFormatting.GOLD);
+    public static final Style GRAY = JsonUtils.STYLE.setColor(TextFormatting.GRAY);
+    public static final Style DARK_GRAY = JsonUtils.STYLE.setColor(TextFormatting.DARK_GRAY);
+    public static final Style BLUE = JsonUtils.STYLE.setColor(TextFormatting.BLUE);
+    public static final Style GREEN = JsonUtils.STYLE.setColor(TextFormatting.GREEN);
+    public static final Style AQUA = JsonUtils.STYLE.setColor(TextFormatting.AQUA);
+    public static final Style RED = JsonUtils.STYLE.setColor(TextFormatting.RED);
+    public static final Style LIGHT_PURPLE = JsonUtils.STYLE.setColor(TextFormatting.LIGHT_PURPLE);
+    public static final Style YELLOW = JsonUtils.STYLE.setColor(TextFormatting.YELLOW);
+    public static final Style WHITE = JsonUtils.STYLE.setColor(TextFormatting.WHITE);
+    public static final Style RESET = JsonUtils.STYLE.setColor(TextFormatting.RESET);
+
     public static ITextComponent rawTextToJson(String raw)
     {
-        ITextComponent json = create("Cannot parse json format! ").setStyle(red());
+        ITextComponent json = create("Cannot parse json format! ").setStyle(RED);
 
         try
         {
@@ -27,9 +48,9 @@ public class JsonUtils
         }
         catch (JsonParseException e)
         {
-            if (Minecraft.getInstance().player.ticksExisted % 300 == 0)
+            if (ClientEventHandler.ticks % 300 == 0)
             {
-                Minecraft.getInstance().player.sendMessage(create(e.getMessage()).setStyle(red()));
+                ClientUtils.printClientMessage(create(e.getMessage()).setStyle(RED));
             }
         }
         return json;
@@ -40,11 +61,6 @@ public class JsonUtils
         return new StringTextComponent(text);
     }
 
-    public static Style style()
-    {
-        return new Style();
-    }
-
     public static ClickEvent click(ClickEvent.Action action, String url)
     {
         return new ClickEvent(action, url);
@@ -53,86 +69,6 @@ public class JsonUtils
     public static HoverEvent hover(HoverEvent.Action action, ITextComponent text)
     {
         return new HoverEvent(action, text);
-    }
-
-    public static Style black()
-    {
-        return style().setColor(TextFormatting.BLACK);
-    }
-
-    public static Style darkBlue()
-    {
-        return style().setColor(TextFormatting.DARK_BLUE);
-    }
-
-    public static Style darkGreen()
-    {
-        return style().setColor(TextFormatting.DARK_GREEN);
-    }
-
-    public static Style darkAqua()
-    {
-        return style().setColor(TextFormatting.DARK_AQUA);
-    }
-
-    public static Style darkRed()
-    {
-        return style().setColor(TextFormatting.DARK_RED);
-    }
-
-    public static Style darkPurple()
-    {
-        return style().setColor(TextFormatting.DARK_PURPLE);
-    }
-
-    public static Style gold()
-    {
-        return style().setColor(TextFormatting.GOLD);
-    }
-
-    public static Style gray()
-    {
-        return style().setColor(TextFormatting.GRAY);
-    }
-
-    public static Style darkGray()
-    {
-        return style().setColor(TextFormatting.DARK_GRAY);
-    }
-
-    public static Style blue()
-    {
-        return style().setColor(TextFormatting.BLUE);
-    }
-
-    public static Style green()
-    {
-        return style().setColor(TextFormatting.GREEN);
-    }
-
-    public static Style aqua()
-    {
-        return style().setColor(TextFormatting.AQUA);
-    }
-
-    public static Style red()
-    {
-        return style().setColor(TextFormatting.RED);
-    }
-
-    public static Style lightPurple()
-    {
-        return style().setColor(TextFormatting.LIGHT_PURPLE);
-    }
-
-    public static Style yellow()
-    {
-        return style().setColor(TextFormatting.YELLOW);
-    }
-
-    public static Style white()
-    {
-        return style().setColor(TextFormatting.WHITE);
     }
 
     public static void toJson(Object src, Appendable writer)
@@ -151,9 +87,8 @@ public class JsonUtils
     {
         try
         {
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
             JsonWriter jsonWriter = newJsonWriter(Streams.writerForAppendable(writer));
-            gson.toJson(src, typeOfSrc, jsonWriter);
+            GSON.toJson(src, typeOfSrc, jsonWriter);
         }
         catch (JsonIOException e)
         {
@@ -163,10 +98,9 @@ public class JsonUtils
 
     private static JsonWriter newJsonWriter(Writer writer)
     {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         JsonWriter jsonWriter = new JsonWriter(writer);
         jsonWriter.setIndent("    ");
-        jsonWriter.setSerializeNulls(gson.serializeNulls());
+        jsonWriter.setSerializeNulls(GSON.serializeNulls());
         return jsonWriter;
     }
 }

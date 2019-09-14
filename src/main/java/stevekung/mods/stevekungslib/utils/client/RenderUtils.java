@@ -7,14 +7,14 @@ import net.minecraft.util.ResourceLocation;
 
 public class RenderUtils
 {
+    public static void bindTexture(String resource)
+    {
+        RenderUtils.bindTexture(new ResourceLocation(resource));
+    }
+
     public static void bindTexture(ResourceLocation resource)
     {
         Minecraft.getInstance().getTextureManager().bindTexture(resource);
-    }
-
-    public static void bindTexture(String resource)
-    {
-        Minecraft.getInstance().getTextureManager().bindTexture(new ResourceLocation(resource));
     }
 
     public static void disableLighting()

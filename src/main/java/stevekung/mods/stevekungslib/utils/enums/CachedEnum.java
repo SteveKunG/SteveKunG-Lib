@@ -10,12 +10,12 @@ import net.minecraftforge.common.BiomeManager;
 
 public class CachedEnum
 {
-    public static final Hand[] handValues = Hand.values();
-    public static final DyeColor[] dyeColorValues = DyeColor.values();
-    public static final BiomeManager.BiomeType[] biomeValues = BiomeManager.BiomeType.values();
-    public static final Direction[] facingValues = Direction.values();
-    public static final Direction.Axis[] axisValues = Direction.Axis.values();
-    public static final TextFormatting[] textFormatValues = TextFormatting.values();
-    public static final UseAction[] actionValues = UseAction.values();
-    public static final Rotation[] rotationValues = Rotation.values();
+    public static final Hand[] HAND = Hand.values();
+    public static final DyeColor[] DYE_COLOR = DyeColor.values();
+    public static final BiomeManager.BiomeType[] BIOME_TYPE = BiomeManager.BiomeType.values();
+    public static final Direction[] DIRECTION = Direction.values();
+    public static final Direction.Axis[] DIRECTION_AXIS = Direction.Axis.values();
+    public static final TextFormatting[] TEXT_FORMATTING = TextFormatting.values();
+    public static final UseAction[] USE_ACTION = UseAction.values();
+    public static final Rotation[] ROTATION = Rotation.values();
 }

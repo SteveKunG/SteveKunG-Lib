@@ -2,8 +2,7 @@ package stevekung.mods.stevekungslib.core;
 
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import stevekung.mods.stevekungslib.client.event.ClientEventHandler;
 import stevekung.mods.stevekungslib.config.SteveKunGsLibConfig;
 import stevekung.mods.stevekungslib.utils.ColorUtils;
@@ -22,12 +21,11 @@ public class SteveKunGLib
         CommonUtils.registerConfig(ModConfig.Type.CLIENT, SteveKunGsLibConfig.GENERAL_BUILDER);
         CommonUtils.registerModEventBus(SteveKunGsLibConfig.class);
 
-        CommonUtils.addModListener(this::setup);
-        CommonUtils.addModListener(this::postInit);
+        CommonUtils.addModListener(this::phaseOne);
         CommonUtils.registerEventHandler(this);
     }
 
-    private void setup(FMLClientSetupEvent event)
+    private void phaseOne(FMLCommonSetupEvent event)
     {
         SteveKunGLib.LOGGER = new LoggerBase("SteveKunG's Lib", SteveKunGsLibConfig.GENERAL.enableDebugLog.get());
 
@@ -35,10 +33,6 @@ public class SteveKunGLib
         {
             CommonUtils.registerEventHandler(new ClientEventHandler());
         }
-    }
-
-    private void postInit(InterModProcessEvent event)
-    {
         if (ClientUtils.isClient())
         {
             ColorUtils.init();

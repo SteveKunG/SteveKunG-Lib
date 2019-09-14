@@ -2,15 +2,11 @@ package stevekung.mods.stevekungslib.utils;
 
 import java.util.function.Supplier;
 
-import javax.annotation.Nonnull;
-
-import com.mojang.datafixers.DataFixUtils;
-import com.mojang.datafixers.types.Type;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.IDispenseItemBehavior;
 import net.minecraft.entity.*;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -18,26 +14,36 @@ import net.minecraft.potion.Effect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SharedConstants;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.datafix.DataFixesManager;
-import net.minecraft.util.datafix.TypeReferences;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.storage.loot.LootTables;
 import net.minecraftforge.common.BiomeDictionary;
-import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import stevekung.mods.stevekungslib.utils.enums.EntityTrackerType;
 
 public class CommonRegistryUtils
 {
-    private final String resourcePath;
+    private static DeferredRegister<Block> BLOCKS;
+    private static DeferredRegister<Item> ITEMS;
+    private static DeferredRegister<Fluid> FLUIDS;
+    private static DeferredRegister<TileEntityType<?>> TILE_ENTITIES;
+    private static DeferredRegister<Effect> POTIONS;
+    private static DeferredRegister<Biome> BIOMES;
+    private static DeferredRegister<EntityType<?>> ENTITIES;
+    private static DeferredRegister<SoundEvent> SOUND_EVENTS;
 
-    public CommonRegistryUtils(@Nonnull String resourcePath)
+    public CommonRegistryUtils(String modId)
     {
-        this.resourcePath = resourcePath;
+        CommonRegistryUtils.BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, modId);
+        CommonRegistryUtils.ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, modId);
+        CommonRegistryUtils.FLUIDS = new DeferredRegister<>(ForgeRegistries.FLUIDS, modId);
+        CommonRegistryUtils.TILE_ENTITIES = new DeferredRegister<>(ForgeRegistries.TILE_ENTITIES, modId);
+        CommonRegistryUtils.POTIONS = new DeferredRegister<>(ForgeRegistries.POTIONS, modId);
+        CommonRegistryUtils.BIOMES = new DeferredRegister<>(ForgeRegistries.BIOMES, modId);
+        CommonRegistryUtils.ENTITIES = new DeferredRegister<>(ForgeRegistries.ENTITIES, modId);
+        CommonRegistryUtils.SOUND_EVENTS = new DeferredRegister<>(ForgeRegistries.SOUND_EVENTS, modId);
     }
 
     public void registerBlock(Block block, String name, ItemGroup group)
@@ -47,50 +53,43 @@ public class CommonRegistryUtils
 
     public void registerBlock(Block block, String name, ItemGroup group, boolean useBlockItem)
     {
-        ForgeRegistries.BLOCKS.register(block.setRegistryName(this.resourcePath + ":" + name));
+        CommonRegistryUtils.BLOCKS.register(name, () -> block);
 
         if (useBlockItem)
         {
-            BlockItem itemBlock = new BlockItem(block, new Item.Properties().group(group));
-            ForgeRegistries.ITEMS.register(itemBlock.setRegistryName(this.resourcePath + ":" + name));
+            CommonRegistryUtils.ITEMS.register(name, () -> new BlockItem(block, new Item.Properties().group(group)));
         }
     }
 
     public void registerBlock(Block block, String name, BlockItem itemBlock)
     {
-        ForgeRegistries.BLOCKS.register(block.setRegistryName(this.resourcePath + ":" + name));
-        ForgeRegistries.ITEMS.register(itemBlock.setRegistryName(this.resourcePath + ":" + name));
+        CommonRegistryUtils.BLOCKS.register(name, () -> block);
+        CommonRegistryUtils.ITEMS.register(name, () -> itemBlock);
     }
 
     public void registerItem(Item item, String name)
     {
-        ForgeRegistries.ITEMS.register(item.setRegistryName(this.resourcePath + ":" + name));
+        CommonRegistryUtils.ITEMS.register(name, () -> item);
     }
 
-    public void registerFluid(Fluid fluid)
+    public void registerFluid(Fluid fluid, String name)
     {
-        //FluidRegistry.registerFluid(fluid);TODO
+        CommonRegistryUtils.FLUIDS.register(name, () -> fluid);
     }
 
-    public void registerForgeBucket(Fluid fluid)
+    public void registerTileEntity(Supplier<TileEntity> factory, String name)
     {
-        //FluidRegistry.addBucketForFluid(fluid);TODO
+        CommonRegistryUtils.TILE_ENTITIES.register(name, () -> TileEntityType.Builder.create(factory).build(null));
     }
 
-    public <T extends TileEntity> void registerTileEntity(Supplier<? extends T> factory, String name)
+    public void registerPotion(Effect effect, String name)
     {
-        Type type = DataFixesManager.getDataFixer().getSchema(DataFixUtils.makeKey(SharedConstants.getVersion().getWorldVersion())).getChoiceType(TypeReferences.BLOCK_ENTITY, name);
-        ForgeRegistries.TILE_ENTITIES.register(TileEntityType.Builder.create(factory).build(type).setRegistryName(this.resourcePath + ":" + name));
-    }
-
-    public void registerPotion(Effect potion, String name)
-    {
-        ForgeRegistries.POTIONS.register(potion.setRegistryName(this.resourcePath + ":" + name));
+        CommonRegistryUtils.POTIONS.register(name, () -> effect);
     }
 
     public void registerBiome(Biome biome, String name)
     {
-        ForgeRegistries.BIOMES.register(biome.setRegistryName(this.resourcePath + ":" + name));
+        CommonRegistryUtils.BIOMES.register(name, () -> biome);
     }
 
     @SuppressWarnings("deprecation")
@@ -100,7 +99,7 @@ public class CommonRegistryUtils
 
         if (biome.isMutation()) // should put to mutation after registered biomes
         {
-            Biome.MUTATION_TO_BASE_ID_MAP.put(biome, Registry.BIOME.getId(ForgeRegistries.BIOMES.getValue(new ResourceLocation(this.resourcePath + ":" + biome.getParent()))));
+            Biome.MUTATION_TO_BASE_ID_MAP.put(biome, Registry.BIOME.getId(Registry.BIOME.getOrDefault(new ResourceLocation(biome.getParent()))));
         }
     }
 
@@ -116,7 +115,7 @@ public class CommonRegistryUtils
 
     public <T extends Entity> void registerEntity(EntityType.IFactory<T> entity, EntityClassification classifi, String name, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates)
     {
-        ForgeRegistries.ENTITIES.register(EntityType.Builder.create(entity, classifi).setTrackingRange(trackingRange).setUpdateInterval(updateFrequency).setShouldReceiveVelocityUpdates(sendsVelocityUpdates).build(this.resourcePath + ":" + name));
+        CommonRegistryUtils.ENTITIES.register(name, () -> EntityType.Builder.create(entity, classifi).setTrackingRange(trackingRange).setUpdateInterval(updateFrequency).setShouldReceiveVelocityUpdates(sendsVelocityUpdates).build(name));
     }
 
     public <T extends MobEntity> void registerEntityPlacement(EntityType<T> entity, EntitySpawnPlacementRegistry.PlacementType placementType, Heightmap.Type heightMapType, EntitySpawnPlacementRegistry.IPlacementPredicate<T> predicate)
@@ -131,39 +130,11 @@ public class CommonRegistryUtils
 
     public SoundEvent registerSound(String name)
     {
-        ResourceLocation resource = new ResourceLocation(this.resourcePath + ":" + name);
-        SoundEvent event = new SoundEvent(resource).setRegistryName(resource);
-        ForgeRegistries.SOUND_EVENTS.register(event);
-        return event;
+        return CommonRegistryUtils.SOUND_EVENTS.register(name, () -> new SoundEvent(new ResourceLocation(name))).get();
     }
 
     public SoundEvent registerRecord(String name)
     {
         return this.registerSound("record." + name);
-    }
-
-    public ResourceLocation registerEntityLoot(String name)
-    {
-        return LootTables.register(new ResourceLocation(this.resourcePath + ":entities/" + name));
-    }
-
-    public ResourceLocation registerEntitySubLoot(String folder, String name)
-    {
-        return LootTables.register(new ResourceLocation(this.resourcePath + ":entities/" + folder + "/" + name));
-    }
-
-    public ResourceLocation registerChestLoot(String name)
-    {
-        return LootTables.register(new ResourceLocation(this.resourcePath + ":chests/" + name));
-    }
-
-    public ResourceLocation registerGameplayLoot(String name)
-    {
-        return LootTables.register(new ResourceLocation(this.resourcePath + ":gameplay/" + name));
-    }
-
-    public ResourceLocation registerFishingLoot(String name)
-    {
-        return LootTables.register(new ResourceLocation(this.resourcePath + ":gameplay/fishing/" + name));
     }
 }
