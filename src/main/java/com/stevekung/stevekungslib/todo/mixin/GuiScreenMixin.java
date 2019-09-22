@@ -1,27 +1,34 @@
-package com.stevekung.stevekungslib.todo.mixin;
-//package stevekung.mods.stevekungslib.todo.mixin;
+//package com.stevekung.stevekungslib.todo.mixin;
 //
 //import org.spongepowered.asm.mixin.Mixin;
 //import org.spongepowered.asm.mixin.injection.At;
 //import org.spongepowered.asm.mixin.injection.Inject;
 //import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+//import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 //
-//import net.minecraft.client.gui.Gui;
-//import net.minecraft.client.gui.GuiScreen;
-//import stevekung.mods.stevekunglib.client.gui.GuiChatRegistry;
+//import com.stevekung.stevekungslib.client.gui.ChatScreenRegistry;
 //
-//@Mixin(GuiScreen.class)
-//public abstract class GuiScreenMixin extends Gui
+//import net.minecraft.client.gui.INestedGuiEventHandler;
+//
+//@Mixin(INestedGuiEventHandler.class)
+//public abstract class GuiScreenMixin
 //{
-//    @Inject(method = "mouseReleased(III)V", at = @At("RETURN"))
-//    private void mouseReleased(int mouseX, int mouseY, int mouseButton, CallbackInfo info)
+//    private final INestedGuiEventHandler that = (INestedGuiEventHandler) this;
+//
+//    @Inject(method = "mouseReleased(DDI)Z", at = @At("RETURN"))
+//    private void mouseReleased(double mouseX, double mouseY, int mouseButton, CallbackInfoReturnable info)
 //    {
-//        GuiChatRegistry.getGuiChatList().forEach(gui -> gui.mouseReleased(mouseX, mouseY, mouseButton));
+//        ChatScreenRegistry.getChatScreen().forEach(gui -> gui.mouseReleased(mouseX, mouseY, mouseButton));
+//
+//        info.setReturnValue(this.that.getEventListenerForPos(mouseX, mouseY).filter(listener ->
+//        {
+//            return listener.mouseReleased(mouseX, mouseY, mouseButton);
+//        }).isPresent());
 //    }
 //
 //    @Inject(method = "mouseClickMove(IIIJ)V", at = @At("RETURN"))
 //    private void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick, CallbackInfo info)
 //    {
-//        GuiChatRegistry.getGuiChatList().forEach(gui -> gui.mouseClickMove(mouseX, mouseY, clickedMouseButton, timeSinceLastClick));
+//        //ChatScreenRegistry.getChatScreen().forEach(gui -> gui.mouseDragged(mouseX, mouseY, clickedMouseButton, timeSinceLastClick));TODO
 //    }
 //}

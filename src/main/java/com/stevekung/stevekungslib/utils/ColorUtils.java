@@ -11,6 +11,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ColorUtils
 {
+    public static final int CUSTOM_COLOR_MARKER = 60160;
     public static FontRenderer unicodeFontRenderer;
     public static FontResourceManager unicodeFontResourceMananger;
 
@@ -126,6 +127,11 @@ public class ColorUtils
         return new RGB(red, green, blue, alpha);
     }
 
+    public static boolean isMarker(char charac)
+    {
+        return charac >= ColorUtils.CUSTOM_COLOR_MARKER && charac <= ColorUtils.CUSTOM_COLOR_MARKER + 255;
+    }
+
     public static class RGB
     {
         float red;
@@ -230,9 +236,7 @@ public class ColorUtils
 
         private String formatColored(int r, int g, int b)
         {
-            //int marker = 59136; TODO
-            //return String.format("%c%c%c", (char)(marker + (r & 255)), (char)(marker + (g & 255)), (char)(marker + (b & 255)));
-            return "";
+            return String.format("%c%c%c", (char)(ColorUtils.CUSTOM_COLOR_MARKER + (r & 255)), (char)(ColorUtils.CUSTOM_COLOR_MARKER + (g & 255)), (char)(ColorUtils.CUSTOM_COLOR_MARKER + (b & 255)));
         }
     }
 }

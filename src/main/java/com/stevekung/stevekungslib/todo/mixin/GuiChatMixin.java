@@ -1,5 +1,4 @@
-package com.stevekung.stevekungslib.todo.mixin;
-//package stevekung.mods.stevekungslib.todo.mixin;
+//package com.stevekung.stevekungslib.todo.mixin;
 //
 //import java.io.IOException;
 //

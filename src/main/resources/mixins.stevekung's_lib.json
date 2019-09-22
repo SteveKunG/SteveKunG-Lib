@@ -1,20 +1,20 @@
 {
     "required": true,
-    "minVersion": "0.7.11",
+    "minVersion": "0.8",
     "compatibilityLevel": "JAVA_8",
-    "package": "stevekung.mods.stevekunglib.mixin",
+    "package": "com.stevekung.stevekungslib.mixin",
     "refmap": "mixins.stevekung's_lib.refmap.json",
     "target": "@env(DEFAULT)",
     "mixins": [
-        "WorldMixin",
-        "WorldServerMixin"
+        "MixinWorld",
+        "MixinServerChunkProvider"
     ],
     "client": [
-        "GuiChatMixin",
-        "ColoredFontRendererMixin",
-        "EntityRendererMixin",
-        "ItemRendererMixin",
-        "RenderMixin"
+        "MixinEntityRenderer",
+        "MixinFirstPersonRenderer",
+        "MixinGameRenderer",
+        "MixinFontRenderer",
+        "MixinFont"
     ],
     "injectors": {
         "defaultRequire": 1

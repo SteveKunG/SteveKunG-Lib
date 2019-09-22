@@ -12,7 +12,10 @@ public interface IChatScreen
     default void pageUp() {}
     default void pageDown() {}
     default void mouseClicked(double mouseX, double mouseY, int mouseButton) {}
-    default void mouseReleased(double mouseX, double mouseY, int state) {}
+    default boolean mouseReleased(double mouseX, double mouseY, int button)
+    {
+        return false;
+    }
     default void mouseDragged(double mouseX, double mouseY, int mouseEvent, double dragX, double dragY) {}
 
     default boolean mouseScrolled(double wheel)
