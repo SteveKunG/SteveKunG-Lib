@@ -58,7 +58,7 @@ public abstract class MixinFontRenderer
         float alpha = (color >> 24 & 255) / 255.0F;
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder builder = tessellator.getBuffer();
-        ResourceLocation identifier = null;
+        ResourceLocation resource = null;
         builder.begin(GLConstants.QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
         boolean obfuscated = false;
         boolean bold = false;
@@ -154,12 +154,12 @@ public abstract class MixinFontRenderer
 
                 if (id != null)
                 {
-                    if (identifier != id)
+                    if (resource != id)
                     {
                         tessellator.draw();
                         this.textureManager.bindTexture(id);
                         builder.begin(GLConstants.QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
-                        identifier = id;
+                        resource = id;
                     }
                     boldOffset = bold ? glyph.getBoldOffset() : 0.0F;
                     shadowOffset = dropShadow ? glyph.getShadowOffset() : 0.0F;
@@ -191,8 +191,7 @@ public abstract class MixinFontRenderer
 
             while (it.hasNext())
             {
-                MixinFontRenderer.Entry rectangle = it.next();
-                rectangle.pipe(builder);
+                it.next().pipe(builder);
             }
             tessellator.draw();
             GlStateManager.enableTexture();

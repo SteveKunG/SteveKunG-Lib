@@ -22,7 +22,7 @@ public abstract class MixinFont
     private static EmptyGlyph field_212460_b;
 
     @Inject(method = "getGlyph(C)Lnet/minecraft/client/gui/fonts/TexturedGlyph;", cancellable = true, at = @At("HEAD"))
-    private void getEmptyGlyph(char charac, CallbackInfoReturnable<TexturedGlyph> info)
+    private void getGlyph(char charac, CallbackInfoReturnable<TexturedGlyph> info)
     {
         if (ColorUtils.isMarker(charac))
         {
