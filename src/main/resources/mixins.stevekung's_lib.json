@@ -14,7 +14,10 @@
         "MixinFirstPersonRenderer",
         "MixinGameRenderer",
         "MixinFontRenderer",
-        "MixinFont"
+        "MixinFont",
+        "MixinClientPlayerEntity",
+        "MixinClientPlayNetHandler",
+        "MixinClientSuggestionProvider"
     ],
     "injectors": {
         "defaultRequire": 1
