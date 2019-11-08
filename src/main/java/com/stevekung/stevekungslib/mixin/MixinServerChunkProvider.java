@@ -24,14 +24,14 @@ public abstract class MixinServerChunkProvider
     @Shadow
     private long lastGameTime;
 
-    @Inject(method = "func_217220_m()V", cancellable = true, at = @At(value = "INVOKE", target = "net/minecraft/profiler/IProfiler.endSection()V", shift = At.Shift.AFTER, ordinal = 0))
+    @Inject(method = "tickChunks()V", cancellable = true, at = @At(value = "INVOKE", target = "net/minecraft/profiler/IProfiler.endSection()V", shift = At.Shift.AFTER, ordinal = 0))
     private void injectWeatherTickEvent(CallbackInfo info)
     {
         long i = this.that.world.getGameTime();
         long j = i - this.lastGameTime;
         this.lastGameTime = i;
 
-        this.that.chunkManager.func_223491_f().forEach(holder ->
+        this.that.chunkManager.getLoadedChunksIterable().forEach(holder ->
         {
             Optional<Chunk> optional = holder.func_219297_b().getNow(ChunkHolder.UNLOADED_CHUNK).left();
 
