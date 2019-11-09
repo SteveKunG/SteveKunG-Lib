@@ -1,12 +1,14 @@
 buildscript {
     repositories {
         maven { url = "https://files.minecraftforge.net/maven" }
+        maven { url = "https://repo.spongepowered.org/maven" }
         jcenter()
         mavenCentral()
     }
     dependencies {
         classpath group: "net.minecraftforge.gradle", name: "ForgeGradle", version: "3.+", changing: true
         classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
+        classpath "org.spongepowered:mixingradle:0.7-SNAPSHOT"
     }
 }
 
@@ -17,6 +19,7 @@ plugins {
 def mcVersion = project.mc_version
 
 apply plugin: "net.minecraftforge.gradle"
+//apply plugin: "org.spongepowered.mixin" TEMPORARY DISABLED
 apply plugin: "eclipse"
 apply plugin: "maven-publish"
 
@@ -55,17 +58,39 @@ minecraft {
     }
 }
 
+configurations {
+    embed
+    implementation.extendsFrom(embed)
+}
+
 dependencies {
     minecraft "net.minecraftforge:forge:${forge_version}"
+    embed("org.spongepowered:mixin:0.8-SNAPSHOT") { transitive = false }
 }
 
 repositories {
     maven {
         url "https://plugins.gradle.org/m2/"
     }
+    maven {
+        url "http://repo.spongepowered.org/maven/"
+    }
+}
+
+sourceSets {
+    main {
+        ext.refMap = "mixins.stevekung's_lib.refmap.json"
+    }
 }
 
 jar {
+    from(configurations.embed.collect { it.isDirectory() ? it : zipTree(it) }) {
+        exclude "LICENSE.txt", "META-INF/*.txt", "META-INF/MANIFSET.MF", "META-INF/maven/**", "META-INF/*.RSA", "META-INF/*.SF"
+    }
+    manifest {
+        attributes("MixinConfigs": "mixins.stevekung's_lib.json"
+        )
+    }
     baseName = "SteveKunG's-Lib-" + mcVersion
 }
 
@@ -77,6 +102,13 @@ task sourcesJar(type: Jar) {
 
 task deobfJar(type: Jar) {
     from sourceSets.main.output
+    from(configurations.embed.collect { it.isDirectory() ? it : zipTree(it) }) {
+        exclude "LICENSE.txt", "META-INF/*.txt", "META-INF/MANIFSET.MF", "META-INF/maven/**", "META-INF/*.RSA", "META-INF/*.SF"
+    }
+    manifest {
+        attributes("MixinConfigs": "mixins.stevekung's_lib.json"
+        )
+    }
     baseName = "SteveKunG's-Lib-" + mcVersion
     classifier = "deobf"
 }
