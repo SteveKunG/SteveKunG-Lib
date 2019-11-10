@@ -6,18 +6,19 @@
     "refmap": "mixins.stevekung's_lib.refmap.json",
     "target": "@env(DEFAULT)",
     "mixins": [
-        "MixinWorld",
-        "MixinServerChunkProvider"
+        "MixinServerChunkProvider",
+        "MixinWorld"
     ],
     "client": [
-        "MixinEntityRenderer",
-        "MixinFirstPersonRenderer",
-        "MixinGameRenderer",
-        "MixinFontRenderer",
-        "MixinFont",
+        "MixinChatScreen",
         "MixinClientPlayerEntity",
         "MixinClientPlayNetHandler",
-        "MixinClientSuggestionProvider"
+        "MixinClientSuggestionProvider",
+        "MixinEntityRenderer",
+        "MixinFirstPersonRenderer",
+        "MixinFont",
+        "MixinFontRenderer",
+        "MixinGameRenderer"
     ],
     "injectors": {
         "defaultRequire": 1
