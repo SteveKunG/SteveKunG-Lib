@@ -19,7 +19,7 @@ plugins {
 def mcVersion = project.mc_version
 
 apply plugin: "net.minecraftforge.gradle"
-//apply plugin: "org.spongepowered.mixin" TEMPORARY DISABLED
+apply plugin: "org.spongepowered.mixin"
 apply plugin: "eclipse"
 apply plugin: "maven-publish"
 
@@ -77,10 +77,8 @@ repositories {
     }
 }
 
-sourceSets {
-    main {
-        ext.refMap = "mixins.stevekung's_lib.refmap.json"
-    }
+mixin {
+    add sourceSets.main, "mixins.stevekung's_lib.refmap.json"
 }
 
 jar {
