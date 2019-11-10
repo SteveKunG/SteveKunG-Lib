@@ -36,7 +36,7 @@ public abstract class MixinChatScreen extends Screen
     @Inject(method = "tick()V", at = @At("RETURN"))
     private void tick(CallbackInfo info)
     {
-        ChatScreenRegistry.getChatScreen().forEach(gui -> gui.tick(this.buttons, this.width, this.height));
+        ChatScreenRegistry.getChatScreen().forEach(gui -> gui.tick(this.buttons, this.children, this.width, this.height));
     }
 
     @Inject(method = "removed()V", at = @At("RETURN"))
