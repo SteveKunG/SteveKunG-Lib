@@ -23,8 +23,6 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 @Mixin(FontRenderer.class)
 public abstract class MixinFontRenderer
@@ -65,7 +63,7 @@ public abstract class MixinFontRenderer
         boolean italic = false;
         boolean underline = false;
         boolean strikethrough = false;
-        List<MixinFontRenderer.Entry> list = new ArrayList<>();
+        List<FontRenderer.Entry> list = new ArrayList<>();
 
         for (int i = 0; i < text.length(); ++i)
         {
@@ -171,11 +169,11 @@ public abstract class MixinFontRenderer
 
                 if (strikethrough)
                 {
-                    list.add(new MixinFontRenderer.Entry(x + shadowOffset - 1.0F, y + shadowOffset + 4.5F, x + shadowOffset + boldOffset, y + shadowOffset + 4.5F - 1.0F, red, green, blue, alpha));
+                    list.add(new FontRenderer.Entry(x + shadowOffset - 1.0F, y + shadowOffset + 4.5F, x + shadowOffset + boldOffset, y + shadowOffset + 4.5F - 1.0F, red, green, blue, alpha));
                 }
                 if (underline)
                 {
-                    list.add(new MixinFontRenderer.Entry(x + shadowOffset - 1.0F, y + shadowOffset + 9.0F, x + shadowOffset + boldOffset, y + shadowOffset + 9.0F - 1.0F, red, green, blue, alpha));
+                    list.add(new FontRenderer.Entry(x + shadowOffset - 1.0F, y + shadowOffset + 9.0F, x + shadowOffset + boldOffset, y + shadowOffset + 9.0F - 1.0F, red, green, blue, alpha));
                 }
                 x += boldOffset;
             }
@@ -187,7 +185,7 @@ public abstract class MixinFontRenderer
         {
             GlStateManager.disableTexture();
             builder.begin(GLConstants.QUADS, DefaultVertexFormats.POSITION_COLOR);
-            Iterator<MixinFontRenderer.Entry> it = list.iterator();
+            Iterator<FontRenderer.Entry> it = list.iterator();
 
             while (it.hasNext())
             {
@@ -199,36 +197,35 @@ public abstract class MixinFontRenderer
         return x;
     }
 
-    @OnlyIn(Dist.CLIENT)
-    static class Entry
+    // TODO If @ModifyVariable support with @Inject
+    /*@Inject(method = "renderStringAtPos(Ljava/lang/String;FFIZ)F", at = @At(value = "INVOKE", target = "java/lang/String.length()I", ordinal = 1, remap = false, shift = Shift.BEFORE), locals = LocalCapture.CAPTURE_FAILHARD)
+    private void renderStringAtPos(String text, float x, float y, int color, boolean dropShadow, CallbackInfoReturnable<Float> info, float f, float f1, float f2, float f3, float f4, float f5, float f6, float f7,
+            Tessellator tessellator, BufferBuilder bufferbuilder, ResourceLocation resourcelocation, boolean flag, boolean flag1, boolean flag2, boolean flag3, boolean flag4, List<FontRenderer.Entry> list,
+            int i, char c0)
     {
-        protected final float xMin;
-        protected final float yMin;
-        protected final float xMax;
-        protected final float yMax;
-        protected final float red;
-        protected final float green;
-        protected final float blue;
-        protected final float alpha;
-
-        private Entry(float xMin, float yMin, float xMax, float yMax, float red, float green, float blue, float alpha)
+        if (c0 >= ColorUtils.CUSTOM_COLOR_MARKER && c0 <= ColorUtils.CUSTOM_COLOR_MARKER + 255)
         {
-            this.xMin = xMin;
-            this.yMin = yMin;
-            this.xMax = xMax;
-            this.yMax = yMax;
-            this.red = red;
-            this.green = green;
-            this.blue = blue;
-            this.alpha = alpha;
-        }
+            int value = c0 & 255;
 
-        public void pipe(BufferBuilder builder)
-        {
-            builder.pos(this.xMin, this.yMin, 0.0D).color(this.red, this.green, this.blue, this.alpha).endVertex();
-            builder.pos(this.xMax, this.yMin, 0.0D).color(this.red, this.green, this.blue, this.alpha).endVertex();
-            builder.pos(this.xMax, this.yMax, 0.0D).color(this.red, this.green, this.blue, this.alpha).endVertex();
-            builder.pos(this.xMin, this.yMax, 0.0D).color(this.red, this.green, this.blue, this.alpha).endVertex();
+            switch (this.state)
+            {
+            case 0:
+                this.red = value;
+                break;
+            case 1:
+                this.green = value;
+                break;
+            case 2:
+                this.blue = value;
+                break;
+            default:
+                info.setReturnValue(0.0F);
+            }
+            this.state = ++this.state % 3;
+            color = this.red << 16 | this.green << 8 | this.blue;
+            f4 = (color >> 16 & 255) / 255.0F * f;
+            f5 = (color >> 8 & 255) / 255.0F * f;
+            f6 = (color & 255) / 255.0F * f;
         }
-    }
+    }*/
 }

@@ -3,10 +3,10 @@ package com.stevekung.stevekungslib.mixin;
 import java.util.Optional;
 
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import com.stevekung.stevekungslib.utils.CommonEventHooks;
 
@@ -21,16 +21,9 @@ public abstract class MixinServerChunkProvider
 {
     private final ServerChunkProvider that = (ServerChunkProvider) (Object) this;
 
-    @Shadow
-    private long lastGameTime;
-
-    @Inject(method = "tickChunks()V", cancellable = true, at = @At(value = "INVOKE", target = "net/minecraft/profiler/IProfiler.endSection()V", shift = At.Shift.AFTER, ordinal = 0))
-    private void injectWeatherTickEvent(CallbackInfo info)
+    @Inject(method = "tickChunks()V", cancellable = true, at = @At(value = "INVOKE", target = "net/minecraft/profiler/IProfiler.endSection()V", shift = At.Shift.AFTER, ordinal = 0), locals = LocalCapture.CAPTURE_FAILHARD)
+    private void injectWeatherTickEvent(CallbackInfo info, long i, long j)
     {
-        long i = this.that.world.getGameTime();
-        long j = i - this.lastGameTime;
-        this.lastGameTime = i;
-
         this.that.chunkManager.getLoadedChunksIterable().forEach(holder ->
         {
             Optional<Chunk> optional = holder.func_219297_b().getNow(ChunkHolder.UNLOADED_CHUNK).left();

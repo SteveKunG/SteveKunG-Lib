@@ -13,6 +13,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 
 @Mixin(World.class)
 public abstract class MixinWorld
@@ -27,7 +28,7 @@ public abstract class MixinWorld
 
         if (block == Blocks.FIRE || block instanceof IFireBlock)
         {
-            this.that.playEvent(player, 1009, pos, 0);
+            this.that.playEvent(player, Constants.WorldEvents.FIRE_EXTINGUISH_SOUND, pos, 0);
             this.that.removeBlock(pos, false);
             return true;
         }
