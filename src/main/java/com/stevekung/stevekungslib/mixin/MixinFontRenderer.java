@@ -2,10 +2,7 @@ package com.stevekung.stevekungslib.mixin;
 
 import java.util.List;
 
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.*;
 
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
@@ -34,10 +31,12 @@ public abstract class MixinFontRenderer
 
     @Shadow
     @Final
+    @Mutable
     private Font font;
 
     @Shadow
     @Final
+    @Mutable
     private TextureManager textureManager;
 
     @Overwrite
