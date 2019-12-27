@@ -17,7 +17,7 @@ public class SteveKunGsLibConfig
             .push("general");
 
             this.enableDebugLog = builder
-                    .comment("Display debug log for easy bug finding!")
+                    .comment("Display debug log, useful to find bugs.")
                     .translation("stevekungs_lib.configgui.debug_log")
                     .define("enableDebugLog", true);
             builder.pop();
