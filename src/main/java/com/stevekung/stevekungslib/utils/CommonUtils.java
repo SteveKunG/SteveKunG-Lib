@@ -2,6 +2,8 @@ package com.stevekung.stevekungslib.utils;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
 import net.minecraft.util.Util;
@@ -14,7 +16,16 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 public class CommonUtils
 {
-    private static final ExecutorService POOL = Executors.newCachedThreadPool();
+    private static final ExecutorService POOL = Executors.newFixedThreadPool(100, new ThreadFactory()
+    {
+        final AtomicInteger counter = new AtomicInteger(0);
+
+        @Override
+        public Thread newThread(Runnable runnable)
+        {
+            return new Thread(runnable, String.format("Thread %s", this.counter.incrementAndGet()));
+        }
+    });
 
     public static void registerEventHandler(Object event)
     {
