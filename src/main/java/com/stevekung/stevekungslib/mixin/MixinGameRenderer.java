@@ -4,14 +4,14 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.stevekung.stevekungslib.utils.client.EventHooksClient;
 
+import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particles.IParticleData;
 
 @Mixin(GameRenderer.class)
 public class MixinGameRenderer
@@ -19,18 +19,9 @@ public class MixinGameRenderer
     @Shadow
     private int rendererUpdateCount;
 
-    @Redirect(method = "addRainParticles()V", at = @At(value = "INVOKE", target = "net/minecraft/client/world/ClientWorld.addParticle(Lnet/minecraft/particles/IParticleData;DDDDDD)V"), expect = 0)
-    private void replaceRainParticles(ClientWorld world, IParticleData data, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed)
+    @Inject(method = "func_228378_a_(FJLcom/mojang/blaze3d/matrix/MatrixStack;)V", cancellable = true, at = @At(value = "INVOKE", target = "net/minecraft/client/renderer/GameRenderer.func_228383_b_(Lcom/mojang/blaze3d/matrix/MatrixStack;F)V", shift = At.Shift.AFTER), locals = LocalCapture.CAPTURE_FAILHARD)
+    private void injectCameraEvent(float partialTicks, long nanoTime, MatrixStack stack, CallbackInfo info, boolean flag, ActiveRenderInfo activerenderinfo, MatrixStack matrixstack)
     {
-        if (!EventHooksClient.onAddRainParticle(world, x, y, z))
-        {
-            world.addParticle(data, x, y, z, 0.0D, 0.0D, 0.0D);
-        }
-    }
-
-    @Inject(method = "setupCameraTransform(F)V", cancellable = true, at = @At(value = "INVOKE", target = "net/minecraft/client/renderer/GameRenderer.applyBobbing(F)V", shift = At.Shift.AFTER))
-    private void injectCameraEvent(float partialTicks, CallbackInfo info)
-    {
-        EventHooksClient.onCameraTransform(this.rendererUpdateCount, partialTicks);
+        EventHooksClient.onCameraTransform(this.rendererUpdateCount, partialTicks, matrixstack);
     }
 }

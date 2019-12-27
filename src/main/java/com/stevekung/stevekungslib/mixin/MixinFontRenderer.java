@@ -1,7 +1,5 @@
 package com.stevekung.stevekungslib.mixin;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.spongepowered.asm.mixin.Final;
@@ -9,19 +7,18 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.google.common.collect.Lists;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.stevekung.stevekungslib.utils.ColorUtils;
-import com.stevekung.stevekungslib.utils.client.GLConstants;
 
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.fonts.EmptyGlyph;
 import net.minecraft.client.gui.fonts.Font;
 import net.minecraft.client.gui.fonts.IGlyph;
 import net.minecraft.client.gui.fonts.TexturedGlyph;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.Matrix4f;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 
 @Mixin(FontRenderer.class)
@@ -33,7 +30,7 @@ public abstract class MixinFontRenderer
     private int blue;
 
     @Shadow
-    protected abstract void renderGlyph(TexturedGlyph texturedGlyph, boolean bold, boolean italic, float boldOffset, float shadowX, float shadowY, BufferBuilder bufferBuilder, float red, float green, float blue, float alpha);
+    protected abstract void func_228077_a_(TexturedGlyph texturedGlyph, boolean bold, boolean italic, float boldOffset, float shadowX, float shadowY, Matrix4f matrix4f, IVertexBuilder builder, float red, float green, float blue, float alpha, int p_228077_13_);
 
     @Shadow
     @Final
@@ -44,26 +41,23 @@ public abstract class MixinFontRenderer
     private TextureManager textureManager;
 
     @Overwrite
-    private float renderStringAtPos(String text, float x, float y, int color, boolean dropShadow)
+    private float func_228081_c_(String text, float x, float y, int color, boolean dropShadow, Matrix4f matrix4f, IRenderTypeBuffer renderBuffer, boolean depthRender, int p_228081_9_, int p_228081_10_)
     {
         float shadowAlpha = dropShadow ? 0.25F : 1.0F;
         float redRaw = (color >> 16 & 255) / 255.0F * shadowAlpha;
         float greenRaw = (color >> 8 & 255) / 255.0F * shadowAlpha;
         float blueRaw = (color & 255) / 255.0F * shadowAlpha;
+        float x2 = x;
         float red = redRaw;
         float green = greenRaw;
         float blue = blueRaw;
         float alpha = (color >> 24 & 255) / 255.0F;
-        Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder builder = tessellator.getBuffer();
-        ResourceLocation resource = null;
-        builder.begin(GLConstants.QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
         boolean obfuscated = false;
         boolean bold = false;
         boolean italic = false;
         boolean underline = false;
         boolean strikethrough = false;
-        List<FontRenderer.Entry> list = new ArrayList<>();
+        List<TexturedGlyph.Effect> list = Lists.newArrayList();
 
         for (int i = 0; i < text.length(); ++i)
         {
@@ -114,10 +108,10 @@ public abstract class MixinFontRenderer
 
                     if (formatting.getColor() != null)
                     {
-                        int value = formatting.getColor();
-                        red = (value >> 16 & 255) / 255.0F * shadowAlpha;
-                        green = (value >> 8 & 255) / 255.0F * shadowAlpha;
-                        blue = (value & 255) / 255.0F * shadowAlpha;
+                        int j = formatting.getColor();
+                        red = (j >> 16 & 255) / 255.0F * shadowAlpha;
+                        green = (j >> 8 & 255) / 255.0F * shadowAlpha;
+                        blue = (j & 255) / 255.0F * shadowAlpha;
                     }
                     else if (formatting == TextFormatting.OBFUSCATED)
                     {
@@ -144,57 +138,52 @@ public abstract class MixinFontRenderer
             }
             else
             {
-                IGlyph glyph = this.font.findGlyph(charac);
-                TexturedGlyph texturedGlyph = obfuscated && charac != ' ' ? this.font.obfuscate(glyph) : this.font.getGlyph(charac);
-                ResourceLocation id = texturedGlyph.getTextureLocation();
-                float boldOffset;
-                float shadowOffset;
+                IGlyph iglyph = this.font.findGlyph(charac);
+                TexturedGlyph texturedGlyph = obfuscated && charac != ' ' ? this.font.obfuscate(iglyph) : this.font.getGlyph(charac);
 
-                if (id != null)
+                if (!(texturedGlyph instanceof EmptyGlyph))
                 {
-                    if (resource != id)
-                    {
-                        tessellator.draw();
-                        this.textureManager.bindTexture(id);
-                        builder.begin(GLConstants.QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
-                        resource = id;
-                    }
-                    boldOffset = bold ? glyph.getBoldOffset() : 0.0F;
-                    shadowOffset = dropShadow ? glyph.getShadowOffset() : 0.0F;
-                    this.renderGlyph(texturedGlyph, bold, italic, boldOffset, x + shadowOffset, y + shadowOffset, builder, red, green, blue, alpha);
+                    float boldOffset = bold ? iglyph.getBoldOffset() : 0.0F;
+                    float shadowOffset = dropShadow ? iglyph.getShadowOffset() : 0.0F;
+                    IVertexBuilder ivertexbuilder = renderBuffer.getBuffer(texturedGlyph.func_228163_a_(depthRender));
+                    this.func_228077_a_(texturedGlyph, bold, italic, boldOffset, x2 + shadowOffset, y + shadowOffset, matrix4f, ivertexbuilder, red, green, blue, alpha, p_228081_10_);
                 }
 
-                boldOffset = glyph.getAdvance(bold);
-                shadowOffset = dropShadow ? 1.0F : 0.0F;
+                float advance = iglyph.getAdvance(bold);
+                float shadowOffset = dropShadow ? 1.0F : 0.0F;
 
                 if (strikethrough)
                 {
-                    list.add(new FontRenderer.Entry(x + shadowOffset - 1.0F, y + shadowOffset + 4.5F, x + shadowOffset + boldOffset, y + shadowOffset + 4.5F - 1.0F, red, green, blue, alpha));
+                    list.add(new TexturedGlyph.Effect(x2 + shadowOffset - 1.0F, y + shadowOffset + 4.5F, x2 + shadowOffset + advance, y + shadowOffset + 4.5F - 1.0F, -0.01F, red, green, blue, alpha));
                 }
                 if (underline)
                 {
-                    list.add(new FontRenderer.Entry(x + shadowOffset - 1.0F, y + shadowOffset + 9.0F, x + shadowOffset + boldOffset, y + shadowOffset + 9.0F - 1.0F, red, green, blue, alpha));
+                    list.add(new TexturedGlyph.Effect(x2 + shadowOffset - 1.0F, y + shadowOffset + 9.0F, x2 + shadowOffset + advance, y + shadowOffset + 9.0F - 1.0F, -0.01F, red, green, blue, alpha));
                 }
-                x += boldOffset;
+                x2 += advance;
             }
         }
 
-        tessellator.draw();
+        if (p_228081_9_ != 0)
+        {
+            float f11 = (p_228081_9_ >> 24 & 255) / 255.0F;
+            float f12 = (p_228081_9_ >> 16 & 255) / 255.0F;
+            float f13 = (p_228081_9_ >> 8 & 255) / 255.0F;
+            float f14 = (p_228081_9_ & 255) / 255.0F;
+            list.add(new TexturedGlyph.Effect(x - 1.0F, y + 9.0F, x2 + 1.0F, y - 1.0F, 0.01F, f12, f13, f14, f11));
+        }
 
         if (!list.isEmpty())
         {
-            GlStateManager.disableTexture();
-            builder.begin(GLConstants.QUADS, DefaultVertexFormats.POSITION_COLOR);
-            Iterator<FontRenderer.Entry> it = list.iterator();
+            TexturedGlyph texturedglyph1 = this.font.func_228157_b_();
+            IVertexBuilder ivertexbuilder1 = renderBuffer.getBuffer(texturedglyph1.func_228163_a_(depthRender));
 
-            while (it.hasNext())
+            for (TexturedGlyph.Effect effect : list)
             {
-                it.next().pipe(builder);
+                texturedglyph1.func_228162_a_(effect, matrix4f, ivertexbuilder1, p_228081_10_);
             }
-            tessellator.draw();
-            GlStateManager.enableTexture();
         }
-        return x;
+        return x2;
     }
 
     // TODO If @ModifyVariable support with @Inject

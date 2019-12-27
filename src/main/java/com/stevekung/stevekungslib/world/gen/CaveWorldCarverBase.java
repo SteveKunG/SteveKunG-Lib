@@ -4,6 +4,7 @@ import java.util.BitSet;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Function;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -12,6 +13,7 @@ import net.minecraft.fluid.IFluidState;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.carver.WorldCarver;
 import net.minecraft.world.gen.feature.ProbabilityConfig;
@@ -39,7 +41,7 @@ public class CaveWorldCarverBase extends WorldCarver<ProbabilityConfig>
     }
 
     @Override
-    public boolean carve(IChunk chunk, Random rand, int seaLevel, int chunkX, int chunkZ, int originalX, int originalZ, BitSet carvingMask, ProbabilityConfig config)
+    public boolean func_225555_a_(IChunk chunk, Function<BlockPos, Biome> biomeGetter, Random rand, int seaLevel, int chunkX, int chunkZ, int originalX, int originalZ, BitSet carvingMask, ProbabilityConfig config)
     {
         int i = (this.func_222704_c() * 2 - 1) * 16;
         int j = rand.nextInt(rand.nextInt(rand.nextInt(15) + 1) + 1);
@@ -54,7 +56,7 @@ public class CaveWorldCarverBase extends WorldCarver<ProbabilityConfig>
             if (rand.nextInt(4) == 0)
             {
                 float f1 = 1.0F + rand.nextFloat() * 6.0F;
-                this.addRoom(chunk, rand.nextLong(), seaLevel, originalX, originalZ, d0, d1, d2, f1, 0.5D, carvingMask);
+                this.addRoom(chunk, biomeGetter, rand.nextLong(), seaLevel, originalX, originalZ, d0, d1, d2, f1, 0.5D, carvingMask);
                 l += rand.nextInt(4);
             }
 
@@ -64,7 +66,7 @@ public class CaveWorldCarverBase extends WorldCarver<ProbabilityConfig>
                 float f3 = (rand.nextFloat() - 0.5F) / 4.0F;
                 float f2 = this.generateCaveRadius(rand);
                 int i1 = i - rand.nextInt(i / 4);
-                this.carveTunnel(chunk, rand.nextLong(), seaLevel, originalX, originalZ, d0, d1, d2, f2, f, f3, 0, i1, 1.0D, carvingMask);
+                this.carveTunnel(chunk, biomeGetter, rand.nextLong(), seaLevel, originalX, originalZ, d0, d1, d2, f2, f, f3, 0, i1, 1.0D, carvingMask);
             }
         }
         return true;
@@ -77,7 +79,7 @@ public class CaveWorldCarverBase extends WorldCarver<ProbabilityConfig>
     }
 
     @Override
-    protected boolean carveBlock(IChunk chunk, BitSet carvingMask, Random rand, BlockPos.MutableBlockPos mutablePos1, BlockPos.MutableBlockPos mutablePos2, BlockPos.MutableBlockPos mutablePos3, int p_222703_7_, int p_222703_8_, int p_222703_9_, int x, int z, int p_222703_12_, int y, int p_222703_14_, AtomicBoolean atomicboolean)
+    protected boolean func_225556_a_(IChunk chunk, Function<BlockPos, Biome> biomeGetter, BitSet carvingMask, Random rand, BlockPos.Mutable mutablePos1, BlockPos.Mutable mutablePos2, BlockPos.Mutable mutablePos3, int p_222703_7_, int p_222703_8_, int p_222703_9_, int x, int z, int p_222703_12_, int y, int p_222703_14_, AtomicBoolean atomicboolean)
     {
         int i = p_222703_12_ | p_222703_14_ << 4 | y << 8;
 
@@ -117,7 +119,7 @@ public class CaveWorldCarverBase extends WorldCarver<ProbabilityConfig>
 
                         if (this.subSurfaceBlocks.stream().anyMatch(block -> chunk.getBlockState(mutablePos3).getBlock() == block.getBlock()))
                         {
-                            chunk.setBlockState(mutablePos3, chunk.getBiome(mutablePos1).getSurfaceBuilderConfig().getTop(), false);
+                            chunk.setBlockState(mutablePos3, biomeGetter.apply(mutablePos1).getSurfaceBuilderConfig().getTop(), false);
                         }
                     }
                 }
@@ -137,14 +139,14 @@ public class CaveWorldCarverBase extends WorldCarver<ProbabilityConfig>
         return f;
     }
 
-    private void addRoom(IChunk world, long seed, int height, int originalX, int originalZ, double x, double y, double z, float p_222723_13_, double p_222723_14_, BitSet bitSet)
+    private void addRoom(IChunk world, Function<BlockPos, Biome> biomeGetter, long seed, int height, int originalX, int originalZ, double x, double y, double z, float p_222723_13_, double p_222723_14_, BitSet bitSet)
     {
         double d0 = 1.5D + MathHelper.sin((float)Math.PI / 2F) * p_222723_13_;
         double d1 = d0 * p_222723_14_;
-        this.func_222705_a(world, seed, height, originalX, originalZ, x + 1.0D, y, z, d0, d1, bitSet);
+        this.func_227208_a_(world, biomeGetter, seed, height, originalX, originalZ, x + 1.0D, y, z, d0, d1, bitSet);
     }
 
-    private void carveTunnel(IChunk chunk, long seed, int height, int originalX, int originalZ, double x, double y, double z, float radius, float p_222727_14_, float p_222727_15_, int p_222727_16_, int p_222727_17_, double p_222727_18_, BitSet bitSet)
+    private void carveTunnel(IChunk chunk, Function<BlockPos, Biome> biomeGetter, long seed, int height, int originalX, int originalZ, double x, double y, double z, float radius, float p_222727_14_, float p_222727_15_, int p_222727_16_, int p_222727_17_, double p_222727_18_, BitSet bitSet)
     {
         Random rand = new Random(seed);
         int i = rand.nextInt(p_222727_17_ / 2) + p_222727_17_ / 4;
@@ -170,8 +172,8 @@ public class CaveWorldCarverBase extends WorldCarver<ProbabilityConfig>
 
             if (j == i && radius > 1.0F)
             {
-                this.carveTunnel(chunk, rand.nextLong(), height, originalX, originalZ, x, y, z, rand.nextFloat() * 0.5F + 0.5F, p_222727_14_ - (float)Math.PI / 2F, p_222727_15_ / 3.0F, j, p_222727_17_, 1.0D, bitSet);
-                this.carveTunnel(chunk, rand.nextLong(), height, originalX, originalZ, x, y, z, rand.nextFloat() * 0.5F + 0.5F, p_222727_14_ + (float)Math.PI / 2F, p_222727_15_ / 3.0F, j, p_222727_17_, 1.0D, bitSet);
+                this.carveTunnel(chunk, biomeGetter, rand.nextLong(), height, originalX, originalZ, x, y, z, rand.nextFloat() * 0.5F + 0.5F, p_222727_14_ - (float)Math.PI / 2F, p_222727_15_ / 3.0F, j, p_222727_17_, 1.0D, bitSet);
+                this.carveTunnel(chunk, biomeGetter, rand.nextLong(), height, originalX, originalZ, x, y, z, rand.nextFloat() * 0.5F + 0.5F, p_222727_14_ + (float)Math.PI / 2F, p_222727_15_ / 3.0F, j, p_222727_17_, 1.0D, bitSet);
                 return;
             }
 
@@ -181,7 +183,7 @@ public class CaveWorldCarverBase extends WorldCarver<ProbabilityConfig>
                 {
                     return;
                 }
-                this.func_222705_a(chunk, seed, height, originalX, originalZ, x, y, z, d0, d1, bitSet);
+                this.func_227208_a_(chunk, biomeGetter, seed, height, originalX, originalZ, x, y, z, d0, d1, bitSet);
             }
         }
     }

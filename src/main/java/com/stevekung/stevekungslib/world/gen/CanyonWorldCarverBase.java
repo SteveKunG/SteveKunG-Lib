@@ -4,6 +4,7 @@ import java.util.BitSet;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Function;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -12,6 +13,7 @@ import net.minecraft.fluid.IFluidState;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.carver.WorldCarver;
 import net.minecraft.world.gen.feature.ProbabilityConfig;
@@ -40,7 +42,7 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
     }
 
     @Override
-    public boolean carve(IChunk chunk, Random rand, int seaLevel, int chunkX, int chunkZ, int originalX, int originalZ, BitSet carvingMask, ProbabilityConfig config)
+    public boolean func_225555_a_(IChunk chunk, Function<BlockPos, Biome> biomeGetter, Random rand, int seaLevel, int chunkX, int chunkZ, int originalX, int originalZ, BitSet carvingMask, ProbabilityConfig config)
     {
         int i = (this.func_222704_c() * 2 - 1) * 16;
         double d0 = chunkX * 16 + rand.nextInt(16);
@@ -50,7 +52,7 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
         float f1 = (rand.nextFloat() - 0.5F) * 2.0F / 8.0F;
         float f2 = (rand.nextFloat() * 2.0F + rand.nextFloat()) * 2.0F;
         int j = i - rand.nextInt(i / 4);
-        this.carveTunnel(chunk, rand.nextLong(), seaLevel, originalX, originalZ, d0, d1, d2, f2, f, f1, 0, j, 3.0D, carvingMask);
+        this.carveTunnel(chunk, biomeGetter, rand.nextLong(), seaLevel, originalX, originalZ, d0, d1, d2, f2, f, f1, 0, j, 3.0D, carvingMask);
         return true;
     }
 
@@ -61,7 +63,7 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
     }
 
     @Override
-    protected boolean carveBlock(IChunk chunk, BitSet carvingMask, Random rand, BlockPos.MutableBlockPos mutablePos1, BlockPos.MutableBlockPos mutablePos2, BlockPos.MutableBlockPos mutablePos3, int p_222703_7_, int p_222703_8_, int p_222703_9_, int x, int z, int p_222703_12_, int y, int p_222703_14_, AtomicBoolean atomicboolean)
+    protected boolean func_225556_a_(IChunk chunk, Function<BlockPos, Biome> biomeGetter, BitSet carvingMask, Random rand, BlockPos.Mutable mutablePos1, BlockPos.Mutable mutablePos2, BlockPos.Mutable mutablePos3, int p_222703_7_, int p_222703_8_, int p_222703_9_, int x, int z, int p_222703_12_, int y, int p_222703_14_, AtomicBoolean atomicboolean)
     {
         int i = p_222703_12_ | p_222703_14_ << 4 | y << 8;
 
@@ -101,7 +103,7 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
 
                         if (this.subSurfaceBlocks.stream().anyMatch(block -> chunk.getBlockState(mutablePos3).getBlock() == block.getBlock()))
                         {
-                            chunk.setBlockState(mutablePos3, chunk.getBiome(mutablePos1).getSurfaceBuilderConfig().getTop(), false);
+                            chunk.setBlockState(mutablePos3, biomeGetter.apply(mutablePos1).getSurfaceBuilderConfig().getTop(), false);
                         }
                     }
                 }
@@ -110,7 +112,7 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
         }
     }
 
-    private void carveTunnel(IChunk chunk, long seed, int seaLevel, int originalX, int originalZ, double x, double y, double z, float radius, float p_222729_14_, float p_222729_15_, int p_222729_16_, int p_222729_17_, double p_222729_18_, BitSet bitSet)
+    private void carveTunnel(IChunk chunk, Function<BlockPos, Biome> biomeGetter, long seed, int seaLevel, int originalX, int originalZ, double x, double y, double z, float radius, float p_222729_14_, float p_222729_15_, int p_222729_16_, int p_222729_17_, double p_222729_18_, BitSet bitSet)
     {
         Random rand = new Random(seed);
         float f = 1.0F;
@@ -152,7 +154,7 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
                 {
                     return;
                 }
-                this.func_222705_a(chunk, seed, seaLevel, originalX, originalZ, x, y, z, d0, d1, bitSet);
+                this.func_227208_a_(chunk, biomeGetter, seed, seaLevel, originalX, originalZ, x, y, z, d0, d1, bitSet);
             }
         }
     }

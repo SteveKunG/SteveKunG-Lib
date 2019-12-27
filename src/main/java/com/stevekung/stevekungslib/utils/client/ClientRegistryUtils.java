@@ -2,15 +2,20 @@ package com.stevekung.stevekungslib.utils.client;
 
 import javax.annotation.Nonnull;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -31,24 +36,24 @@ public class ClientRegistryUtils
         event.addSprite(new ResourceLocation(this.resourcePath + ":" + texture));
     }
 
-    public static <E extends Entity> void registerEntityRendering(Class<E> entity, IRenderFactory<E> render)
+    public static <E extends Entity> void registerEntityRendering(EntityType<E> entity, IRenderFactory<? super E> render)
     {
         RenderingRegistry.registerEntityRenderingHandler(entity, render);
     }
 
-    public static <T extends TileEntity> void registerTileEntityRendering(Class<T> tile, TileEntityRenderer<? super T> render)
+    public static <T extends TileEntity> void registerTileEntityRendering(TileEntityType<T> tile, TileEntityRenderer<? super T> render)
     {
-        ClientRegistry.bindTileEntitySpecialRenderer(tile, render);
+        ClientRegistry.bindTileEntityRenderer(tile, render);
     }
 
-    public static void renderTESR(TileEntity tile)
+    public static void renderTESR(TileEntity tile, MatrixStack stack, IRenderTypeBuffer renderType)
     {
-        ClientRegistryUtils.renderTESR(tile, 0.0D);
+        ClientRegistryUtils.renderTESR(tile, stack, renderType, 0, 0);
     }
 
-    public static void renderTESR(TileEntity tile, double yOffset)
+    public static void renderTESR(TileEntity tile, MatrixStack stack, IRenderTypeBuffer renderType, int color1, int color2)
     {
-        TileEntityRendererDispatcher.instance.render(tile, 0.0D, yOffset, 0.0D, 0.0F);
+        TileEntityRendererDispatcher.instance.func_228852_a_(tile, stack, renderType, color1, color2);
     }
 
     public static void registerBlockColor(IBlockColor blockColor, Block block)
