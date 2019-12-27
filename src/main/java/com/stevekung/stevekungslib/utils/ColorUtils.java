@@ -6,8 +6,6 @@ import com.stevekung.stevekungslib.utils.client.ClientUtils;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.fonts.FontResourceManager;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ColorUtils
 {
@@ -15,7 +13,6 @@ public class ColorUtils
     public static FontRenderer unicodeFontRenderer;
     public static FontResourceManager unicodeFontResourceMananger;
 
-    @OnlyIn(Dist.CLIENT)
     public static void init()
     {
         /*Minecraft mc = Minecraft.getInstance();

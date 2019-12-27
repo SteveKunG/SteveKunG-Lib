@@ -18,7 +18,7 @@ public class CommonUtils
 {
     private static final ExecutorService POOL = Executors.newFixedThreadPool(100, new ThreadFactory()
     {
-        final AtomicInteger counter = new AtomicInteger(0);
+        private final AtomicInteger counter = new AtomicInteger(0);
 
         @Override
         public Thread newThread(Runnable runnable)

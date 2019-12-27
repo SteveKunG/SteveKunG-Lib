@@ -5,8 +5,6 @@ import java.util.Comparator;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ItemGroupBase extends ItemGroup
 {
@@ -19,14 +17,12 @@ public class ItemGroupBase extends ItemGroup
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
     public ItemStack createIcon()
     {
         return this.itemStack;
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
     public void fill(NonNullList<ItemStack> list)
     {
         super.fill(list);
