@@ -41,7 +41,7 @@ public abstract class MixinServerChunkProvider
                     ChunkPos chunkpos2 = chunk.getPos();
                     int chunkX = chunkpos2.getXStart();
                     int chunkZ = chunkpos2.getZStart();
-                    BlockPos strikePos = this.that.world.adjustPosToNearbyEntity(this.that.world.func_217383_a(chunkX, 0, chunkZ, 15));
+                    BlockPos strikePos = this.that.world.adjustPosToNearbyEntity(this.that.world.getBlockRandomPos(chunkX, 0, chunkZ, 15));
                     CommonEventHooks.onWeatherTick(this.that.world, chunkX, chunkZ, strikePos);
                 }
             }
