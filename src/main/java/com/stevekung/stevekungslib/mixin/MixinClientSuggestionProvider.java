@@ -8,7 +8,7 @@ import com.stevekung.stevekungslib.utils.client.command.IClientSuggestionProvide
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientSuggestionProvider;
-import net.minecraft.util.text.TextComponent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 
 @Mixin(ClientSuggestionProvider.class)
@@ -19,13 +19,13 @@ public abstract class MixinClientSuggestionProvider implements IClientSuggestion
     private Minecraft mc;
 
     @Override
-    public void sendFeedback(TextComponent text)
+    public void sendFeedback(ITextComponent text)
     {
         this.mc.player.sendStatusMessage(text, false);
     }
 
     @Override
-    public void sendErrorMessage(TextComponent text)
+    public void sendErrorMessage(ITextComponent text)
     {
         this.mc.player.sendStatusMessage(text.applyTextStyle(TextFormatting.RED), false);
     }
