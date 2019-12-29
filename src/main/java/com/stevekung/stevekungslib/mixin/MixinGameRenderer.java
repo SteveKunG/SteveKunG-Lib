@@ -19,7 +19,7 @@ public class MixinGameRenderer
     @Shadow
     private int rendererUpdateCount;
 
-    @Inject(method = "func_228378_a_(FJLcom/mojang/blaze3d/matrix/MatrixStack;)V", cancellable = true, at = @At(value = "INVOKE", target = "net/minecraft/client/renderer/GameRenderer.func_228383_b_(Lcom/mojang/blaze3d/matrix/MatrixStack;F)V", shift = At.Shift.AFTER), locals = LocalCapture.CAPTURE_FAILHARD)
+    @Inject(method = "func_228378_a_(FJLcom/mojang/blaze3d/matrix/MatrixStack;)V", at = @At(value = "INVOKE", target = "net/minecraft/client/renderer/GameRenderer.func_228383_b_(Lcom/mojang/blaze3d/matrix/MatrixStack;F)V", shift = At.Shift.AFTER), locals = LocalCapture.CAPTURE_FAILHARD)
     private void injectCameraEvent(float partialTicks, long nanoTime, MatrixStack stack, CallbackInfo info, boolean flag, ActiveRenderInfo activerenderinfo, MatrixStack matrixstack)
     {
         EventHooksClient.onCameraTransform(this.rendererUpdateCount, partialTicks, matrixstack);

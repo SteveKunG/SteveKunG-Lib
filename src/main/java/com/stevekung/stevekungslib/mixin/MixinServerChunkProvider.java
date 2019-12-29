@@ -21,7 +21,7 @@ public abstract class MixinServerChunkProvider
 {
     private final ServerChunkProvider that = (ServerChunkProvider) (Object) this;
 
-    @Inject(method = "tickChunks()V", cancellable = true, at = @At(value = "INVOKE", target = "net/minecraft/profiler/IProfiler.endSection()V", shift = At.Shift.AFTER, ordinal = 0), locals = LocalCapture.CAPTURE_FAILHARD)
+    @Inject(method = "tickChunks()V", at = @At(value = "INVOKE", target = "net/minecraft/profiler/IProfiler.endSection()V", shift = At.Shift.AFTER, ordinal = 0), locals = LocalCapture.CAPTURE_FAILHARD)
     private void injectWeatherTickEvent(CallbackInfo info, long i, long j)
     {
         this.that.chunkManager.getLoadedChunksIterable().forEach(holder ->
