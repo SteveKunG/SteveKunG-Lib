@@ -1,5 +1,7 @@
 package com.stevekung.stevekungslib.utils.client;
 
+import java.util.function.Function;
+
 import javax.annotation.Nonnull;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -41,7 +43,7 @@ public class ClientRegistryUtils
         RenderingRegistry.registerEntityRenderingHandler(entity, render);
     }
 
-    public static <T extends TileEntity> void registerTileEntityRendering(TileEntityType<T> tile, TileEntityRenderer<? super T> render)
+    public static <T extends TileEntity> void registerTileEntityRendering(TileEntityType<T> tile, Function<? super TileEntityRendererDispatcher, ? extends TileEntityRenderer<? super T>> render)
     {
         ClientRegistry.bindTileEntityRenderer(tile, render);
     }
