@@ -21,7 +21,7 @@ public class MixinFirstPersonRenderer
     @Mutable
     private Minecraft mc;
 
-    @Inject(method = "renderOverlays(F)V", cancellable = true, at = @At(value = "INVOKE", target = "net/minecraft/client/entity/player/ClientPlayerEntity.isSpectator()Z", shift = At.Shift.AFTER))
+    @Inject(method = "renderOverlays(F)V", at = @At(value = "INVOKE", target = "net/minecraft/client/entity/player/ClientPlayerEntity.isSpectator()Z", shift = At.Shift.AFTER))
     private void injectPersonViewOverlayEvent(float partialTicks, CallbackInfo info)
     {
         if (!this.mc.player.isSpectator())
