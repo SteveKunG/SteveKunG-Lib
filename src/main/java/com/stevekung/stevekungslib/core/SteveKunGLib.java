@@ -21,6 +21,7 @@ public class SteveKunGLib
     {
         CommonUtils.registerConfig(ModConfig.Type.CLIENT, SteveKunGsLibConfig.GENERAL_BUILDER);
         CommonUtils.registerModEventBus(SteveKunGsLibConfig.class);
+        //CommonUtils.registerConfigScreen(() -> (mc, parent) -> new VideoSettingsScreen(parent, mc.gameSettings)); TODO Waiting for forge
 
         CommonUtils.addModListener(this::phaseOne);
         CommonUtils.registerEventHandler(this);
