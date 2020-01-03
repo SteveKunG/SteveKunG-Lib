@@ -4,12 +4,17 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.Util;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -55,6 +60,11 @@ public class CommonUtils
     public static void registerConfig(ModConfig.Type type, ForgeConfigSpec.Builder builder)
     {
         ModLoadingContext.get().registerConfig(type, builder.build());
+    }
+
+    public static void registerConfigScreen(Supplier<BiFunction<Minecraft, Screen, Screen>> supplier)
+    {
+        ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY, supplier);
     }
 
     public static String ticksToElapsedTime(int ticks)
