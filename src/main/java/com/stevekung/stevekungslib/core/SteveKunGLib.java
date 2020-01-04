@@ -15,7 +15,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 public class SteveKunGLib
 {
     public static final String MOD_ID = "stevekungs_lib";
-    public static LoggerBase LOGGER;
+    public static final LoggerBase LOGGER = new LoggerBase("SteveKunG's Lib");
 
     public SteveKunGLib()
     {
@@ -29,7 +29,7 @@ public class SteveKunGLib
 
     private void phaseOne(FMLCommonSetupEvent event)
     {
-        SteveKunGLib.LOGGER = new LoggerBase("SteveKunG's Lib", SteveKunGsLibConfig.GENERAL.enableDebugLog.get());
+        SteveKunGLib.LOGGER.setDebug(SteveKunGsLibConfig.GENERAL.enableDebugLog.get());
 
         if (ClientUtils.isEffectiveClient())
         {

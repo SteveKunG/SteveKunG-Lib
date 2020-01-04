@@ -14,12 +14,11 @@ public class LoggerBase
     private static final Marker WARNING = MarkerManager.getMarker("WARNING");
     private static final Marker DEBUG = MarkerManager.getMarker("DEBUG");
     private final String modName;
-    private final boolean debug;
+    private boolean debug;
 
-    public LoggerBase(String modName, boolean debug)
+    public LoggerBase(String modName)
     {
         this.modName = modName;
-        this.debug = debug;
         this.log = LogManager.getLogger(this.modName);
         this.logDebug = LogManager.getLogger(this.modName + " Debug");
     }
@@ -68,5 +67,10 @@ public class LoggerBase
         {
             this.logDebug.info(DEBUG, message, obj);
         }
+    }
+
+    public void setDebug(boolean debug)
+    {
+        this.debug = debug;
     }
 }
