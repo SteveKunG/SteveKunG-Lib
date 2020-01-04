@@ -14,7 +14,7 @@
         "MixinClientPlayerEntity",
         "MixinClientPlayNetHandler",
         "MixinClientSuggestionProvider",
-        "MixinEntityRenderer",
+        "MixinEntityRendererManager",
         "MixinFirstPersonRenderer",
         "MixinFont",
         "MixinFontRenderer",
