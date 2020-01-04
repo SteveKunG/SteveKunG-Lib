@@ -18,6 +18,7 @@
         "MixinFirstPersonRenderer",
         "MixinFont",
         "MixinFontRenderer",
+        "MixinFontResourceManager",
         "MixinGameRenderer"
     ],
     "injectors": {

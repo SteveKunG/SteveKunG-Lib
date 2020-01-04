@@ -5,6 +5,7 @@ import org.lwjgl.glfw.GLFW;
 import com.stevekung.stevekungslib.utils.JsonUtils;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
@@ -15,6 +16,8 @@ import net.minecraftforge.fml.loading.FMLLoader;
 
 public class ClientUtils
 {
+    public static FontRenderer unicodeFontRenderer;
+
     public static boolean isClient()
     {
         return FMLLoader.getDist() == Dist.CLIENT;
