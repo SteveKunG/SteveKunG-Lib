@@ -39,10 +39,10 @@ public abstract class MixinChatScreen extends Screen
         ChatScreenRegistry.getChatScreen().forEach(gui -> gui.tick(this.buttons, this.children, this.width, this.height));
     }
 
-    @Inject(method = "removed()V", at = @At("RETURN"))
-    private void removed(CallbackInfo info)
+    @Inject(method = "onClose()V", at = @At("RETURN"))
+    private void onClose(CallbackInfo info)
     {
-        ChatScreenRegistry.getChatScreen().forEach(IChatScreen::removed);
+        ChatScreenRegistry.getChatScreen().forEach(IChatScreen::onClose);
     }
 
     @Inject(method = "mouseScrolled(DDD)Z", at = @At("RETURN"))
