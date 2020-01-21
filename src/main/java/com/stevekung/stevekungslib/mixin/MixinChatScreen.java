@@ -21,6 +21,13 @@ public abstract class MixinChatScreen extends Screen
         super(title);
     }
 
+    @Override
+    public void onClose()
+    {
+        super.onClose();
+        ChatScreenRegistry.getChatScreen().forEach(IChatScreen::onClose);
+    }
+
     @Inject(method = "init()V", at = @At("RETURN"))
     private void init(CallbackInfo info)
     {

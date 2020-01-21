@@ -19,8 +19,7 @@
         "MixinFont",
         "MixinFontRenderer",
         "MixinFontResourceManager",
-        "MixinGameRenderer",
-        "MixinScreen"
+        "MixinGameRenderer"
     ],
     "injectors": {
         "defaultRequire": 1
