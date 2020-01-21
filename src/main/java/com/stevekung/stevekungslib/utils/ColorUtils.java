@@ -4,28 +4,9 @@ import com.stevekung.stevekungslib.client.event.ClientEventHandler;
 import com.stevekung.stevekungslib.core.SteveKunGLib;
 import com.stevekung.stevekungslib.utils.client.ClientUtils;
 
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.fonts.FontResourceManager;
-
 public class ColorUtils
 {
     public static final int CUSTOM_COLOR_MARKER = 60160;
-    public static FontRenderer unicodeFontRenderer;
-    public static FontResourceManager unicodeFontResourceMananger;
-
-    public static void init()
-    {
-        /*Minecraft mc = Minecraft.getInstance();
-
-        ColorUtils.unicodeFontResourceMananger = new FontResourceManager(mc.textureManager, true);
-        ((IReloadableResourceManager)mc.getResourceManager()).addReloadListener(ColorUtils.unicodeFontResourceMananger.func_216884_a());
-        ColorUtils.unicodeFontRenderer = ColorUtils.unicodeFontResourceMananger.getFontRenderer(Minecraft.DEFAULT_FONT_RENDERER_NAME);
-
-        if (mc.gameSettings.language != null)
-        {
-            ColorUtils.unicodeFontRenderer.setBidiFlag(mc.getLanguageManager().isCurrentLanguageBidirectional());
-        }*/
-    }
 
     public static int rgbToDecimal(int r, int g, int b)
     {
