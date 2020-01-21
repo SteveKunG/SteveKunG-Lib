@@ -10,6 +10,6 @@ public interface IChatScreen
     void init(List<Widget> buttons, List<IGuiEventListener> children, int width, int height);
     void render(List<Widget> buttons, int mouseX, int mouseY, float partialTicks);
     void tick(List<Widget> buttons, List<IGuiEventListener> children, int width, int height);
-    void removed();
+    void onClose();
     boolean mouseScrolled(double mouseX, double mouseY, double scrollDelta);
 }

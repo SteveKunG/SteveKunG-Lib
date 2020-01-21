@@ -21,33 +21,37 @@ public abstract class MixinChatScreen extends Screen
         super(title);
     }
 
+    @Override
+    public void onClose()
+    {
+        super.onClose();
+        ChatScreenRegistry.getChatScreen().forEach(IChatScreen::onClose);
+    }
+
     @Inject(method = "init()V", at = @At("RETURN"))
     private void init(CallbackInfo info)
     {
-        ChatScreenRegistry.getChatScreen().forEach(gui -> gui.init(this.buttons, this.children, this.width, this.height));
+        ChatScreenRegistry.getChatScreen().forEach(screen -> screen.init(this.buttons, this.children, this.width, this.height));
     }
 
     @Inject(method = "render(IIF)V", at = @At("RETURN"))
     private void render(int mouseX, int mouseY, float partialTicks, CallbackInfo info)
     {
-        ChatScreenRegistry.getChatScreen().forEach(gui -> gui.render(this.buttons, mouseX, mouseY, partialTicks));
+        ChatScreenRegistry.getChatScreen().forEach(screen -> screen.render(this.buttons, mouseX, mouseY, partialTicks));
     }
 
     @Inject(method = "tick()V", at = @At("RETURN"))
     private void tick(CallbackInfo info)
     {
-        ChatScreenRegistry.getChatScreen().forEach(gui -> gui.tick(this.buttons, this.children, this.width, this.height));
+        ChatScreenRegistry.getChatScreen().forEach(screen -> screen.tick(this.buttons, this.children, this.width, this.height));
     }
 
-    @Inject(method = "removed()V", at = @At("RETURN"))
-    private void removed(CallbackInfo info)
-    {
-        ChatScreenRegistry.getChatScreen().forEach(IChatScreen::removed);
-    }
-
-    @Inject(method = "mouseScrolled(DDD)Z", at = @At("RETURN"))
+    @Inject(method = "mouseScrolled(DDD)Z", cancellable = true, at = @At("RETURN"))
     private void mouseScrolled(double mouseX, double mouseY, double scrollDelta, CallbackInfoReturnable<Boolean> info)
     {
-        ChatScreenRegistry.getChatScreen().forEach(gui -> gui.mouseScrolled(mouseX, mouseY, scrollDelta));
+        for (IChatScreen screen : ChatScreenRegistry.getChatScreen())
+        {
+            info.setReturnValue(screen.mouseScrolled(mouseX, mouseY, scrollDelta));
+        }
     }
 }
