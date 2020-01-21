@@ -1,5 +1,6 @@
 package com.stevekung.stevekungslib.utils;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
@@ -80,8 +81,8 @@ public class CommonUtils
         Util.getOSType().openURI(url);
     }
 
-    public static void execute(Runnable runnable)
+    public static void runAsync(Runnable runnable)
     {
-        CommonUtils.POOL.execute(runnable);
+        CompletableFuture.runAsync(runnable, CommonUtils.POOL);
     }
 }
