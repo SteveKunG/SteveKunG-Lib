@@ -2,7 +2,6 @@ package com.stevekung.stevekungslib.core;
 
 import com.stevekung.stevekungslib.client.event.ClientEventHandler;
 import com.stevekung.stevekungslib.config.SteveKunGsLibConfig;
-import com.stevekung.stevekungslib.utils.ColorUtils;
 import com.stevekung.stevekungslib.utils.CommonUtils;
 import com.stevekung.stevekungslib.utils.LoggerBase;
 import com.stevekung.stevekungslib.utils.client.ClientUtils;
@@ -34,10 +33,6 @@ public class SteveKunGLib
         if (ClientUtils.isEffectiveClient())
         {
             CommonUtils.registerEventHandler(new ClientEventHandler());
-        }
-        if (ClientUtils.isClient())
-        {
-            ColorUtils.init();
         }
     }
 }
