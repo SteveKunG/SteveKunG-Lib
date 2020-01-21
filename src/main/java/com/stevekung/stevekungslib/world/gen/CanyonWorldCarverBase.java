@@ -74,9 +74,9 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
         else
         {
             carvingMask.set(i);
-            mutablePos1.setPos(x, y, z);
+            mutablePos1.func_181079_c(x, y, z);
             BlockState blockstate = chunk.getBlockState(mutablePos1);
-            BlockState blockstate1 = chunk.getBlockState(mutablePos2.setPos(mutablePos1).move(Direction.UP));
+            BlockState blockstate1 = chunk.getBlockState(mutablePos2.func_189533_g(mutablePos1).func_189536_c(Direction.UP));
 
             if (this.surfaceBlocks.stream().anyMatch(block -> blockstate.getBlock() == block.getBlock()))
             {
@@ -99,7 +99,7 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
 
                     if (atomicboolean.get())
                     {
-                        mutablePos3.setPos(mutablePos1).move(Direction.DOWN);
+                        mutablePos3.func_189533_g(mutablePos1).func_189536_c(Direction.DOWN);
 
                         if (this.subSurfaceBlocks.stream().anyMatch(block -> chunk.getBlockState(mutablePos3).getBlock() == block.getBlock()))
                         {
