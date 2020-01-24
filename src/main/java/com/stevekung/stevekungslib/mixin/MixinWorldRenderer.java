@@ -13,7 +13,7 @@ import net.minecraft.particles.IParticleData;
 @Mixin(WorldRenderer.class)
 public class MixinWorldRenderer
 {
-    @Redirect(method = "func_228436_a_(Lnet/minecraft/client/renderer/ActiveRenderInfo;)V", at = @At(value = "INVOKE", target = "net/minecraft/client/world/ClientWorld.addParticle(Lnet/minecraft/particles/IParticleData;DDDDDD)V"))
+    @Redirect(method = "addRainParticles(Lnet/minecraft/client/renderer/ActiveRenderInfo;)V", at = @At(value = "INVOKE", target = "net/minecraft/client/world/ClientWorld.addParticle(Lnet/minecraft/particles/IParticleData;DDDDDD)V"))
     private void replaceRainParticles(ClientWorld world, IParticleData data, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed)
     {
         if (!EventHooksClient.onAddRainParticle(world, x, y, z))

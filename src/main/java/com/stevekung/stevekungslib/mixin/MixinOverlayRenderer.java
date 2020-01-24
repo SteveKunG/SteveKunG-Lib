@@ -14,7 +14,7 @@ import net.minecraft.client.renderer.OverlayRenderer;
 @Mixin(OverlayRenderer.class)
 public class MixinOverlayRenderer
 {
-    @Inject(method = "func_228734_a_(Lnet/minecraft/client/Minecraft;Lcom/mojang/blaze3d/matrix/MatrixStack;)V", at = @At(value = "INVOKE", target = "net/minecraft/client/entity/player/ClientPlayerEntity.isSpectator()Z", shift = At.Shift.AFTER))
+    @Inject(method = "renderOverlays(Lnet/minecraft/client/Minecraft;Lcom/mojang/blaze3d/matrix/MatrixStack;)V", at = @At(value = "INVOKE", target = "net/minecraft/client/entity/player/ClientPlayerEntity.isSpectator()Z", shift = At.Shift.AFTER))
     private static void renderFirstPersonViewOverlayEvent(Minecraft mc, MatrixStack stack, CallbackInfo info)
     {
         if (!mc.player.isSpectator())

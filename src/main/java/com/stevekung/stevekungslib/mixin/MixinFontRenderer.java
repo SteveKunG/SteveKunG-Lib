@@ -27,7 +27,7 @@ public abstract class MixinFontRenderer
     private int blue;
 
     @Shadow
-    protected abstract void func_228077_a_(TexturedGlyph texturedGlyph, boolean bold, boolean italic, float boldOffset, float shadowX, float shadowY, Matrix4f matrix4f, IVertexBuilder builder, float red, float green, float blue, float alpha, int p_228077_13_);
+    protected abstract void drawGlyph(TexturedGlyph texturedGlyph, boolean bold, boolean italic, float boldOffset, float shadowX, float shadowY, Matrix4f matrix4f, IVertexBuilder builder, float red, float green, float blue, float alpha, int p_228077_13_);
 
     @Shadow
     @Final
@@ -40,7 +40,7 @@ public abstract class MixinFontRenderer
     private TextureManager textureManager;
 
     @Overwrite
-    private float func_228081_c_(String text, float x, float y, int color, boolean dropShadow, Matrix4f matrix4f, IRenderTypeBuffer renderBuffer, boolean depthRender, int p_228081_9_, int p_228081_10_)
+    private float renderStringAtPos(String text, float x, float y, int color, boolean dropShadow, Matrix4f matrix4f, IRenderTypeBuffer renderBuffer, boolean depthRender, int p_228081_9_, int p_228081_10_)
     {
         float shadowAlpha = dropShadow ? 0.25F : 1.0F;
         float redRaw = (color >> 16 & 255) / 255.0F * shadowAlpha;
@@ -145,7 +145,7 @@ public abstract class MixinFontRenderer
                     float boldOffset = bold ? iglyph.getBoldOffset() : 0.0F;
                     float shadowOffset = dropShadow ? iglyph.getShadowOffset() : 0.0F;
                     IVertexBuilder ivertexbuilder = renderBuffer.getBuffer(texturedGlyph.getRenderType(depthRender));
-                    this.func_228077_a_(texturedGlyph, bold, italic, boldOffset, x2 + shadowOffset, y + shadowOffset, matrix4f, ivertexbuilder, red, green, blue, alpha, p_228081_10_);
+                    this.drawGlyph(texturedGlyph, bold, italic, boldOffset, x2 + shadowOffset, y + shadowOffset, matrix4f, ivertexbuilder, red, green, blue, alpha, p_228081_10_);
                 }
 
                 float advance = iglyph.getAdvance(bold);
