@@ -144,7 +144,7 @@ public abstract class MixinFontRenderer
                 {
                     float boldOffset = bold ? iglyph.getBoldOffset() : 0.0F;
                     float shadowOffset = dropShadow ? iglyph.getShadowOffset() : 0.0F;
-                    IVertexBuilder ivertexbuilder = renderBuffer.getBuffer(texturedGlyph.func_228163_a_(depthRender));
+                    IVertexBuilder ivertexbuilder = renderBuffer.getBuffer(texturedGlyph.getRenderType(depthRender));
                     this.func_228077_a_(texturedGlyph, bold, italic, boldOffset, x2 + shadowOffset, y + shadowOffset, matrix4f, ivertexbuilder, red, green, blue, alpha, p_228081_10_);
                 }
 
@@ -174,12 +174,12 @@ public abstract class MixinFontRenderer
 
         if (!list.isEmpty())
         {
-            TexturedGlyph texturedglyph1 = this.font.func_228157_b_();
-            IVertexBuilder ivertexbuilder1 = renderBuffer.getBuffer(texturedglyph1.func_228163_a_(depthRender));
+            TexturedGlyph texturedglyph1 = this.font.getWhiteGlyph();
+            IVertexBuilder ivertexbuilder1 = renderBuffer.getBuffer(texturedglyph1.getRenderType(depthRender));
 
             for (TexturedGlyph.Effect effect : list)
             {
-                texturedglyph1.func_228162_a_(effect, matrix4f, ivertexbuilder1, p_228081_10_);
+                texturedglyph1.renderEffect(effect, matrix4f, ivertexbuilder1, p_228081_10_);
             }
         }
         return x2;

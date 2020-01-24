@@ -30,12 +30,12 @@ public class ClientUtils
 
     public static boolean isKeyDown(int key)
     {
-        return GLFW.glfwGetKey(Minecraft.getInstance().func_228018_at_().getHandle(), key) == GLFW.GLFW_PRESS;
+        return GLFW.glfwGetKey(Minecraft.getInstance().getMainWindow().getHandle(), key) == GLFW.GLFW_PRESS;
     }
 
     public static boolean isMouseDown(int button)
     {
-        return GLFW.glfwGetMouseButton(Minecraft.getInstance().func_228018_at_().getHandle(), button) == GLFW.GLFW_PRESS;
+        return GLFW.glfwGetMouseButton(Minecraft.getInstance().getMainWindow().getHandle(), button) == GLFW.GLFW_PRESS;
     }
 
     public static boolean isShiftKeyDown()
