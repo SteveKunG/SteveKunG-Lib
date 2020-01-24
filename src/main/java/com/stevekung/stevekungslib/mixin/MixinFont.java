@@ -21,14 +21,14 @@ public abstract class MixinFont
     @Shadow
     @Final
     @Mutable
-    private static EmptyGlyph field_212460_b;
+    private static EmptyGlyph EMPTY_GLYPH;
 
     @Inject(method = "getGlyph(C)Lnet/minecraft/client/gui/fonts/TexturedGlyph;", cancellable = true, at = @At("HEAD"))
     private void getGlyph(char charac, CallbackInfoReturnable<TexturedGlyph> info)
     {
         if (ColorUtils.isMarker(charac))
         {
-            info.setReturnValue(field_212460_b);
+            info.setReturnValue(EMPTY_GLYPH);
         }
     }
 
