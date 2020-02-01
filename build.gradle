@@ -61,7 +61,7 @@ minecraft {
 
 dependencies {
     minecraft "net.minecraftforge:forge:${forge_version}"
-    compile "org.spongepowered:mixin:0.8-SNAPSHOT"
+    compile "org.spongepowered:mixin:0.8.1-SNAPSHOT"
 }
 
 repositories {
