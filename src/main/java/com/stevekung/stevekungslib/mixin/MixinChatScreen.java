@@ -35,9 +35,15 @@ public abstract class MixinChatScreen extends Screen
     }
 
     @Inject(method = "render(IIF)V", at = @At("HEAD"))
-    private void render(int mouseX, int mouseY, float partialTicks, CallbackInfo info)
+    private void renderPre(int mouseX, int mouseY, float partialTicks, CallbackInfo info)
     {
-        ChatScreenRegistry.getChatScreen().forEach(screen -> screen.render(this.buttons, mouseX, mouseY, partialTicks));
+        ChatScreenRegistry.getChatScreen().forEach(screen -> screen.renderPre(this.buttons, mouseX, mouseY, partialTicks));
+    }
+
+    @Inject(method = "render(IIF)V", at = @At("HEAD"))
+    private void renderPost(int mouseX, int mouseY, float partialTicks, CallbackInfo info)
+    {
+        ChatScreenRegistry.getChatScreen().forEach(screen -> screen.renderPost(this.buttons, mouseX, mouseY, partialTicks));
     }
 
     @Inject(method = "tick()V", at = @At("RETURN"))

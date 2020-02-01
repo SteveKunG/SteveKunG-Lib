@@ -8,7 +8,8 @@ import net.minecraft.client.gui.widget.Widget;
 public interface IChatScreen
 {
     void init(List<Widget> buttons, List<IGuiEventListener> children, int width, int height);
-    void render(List<Widget> buttons, int mouseX, int mouseY, float partialTicks);
+    void renderPre(List<Widget> buttons, int mouseX, int mouseY, float partialTicks);
+    void renderPost(List<Widget> buttons, int mouseX, int mouseY, float partialTicks);
     void tick(List<Widget> buttons, List<IGuiEventListener> children, int width, int height);
     void onClose();
     boolean mouseScrolled(double mouseX, double mouseY, double scrollDelta);
