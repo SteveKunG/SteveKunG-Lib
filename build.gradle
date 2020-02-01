@@ -61,7 +61,7 @@ minecraft {
 
 dependencies {
     minecraft "net.minecraftforge:forge:${forge_version}"
-    compile "org.spongepowered:mixin:0.8-SNAPSHOT"
+    compile "org.spongepowered:mixin:0.8.1-SNAPSHOT"
 }
 
 repositories {
@@ -73,8 +73,10 @@ repositories {
     }
 }
 
-mixin {
-    add sourceSets.main, "mixins.stevekung's_lib.refmap.json"
+sourceSets {
+    main {
+        ext.refMap = "mixins.stevekung's_lib.refmap.json"
+    }
 }
 
 jar {
@@ -87,7 +89,7 @@ jar {
 
 task sourcesJar(type: Jar) {
     from sourceSets.main.allSource
-	baseName = "SteveKunG's-Lib-" + mcVersion
+    baseName = "SteveKunG's-Lib-" + mcVersion
     classifier = "sources"
 }
 
