@@ -15,6 +15,7 @@ import net.minecraft.util.Util;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
@@ -50,12 +51,17 @@ public class CommonUtils
 
     public static <T extends Event> void addModListener(Consumer<T> consumer)
     {
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(consumer);
+        CommonUtils.getModEventBus().addListener(consumer);
     }
 
     public static void registerModEventBus(Object target)
     {
-        FMLJavaModLoadingContext.get().getModEventBus().register(target);
+        CommonUtils.getModEventBus().register(target);
+    }
+
+    public static IEventBus getModEventBus()
+    {
+        return FMLJavaModLoadingContext.get().getModEventBus();
     }
 
     public static void registerConfig(ModConfig.Type type, ForgeConfigSpec.Builder builder)

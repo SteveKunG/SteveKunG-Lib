@@ -1,5 +1,7 @@
 package com.stevekung.stevekungslib.utils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Supplier;
 
 import com.stevekung.stevekungslib.utils.enums.EntityTrackerType;
@@ -34,6 +36,7 @@ public class CommonRegistryUtils
     private static DeferredRegister<Biome> BIOMES;
     private static DeferredRegister<EntityType<?>> ENTITIES;
     private static DeferredRegister<SoundEvent> SOUND_EVENTS;
+    private static final List<DeferredRegister<?>> ALL_REGISTRIES = new ArrayList<>();
 
     public CommonRegistryUtils(String modId)
     {
@@ -45,6 +48,14 @@ public class CommonRegistryUtils
         CommonRegistryUtils.BIOMES = new DeferredRegister<>(ForgeRegistries.BIOMES, modId);
         CommonRegistryUtils.ENTITIES = new DeferredRegister<>(ForgeRegistries.ENTITIES, modId);
         CommonRegistryUtils.SOUND_EVENTS = new DeferredRegister<>(ForgeRegistries.SOUND_EVENTS, modId);
+        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.BLOCKS);
+        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.ITEMS);
+        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.FLUIDS);
+        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.TILE_ENTITIES);
+        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.POTIONS);
+        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.BIOMES);
+        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.ENTITIES);
+        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.SOUND_EVENTS);
     }
 
     public void registerBlock(Block block, String name, ItemGroup group)
@@ -137,5 +148,13 @@ public class CommonRegistryUtils
     public SoundEvent registerRecord(String name)
     {
         return this.registerSound("record." + name);
+    }
+
+    public void registerAll()
+    {
+        for (DeferredRegister<?> registry : CommonRegistryUtils.ALL_REGISTRIES)
+        {
+            registry.register(CommonUtils.getModEventBus());
+        }
     }
 }
