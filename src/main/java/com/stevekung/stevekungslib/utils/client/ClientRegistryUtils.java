@@ -55,7 +55,7 @@ public class ClientRegistryUtils
 
     public static void renderTESR(TileEntity tile, MatrixStack stack, IRenderTypeBuffer renderType, int color1, int color2)
     {
-        TileEntityRendererDispatcher.instance.renderNullable(tile, stack, renderType, color1, color2);
+        TileEntityRendererDispatcher.instance.renderItem(tile, stack, renderType, color1, color2);
     }
 
     public static void registerBlockColor(IBlockColor blockColor, Block block)
