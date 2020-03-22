@@ -17,6 +17,8 @@ plugins {
 }
 
 def mcVersion = project.mc_version
+def username = project.username
+def password = project.password
 
 apply plugin: "net.minecraftforge.gradle"
 apply plugin: "org.spongepowered.mixin"
@@ -36,28 +38,17 @@ minecraft {
 
     runs {
         client = {
-            workingDirectory project.file("run").canonicalPath
+            workingDirectory project.file("run")
             source sourceSets.main
-
-            mods {
-                stevekungslib {
-                    source sourceSets.main
-                }
-            }
+            args "--mixin", "mixins.stevekung's_lib.json", "--username", username, "--password", password
         }
         server = {
-            workingDirectory project.file("run").canonicalPath
+            workingDirectory project.file("run")
             source sourceSets.main
-
-            mods {
-                stevekungslib {
-                    source sourceSets.main
-                }
-            }
+            args "--mixin", "mixins.stevekung's_lib.json"
         }
     }
 }
-
 
 dependencies {
     minecraft "net.minecraftforge:forge:${forge_version}"
@@ -113,7 +104,7 @@ curseforge {
     project {
         id = "296019"
         changelog = "Change Log"
-        changelogType = "text"
+        changelogType = "html"
         releaseType = "release"
         addGameVersion mcVersion
 
