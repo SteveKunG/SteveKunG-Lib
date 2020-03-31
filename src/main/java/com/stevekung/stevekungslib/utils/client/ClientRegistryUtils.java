@@ -2,14 +2,9 @@ package com.stevekung.stevekungslib.utils.client;
 
 import javax.annotation.Nonnull;
 
-import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.color.IBlockColor;
-import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.entity.Entity;
-import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -49,20 +44,5 @@ public class ClientRegistryUtils
     public static void renderTESR(TileEntity tile, double yOffset)
     {
         TileEntityRendererDispatcher.instance.render(tile, 0.0D, yOffset, 0.0D, 0.0F);
-    }
-
-    public static void registerBlockColor(IBlockColor blockColor, Block block)
-    {
-        Minecraft.getInstance().getBlockColors().register(blockColor, block);
-    }
-
-    public static void registerItemColor(IItemColor blockColor, Block block)
-    {
-        Minecraft.getInstance().getItemColors().register(blockColor, block);
-    }
-
-    public static void registerItemColor(IItemColor blockColor, Item item)
-    {
-        Minecraft.getInstance().getItemColors().register(blockColor, item);
     }
 }
