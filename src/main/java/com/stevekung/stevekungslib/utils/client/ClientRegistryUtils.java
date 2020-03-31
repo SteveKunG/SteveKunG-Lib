@@ -6,16 +6,11 @@ import javax.annotation.Nonnull;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 
-import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.color.IBlockColor;
-import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
@@ -56,20 +51,5 @@ public class ClientRegistryUtils
     public static void renderTESR(TileEntity tile, MatrixStack stack, IRenderTypeBuffer renderType, int color1, int color2)
     {
         TileEntityRendererDispatcher.instance.renderItem(tile, stack, renderType, color1, color2);
-    }
-
-    public static void registerBlockColor(IBlockColor blockColor, Block block)
-    {
-        Minecraft.getInstance().getBlockColors().register(blockColor, block);
-    }
-
-    public static void registerItemColor(IItemColor blockColor, Block block)
-    {
-        Minecraft.getInstance().getItemColors().register(blockColor, block);
-    }
-
-    public static void registerItemColor(IItemColor blockColor, Item item)
-    {
-        Minecraft.getInstance().getItemColors().register(blockColor, item);
     }
 }
