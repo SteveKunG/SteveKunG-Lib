@@ -28,7 +28,7 @@ public class MixinGameRenderer
         }
     }
 
-    @Inject(method = "setupCameraTransform(F)V", at = @At(value = "INVOKE", target = "net/minecraft/client/renderer/GameRenderer.applyBobbing(F)V", shift = At.Shift.AFTER))
+    @Inject(method = "setupCameraTransform(F)V", at = @At(value = "INVOKE", target = "net/minecraft/client/renderer/GameRenderer.hurtCameraEffect(F)V", shift = At.Shift.AFTER))
     private void injectCameraEvent(float partialTicks, CallbackInfo info)
     {
         EventHooksClient.onCameraTransform(this.rendererUpdateCount, partialTicks);
