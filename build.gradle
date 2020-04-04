@@ -110,6 +110,9 @@ curseforge {
 
         mainArtifact(jar) {
             displayName = "SteveKunG's-Lib-" + mcVersion + "-" + version
+            relations {
+                requiredLibrary "mixinbootstrap"
+            }
         }
         addArtifact sourcesJar
         addArtifact deobfJar

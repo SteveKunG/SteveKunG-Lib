@@ -21,11 +21,12 @@ import net.minecraft.util.ResourceLocation;
 @Mixin(Minecraft.class)
 public abstract class MixinMinecraft
 {
+    private final Minecraft mc = (Minecraft) (Object) this;
+
     @Inject(method = "<init>", at = @At("RETURN"))
     private void create(GameConfiguration gameConfig, CallbackInfo info)
     {
-        Minecraft mc = Minecraft.getInstance();
-        ClientUtils.unicodeFontRenderer = new FontRenderer(mc.textureManager, new Font(mc.textureManager, new ResourceLocation(SteveKunGLib.MOD_ID, "unicode")));
+        ClientUtils.unicodeFontRenderer = new FontRenderer(this.mc.textureManager, new Font(this.mc.textureManager, new ResourceLocation(SteveKunGLib.MOD_ID, "unicode")));
         IGlyphProvider provider = new UnicodeTextureGlyphProvider.Factory(new ResourceLocation("font/glyph_sizes.bin"), "minecraft:font/unicode_page_%s.png").create(Minecraft.getInstance().getResourceManager());
         ClientUtils.unicodeFontRenderer.setGlyphProviders(Collections.singletonList(provider));
         SteveKunGLib.LOGGER.info("Unicode Font initialized");
