@@ -45,6 +45,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class CommonRegistryUtils
 {
     private static final List<DeferredRegister<?>> ALL_REGISTRIES = new ArrayList<>();
+    private final String modId;
 
     private static DeferredRegister<Block> BLOCKS;
     private static DeferredRegister<Enchantment> ENCHANTMENTS;
@@ -75,6 +76,7 @@ public class CommonRegistryUtils
 
     public CommonRegistryUtils(String modId)
     {
+        this.modId = modId;
         CommonRegistryUtils.BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, modId);
         CommonRegistryUtils.ENCHANTMENTS = new DeferredRegister<>(ForgeRegistries.ENCHANTMENTS, modId);
         CommonRegistryUtils.ENTITY_TYPES = new DeferredRegister<>(ForgeRegistries.ENTITIES, modId);
@@ -242,14 +244,19 @@ public class CommonRegistryUtils
         CommonRegistryUtils.TILE_ENTITY_TYPES.register(name, () -> type);
     }
 
-    public SoundEvent registerSound(String name)
+    public void registerSound(SoundEvent event, String name)
     {
-        return CommonRegistryUtils.SOUND_EVENTS.register(name, () -> new SoundEvent(new ResourceLocation(name))).get();
+        CommonRegistryUtils.SOUND_EVENTS.register(name, () -> event);
     }
 
-    public SoundEvent registerMusicDisc(String name)
+    public SoundEvent createSound(String name)
     {
-        return this.registerSound("music_disc." + name);
+        return new SoundEvent(new ResourceLocation(this.modId, name));
+    }
+
+    public void registerMusicDisc(SoundEvent event, String name)
+    {
+        this.registerSound(event, "music_disc." + name);
     }
 
     public void registerPointOfInterestType(PointOfInterestType type, String name)
