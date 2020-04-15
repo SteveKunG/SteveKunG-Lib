@@ -18,10 +18,10 @@ import net.minecraft.client.renderer.Matrix4f;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.util.text.TextFormatting;
 
-@Mixin(FontRenderer.class)
+@Mixin(value = FontRenderer.class, priority = 100)
 public abstract class MixinFontRenderer
 {
-    private int state = 0;
+    private int state;
     private int red;
     private int green;
     private int blue;
@@ -39,6 +39,10 @@ public abstract class MixinFontRenderer
     @Mutable
     private TextureManager textureManager;
 
+    /**
+     * @reason No way to modify r,g,b before renderGlyph()
+     * @author SteveKunG
+     */
     @Overwrite
     private float renderStringAtPos(String text, float x, float y, int color, boolean dropShadow, Matrix4f matrix4f, IRenderTypeBuffer renderBuffer, boolean depthRender, int p_228081_9_, int p_228081_10_)
     {
