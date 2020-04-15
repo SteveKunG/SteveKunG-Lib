@@ -26,7 +26,7 @@ public abstract class MixinServerChunkProvider
     {
         this.that.chunkManager.getLoadedChunksIterable().forEach(holder ->
         {
-            Optional<Chunk> optional = holder.func_219297_b().getNow(ChunkHolder.UNLOADED_CHUNK).left();
+            Optional<Chunk> optional = holder.getEntityTickingFuture().getNow(ChunkHolder.UNLOADED_CHUNK).left();
 
             if (optional.isPresent())
             {
