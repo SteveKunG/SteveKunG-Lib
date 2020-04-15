@@ -21,10 +21,10 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 
-@Mixin(FontRenderer.class)
+@Mixin(value = FontRenderer.class, priority = 100)
 public abstract class MixinFontRenderer
 {
-    private int state = 0;
+    private int state;
     private int red;
     private int green;
     private int blue;
@@ -42,6 +42,10 @@ public abstract class MixinFontRenderer
     @Mutable
     private TextureManager textureManager;
 
+    /**
+     * @reason No way to modify r,g,b before renderGlyph()
+     * @author SteveKunG
+     */
     @Overwrite
     private float renderStringAtPos(String text, float x, float y, int color, boolean dropShadow)
     {

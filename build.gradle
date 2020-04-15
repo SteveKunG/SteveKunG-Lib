@@ -1,7 +1,7 @@
 buildscript {
     repositories {
-        maven { url = "https://files.minecraftforge.net/maven" }
-        maven { url = "https://repo.spongepowered.org/maven" }
+        maven { url "https://files.minecraftforge.net/maven" }
+        maven { url "https://repo.spongepowered.org/maven" }
         jcenter()
         mavenCentral()
     }
@@ -23,7 +23,6 @@ def password = project.password
 apply plugin: "net.minecraftforge.gradle"
 apply plugin: "org.spongepowered.mixin"
 apply plugin: "eclipse"
-apply plugin: "maven-publish"
 
 import net.minecraftforge.gradle.common.task.SignJar
 
@@ -34,15 +33,15 @@ sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = co
 
 minecraft {
     mappings channel: "stable", version: "${mcp_mapping}"
-    accessTransformer = file("src/main/resources/META-INF/accesstransformer.cfg")
+    accessTransformer file("src/main/resources/META-INF/accesstransformer.cfg")
 
     runs {
-        client = {
+        client {
             workingDirectory project.file("run")
             source sourceSets.main
             args "--mixin", "mixins.stevekung's_lib.json", "--username", username, "--password", password
         }
-        server = {
+        server {
             workingDirectory project.file("run")
             source sourceSets.main
             args "--mixin", "mixins.stevekung's_lib.json"

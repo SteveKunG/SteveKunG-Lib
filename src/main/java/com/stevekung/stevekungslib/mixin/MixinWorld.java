@@ -20,6 +20,10 @@ public abstract class MixinWorld
 {
     private final World that = (World) (Object) this;
 
+    /**
+     * @reason Currently vanilla doesn't support custom fire when extinguish
+     * @author SteveKunG
+     */
     @Overwrite
     public boolean extinguishFire(@Nullable PlayerEntity player, BlockPos pos, Direction side)
     {
