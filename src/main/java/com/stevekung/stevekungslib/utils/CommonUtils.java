@@ -49,6 +49,11 @@ public class CommonUtils
         MinecraftForge.EVENT_BUS.addListener(consumer);
     }
 
+    public static boolean post(Event event)
+    {
+        return MinecraftForge.EVENT_BUS.post(event);
+    }
+
     public static <T extends Event> void addModListener(Consumer<T> consumer)
     {
         CommonUtils.getModEventBus().addListener(consumer);
