@@ -1,3 +1,3 @@
 # Change Log
 
-* Update sound event registry
+* * Switch ChatScreenRegistry to use forge event
