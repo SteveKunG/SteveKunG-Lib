@@ -15,12 +15,9 @@ public class NumberWidget extends TextFieldWidget
     @Override
     public void writeText(String textToWrite)
     {
-        for (int i = 0; i < textToWrite.length(); i++)
+        if (NumberUtils.isNumeric(textToWrite))
         {
-            if (NumberUtils.isNumber(textToWrite.charAt(i)))
-            {
-                super.writeText(textToWrite);
-            }
+            super.writeText(textToWrite);
         }
     }
 }

@@ -8,7 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.thread.EffectiveSide;
@@ -75,9 +75,9 @@ public class ClientUtils
         ClientUtils.printClientMessage(JsonUtils.create(text));
     }
 
-    public static void printClientMessage(String text, Style color)
+    public static void printClientMessage(String text, TextFormatting color)
     {
-        ClientUtils.printClientMessage(JsonUtils.create(text).setStyle(color));
+        ClientUtils.printClientMessage(JsonUtils.create(text).applyTextStyle(color));
     }
 
     public static void printClientMessage(ITextComponent component)

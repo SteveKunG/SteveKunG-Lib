@@ -4,6 +4,8 @@ import com.stevekung.stevekungslib.client.event.ClientEventHandler;
 import com.stevekung.stevekungslib.core.SteveKunGLib;
 import com.stevekung.stevekungslib.utils.client.ClientUtils;
 
+import net.minecraft.util.text.TextFormatting;
+
 public class ColorUtils
 {
     public static final int CUSTOM_COLOR_MARKER = 60160;
@@ -66,7 +68,7 @@ public class ColorUtils
             if (printException)
             {
                 SteveKunGLib.LOGGER.error("Invalid RGB Color format at option {}!", optionName);
-                ClientUtils.printClientMessage("Invalid RGB Color format at option " + optionName + "!", JsonUtils.RED);
+                ClientUtils.printClientMessage("Invalid RGB Color format at option " + optionName + "!", TextFormatting.RED);
                 e.printStackTrace();
             }
             return new RGB(true);
@@ -89,7 +91,7 @@ public class ColorUtils
             if (printException)
             {
                 SteveKunGLib.LOGGER.error("Invalid RGB Color format at option {}!", optionName);
-                ClientUtils.printClientMessage("Invalid RGB Color format at option " + optionName + "!", JsonUtils.RED);
+                ClientUtils.printClientMessage("Invalid RGB Color format at option " + optionName + "!", TextFormatting.RED);
                 e.printStackTrace();
             }
             return new RGB(true);
