@@ -8,8 +8,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.minecraft.client.gui.FontRenderer;
-import stevekung.mods.stevekunglib.client.gui.GuiChatRegistry;
-import stevekung.mods.stevekunglib.client.gui.IEntityHoverChat;
 
 @Mixin(FontRenderer.class)
 public abstract class ColoredFontRendererMixin
@@ -35,6 +33,18 @@ public abstract class ColoredFontRendererMixin
 
     @Shadow
     protected abstract int renderString(String text, float x, float y, int color, boolean dropShadow);
+
+    @Shadow
+    private static boolean isFormatColor(char colorChar)
+    {
+        return false;
+    }
+
+    @Shadow
+    private static boolean isFormatSpecial(char formatChar)
+    {
+        return false;
+    }
 
     @Inject(method = "renderString(Ljava/lang/String;FFIZ)I", at = @At("HEAD"))
     private int renderString(String text, float x, float y, int color, boolean dropShadow, CallbackInfoReturnable info)
@@ -134,30 +144,6 @@ public abstract class ColoredFontRendererMixin
     }
 
     @Overwrite
-    public int drawString(String text, float x, float y, int color, boolean dropShadow)
-    {
-        for (IEntityHoverChat entity : GuiChatRegistry.getEntityHoverChatList())
-        {
-            text = entity.addEntityComponent(text);
-        }
-
-        this.enableAlpha();
-        this.resetStyles();
-        int i;
-
-        if (dropShadow)
-        {
-            i = this.renderString(text, x + 1.0F, y + 1.0F, color, true);
-            i = Math.max(i, this.renderString(text, x, y, color, false));
-        }
-        else
-        {
-            i = this.renderString(text, x, y, color, false);
-        }
-        return i;
-    }
-
-    @Overwrite
     public static String getFormatFromString(String text)
     {
         String s = "";
@@ -186,15 +172,5 @@ public abstract class ColoredFontRendererMixin
             }
         }
         return s;
-    }
-
-    private static boolean isFormatColor(char colorChar)
-    {
-        return colorChar >= '0' && colorChar <= '9' || colorChar >= 'a' && colorChar <= 'f' || colorChar >= 'A' && colorChar <= 'F';
-    }
-
-    private static boolean isFormatSpecial(char formatChar)
-    {
-        return formatChar >= 'k' && formatChar <= 'o' || formatChar >= 'K' && formatChar <= 'O' || formatChar == 'r' || formatChar == 'R';
     }
 }

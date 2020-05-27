@@ -2,6 +2,7 @@ package stevekung.mods.stevekunglib.mixin;
 
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -16,6 +17,7 @@ public class ItemRendererMixin
 {
     @Shadow
     @Final
+    @Mutable
     private Minecraft mc;
 
     @Inject(method = "renderOverlays(F)V", cancellable = true, at = @At(value = "INVOKE", target = "net/minecraft/client/entity/EntityPlayerSP.isSpectator()Z", shift = At.Shift.AFTER))
