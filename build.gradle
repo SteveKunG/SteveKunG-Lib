@@ -108,8 +108,8 @@ curseforge {
     apiKey = project.stevekungs_lib_api
     project {
         id = "296019"
-        changelog = "Change Log"
-        changelogType = "text"
+        changelog = file("CHANGE_LOG.md")
+        changelogType = "markdown"
         releaseType = "release"
         addGameVersion mcVersion
 
