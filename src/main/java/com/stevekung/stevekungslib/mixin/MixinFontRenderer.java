@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.*;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.stevekung.stevekungslib.utils.ColorUtils;
-import com.stevekung.stevekungslib.utils.client.GLConstants;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.fonts.Font;
@@ -60,7 +60,7 @@ public abstract class MixinFontRenderer
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder builder = tessellator.getBuffer();
         ResourceLocation resource = null;
-        builder.begin(GLConstants.QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
+        builder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
         boolean obfuscated = false;
         boolean bold = false;
         boolean italic = false;
@@ -159,7 +159,7 @@ public abstract class MixinFontRenderer
                     {
                         tessellator.draw();
                         this.textureManager.bindTexture(id);
-                        builder.begin(GLConstants.QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
+                        builder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
                         resource = id;
                     }
                     boldOffset = bold ? glyph.getBoldOffset() : 0.0F;
@@ -187,7 +187,7 @@ public abstract class MixinFontRenderer
         if (!list.isEmpty())
         {
             GlStateManager.disableTexture();
-            builder.begin(GLConstants.QUADS, DefaultVertexFormats.POSITION_COLOR);
+            builder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
             Iterator<FontRenderer.Entry> it = list.iterator();
 
             while (it.hasNext())
