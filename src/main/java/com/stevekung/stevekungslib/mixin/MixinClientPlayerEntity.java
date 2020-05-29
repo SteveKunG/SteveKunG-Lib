@@ -35,11 +35,11 @@ public abstract class MixinClientPlayerEntity
     {
         if (message.length() < 2 || !message.startsWith("/"))
         {
-            info.cancel();
+            return;
         }
         if (!ClientCommands.hasCommand(message.substring(1).split(" ")[0]))
         {
-            info.cancel();
+            return;
         }
 
         boolean cancel = false;
