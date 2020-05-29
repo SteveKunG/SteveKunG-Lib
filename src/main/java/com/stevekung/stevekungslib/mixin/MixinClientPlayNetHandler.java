@@ -23,7 +23,7 @@ public class MixinClientPlayNetHandler
     @Shadow
     private CommandDispatcher<ISuggestionProvider> commandDispatcher;
 
-    @Inject(method = "<init>", at = @At("RETURN"))
+    @Inject(method = "<init>(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/gui/screen/Screen;Lnet/minecraft/network/NetworkManager;Lcom/mojang/authlib/GameProfile;)V", at = @At("RETURN"))
     private void onConstruct(Minecraft mc, Screen screen, NetworkManager manager, GameProfile profile, CallbackInfo info)
     {
         ClientCommands.buildSuggestion(this.commandDispatcher);

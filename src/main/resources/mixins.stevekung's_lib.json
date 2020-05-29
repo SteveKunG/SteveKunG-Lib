@@ -6,7 +6,7 @@
     "refmap": "mixins.stevekung's_lib.refmap.json",
     "target": "@env(DEFAULT)",
     "mixins": [
-        "MixinServerChunkProvider",
+        "MixinServerWorld",
         "MixinWorld"
     ],
     "client": [

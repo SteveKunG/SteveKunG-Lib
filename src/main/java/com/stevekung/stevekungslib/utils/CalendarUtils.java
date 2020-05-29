@@ -35,10 +35,9 @@ public class CalendarUtils
         {
             return Calendar.getInstance().get(Calendar.DATE) == day;
         }
-        else if (flag == 1)
+        else
         {
             return Calendar.getInstance().get(Calendar.DATE) >= day && Calendar.getInstance().get(Calendar.DATE) <= day + 2;
         }
-        return false;
     }
 }

@@ -5,7 +5,7 @@ issueTrackerURL="https://github.com/SteveKunG/SteveKunG-Lib/issues"
 
 [[mods]]
 modId="stevekungs_lib"
-version="3.0.5"
+version="3.0.6"
 displayName="SteveKunG's Lib"
 description="Code and Utilities for SteveKunG's mods!"
 displayURL="https://minecraft.curseforge.com/projects/stevekungs-lib"
@@ -15,7 +15,7 @@ authors="SteveKunG"
 [[dependencies.stevekungs_lib]]
     modId="forge"
     mandatory=true
-    versionRange="[31,)"
+    versionRange="[31.2.0,)"
     ordering="NONE"
     side="BOTH"
 
