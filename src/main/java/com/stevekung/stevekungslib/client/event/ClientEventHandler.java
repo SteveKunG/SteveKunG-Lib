@@ -2,6 +2,7 @@ package com.stevekung.stevekungslib.client.event;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.MainMenuScreen;
+import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -21,11 +22,6 @@ public class ClientEventHandler
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event)
     {
-        if (this.mc.currentScreen instanceof MainMenuScreen)
-        {
-            ClientEventHandler.ticks = 0;
-            ClientEventHandler.ticksPaused = 0;
-        }
         if (event.phase == Phase.START)
         {
             ClientEventHandler.ticks++;
@@ -35,6 +31,16 @@ public class ClientEventHandler
             {
                 ClientEventHandler.ticksPaused++;
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void onGuiOpen(GuiOpenEvent event)
+    {
+        if (event.getGui() instanceof MainMenuScreen)
+        {
+            ClientEventHandler.ticks = 0;
+            ClientEventHandler.ticksPaused = 0;
         }
     }
 }
