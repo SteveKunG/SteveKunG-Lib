@@ -1,3 +1,5 @@
 # Change Log
 
-* * Switch ChatScreenRegistry to use forge event
+* + Add more decimal formats
+* * Some fix to mixins
+* * Fixed bug in NumberUtils with empty char
