@@ -42,7 +42,7 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
     }
 
     @Override
-    public boolean func_225555_a_(IChunk chunk, Function<BlockPos, Biome> biomeGetter, Random rand, int seaLevel, int chunkX, int chunkZ, int originalX, int originalZ, BitSet carvingMask, ProbabilityConfig config)
+    public boolean carveRegion(IChunk chunk, Function<BlockPos, Biome> biomeGetter, Random rand, int seaLevel, int chunkX, int chunkZ, int originalX, int originalZ, BitSet carvingMask, ProbabilityConfig config)
     {
         int i = (this.func_222704_c() * 2 - 1) * 16;
         double d0 = chunkX * 16 + rand.nextInt(16);
@@ -63,7 +63,7 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
     }
 
     @Override
-    protected boolean func_225556_a_(IChunk chunk, Function<BlockPos, Biome> biomeGetter, BitSet carvingMask, Random rand, BlockPos.Mutable mutablePos1, BlockPos.Mutable mutablePos2, BlockPos.Mutable mutablePos3, int p_222703_7_, int p_222703_8_, int p_222703_9_, int x, int z, int p_222703_12_, int y, int p_222703_14_, AtomicBoolean atomicboolean)
+    protected boolean carveBlock(IChunk chunk, Function<BlockPos, Biome> biomeGetter, BitSet carvingMask, Random rand, BlockPos.Mutable mutablePos1, BlockPos.Mutable mutablePos2, BlockPos.Mutable mutablePos3, int p_222703_7_, int p_222703_8_, int p_222703_9_, int x, int z, int p_222703_12_, int y, int p_222703_14_, AtomicBoolean atomicboolean)
     {
         int i = p_222703_12_ | p_222703_14_ << 4 | y << 8;
 
