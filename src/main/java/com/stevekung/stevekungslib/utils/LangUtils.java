@@ -12,7 +12,7 @@ public class LangUtils
 
     public static String translate(String key, Object... obj)
     {
-        return new TranslationTextComponent(key, obj).getFormattedText();
+        return new TranslationTextComponent(key, obj).getString();//TODO Test
     }
 
     public static ITextComponent translateComponent(String key)

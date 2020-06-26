@@ -2,29 +2,29 @@ package com.stevekung.stevekungslib.utils;
 
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.dispenser.ProjectileDispenseBehavior;
-import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.projectile.ArrowEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class ProjectileDispenseBehaviorBase extends ProjectileDispenseBehavior
 {
-    private final Class<? extends IProjectile> projectile;
+    private final Class<? extends ProjectileEntity> projectile;
     private final boolean isArrow;
 
-    public ProjectileDispenseBehaviorBase(Class<? extends IProjectile> projectile)
+    public ProjectileDispenseBehaviorBase(Class<? extends ProjectileEntity> projectile)
     {
         this(projectile, false);
     }
 
-    public ProjectileDispenseBehaviorBase(Class<? extends IProjectile> projectile, boolean isArrow)
+    public ProjectileDispenseBehaviorBase(Class<? extends ProjectileEntity> projectile, boolean isArrow)
     {
         this.projectile = projectile;
         this.isArrow = isArrow;
     }
 
     @Override
-    protected IProjectile getProjectileEntity(World world, IPosition pos, ItemStack itemStack)
+    protected ProjectileEntity getProjectileEntity(World world, IPosition pos, ItemStack itemStack)
     {
         if (this.isArrow)
         {

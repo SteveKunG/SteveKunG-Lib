@@ -107,11 +107,6 @@ public class ColorUtils
         return new RGB(red, green, blue, alpha);
     }
 
-    public static boolean isMarker(char charac)
-    {
-        return charac >= ColorUtils.CUSTOM_COLOR_MARKER && charac <= ColorUtils.CUSTOM_COLOR_MARKER + 255;
-    }
-
     public static class RGB
     {
         float red;

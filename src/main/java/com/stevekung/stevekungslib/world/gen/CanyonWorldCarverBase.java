@@ -3,13 +3,16 @@ package com.stevekung.stevekungslib.world.gen;
 import java.util.BitSet;
 import java.util.Random;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
+
+import org.apache.commons.lang3.mutable.MutableBoolean;
+
+import com.mojang.serialization.Codec;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.IFluidState;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -23,11 +26,11 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
     private final float[] field_202536_i = new float[1024];
     private final Set<Block> surfaceBlocks;
     private final Set<Block> subSurfaceBlocks;
-    private final IFluidState lava;
+    private final FluidState lava;
 
-    public CanyonWorldCarverBase(Set<Block> terrainBlocks, Set<Fluid> terrainFluids, Set<Block> surfaceBlocks, Set<Block> subSurfaceBlocks, IFluidState lava)
+    public CanyonWorldCarverBase(Codec<ProbabilityConfig> config, Set<Block> terrainBlocks, Set<Fluid> terrainFluids, Set<Block> surfaceBlocks, Set<Block> subSurfaceBlocks, FluidState lava)
     {
-        super(ProbabilityConfig::deserialize, 256);
+        super(config, 256);
         this.carvableBlocks = terrainBlocks;
         this.carvableFluids = terrainFluids;
         this.surfaceBlocks = surfaceBlocks;
@@ -42,7 +45,7 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
     }
 
     @Override
-    public boolean carveRegion(IChunk chunk, Function<BlockPos, Biome> biomeGetter, Random rand, int seaLevel, int chunkX, int chunkZ, int originalX, int originalZ, BitSet carvingMask, ProbabilityConfig config)
+    public boolean func_225555_a_(IChunk chunk, Function<BlockPos, Biome> biomeGetter, Random rand, int seaLevel, int chunkX, int chunkZ, int originalX, int originalZ, BitSet carvingMask, ProbabilityConfig config)
     {
         int i = (this.func_222704_c() * 2 - 1) * 16;
         double d0 = chunkX * 16 + rand.nextInt(16);
@@ -63,7 +66,7 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
     }
 
     @Override
-    protected boolean carveBlock(IChunk chunk, Function<BlockPos, Biome> biomeGetter, BitSet carvingMask, Random rand, BlockPos.Mutable mutablePos1, BlockPos.Mutable mutablePos2, BlockPos.Mutable mutablePos3, int p_222703_7_, int p_222703_8_, int p_222703_9_, int x, int z, int p_222703_12_, int y, int p_222703_14_, AtomicBoolean atomicboolean)
+    protected boolean func_230358_a_(IChunk chunk, Function<BlockPos, Biome> biomeGetter, BitSet carvingMask, Random rand, BlockPos.Mutable mutablePos1, BlockPos.Mutable mutablePos2, BlockPos.Mutable mutablePos3, int p_222703_7_, int p_222703_8_, int p_222703_9_, int x, int z, int p_222703_12_, int y, int p_222703_14_, MutableBoolean atomicboolean)
     {
         int i = p_222703_12_ | p_222703_14_ << 4 | y << 8;
 
@@ -80,7 +83,7 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
 
             if (this.surfaceBlocks.stream().anyMatch(block -> blockstate.getBlock() == block.getBlock()))
             {
-                atomicboolean.set(true);
+                atomicboolean.setTrue();
             }
 
             if (!this.canCarveBlock(blockstate, blockstate1))
@@ -97,7 +100,7 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
                 {
                     chunk.setBlockState(mutablePos1, CAVE_AIR, false);
 
-                    if (atomicboolean.get())
+                    if (atomicboolean.isTrue())
                     {
                         mutablePos3.setPos(mutablePos1).move(Direction.DOWN);
 

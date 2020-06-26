@@ -6,7 +6,7 @@ import com.stevekung.stevekungslib.utils.JsonUtils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.util.Util;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.api.distmarker.Dist;
@@ -40,33 +40,35 @@ public class ClientUtils
 
     public static boolean isShiftKeyDown()
     {
-        return Screen.hasShiftDown();
+        return false;
+        //        return Screen.hasShiftDown();TODO
     }
 
     public static boolean isControlKeyDown()
     {
-        return Screen.hasControlDown();
+        return false;
+        //        return Screen.hasControlDown();TODO
     }
 
     public static void setOverlayMessage(String message)
     {
-        Minecraft.getInstance().ingameGUI.setOverlayMessage(message, false);
+        Minecraft.getInstance().ingameGUI.setOverlayMessage(JsonUtils.create(message), false);
     }
 
     public static void setOverlayMessage(String message, int delay)
     {
-        Minecraft.getInstance().ingameGUI.setOverlayMessage(message, false);
+        Minecraft.getInstance().ingameGUI.setOverlayMessage(JsonUtils.create(message), false);
         Minecraft.getInstance().ingameGUI.overlayMessageTime = delay;
     }
 
     public static void setOverlayMessage(ITextComponent component)
     {
-        Minecraft.getInstance().ingameGUI.setOverlayMessage(component.getFormattedText(), false);
+        Minecraft.getInstance().ingameGUI.setOverlayMessage(component, false);
     }
 
     public static void setOverlayMessage(ITextComponent component, int delay)
     {
-        Minecraft.getInstance().ingameGUI.setOverlayMessage(component.getFormattedText(), false);
+        Minecraft.getInstance().ingameGUI.setOverlayMessage(component, false);
         Minecraft.getInstance().ingameGUI.overlayMessageTime = delay;
     }
 
@@ -77,14 +79,14 @@ public class ClientUtils
 
     public static void printClientMessage(String text, TextFormatting color)
     {
-        ClientUtils.printClientMessage(JsonUtils.create(text).applyTextStyle(color));
+        ClientUtils.printClientMessage(JsonUtils.create(text).func_240699_a_(color));
     }
 
     public static void printClientMessage(ITextComponent component)
     {
         if (Minecraft.getInstance().player != null)
         {
-            Minecraft.getInstance().player.sendMessage(component);
+            Minecraft.getInstance().player.sendMessage(component, Util.field_240973_b_);
         }
     }
 }

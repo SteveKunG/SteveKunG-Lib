@@ -30,14 +30,12 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.village.PointOfInterestType;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.provider.BiomeProviderType;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.carver.WorldCarver;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
 import net.minecraftforge.common.BiomeDictionary;
-import net.minecraftforge.common.ModDimension;
 import net.minecraftforge.registries.DataSerializerEntry;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -66,44 +64,43 @@ public class CommonRegistryUtils
     private static DeferredRegister<SoundEvent> SOUND_EVENTS;
     private static DeferredRegister<PointOfInterestType> POINT_OF_INTEREST_TYPES;
     private static DeferredRegister<Biome> BIOMES;
-    private static DeferredRegister<BiomeProviderType<?, ?>> BIOME_PROVIDER_TYPES;
-    private static DeferredRegister<ModDimension> MOD_DIMENSIONS;
+    //    private static DeferredRegister<BiomeProviderType<?, ?>> BIOME_PROVIDER_TYPES;TODO
+    //    private static DeferredRegister<Dimension> MOD_DIMENSIONS;
     private static DeferredRegister<WorldCarver<?>> WORLD_CARVERS;
     private static DeferredRegister<Feature<?>> FEATURES;
     private static DeferredRegister<Placement<?>> PLACEMENTS;
     private static DeferredRegister<SurfaceBuilder<?>> SURFACE_BUILDERS;
     private static DeferredRegister<DataSerializerEntry> DATA_SERIALIZERS;
 
-    @SuppressWarnings("deprecation")
     public CommonRegistryUtils(String modId)
     {
         this.modId = modId;
-        CommonRegistryUtils.BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, modId);
-        CommonRegistryUtils.ENCHANTMENTS = new DeferredRegister<>(ForgeRegistries.ENCHANTMENTS, modId);
-        CommonRegistryUtils.ENTITY_TYPES = new DeferredRegister<>(ForgeRegistries.ENTITIES, modId);
-        CommonRegistryUtils.MEMORY_MODULE_TYPES = new DeferredRegister<>(ForgeRegistries.MEMORY_MODULE_TYPES, modId);
-        CommonRegistryUtils.ACTIVITIES = new DeferredRegister<>(ForgeRegistries.ACTIVITIES, modId);
-        CommonRegistryUtils.SCHEDULES = new DeferredRegister<>(ForgeRegistries.SCHEDULES, modId);
-        CommonRegistryUtils.SENSOR_TYPES = new DeferredRegister<>(ForgeRegistries.SENSOR_TYPES, modId);
-        CommonRegistryUtils.VILLAGER_PROFESSIONS = new DeferredRegister<>(ForgeRegistries.PROFESSIONS, modId);
-        CommonRegistryUtils.FLUIDS = new DeferredRegister<>(ForgeRegistries.FLUIDS, modId);
-        CommonRegistryUtils.CONTAINER_TYPES = new DeferredRegister<>(ForgeRegistries.CONTAINERS, modId);
-        CommonRegistryUtils.ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, modId);
-        CommonRegistryUtils.RECIPE_SERIALIZERS = new DeferredRegister<>(ForgeRegistries.RECIPE_SERIALIZERS, modId);
-        CommonRegistryUtils.PARTICLE_TYPES = new DeferredRegister<>(ForgeRegistries.PARTICLE_TYPES, modId);
-        CommonRegistryUtils.EFFECTS = new DeferredRegister<>(ForgeRegistries.POTIONS, modId);
-        CommonRegistryUtils.POTIONS = new DeferredRegister<>(ForgeRegistries.POTION_TYPES, modId);
-        CommonRegistryUtils.TILE_ENTITY_TYPES = new DeferredRegister<>(ForgeRegistries.TILE_ENTITIES, modId);
-        CommonRegistryUtils.SOUND_EVENTS = new DeferredRegister<>(ForgeRegistries.SOUND_EVENTS, modId);
-        CommonRegistryUtils.POINT_OF_INTEREST_TYPES = new DeferredRegister<>(ForgeRegistries.POI_TYPES, modId);
-        CommonRegistryUtils.BIOMES = new DeferredRegister<>(ForgeRegistries.BIOMES, modId);
-        CommonRegistryUtils.BIOME_PROVIDER_TYPES = new DeferredRegister<>(ForgeRegistries.BIOME_PROVIDER_TYPES, modId);
-        CommonRegistryUtils.MOD_DIMENSIONS = new DeferredRegister<>(ForgeRegistries.MOD_DIMENSIONS, modId);
-        CommonRegistryUtils.WORLD_CARVERS = new DeferredRegister<>(ForgeRegistries.WORLD_CARVERS, modId);
-        CommonRegistryUtils.FEATURES = new DeferredRegister<>(ForgeRegistries.FEATURES, modId);
-        CommonRegistryUtils.PLACEMENTS = new DeferredRegister<>(ForgeRegistries.DECORATORS, modId);
-        CommonRegistryUtils.SURFACE_BUILDERS = new DeferredRegister<>(ForgeRegistries.SURFACE_BUILDERS, modId);
-        CommonRegistryUtils.DATA_SERIALIZERS = new DeferredRegister<>(ForgeRegistries.DATA_SERIALIZERS, modId);
+        CommonRegistryUtils.BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, modId);
+        CommonRegistryUtils.ENCHANTMENTS = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, modId);
+        CommonRegistryUtils.ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES, modId);
+        CommonRegistryUtils.MEMORY_MODULE_TYPES = DeferredRegister.create(ForgeRegistries.MEMORY_MODULE_TYPES, modId);
+        CommonRegistryUtils.ACTIVITIES = DeferredRegister.create(ForgeRegistries.ACTIVITIES, modId);
+        CommonRegistryUtils.SCHEDULES = DeferredRegister.create(ForgeRegistries.SCHEDULES, modId);
+        CommonRegistryUtils.SENSOR_TYPES = DeferredRegister.create(ForgeRegistries.SENSOR_TYPES, modId);
+        CommonRegistryUtils.VILLAGER_PROFESSIONS = DeferredRegister.create(ForgeRegistries.PROFESSIONS, modId);
+        CommonRegistryUtils.FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, modId);
+        CommonRegistryUtils.CONTAINER_TYPES = DeferredRegister.create(ForgeRegistries.CONTAINERS, modId);
+        CommonRegistryUtils.ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, modId);
+        CommonRegistryUtils.RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, modId);
+        CommonRegistryUtils.PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, modId);
+        CommonRegistryUtils.EFFECTS = DeferredRegister.create(ForgeRegistries.POTIONS, modId);
+        CommonRegistryUtils.POTIONS = DeferredRegister.create(ForgeRegistries.POTION_TYPES, modId);
+        CommonRegistryUtils.TILE_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, modId);
+        CommonRegistryUtils.SOUND_EVENTS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, modId);
+        CommonRegistryUtils.POINT_OF_INTEREST_TYPES = DeferredRegister.create(ForgeRegistries.POI_TYPES, modId);
+        CommonRegistryUtils.BIOMES = DeferredRegister.create(ForgeRegistries.BIOMES, modId);
+        //        CommonRegistryUtils.BIOME_PROVIDER_TYPES = DeferredRegister.create(ForgeRegistries.BIOME_PROVIDER_TYPES, modId);
+        //        CommonRegistryUtils.MOD_DIMENSIONS = DeferredRegister.create(ForgeRegistries.MOD_DIMENSIONS, modId);
+        CommonRegistryUtils.WORLD_CARVERS = DeferredRegister.create(ForgeRegistries.WORLD_CARVERS, modId);
+        CommonRegistryUtils.FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, modId);
+        CommonRegistryUtils.PLACEMENTS = DeferredRegister.create(ForgeRegistries.DECORATORS, modId);
+        CommonRegistryUtils.SURFACE_BUILDERS = DeferredRegister.create(ForgeRegistries.SURFACE_BUILDERS, modId);
+        CommonRegistryUtils.DATA_SERIALIZERS = DeferredRegister.create(ForgeRegistries.DATA_SERIALIZERS, modId);
 
         CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.BLOCKS);
         CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.ENCHANTMENTS);
@@ -124,8 +121,8 @@ public class CommonRegistryUtils
         CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.SOUND_EVENTS);
         CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.POINT_OF_INTEREST_TYPES);
         CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.BIOMES);
-        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.BIOME_PROVIDER_TYPES);
-        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.MOD_DIMENSIONS);
+        //        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.BIOME_PROVIDER_TYPES);
+        //        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.MOD_DIMENSIONS);
         CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.WORLD_CARVERS);
         CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.FEATURES);
         CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.PLACEMENTS);
@@ -270,10 +267,10 @@ public class CommonRegistryUtils
         CommonRegistryUtils.BIOMES.register(name, () -> biome);
     }
 
-    public void registerBiomeProviderType(BiomeProviderType<?, ?> type, String name)
-    {
-        CommonRegistryUtils.BIOME_PROVIDER_TYPES.register(name, () -> type);
-    }
+    //    public void registerBiomeProviderType(BiomeProviderType<?, ?> type, String name)TODO
+    //    {
+    //        CommonRegistryUtils.BIOME_PROVIDER_TYPES.register(name, () -> type);
+    //    }
 
     @SuppressWarnings("deprecation")
     public void registerBiomeType(Biome biome, BiomeDictionary.Type... biomeType)
@@ -286,10 +283,10 @@ public class CommonRegistryUtils
         }
     }
 
-    public void registerDimension(ModDimension dimension, String name)
-    {
-        CommonRegistryUtils.MOD_DIMENSIONS.register(name, () -> dimension);
-    }
+    //    public void registerDimension(ModDimension dimension, String name)TODO
+    //    {
+    //        CommonRegistryUtils.MOD_DIMENSIONS.register(name, () -> dimension);
+    //    }
 
     public void registerWorldCarver(WorldCarver worldCarver, String name)
     {

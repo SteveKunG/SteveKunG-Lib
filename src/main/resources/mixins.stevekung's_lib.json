@@ -16,9 +16,6 @@
         "MixinClientSuggestionProvider",
         "MixinEntityRendererManager",
         "MixinOverlayRenderer",
-        "MixinFont",
-        "MixinFontRenderer",
-        "MixinMinecraft",
         "MixinGameRenderer",
         "MixinWorldRenderer"
     ],
