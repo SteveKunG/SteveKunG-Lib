@@ -74,6 +74,7 @@ public class CommonRegistryUtils
     private static DeferredRegister<SurfaceBuilder<?>> SURFACE_BUILDERS;
     private static DeferredRegister<DataSerializerEntry> DATA_SERIALIZERS;
 
+    @SuppressWarnings("deprecation")
     public CommonRegistryUtils(String modId)
     {
         this.modId = modId;
