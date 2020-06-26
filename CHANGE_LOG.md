@@ -1,3 +1,4 @@
 # Change Log
 
-* * Fixed command not working
+* * Update NumberUtils for compact number format
+* * Clean up some class
