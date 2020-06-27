@@ -10,6 +10,7 @@ import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.IDispenseItemBehavior;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.*;
+import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.brain.memory.MemoryModuleType;
 import net.minecraft.entity.ai.brain.schedule.Activity;
 import net.minecraft.entity.ai.brain.schedule.Schedule;
@@ -31,10 +32,14 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.village.PointOfInterestType;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.Heightmap;
+import net.minecraft.world.gen.blockplacer.BlockPlacerType;
+import net.minecraft.world.gen.blockstateprovider.BlockStateProviderType;
 import net.minecraft.world.gen.carver.WorldCarver;
 import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.foliageplacer.FoliagePlacerType;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
+import net.minecraft.world.gen.treedecorator.TreeDecoratorType;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.registries.DataSerializerEntry;
 import net.minecraftforge.registries.DeferredRegister;
@@ -64,13 +69,16 @@ public class CommonRegistryUtils
     private static DeferredRegister<SoundEvent> SOUND_EVENTS;
     private static DeferredRegister<PointOfInterestType> POINT_OF_INTEREST_TYPES;
     private static DeferredRegister<Biome> BIOMES;
-    //    private static DeferredRegister<BiomeProviderType<?, ?>> BIOME_PROVIDER_TYPES;TODO
-    //    private static DeferredRegister<Dimension> MOD_DIMENSIONS;
     private static DeferredRegister<WorldCarver<?>> WORLD_CARVERS;
     private static DeferredRegister<Feature<?>> FEATURES;
     private static DeferredRegister<Placement<?>> PLACEMENTS;
     private static DeferredRegister<SurfaceBuilder<?>> SURFACE_BUILDERS;
     private static DeferredRegister<DataSerializerEntry> DATA_SERIALIZERS;
+    private static DeferredRegister<Attribute> ATTRIBUTES;
+    private static DeferredRegister<BlockStateProviderType<?>> BLOCK_STATE_PROVIDER_TYPES;
+    private static DeferredRegister<BlockPlacerType<?>> BLOCK_PLACER_TYPES;
+    private static DeferredRegister<FoliagePlacerType<?>> FOLIAGE_PLACER_TYPES;
+    private static DeferredRegister<TreeDecoratorType<?>> TREE_DECORATOR_TYPES;
 
     public CommonRegistryUtils(String modId)
     {
@@ -94,13 +102,16 @@ public class CommonRegistryUtils
         CommonRegistryUtils.SOUND_EVENTS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, modId);
         CommonRegistryUtils.POINT_OF_INTEREST_TYPES = DeferredRegister.create(ForgeRegistries.POI_TYPES, modId);
         CommonRegistryUtils.BIOMES = DeferredRegister.create(ForgeRegistries.BIOMES, modId);
-        //        CommonRegistryUtils.BIOME_PROVIDER_TYPES = DeferredRegister.create(ForgeRegistries.BIOME_PROVIDER_TYPES, modId);
-        //        CommonRegistryUtils.MOD_DIMENSIONS = DeferredRegister.create(ForgeRegistries.MOD_DIMENSIONS, modId);
         CommonRegistryUtils.WORLD_CARVERS = DeferredRegister.create(ForgeRegistries.WORLD_CARVERS, modId);
         CommonRegistryUtils.FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, modId);
         CommonRegistryUtils.PLACEMENTS = DeferredRegister.create(ForgeRegistries.DECORATORS, modId);
         CommonRegistryUtils.SURFACE_BUILDERS = DeferredRegister.create(ForgeRegistries.SURFACE_BUILDERS, modId);
         CommonRegistryUtils.DATA_SERIALIZERS = DeferredRegister.create(ForgeRegistries.DATA_SERIALIZERS, modId);
+        CommonRegistryUtils.ATTRIBUTES = DeferredRegister.create(ForgeRegistries.ATTRIBUTES, modId);
+        CommonRegistryUtils.BLOCK_STATE_PROVIDER_TYPES = DeferredRegister.create(ForgeRegistries.BLOCK_STATE_PROVIDER_TYPES, modId);
+        CommonRegistryUtils.BLOCK_PLACER_TYPES = DeferredRegister.create(ForgeRegistries.BLOCK_PLACER_TYPES, modId);
+        CommonRegistryUtils.FOLIAGE_PLACER_TYPES = DeferredRegister.create(ForgeRegistries.FOLIAGE_PLACER_TYPES, modId);
+        CommonRegistryUtils.TREE_DECORATOR_TYPES = DeferredRegister.create(ForgeRegistries.TREE_DECORATOR_TYPES, modId);
 
         CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.BLOCKS);
         CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.ENCHANTMENTS);
@@ -121,13 +132,16 @@ public class CommonRegistryUtils
         CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.SOUND_EVENTS);
         CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.POINT_OF_INTEREST_TYPES);
         CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.BIOMES);
-        //        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.BIOME_PROVIDER_TYPES);
-        //        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.MOD_DIMENSIONS);
         CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.WORLD_CARVERS);
         CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.FEATURES);
         CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.PLACEMENTS);
         CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.SURFACE_BUILDERS);
         CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.DATA_SERIALIZERS);
+        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.ATTRIBUTES);
+        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.BLOCK_STATE_PROVIDER_TYPES);
+        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.BLOCK_PLACER_TYPES);
+        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.FOLIAGE_PLACER_TYPES);
+        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.TREE_DECORATOR_TYPES);
     }
 
     // Game Object
@@ -267,11 +281,6 @@ public class CommonRegistryUtils
         CommonRegistryUtils.BIOMES.register(name, () -> biome);
     }
 
-    //    public void registerBiomeProviderType(BiomeProviderType<?, ?> type, String name)TODO
-    //    {
-    //        CommonRegistryUtils.BIOME_PROVIDER_TYPES.register(name, () -> type);
-    //    }
-
     @SuppressWarnings("deprecation")
     public void registerBiomeType(Biome biome, BiomeDictionary.Type... biomeType)
     {
@@ -282,11 +291,6 @@ public class CommonRegistryUtils
             Biome.MUTATION_TO_BASE_ID_MAP.put(biome, Registry.BIOME.getId(Registry.BIOME.getOrDefault(new ResourceLocation(biome.getParent()))));
         }
     }
-
-    //    public void registerDimension(ModDimension dimension, String name)TODO
-    //    {
-    //        CommonRegistryUtils.MOD_DIMENSIONS.register(name, () -> dimension);
-    //    }
 
     public void registerWorldCarver(WorldCarver worldCarver, String name)
     {
@@ -311,6 +315,31 @@ public class CommonRegistryUtils
     public void registerDataSerializer(DataSerializerEntry data, String name)
     {
         CommonRegistryUtils.DATA_SERIALIZERS.register(name, () -> data);
+    }
+
+    public void registerAttribute(Attribute attribute, String name)
+    {
+        CommonRegistryUtils.ATTRIBUTES.register(name, () -> attribute);
+    }
+
+    public void registerBlockStateProviderType(BlockStateProviderType<?> type, String name)
+    {
+        CommonRegistryUtils.BLOCK_STATE_PROVIDER_TYPES.register(name, () -> type);
+    }
+
+    public void registerBlockPlacerType(BlockPlacerType<?> type, String name)
+    {
+        CommonRegistryUtils.BLOCK_PLACER_TYPES.register(name, () -> type);
+    }
+
+    public void registerFoliagePlacerType(FoliagePlacerType<?> type, String name)
+    {
+        CommonRegistryUtils.FOLIAGE_PLACER_TYPES.register(name, () -> type);
+    }
+
+    public void registerTreeDecoratorType(TreeDecoratorType<?> type, String name)
+    {
+        CommonRegistryUtils.TREE_DECORATOR_TYPES.register(name, () -> type);
     }
 
     // Others

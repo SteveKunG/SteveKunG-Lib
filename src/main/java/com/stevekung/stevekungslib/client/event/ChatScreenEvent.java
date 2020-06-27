@@ -2,6 +2,8 @@ package com.stevekung.stevekungslib.client.event;
 
 import java.util.List;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+
 import net.minecraft.client.gui.IGuiEventListener;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraftforge.eventbus.api.Cancelable;
@@ -122,16 +124,23 @@ public class ChatScreenEvent extends Event
 
     public static class RenderPre extends ChatScreenEvent
     {
+        private final MatrixStack matrixStack;
         private final int mouseX;
         private final int mouseY;
         private final float partialTicks;
 
-        public RenderPre(List<Widget> buttons, List<IGuiEventListener> children, int mouseX, int mouseY, float partialTicks)
+        public RenderPre(List<Widget> buttons, List<IGuiEventListener> children, MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks)
         {
             super(buttons, children);
+            this.matrixStack = matrixStack;
             this.mouseX = mouseX;
             this.mouseY = mouseY;
             this.partialTicks = partialTicks;
+        }
+
+        public MatrixStack getMatrixStack()
+        {
+            return this.matrixStack;
         }
 
         public int getMouseX()
@@ -152,16 +161,23 @@ public class ChatScreenEvent extends Event
 
     public static class RenderPost extends ChatScreenEvent
     {
+        private final MatrixStack matrixStack;
         private final int mouseX;
         private final int mouseY;
         private final float partialTicks;
 
-        public RenderPost(List<Widget> buttons, List<IGuiEventListener> children, int mouseX, int mouseY, float partialTicks)
+        public RenderPost(List<Widget> buttons, List<IGuiEventListener> children, MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks)
         {
             super(buttons, children);
+            this.matrixStack = matrixStack;
             this.mouseX = mouseX;
             this.mouseY = mouseY;
             this.partialTicks = partialTicks;
+        }
+
+        public MatrixStack getMatrixStack()
+        {
+            return this.matrixStack;
         }
 
         public int getMouseX()

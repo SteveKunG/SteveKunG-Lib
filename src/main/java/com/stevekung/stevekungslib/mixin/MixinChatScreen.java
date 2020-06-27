@@ -38,13 +38,13 @@ public abstract class MixinChatScreen extends Screen
     @Inject(method = "func_230430_a_(Lcom/mojang/blaze3d/matrix/MatrixStack;IIF)V", at = @At("HEAD"))
     private void renderPre(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks, CallbackInfo info)
     {
-        CommonUtils.post(new ChatScreenEvent.RenderPre(this.field_230710_m_, this.field_230705_e_, mouseX, mouseY, partialTicks));
+        CommonUtils.post(new ChatScreenEvent.RenderPre(this.field_230710_m_, this.field_230705_e_, matrixStack, mouseX, mouseY, partialTicks));
     }
 
     @Inject(method = "func_230430_a_(Lcom/mojang/blaze3d/matrix/MatrixStack;IIF)V", at = @At("RETURN"))
     private void renderPost(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks, CallbackInfo info)
     {
-        CommonUtils.post(new ChatScreenEvent.RenderPost(this.field_230710_m_, this.field_230705_e_, mouseX, mouseY, partialTicks));
+        CommonUtils.post(new ChatScreenEvent.RenderPost(this.field_230710_m_, this.field_230705_e_, matrixStack, mouseX, mouseY, partialTicks));
     }
 
     @Inject(method = "func_231023_e_()V", at = @At("RETURN"))

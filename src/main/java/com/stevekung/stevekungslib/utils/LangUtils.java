@@ -5,16 +5,6 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 public class LangUtils
 {
-    public static String translate(String key)
-    {
-        return LangUtils.translate(key, new Object[0]);
-    }
-
-    public static String translate(String key, Object... obj)
-    {
-        return new TranslationTextComponent(key, obj).getString();//TODO Test
-    }
-
     public static ITextComponent translateComponent(String key)
     {
         return LangUtils.translateComponent(key, new Object[0]);

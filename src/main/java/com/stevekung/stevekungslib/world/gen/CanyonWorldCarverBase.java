@@ -7,8 +7,6 @@ import java.util.function.Function;
 
 import org.apache.commons.lang3.mutable.MutableBoolean;
 
-import com.mojang.serialization.Codec;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.fluid.Fluid;
@@ -28,9 +26,9 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
     private final Set<Block> subSurfaceBlocks;
     private final FluidState lava;
 
-    public CanyonWorldCarverBase(Codec<ProbabilityConfig> config, Set<Block> terrainBlocks, Set<Fluid> terrainFluids, Set<Block> surfaceBlocks, Set<Block> subSurfaceBlocks, FluidState lava)
+    public CanyonWorldCarverBase(Set<Block> terrainBlocks, Set<Fluid> terrainFluids, Set<Block> surfaceBlocks, Set<Block> subSurfaceBlocks, FluidState lava)
     {
-        super(config, 256);
+        super(ProbabilityConfig.field_236576_b_, 256);
         this.carvableBlocks = terrainBlocks;
         this.carvableFluids = terrainFluids;
         this.surfaceBlocks = surfaceBlocks;

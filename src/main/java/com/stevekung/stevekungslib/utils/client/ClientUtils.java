@@ -6,6 +6,7 @@ import com.stevekung.stevekungslib.utils.JsonUtils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.Util;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -40,14 +41,12 @@ public class ClientUtils
 
     public static boolean isShiftKeyDown()
     {
-        return false;
-        //        return Screen.hasShiftDown();TODO
+        return Screen.func_231173_s_();
     }
 
     public static boolean isControlKeyDown()
     {
-        return false;
-        //        return Screen.hasControlDown();TODO
+        return Screen.func_231172_r_();
     }
 
     public static void setOverlayMessage(String message)
