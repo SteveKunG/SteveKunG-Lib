@@ -41,12 +41,12 @@ public class ClientUtils
 
     public static boolean isShiftKeyDown()
     {
-        return Screen.func_231173_s_();
+        return Screen.hasShiftDown();
     }
 
     public static boolean isControlKeyDown()
     {
-        return Screen.func_231172_r_();
+        return Screen.hasControlDown();
     }
 
     public static void setOverlayMessage(String message)
@@ -85,7 +85,7 @@ public class ClientUtils
     {
         if (Minecraft.getInstance().player != null)
         {
-            Minecraft.getInstance().player.sendMessage(component, Util.field_240973_b_);
+            Minecraft.getInstance().player.sendMessage(component, Util.DUMMY_UUID);
         }
     }
 }

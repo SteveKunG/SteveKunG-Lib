@@ -23,40 +23,40 @@ public abstract class MixinChatScreen extends Screen
     }
 
     @Override
-    public void func_231164_f_()
+    public void onClose()
     {
-        super.func_231164_f_();
-        CommonUtils.post(new ChatScreenEvent.Close(this.field_230710_m_, this.field_230705_e_));
+        super.onClose();
+        CommonUtils.post(new ChatScreenEvent.Close(this.buttons, this.children));
     }
 
-    @Inject(method = "func_231160_c_()V", at = @At("RETURN"))
+    @Inject(method = "init()V", at = @At("RETURN"))
     private void init(CallbackInfo info)
     {
-        CommonUtils.post(new ChatScreenEvent.Init(this.field_230710_m_, this.field_230705_e_, this.field_230708_k_, this.field_230709_l_));
+        CommonUtils.post(new ChatScreenEvent.Init(this.buttons, this.children, this.width, this.height));
     }
 
-    @Inject(method = "func_230430_a_(Lcom/mojang/blaze3d/matrix/MatrixStack;IIF)V", at = @At("HEAD"))
+    @Inject(method = "render(Lcom/mojang/blaze3d/matrix/MatrixStack;IIF)V", at = @At("HEAD"))
     private void renderPre(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks, CallbackInfo info)
     {
-        CommonUtils.post(new ChatScreenEvent.RenderPre(this.field_230710_m_, this.field_230705_e_, matrixStack, mouseX, mouseY, partialTicks));
+        CommonUtils.post(new ChatScreenEvent.RenderPre(this.buttons, this.children, matrixStack, mouseX, mouseY, partialTicks));
     }
 
-    @Inject(method = "func_230430_a_(Lcom/mojang/blaze3d/matrix/MatrixStack;IIF)V", at = @At("RETURN"))
+    @Inject(method = "render(Lcom/mojang/blaze3d/matrix/MatrixStack;IIF)V", at = @At("RETURN"))
     private void renderPost(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks, CallbackInfo info)
     {
-        CommonUtils.post(new ChatScreenEvent.RenderPost(this.field_230710_m_, this.field_230705_e_, matrixStack, mouseX, mouseY, partialTicks));
+        CommonUtils.post(new ChatScreenEvent.RenderPost(this.buttons, this.children, matrixStack, mouseX, mouseY, partialTicks));
     }
 
-    @Inject(method = "func_231023_e_()V", at = @At("RETURN"))
+    @Inject(method = "tick()V", at = @At("RETURN"))
     private void tick(CallbackInfo info)
     {
-        CommonUtils.post(new ChatScreenEvent.Tick(this.field_230710_m_, this.field_230705_e_, this.field_230708_k_, this.field_230709_l_));
+        CommonUtils.post(new ChatScreenEvent.Tick(this.buttons, this.children, this.width, this.height));
     }
 
-    @Inject(method = "func_231043_a_(DDD)Z", cancellable = true, at = @At("HEAD"))
+    @Inject(method = "mouseScrolled(DDD)Z", cancellable = true, at = @At("HEAD"))
     private void mouseScrolled(double mouseX, double mouseY, double scrollDelta, CallbackInfoReturnable<Boolean> info)
     {
-        ChatScreenEvent.MouseScroll event = new ChatScreenEvent.MouseScroll(this.field_230710_m_, this.field_230705_e_, mouseX, mouseY, scrollDelta);
+        ChatScreenEvent.MouseScroll event = new ChatScreenEvent.MouseScroll(this.buttons, this.children, mouseX, mouseY, scrollDelta);
 
         if (CommonUtils.post(event))
         {

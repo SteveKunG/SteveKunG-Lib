@@ -56,7 +56,7 @@ public abstract class MixinClientPlayerEntity
         }
         catch (CommandException e)
         {
-            this.that.sendStatusMessage(e.getComponent().func_230531_f_().func_240699_a_(TextFormatting.RED), false);
+            this.that.sendStatusMessage(e.getComponent().deepCopy().func_240699_a_(TextFormatting.RED), false);//TODO Test
             cancel = true;
         }
         catch (CommandSyntaxException e)
