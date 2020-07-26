@@ -56,17 +56,17 @@ public abstract class MixinClientPlayerEntity
         }
         catch (CommandException e)
         {
-            this.that.sendStatusMessage(e.getComponent().deepCopy().func_240699_a_(TextFormatting.RED), false);//TODO Test
+            this.that.sendStatusMessage(e.getComponent().deepCopy().mergeStyle(TextFormatting.RED), false);//TODO Test
             cancel = true;
         }
         catch (CommandSyntaxException e)
         {
-            this.that.sendStatusMessage(new StringTextComponent(e.getContext()).func_240699_a_(TextFormatting.RED), false);
+            this.that.sendStatusMessage(new StringTextComponent(e.getContext()).mergeStyle(TextFormatting.RED), false);
             cancel = true;
         }
         catch (Exception e)
         {
-            this.that.sendStatusMessage(new TranslationTextComponent("command.failed").func_240699_a_(TextFormatting.RED), false);
+            this.that.sendStatusMessage(new TranslationTextComponent("command.failed").mergeStyle(TextFormatting.RED), false);
             cancel = true;
         }
 

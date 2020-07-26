@@ -78,7 +78,7 @@ public class ClientUtils
 
     public static void printClientMessage(String text, TextFormatting color)
     {
-        ClientUtils.printClientMessage(JsonUtils.create(text).func_240699_a_(color));
+        ClientUtils.printClientMessage(JsonUtils.create(text).mergeStyle(color));
     }
 
     public static void printClientMessage(ITextComponent component)
