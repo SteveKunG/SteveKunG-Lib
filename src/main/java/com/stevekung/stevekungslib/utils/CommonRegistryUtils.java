@@ -291,7 +291,7 @@ public class CommonRegistryUtils
         CommonRegistryUtils.MOD_DIMENSIONS.register(name, () -> dimension);
     }
 
-    public void registerWorldCarver(WorldCarver worldCarver, String name)
+    public void registerWorldCarver(WorldCarver<?> worldCarver, String name)
     {
         CommonRegistryUtils.WORLD_CARVERS.register(name, () -> worldCarver);
     }
