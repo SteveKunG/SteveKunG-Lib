@@ -2,7 +2,6 @@ package com.stevekung.stevekungslib.mixin;
 
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -20,7 +19,6 @@ public abstract class MixinFont
 {
     @Shadow
     @Final
-    @Mutable
     private static EmptyGlyph EMPTY_GLYPH;
 
     @Inject(method = "getGlyph(C)Lnet/minecraft/client/gui/fonts/TexturedGlyph;", cancellable = true, at = @At("HEAD"))

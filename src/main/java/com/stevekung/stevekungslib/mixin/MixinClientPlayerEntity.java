@@ -2,7 +2,6 @@ package com.stevekung.stevekungslib.mixin;
 
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -27,7 +26,6 @@ public abstract class MixinClientPlayerEntity
 
     @Shadow
     @Final
-    @Mutable
     protected Minecraft mc;
 
     @Inject(method = "sendChatMessage(Ljava/lang/String;)V", at = @At("HEAD"), cancellable = true)
