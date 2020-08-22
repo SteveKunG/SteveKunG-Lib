@@ -30,6 +30,7 @@ version = project.version
 group = "com.stevekung.stevekungslib"
 archivesBaseName = "SteveKunG's-Lib"
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = 1.8
+println("Java: " + System.getProperty("java.version") + " JVM: " + System.getProperty("java.vm.version") + "(" + System.getProperty("java.vendor") + ") Arch: " + System.getProperty("os.arch"))
 
 minecraft {
     mappings channel: "snapshot", version: "${mcp_mapping}"
@@ -56,9 +57,6 @@ dependencies {
 repositories {
     maven {
         url "https://plugins.gradle.org/m2/"
-    }
-    maven {
-        url "http://repo.spongepowered.org/maven/"
     }
 }
 
@@ -98,7 +96,7 @@ artifacts {
 }
 
 curseforge {
-    apiKey = project.stevekungs_lib_api
+    apiKey = project.upload_api_key
     project {
         id = "296019"
         changelog = file("CHANGE_LOG.md")

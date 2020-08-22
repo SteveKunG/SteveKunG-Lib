@@ -104,7 +104,7 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
 
                         if (this.subSurfaceBlocks.stream().anyMatch(block -> chunk.getBlockState(mutablePos3).getBlock() == block.getBlock()))
                         {
-                            chunk.setBlockState(mutablePos3, biomeGetter.apply(mutablePos1).getSurfaceBuilderConfig().getTop(), false);
+                            chunk.setBlockState(mutablePos3, biomeGetter.apply(mutablePos1).func_242440_e().func_242502_e().getTop(), false);
                         }
                     }
                 }

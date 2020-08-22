@@ -28,9 +28,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.village.PointOfInterestType;
-import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.blockplacer.BlockPlacerType;
 import net.minecraft.world.gen.blockstateprovider.BlockStateProviderType;
@@ -40,7 +38,6 @@ import net.minecraft.world.gen.foliageplacer.FoliagePlacerType;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
 import net.minecraft.world.gen.treedecorator.TreeDecoratorType;
-import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.registries.DataSerializerEntry;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -68,7 +65,6 @@ public class CommonRegistryUtils
     private static DeferredRegister<TileEntityType<?>> TILE_ENTITY_TYPES;
     private static DeferredRegister<SoundEvent> SOUND_EVENTS;
     private static DeferredRegister<PointOfInterestType> POINT_OF_INTEREST_TYPES;
-    private static DeferredRegister<Biome> BIOMES;
     private static DeferredRegister<WorldCarver<?>> WORLD_CARVERS;
     private static DeferredRegister<Feature<?>> FEATURES;
     private static DeferredRegister<Placement<?>> PLACEMENTS;
@@ -101,7 +97,6 @@ public class CommonRegistryUtils
         CommonRegistryUtils.TILE_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, modId);
         CommonRegistryUtils.SOUND_EVENTS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, modId);
         CommonRegistryUtils.POINT_OF_INTEREST_TYPES = DeferredRegister.create(ForgeRegistries.POI_TYPES, modId);
-        CommonRegistryUtils.BIOMES = DeferredRegister.create(ForgeRegistries.BIOMES, modId);
         CommonRegistryUtils.WORLD_CARVERS = DeferredRegister.create(ForgeRegistries.WORLD_CARVERS, modId);
         CommonRegistryUtils.FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, modId);
         CommonRegistryUtils.PLACEMENTS = DeferredRegister.create(ForgeRegistries.DECORATORS, modId);
@@ -131,7 +126,6 @@ public class CommonRegistryUtils
         CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.TILE_ENTITY_TYPES);
         CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.SOUND_EVENTS);
         CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.POINT_OF_INTEREST_TYPES);
-        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.BIOMES);
         CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.WORLD_CARVERS);
         CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.FEATURES);
         CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.PLACEMENTS);
@@ -274,22 +268,6 @@ public class CommonRegistryUtils
     public void registerPointOfInterestType(PointOfInterestType type, String name)
     {
         CommonRegistryUtils.POINT_OF_INTEREST_TYPES.register(name, () -> type);
-    }
-
-    public void registerBiome(Biome biome, String name)
-    {
-        CommonRegistryUtils.BIOMES.register(name, () -> biome);
-    }
-
-    @SuppressWarnings("deprecation")
-    public void registerBiomeType(Biome biome, BiomeDictionary.Type... biomeType)
-    {
-        BiomeDictionary.addTypes(biome, biomeType);
-
-        if (biome.isMutation()) // should put to mutation after registered biomes
-        {
-            Biome.MUTATION_TO_BASE_ID_MAP.put(biome, Registry.BIOME.getId(Registry.BIOME.getOrDefault(new ResourceLocation(biome.getParent()))));
-        }
     }
 
     public void registerWorldCarver(WorldCarver worldCarver, String name)
