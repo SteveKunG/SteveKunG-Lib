@@ -270,7 +270,7 @@ public class CommonRegistryUtils
         CommonRegistryUtils.POINT_OF_INTEREST_TYPES.register(name, () -> type);
     }
 
-    public void registerWorldCarver(WorldCarver worldCarver, String name)
+    public void registerWorldCarver(WorldCarver<?> worldCarver, String name)
     {
         CommonRegistryUtils.WORLD_CARVERS.register(name, () -> worldCarver);
     }
