@@ -96,7 +96,7 @@ artifacts {
 }
 
 curseforge {
-    if (project.hasProperty('upload_api_key') {
+    if (project.hasProperty('upload_api_key')) {
         apiKey = project.upload_api_key
         project {
             id = "296019"
@@ -115,7 +115,7 @@ curseforge {
 }
 
 task signJar(type: SignJar, dependsOn: jar) {
-	if (project.hasProperty('upload_api_key') {
+	if (project.hasProperty('upload_api_key')) {
 	    keyStore = project.keystore_path
 	    alias = project.alias
 	    storePass = project.keystore_pass
@@ -125,5 +125,15 @@ task signJar(type: SignJar, dependsOn: jar) {
 	}
 }
 
+task copyJarToLibs {
+	if (project.hasProperty('upload_api_key')) {
+	    copy {
+	        from "build/libs/SteveKunG's-Lib-" + mcVersion + "-" + version + "-deobf.jar"
+	        into "M:/Modding/Indicatia/" + mcVersion + "/libs"
+	    }
+    }
+}
+
 build.dependsOn signJar
 tasks.curseforge.dependsOn(build)
+build.finalizedBy copyJarToLibs
