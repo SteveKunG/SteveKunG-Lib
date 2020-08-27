@@ -1,3 +1,4 @@
 # Change Log
 
-* * Fixed mixin issue
+* * Performance improvement for WeatherTickEvent
+* * Clean up mixins
