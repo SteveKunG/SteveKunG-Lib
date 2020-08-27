@@ -13,7 +13,7 @@ import net.minecraft.client.gui.FontRenderer;
 public abstract class ColoredFontRendererMixin
 {
     private boolean dropShadow;
-    private int state = 0;
+    private int state;
     private int redN;
     private int greenN;
     private int blueN;
