@@ -1,4 +1,3 @@
 # Change Log
 
-* * Performance improvement for WeatherTickEvent
-* * Clean up mixins
+* * Fixed crash with spongeforge
