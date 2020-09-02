@@ -7,7 +7,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
@@ -22,12 +21,18 @@ public abstract class WorldServerMixin
     @Shadow
     protected abstract BlockPos adjustPosToNearbyEntity(BlockPos pos);
 
-    @Inject(method = "updateBlocks()V", at = @At(value = "INVOKE", target = "net/minecraft/world/WorldProvider.canDoLightning(Lnet/minecraft/world/chunk/Chunk;)Z", shift = At.Shift.BEFORE), locals = LocalCapture.CAPTURE_FAILHARD)
-    private void injectWeatherTickEvent(CallbackInfo info, int i, boolean flag, boolean flag1, Iterator iterator, Chunk chunk, int j, int k)
+    @Inject(method = "updateBlocks()V", at = @At(value = "INVOKE", target = "net/minecraft/profiler/Profiler.startSection(Ljava/lang/String;)V", shift = At.Shift.AFTER, ordinal = 0))
+    private void injectWeatherTickEvent(CallbackInfo info)
     {
-        this.that.updateLCG = this.that.updateLCG * 3 + 1013904223;
-        int l = this.that.updateLCG >> 2;
-        BlockPos strikePos = this.adjustPosToNearbyEntity(new BlockPos(j + (l & 15), 0, k + (l >> 8 & 15)));
-        EventHooksCommon.onWeatherTick(this.that, chunk, strikePos);
+        for (Iterator<Chunk> iterator = this.that.getPersistentChunkIterable(this.that.getPlayerChunkMap().getChunkIterator()); iterator.hasNext();)
+        {
+            Chunk chunk = iterator.next();
+            int j = chunk.x * 16;
+            int k = chunk.z * 16;
+            this.that.updateLCG = this.that.updateLCG * 3 + 1013904223;
+            int l = this.that.updateLCG >> 2;
+            BlockPos strikePos = this.adjustPosToNearbyEntity(new BlockPos(j + (l & 15), 0, k + (l >> 8 & 15)));
+            EventHooksCommon.onWeatherTick(this.that, chunk, strikePos);
+        }
     }
 }
