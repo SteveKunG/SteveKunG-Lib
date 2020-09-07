@@ -30,9 +30,6 @@ minecraft {
     runDir = "run"
     mappings = "${mcp_mapping}"
     makeObfSourceJar = false
-
-    replace "@FINGERPRINT@", project.sha1
-    replaceIn "SteveKunGLib.java"
 }
 
 configurations {
@@ -49,7 +46,7 @@ repositories {
         url "https://plugins.gradle.org/m2/"
     }
     maven {
-        url = "http://repo.spongepowered.org/maven/"
+        url "http://repo.spongepowered.org/maven/"
     }
 }
 
@@ -123,15 +120,4 @@ curseforge {
     }
 }
 
-task signJar(type: SignJar, dependsOn: reobfJar) {
-    if (project.hasProperty('upload_api_key')) {
-        keyStore = project.keystore_path
-        alias = project.alias
-        storePass = project.keystore_pass
-        keyPass = project.keystore_pass
-        inputFile = jar.archivePath
-        outputFile = jar.archivePath
-    }
-}
-
-build.dependsOn signJar
+tasks.curseforge.dependsOn(build)
