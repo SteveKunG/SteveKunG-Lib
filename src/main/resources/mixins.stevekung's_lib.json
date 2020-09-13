@@ -10,17 +10,17 @@
         "MixinWorld"
     ],
     "client": [
-        "MixinChatScreen",
-        "MixinClientPlayerEntity",
-        "MixinClientPlayNetHandler",
-        "MixinClientSuggestionProvider",
-        "MixinEntityRendererManager",
-        "MixinOverlayRenderer",
-        "MixinFont",
-        "MixinFontRenderer",
-        "MixinMinecraft",
-        "MixinGameRenderer",
-        "MixinWorldRenderer"
+        "client.MixinChatScreen",
+        "client.MixinClientPlayerEntity",
+        "client.MixinClientPlayNetHandler",
+        "client.MixinClientSuggestionProvider",
+        "client.MixinEntityRendererManager",
+        "client.MixinOverlayRenderer",
+        "client.MixinFont",
+        "client.MixinFontRenderer",
+        "client.MixinMinecraft",
+        "client.MixinGameRenderer",
+        "client.MixinWorldRenderer"
     ],
     "injectors": {
         "defaultRequire": 1

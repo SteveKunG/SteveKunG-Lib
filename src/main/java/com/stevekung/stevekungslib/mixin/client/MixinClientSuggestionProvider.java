@@ -1,4 +1,4 @@
-package com.stevekung.stevekungslib.mixin;
+package com.stevekung.stevekungslib.mixin.client;
 
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;

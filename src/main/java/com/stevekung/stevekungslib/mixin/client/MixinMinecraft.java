@@ -1,4 +1,4 @@
-package com.stevekung.stevekungslib.mixin;
+package com.stevekung.stevekungslib.mixin.client;
 
 import java.util.Collections;
 
