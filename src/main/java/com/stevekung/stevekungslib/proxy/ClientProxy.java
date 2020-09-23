@@ -1,4 +1,6 @@
-package com.stevekung.stevekungslib.client.event;
+package com.stevekung.stevekungslib.proxy;
+
+import com.stevekung.stevekungslib.utils.CommonUtils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.MainMenuScreen;
@@ -7,16 +9,17 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class ClientEventHandler
+public class ClientProxy
 {
     private final Minecraft mc;
     public static int ticks;
     public static int ticksPaused;
     public static float renderPartialTicks;
 
-    public ClientEventHandler()
+    public ClientProxy()
     {
         this.mc = Minecraft.getInstance();
+        CommonUtils.registerEventHandler(this);
     }
 
     @SubscribeEvent
@@ -24,12 +27,12 @@ public class ClientEventHandler
     {
         if (event.phase == Phase.START)
         {
-            ClientEventHandler.ticks++;
-            ClientEventHandler.renderPartialTicks = ClientEventHandler.ticks + this.mc.getRenderPartialTicks();
+            ClientProxy.ticks++;
+            ClientProxy.renderPartialTicks = ClientProxy.ticks + this.mc.getRenderPartialTicks();
 
             if (!this.mc.isGamePaused())
             {
-                ClientEventHandler.ticksPaused++;
+                ClientProxy.ticksPaused++;
             }
         }
     }
@@ -39,8 +42,8 @@ public class ClientEventHandler
     {
         if (event.getGui() instanceof MainMenuScreen)
         {
-            ClientEventHandler.ticks = 0;
-            ClientEventHandler.ticksPaused = 0;
+            ClientProxy.ticks = 0;
+            ClientProxy.ticksPaused = 0;
         }
     }
 }

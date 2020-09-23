@@ -9,14 +9,14 @@
         "MixinServerWorld"
     ],
     "client": [
-        "MixinChatScreen",
-        "MixinClientPlayerEntity",
-        "MixinClientPlayNetHandler",
-        "MixinClientSuggestionProvider",
-        "MixinEntityRendererManager",
-        "MixinOverlayRenderer",
-        "MixinGameRenderer",
-        "MixinWorldRenderer"
+        "client.MixinChatScreen",
+        "client.MixinClientPlayerEntity",
+        "client.MixinClientPlayNetHandler",
+        "client.MixinClientSuggestionProvider",
+        "client.MixinEntityRendererManager",
+        "client.MixinOverlayRenderer",
+        "client.MixinGameRenderer",
+        "client.MixinWorldRenderer"
     ],
     "injectors": {
         "defaultRequire": 1

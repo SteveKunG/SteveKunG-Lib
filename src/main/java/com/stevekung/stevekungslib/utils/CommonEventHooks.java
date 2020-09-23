@@ -8,8 +8,8 @@ import net.minecraftforge.common.MinecraftForge;
 
 public class CommonEventHooks
 {
-    public static void onWeatherTick(World world, int chunkX, int chunkZ, BlockPos strikePos)
+    public static void onWeatherTick(World world, BlockPos strikePos)
     {
-        MinecraftForge.EVENT_BUS.post(new WeatherTickEvent(world, chunkX, chunkZ, strikePos));
+        MinecraftForge.EVENT_BUS.post(new WeatherTickEvent(world, strikePos));
     }
 }

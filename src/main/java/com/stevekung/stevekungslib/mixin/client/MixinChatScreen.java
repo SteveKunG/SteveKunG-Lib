@@ -1,4 +1,4 @@
-package com.stevekung.stevekungslib.mixin;
+package com.stevekung.stevekungslib.mixin.client;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -12,14 +12,13 @@ import com.stevekung.stevekungslib.utils.CommonUtils;
 
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.util.text.ITextComponent;
 
 @Mixin(ChatScreen.class)
 public abstract class MixinChatScreen extends Screen
 {
-    public MixinChatScreen(ITextComponent title)
+    private MixinChatScreen()
     {
-        super(title);
+        super(null);
     }
 
     @Override
