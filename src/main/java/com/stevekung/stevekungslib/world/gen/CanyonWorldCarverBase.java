@@ -44,7 +44,7 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
     @Override
     public boolean carveRegion(IChunk chunk, Function<BlockPos, Biome> biomeGetter, Random rand, int seaLevel, int chunkX, int chunkZ, int originalX, int originalZ, BitSet carvingMask, ProbabilityConfig config)
     {
-        int i = (this.func_222704_c() * 2 - 1) * 16;
+        int i = (this.getRandomNumber() * 2 - 1) * 16;
         double d0 = chunkX * 16 + rand.nextInt(16);
         double d1 = rand.nextInt(rand.nextInt(40) + 8) + 20;
         double d2 = chunkZ * 16 + rand.nextInt(16);
@@ -112,7 +112,7 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
         }
     }
 
-    private void carveTunnel(IChunk chunk, Function<BlockPos, Biome> biomeGetter, long seed, int seaLevel, int originalX, int originalZ, double x, double y, double z, float radius, float p_222729_14_, float p_222729_15_, int p_222729_16_, int p_222729_17_, double p_222729_18_, BitSet bitSet)
+    private void carveTunnel(IChunk chunk, Function<BlockPos, Biome> biomeGetter, long seed, int seaLevel, int originalX, int originalZ, double x, double y, double z, float radius, float p_222729_14_, float p_222729_15_, int p_222729_16_, int maxY, double p_222729_18_, BitSet bitSet)
     {
         Random rand = new Random(seed);
         float f = 1.0F;
@@ -129,9 +129,9 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
         float f4 = 0.0F;
         float f1 = 0.0F;
 
-        for (int j = p_222729_16_; j < p_222729_17_; ++j)
+        for (int j = p_222729_16_; j < maxY; ++j)
         {
-            double d0 = 1.5D + MathHelper.sin(j * (float)Math.PI / p_222729_17_) * radius;
+            double d0 = 1.5D + MathHelper.sin(j * (float)Math.PI / maxY) * radius;
             double d1 = d0 * p_222729_18_;
             d0 = d0 * (rand.nextFloat() * 0.25D + 0.75D);
             d1 = d1 * (rand.nextFloat() * 0.25D + 0.75D);
@@ -150,7 +150,7 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityConfig>
 
             if (rand.nextInt(4) != 0)
             {
-                if (!this.func_222702_a(originalX, originalZ, x, z, j, p_222729_17_, radius))
+                if (!this.isInRange(originalX, originalZ, x, z, j, maxY, radius))
                 {
                     return;
                 }
