@@ -1,11 +1,12 @@
 package com.stevekung.stevekungslib.core;
 
-import com.stevekung.stevekungslib.client.event.ClientEventHandler;
 import com.stevekung.stevekungslib.config.SteveKunGsLibConfig;
+import com.stevekung.stevekungslib.proxy.ClientProxy;
+import com.stevekung.stevekungslib.proxy.CommonProxy;
 import com.stevekung.stevekungslib.utils.CommonUtils;
 import com.stevekung.stevekungslib.utils.LoggerBase;
-import com.stevekung.stevekungslib.utils.client.ClientUtils;
 
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -21,6 +22,7 @@ public class SteveKunGLib
         CommonUtils.registerConfig(ModConfig.Type.COMMON, SteveKunGsLibConfig.GENERAL_BUILDER);
         CommonUtils.registerModEventBus(SteveKunGsLibConfig.class);
         //CommonUtils.registerConfigScreen(() -> (mc, parent) -> new VideoSettingsScreen(parent, mc.gameSettings)); TODO Waiting for forge
+        DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 
         CommonUtils.addModListener(this::phaseOne);
     }
@@ -28,10 +30,5 @@ public class SteveKunGLib
     private void phaseOne(FMLCommonSetupEvent event)
     {
         SteveKunGLib.LOGGER.setDebug(SteveKunGsLibConfig.GENERAL.enableDebugLog.get());
-
-        if (ClientUtils.isEffectiveClient())
-        {
-            CommonUtils.registerEventHandler(new ClientEventHandler());
-        }
     }
 }
