@@ -54,7 +54,7 @@ public abstract class MixinClientPlayerEntity
         }
         catch (CommandException e)
         {
-            this.that.sendStatusMessage(e.getComponent().deepCopy().mergeStyle(TextFormatting.RED), false);//TODO Test
+            this.that.sendStatusMessage(e.getComponent().deepCopy().mergeStyle(TextFormatting.RED), false);
             cancel = true;
         }
         catch (CommandSyntaxException e)

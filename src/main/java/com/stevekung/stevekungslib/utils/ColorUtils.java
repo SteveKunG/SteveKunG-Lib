@@ -1,7 +1,7 @@
 package com.stevekung.stevekungslib.utils;
 
+import com.stevekung.stevekungslib.client.event.ClientEventHandler;
 import com.stevekung.stevekungslib.core.SteveKunGLib;
-import com.stevekung.stevekungslib.proxy.ClientProxy;
 import com.stevekung.stevekungslib.utils.client.ClientUtils;
 
 import net.minecraft.util.text.TextFormatting;
@@ -192,7 +192,7 @@ public class ColorUtils
         {
             if (this.error)
             {
-                if (ClientProxy.ticks % 16 >= 0 && ClientProxy.ticks % 16 <= 8)
+                if (ClientEventHandler.ticks % 16 >= 0 && ClientEventHandler.ticks % 16 <= 8)
                 {
                     return this.formatColored(255, 85, 85);
                 }

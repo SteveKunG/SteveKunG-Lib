@@ -120,7 +120,7 @@ public class CaveWorldCarverBase extends WorldCarver<ProbabilityConfig>
 
                         if (this.subSurfaceBlocks.stream().anyMatch(block -> chunk.getBlockState(mutablePos3).getBlock() == block.getBlock()))
                         {
-                            chunk.setBlockState(mutablePos3, biomeGetter.apply(mutablePos1).func_242440_e().func_242502_e().getTop(), false);
+                            chunk.setBlockState(mutablePos3, biomeGetter.apply(mutablePos1).getGenerationSettings().getSurfaceBuilderConfig().getTop(), false);
                         }
                     }
                 }
@@ -147,17 +147,17 @@ public class CaveWorldCarverBase extends WorldCarver<ProbabilityConfig>
         this.func_227208_a_(world, biomeGetter, seed, height, originalX, originalZ, x + 1.0D, y, z, d0, d1, bitSet);
     }
 
-    private void carveTunnel(IChunk chunk, Function<BlockPos, Biome> biomeGetter, long seed, int height, int originalX, int originalZ, double x, double y, double z, float radius, float p_222727_14_, float p_222727_15_, int p_222727_16_, int p_222727_17_, double p_222727_18_, BitSet bitSet)
+    private void carveTunnel(IChunk chunk, Function<BlockPos, Biome> biomeGetter, long seed, int height, int originalX, int originalZ, double x, double y, double z, float radius, float p_222727_14_, float p_222727_15_, int p_222727_16_, int maxY, double p_222727_18_, BitSet bitSet)
     {
         Random rand = new Random(seed);
-        int i = rand.nextInt(p_222727_17_ / 2) + p_222727_17_ / 4;
+        int i = rand.nextInt(maxY / 2) + maxY / 4;
         boolean flag = rand.nextInt(6) == 0;
         float f = 0.0F;
         float f1 = 0.0F;
 
-        for (int j = 0; j < p_222727_17_; ++j)
+        for (int j = 0; j < maxY; ++j)
         {
-            double d0 = 1.5D + MathHelper.sin((float)Math.PI * j / p_222727_17_) * radius;
+            double d0 = 1.5D + MathHelper.sin((float)Math.PI * j / maxY) * radius;
             double d1 = d0 * p_222727_18_;
             float f2 = MathHelper.cos(p_222727_15_);
             x += MathHelper.cos(p_222727_14_) * f2;
@@ -173,14 +173,14 @@ public class CaveWorldCarverBase extends WorldCarver<ProbabilityConfig>
 
             if (j == i && radius > 1.0F)
             {
-                this.carveTunnel(chunk, biomeGetter, rand.nextLong(), height, originalX, originalZ, x, y, z, rand.nextFloat() * 0.5F + 0.5F, p_222727_14_ - (float)Math.PI / 2F, p_222727_15_ / 3.0F, j, p_222727_17_, 1.0D, bitSet);
-                this.carveTunnel(chunk, biomeGetter, rand.nextLong(), height, originalX, originalZ, x, y, z, rand.nextFloat() * 0.5F + 0.5F, p_222727_14_ + (float)Math.PI / 2F, p_222727_15_ / 3.0F, j, p_222727_17_, 1.0D, bitSet);
+                this.carveTunnel(chunk, biomeGetter, rand.nextLong(), height, originalX, originalZ, x, y, z, rand.nextFloat() * 0.5F + 0.5F, p_222727_14_ - (float)Math.PI / 2F, p_222727_15_ / 3.0F, j, maxY, 1.0D, bitSet);
+                this.carveTunnel(chunk, biomeGetter, rand.nextLong(), height, originalX, originalZ, x, y, z, rand.nextFloat() * 0.5F + 0.5F, p_222727_14_ + (float)Math.PI / 2F, p_222727_15_ / 3.0F, j, maxY, 1.0D, bitSet);
                 return;
             }
 
             if (rand.nextInt(4) != 0)
             {
-                if (!this.func_222702_a(originalX, originalZ, x, z, j, p_222727_17_, radius))
+                if (!this.func_222702_a(originalX, originalZ, x, z, j, maxY, radius))
                 {
                     return;
                 }

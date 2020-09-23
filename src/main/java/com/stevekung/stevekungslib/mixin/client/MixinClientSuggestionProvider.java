@@ -27,6 +27,6 @@ public abstract class MixinClientSuggestionProvider implements IClientSuggestion
     @Override
     public void sendErrorMessage(ITextComponent text)
     {
-        this.mc.player.sendStatusMessage(text.deepCopy().mergeStyle(TextFormatting.RED), false);//TODO Test
+        this.mc.player.sendStatusMessage(text.deepCopy().mergeStyle(TextFormatting.RED), false);
     }
 }
