@@ -3,14 +3,13 @@ package com.stevekung.stevekungslib.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.stevekung.stevekungslib.utils.enums.EntityTrackerType;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.IDispenseItemBehavior;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySpawnPlacementRegistry;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.brain.memory.MemoryModuleType;
 import net.minecraft.entity.ai.brain.schedule.Activity;
 import net.minecraft.entity.ai.brain.schedule.Schedule;
@@ -75,35 +74,36 @@ public class CommonRegistryUtils
     private static DeferredRegister<SurfaceBuilder<?>> SURFACE_BUILDERS;
     private static DeferredRegister<DataSerializerEntry> DATA_SERIALIZERS;
 
+    @SuppressWarnings("deprecation")
     public CommonRegistryUtils(String modId)
     {
         this.modId = modId;
-        CommonRegistryUtils.BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, modId);
-        CommonRegistryUtils.ENCHANTMENTS = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, modId);
-        CommonRegistryUtils.ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES, modId);
-        CommonRegistryUtils.MEMORY_MODULE_TYPES = DeferredRegister.create(ForgeRegistries.MEMORY_MODULE_TYPES, modId);
-        CommonRegistryUtils.ACTIVITIES = DeferredRegister.create(ForgeRegistries.ACTIVITIES, modId);
-        CommonRegistryUtils.SCHEDULES = DeferredRegister.create(ForgeRegistries.SCHEDULES, modId);
-        CommonRegistryUtils.SENSOR_TYPES = DeferredRegister.create(ForgeRegistries.SENSOR_TYPES, modId);
-        CommonRegistryUtils.VILLAGER_PROFESSIONS = DeferredRegister.create(ForgeRegistries.PROFESSIONS, modId);
-        CommonRegistryUtils.FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, modId);
-        CommonRegistryUtils.CONTAINER_TYPES = DeferredRegister.create(ForgeRegistries.CONTAINERS, modId);
-        CommonRegistryUtils.ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, modId);
-        CommonRegistryUtils.RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, modId);
-        CommonRegistryUtils.PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, modId);
-        CommonRegistryUtils.EFFECTS = DeferredRegister.create(ForgeRegistries.POTIONS, modId);
-        CommonRegistryUtils.POTIONS = DeferredRegister.create(ForgeRegistries.POTION_TYPES, modId);
-        CommonRegistryUtils.TILE_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, modId);
-        CommonRegistryUtils.SOUND_EVENTS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, modId);
-        CommonRegistryUtils.POINT_OF_INTEREST_TYPES = DeferredRegister.create(ForgeRegistries.POI_TYPES, modId);
-        CommonRegistryUtils.BIOMES = DeferredRegister.create(ForgeRegistries.BIOMES, modId);
-        CommonRegistryUtils.BIOME_PROVIDER_TYPES = DeferredRegister.create(ForgeRegistries.BIOME_PROVIDER_TYPES, modId);
-        CommonRegistryUtils.MOD_DIMENSIONS = DeferredRegister.create(ForgeRegistries.MOD_DIMENSIONS, modId);
-        CommonRegistryUtils.WORLD_CARVERS = DeferredRegister.create(ForgeRegistries.WORLD_CARVERS, modId);
-        CommonRegistryUtils.FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, modId);
-        CommonRegistryUtils.PLACEMENTS = DeferredRegister.create(ForgeRegistries.DECORATORS, modId);
-        CommonRegistryUtils.SURFACE_BUILDERS = DeferredRegister.create(ForgeRegistries.SURFACE_BUILDERS, modId);
-        CommonRegistryUtils.DATA_SERIALIZERS = DeferredRegister.create(ForgeRegistries.DATA_SERIALIZERS, modId);
+        CommonRegistryUtils.BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, modId);
+        CommonRegistryUtils.ENCHANTMENTS = new DeferredRegister<>(ForgeRegistries.ENCHANTMENTS, modId);
+        CommonRegistryUtils.ENTITY_TYPES = new DeferredRegister<>(ForgeRegistries.ENTITIES, modId);
+        CommonRegistryUtils.MEMORY_MODULE_TYPES = new DeferredRegister<>(ForgeRegistries.MEMORY_MODULE_TYPES, modId);
+        CommonRegistryUtils.ACTIVITIES = new DeferredRegister<>(ForgeRegistries.ACTIVITIES, modId);
+        CommonRegistryUtils.SCHEDULES = new DeferredRegister<>(ForgeRegistries.SCHEDULES, modId);
+        CommonRegistryUtils.SENSOR_TYPES = new DeferredRegister<>(ForgeRegistries.SENSOR_TYPES, modId);
+        CommonRegistryUtils.VILLAGER_PROFESSIONS = new DeferredRegister<>(ForgeRegistries.PROFESSIONS, modId);
+        CommonRegistryUtils.FLUIDS = new DeferredRegister<>(ForgeRegistries.FLUIDS, modId);
+        CommonRegistryUtils.CONTAINER_TYPES = new DeferredRegister<>(ForgeRegistries.CONTAINERS, modId);
+        CommonRegistryUtils.ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, modId);
+        CommonRegistryUtils.RECIPE_SERIALIZERS = new DeferredRegister<>(ForgeRegistries.RECIPE_SERIALIZERS, modId);
+        CommonRegistryUtils.PARTICLE_TYPES = new DeferredRegister<>(ForgeRegistries.PARTICLE_TYPES, modId);
+        CommonRegistryUtils.EFFECTS = new DeferredRegister<>(ForgeRegistries.POTIONS, modId);
+        CommonRegistryUtils.POTIONS = new DeferredRegister<>(ForgeRegistries.POTION_TYPES, modId);
+        CommonRegistryUtils.TILE_ENTITY_TYPES = new DeferredRegister<>(ForgeRegistries.TILE_ENTITIES, modId);
+        CommonRegistryUtils.SOUND_EVENTS = new DeferredRegister<>(ForgeRegistries.SOUND_EVENTS, modId);
+        CommonRegistryUtils.POINT_OF_INTEREST_TYPES = new DeferredRegister<>(ForgeRegistries.POI_TYPES, modId);
+        CommonRegistryUtils.BIOMES = new DeferredRegister<>(ForgeRegistries.BIOMES, modId);
+        CommonRegistryUtils.BIOME_PROVIDER_TYPES = new DeferredRegister<>(ForgeRegistries.BIOME_PROVIDER_TYPES, modId);
+        CommonRegistryUtils.MOD_DIMENSIONS = new DeferredRegister<>(ForgeRegistries.MOD_DIMENSIONS, modId);
+        CommonRegistryUtils.WORLD_CARVERS = new DeferredRegister<>(ForgeRegistries.WORLD_CARVERS, modId);
+        CommonRegistryUtils.FEATURES = new DeferredRegister<>(ForgeRegistries.FEATURES, modId);
+        CommonRegistryUtils.PLACEMENTS = new DeferredRegister<>(ForgeRegistries.DECORATORS, modId);
+        CommonRegistryUtils.SURFACE_BUILDERS = new DeferredRegister<>(ForgeRegistries.SURFACE_BUILDERS, modId);
+        CommonRegistryUtils.DATA_SERIALIZERS = new DeferredRegister<>(ForgeRegistries.DATA_SERIALIZERS, modId);
 
         CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.BLOCKS);
         CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.ENCHANTMENTS);
@@ -134,28 +134,45 @@ public class CommonRegistryUtils
     }
 
     // Game Object
-    public Block registerBlock(Block block, String name, ItemGroup group)
+    public void registerBlock(Block block, String name, ItemGroup group)
     {
-        return this.registerBlock(block, name, group, true);
+        this.registerBlock(block, name, group, true);
     }
 
-    public Block registerBlock(Block block, String name, ItemGroup group, boolean useBlockItem)
+    public void registerBlock(Block block, String name, ItemGroup group, boolean useBlockItem)
     {
+        CommonRegistryUtils.BLOCKS.register(name, () -> block);
+
         if (useBlockItem)
         {
             CommonRegistryUtils.ITEMS.register(name, () -> new BlockItem(block, new Item.Properties().group(group)));
         }
-        return CommonRegistryUtils.BLOCKS.register(name, () -> block).get();
     }
 
-    public Enchantment registerEnchantment(Enchantment enchantment, String name)
+    public void registerBlock(Block block, String name, BlockItem itemBlock)
     {
-        return CommonRegistryUtils.ENCHANTMENTS.register(name, () -> enchantment).get();
+        CommonRegistryUtils.BLOCKS.register(name, () -> block);
+        CommonRegistryUtils.ITEMS.register(name, () -> itemBlock);
     }
 
-    public <T extends Entity> EntityType<T> registerEntityType(EntityType.Builder<T> builder, String name)
+    public void registerEnchantment(Enchantment enchantment, String name)
     {
-        return CommonRegistryUtils.ENTITY_TYPES.register(name, () -> builder.build(name)).get();
+        CommonRegistryUtils.ENCHANTMENTS.register(name, () -> enchantment);
+    }
+
+    public void registerEntityType(EntityType.IFactory<Entity> entity, EntityClassification classifi, String name)
+    {
+        this.registerEntityType(entity, classifi, name, EntityTrackerType.NORMAL);
+    }
+
+    public void registerEntityType(EntityType.IFactory<Entity> entity, EntityClassification classifi, String name, EntityTrackerType type)
+    {
+        this.registerEntityType(entity, classifi, name, type.getTrackingRange(), type.getUpdateFrequency(), type.sendsVelocityUpdates());
+    }
+
+    public void registerEntityType(EntityType.IFactory<Entity> entity, EntityClassification classifi, String name, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates)
+    {
+        CommonRegistryUtils.ENTITY_TYPES.register(name, () -> EntityType.Builder.create(entity, classifi).setTrackingRange(trackingRange).setUpdateInterval(updateFrequency).setShouldReceiveVelocityUpdates(sendsVelocityUpdates).build(name));
     }
 
     public void registerEntityPlacement(EntityType<MobEntity> entity, EntitySpawnPlacementRegistry.PlacementType placementType, Heightmap.Type heightMapType, EntitySpawnPlacementRegistry.IPlacementPredicate<MobEntity> predicate)
@@ -163,94 +180,99 @@ public class CommonRegistryUtils
         EntitySpawnPlacementRegistry.register(entity, placementType, heightMapType, predicate);
     }
 
-    public MemoryModuleType<?> registerMemoryModuleType(MemoryModuleType<?> memoryModule, String name)
+    public void registerMemoryModuleType(MemoryModuleType<?> memoryModule, String name)
     {
-        return CommonRegistryUtils.MEMORY_MODULE_TYPES.register(name, () -> memoryModule).get();
+        CommonRegistryUtils.MEMORY_MODULE_TYPES.register(name, () -> memoryModule);
     }
 
-    public Activity registerEntityActivity(Activity activity, String name)
+    public void registerEntityActivity(Activity activity, String name)
     {
-        return CommonRegistryUtils.ACTIVITIES.register(name, () -> activity).get();
+        CommonRegistryUtils.ACTIVITIES.register(name, () -> activity);
     }
 
-    public Schedule registerEntitySchedule(Schedule schedule, String name)
+    public void registerEntitySchedule(Schedule schedule, String name)
     {
-        return CommonRegistryUtils.SCHEDULES.register(name, () -> schedule).get();
+        CommonRegistryUtils.SCHEDULES.register(name, () -> schedule);
     }
 
-    public SensorType<?> registerEntitySensorType(SensorType<?> sensorType, String name)
+    public void registerEntitySensorType(SensorType<?> sensorType, String name)
     {
-        return CommonRegistryUtils.SENSOR_TYPES.register(name, () -> sensorType).get();
+        CommonRegistryUtils.SENSOR_TYPES.register(name, () -> sensorType);
     }
 
-    public VillagerProfession registerVillagerProfession(VillagerProfession profession, String name)
+    public void registerVillagerProfession(VillagerProfession profession, String name)
     {
-        return CommonRegistryUtils.VILLAGER_PROFESSIONS.register(name, () -> profession).get();
+        CommonRegistryUtils.VILLAGER_PROFESSIONS.register(name, () -> profession);
     }
 
-    public Fluid registerFluid(Fluid fluid, String name)
+    public void registerFluid(Fluid fluid, String name)
     {
-        return CommonRegistryUtils.FLUIDS.register(name, () -> fluid).get();
+        CommonRegistryUtils.FLUIDS.register(name, () -> fluid);
     }
 
-    public ContainerType<?> registerContainerType(ContainerType<?> type, String name)
+    public void registerContainerType(ContainerType<?> type, String name)
     {
-        return CommonRegistryUtils.CONTAINER_TYPES.register(name, () -> type).get();
+        CommonRegistryUtils.CONTAINER_TYPES.register(name, () -> type);
     }
 
-    public Item registerItem(Item item, String name)
+    public void registerItem(Item item, String name)
     {
-        return CommonRegistryUtils.ITEMS.register(name, () -> item).get();
+        CommonRegistryUtils.ITEMS.register(name, () -> item);
     }
 
-    public IRecipeSerializer<?> registerRecipeSerializer(IRecipeSerializer<?> recipe, String name)
+    public void registerRecipeSerializer(IRecipeSerializer<?> recipe, String name)
     {
-        return CommonRegistryUtils.RECIPE_SERIALIZERS.register(name, () -> recipe).get();
+        CommonRegistryUtils.RECIPE_SERIALIZERS.register(name, () -> recipe);
     }
 
-    public ParticleType<?> registerParticleType(ParticleType<?> type, String name)
+    public void registerParticleType(ParticleType<?> type, String name)
     {
-        return CommonRegistryUtils.PARTICLE_TYPES.register(name, () -> type).get();
+        CommonRegistryUtils.PARTICLE_TYPES.register(name, () -> type);
     }
 
-    public Effect registerEffect(Effect effect, String name)
+    public void registerEffect(Effect effect, String name)
     {
-        return CommonRegistryUtils.EFFECTS.register(name, () -> effect).get();
+        CommonRegistryUtils.EFFECTS.register(name, () -> effect);
     }
 
-    public Potion registerPotion(Potion potion, String name)
+    public void registerPotion(Potion potion, String name)
     {
-        return CommonRegistryUtils.POTIONS.register(name, () -> potion).get();
+        CommonRegistryUtils.POTIONS.register(name, () -> potion);
     }
 
-    public TileEntityType<?> registerTileEntityType(TileEntityType<?> type, String name)
+    public void registerTileEntityType(TileEntityType<?> type, String name)
     {
-        return CommonRegistryUtils.TILE_ENTITY_TYPES.register(name, () -> type).get();
+        CommonRegistryUtils.TILE_ENTITY_TYPES.register(name, () -> type);
     }
 
-    public SoundEvent registerSound(SoundEvent event, String name)
+    public void registerSound(SoundEvent event, String name)
     {
-        return CommonRegistryUtils.SOUND_EVENTS.register(name, () -> new SoundEvent(new ResourceLocation(this.modId, name))).get();
+        CommonRegistryUtils.SOUND_EVENTS.register(name, () -> event);
     }
 
-    public SoundEvent registerMusicDisc(SoundEvent event, String name)
+    public SoundEvent createSound(String name)
     {
-        return CommonRegistryUtils.SOUND_EVENTS.register(name, () -> new SoundEvent(new ResourceLocation(this.modId, "music_disc." + name))).get();
+        return new SoundEvent(new ResourceLocation(this.modId, name));
     }
 
-    public PointOfInterestType registerPointOfInterestType(PointOfInterestType type, String name)
+    public void registerMusicDisc(SoundEvent event, String name)
     {
-        return CommonRegistryUtils.POINT_OF_INTEREST_TYPES.register(name, () -> type).get();
+        this.registerSound(event, "music_disc." + name);
     }
 
-    public Biome registerBiome(Biome biome, String name)
+    public void registerPointOfInterestType(PointOfInterestType type, String name)
     {
-        return CommonRegistryUtils.BIOMES.register(name, () -> biome).get();
+        CommonRegistryUtils.POINT_OF_INTEREST_TYPES.register(name, () -> type);
     }
 
-    public BiomeProviderType<?, ?> registerBiomeProviderType(BiomeProviderType<?, ?> type, String name)
+    public void registerBiome(Biome biome, String name)
     {
-        return CommonRegistryUtils.BIOME_PROVIDER_TYPES.register(name, () -> type).get();
+        CommonRegistryUtils.BIOMES.register(name, () -> biome);
+    }
+
+    public void registerBiomeProviderType(BiomeProviderType<?, ?> type, String name)
+    {
+        CommonRegistryUtils.BIOME_PROVIDER_TYPES.register(name, () -> type);
     }
 
     @SuppressWarnings("deprecation")
@@ -264,34 +286,34 @@ public class CommonRegistryUtils
         }
     }
 
-    public ModDimension registerDimension(ModDimension dimension, String name)
+    public void registerDimension(ModDimension dimension, String name)
     {
-        return CommonRegistryUtils.MOD_DIMENSIONS.register(name, () -> dimension).get();
+        CommonRegistryUtils.MOD_DIMENSIONS.register(name, () -> dimension);
     }
 
-    public WorldCarver<?> registerWorldCarver(WorldCarver<?> worldCarver, String name)
+    public void registerWorldCarver(WorldCarver<?> worldCarver, String name)
     {
-        return CommonRegistryUtils.WORLD_CARVERS.register(name, () -> worldCarver).get();
+        CommonRegistryUtils.WORLD_CARVERS.register(name, () -> worldCarver);
     }
 
-    public Feature<?> registerWorldFeature(Feature<?> feature, String name)
+    public void registerWorldFeature(Feature<?> feature, String name)
     {
-        return CommonRegistryUtils.FEATURES.register(name, () -> feature).get();
+        CommonRegistryUtils.FEATURES.register(name, () -> feature);
     }
 
-    public Placement<?> registerWorldPlacement(Placement<?> placement, String name)
+    public void registerWorldPlacement(Placement<?> placement, String name)
     {
-        return CommonRegistryUtils.PLACEMENTS.register(name, () -> placement).get();
+        CommonRegistryUtils.PLACEMENTS.register(name, () -> placement);
     }
 
-    public SurfaceBuilder<?> registerSurfaceBuilder(SurfaceBuilder<?> builder, String name)
+    public void registerSurfaceBuilder(SurfaceBuilder<?> builder, String name)
     {
-        return CommonRegistryUtils.SURFACE_BUILDERS.register(name, () -> builder).get();
+        CommonRegistryUtils.SURFACE_BUILDERS.register(name, () -> builder);
     }
 
-    public DataSerializerEntry registerDataSerializer(DataSerializerEntry data, String name)
+    public void registerDataSerializer(DataSerializerEntry data, String name)
     {
-        return CommonRegistryUtils.DATA_SERIALIZERS.register(name, () -> data).get();
+        CommonRegistryUtils.DATA_SERIALIZERS.register(name, () -> data);
     }
 
     // Others
