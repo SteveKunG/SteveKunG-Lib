@@ -3,40 +3,53 @@ package com.stevekung.stevekungslib.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.stevekung.stevekungslib.utils.enums.EntityTrackerType;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.IDispenseItemBehavior;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.Attribute;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.entity.ai.brain.memory.MemoryModuleType;
 import net.minecraft.entity.ai.brain.schedule.Activity;
 import net.minecraft.entity.ai.brain.schedule.Schedule;
+import net.minecraft.entity.ai.brain.sensor.Sensor;
 import net.minecraft.entity.ai.brain.sensor.SensorType;
 import net.minecraft.entity.merchant.villager.VillagerProfession;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleType;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.Potion;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.village.PointOfInterestType;
 import net.minecraft.world.gen.Heightmap;
+import net.minecraft.world.gen.blockplacer.BlockPlacer;
 import net.minecraft.world.gen.blockplacer.BlockPlacerType;
+import net.minecraft.world.gen.blockstateprovider.BlockStateProvider;
 import net.minecraft.world.gen.blockstateprovider.BlockStateProviderType;
+import net.minecraft.world.gen.carver.ICarverConfig;
 import net.minecraft.world.gen.carver.WorldCarver;
 import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.IFeatureConfig;
+import net.minecraft.world.gen.foliageplacer.FoliagePlacer;
 import net.minecraft.world.gen.foliageplacer.FoliagePlacerType;
+import net.minecraft.world.gen.placement.IPlacementConfig;
 import net.minecraft.world.gen.placement.Placement;
+import net.minecraft.world.gen.surfacebuilders.ISurfaceBuilderConfig;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
+import net.minecraft.world.gen.treedecorator.TreeDecorator;
 import net.minecraft.world.gen.treedecorator.TreeDecoratorType;
 import net.minecraftforge.registries.DataSerializerEntry;
 import net.minecraftforge.registries.DeferredRegister;
@@ -139,12 +152,17 @@ public class CommonRegistryUtils
     }
 
     // Game Object
-    public void registerBlock(Block block, String name, ItemGroup group)
+    public Block registerBlock(String name, Block block, ItemGroup group)
     {
-        this.registerBlock(block, name, group, true);
+        return this.registerBlock(name, block, group, true);
     }
 
-    public void registerBlock(Block block, String name, ItemGroup group, boolean useBlockItem)
+    public Block registerBlock(String name, Block block)
+    {
+        return this.registerBlock(name, block, null, false);
+    }
+
+    public Block registerBlock(String name, Block block, ItemGroup group, boolean useBlockItem)
     {
         CommonRegistryUtils.BLOCKS.register(name, () -> block);
 
@@ -152,107 +170,121 @@ public class CommonRegistryUtils
         {
             CommonRegistryUtils.ITEMS.register(name, () -> new BlockItem(block, new Item.Properties().group(group)));
         }
+        return block;
     }
 
-    public void registerBlock(Block block, String name, BlockItem itemBlock)
+    public Block registerBlock(String name, Block block, BlockItem itemBlock)
     {
         CommonRegistryUtils.BLOCKS.register(name, () -> block);
         CommonRegistryUtils.ITEMS.register(name, () -> itemBlock);
+        return block;
     }
 
-    public void registerEnchantment(Enchantment enchantment, String name)
+    public Enchantment registerEnchantment(String name, Enchantment enchantment)
     {
         CommonRegistryUtils.ENCHANTMENTS.register(name, () -> enchantment);
+        return enchantment;
     }
 
-    public void registerEntityType(EntityType.IFactory<Entity> entity, EntityClassification classifi, String name)
+    public <E extends Entity> EntityType<E> registerEntityType(String name, EntityType.Builder<E> builder)
     {
-        this.registerEntityType(entity, classifi, name, EntityTrackerType.NORMAL);
+        EntityType<E> type = builder.build(name);
+        CommonRegistryUtils.ENTITY_TYPES.register(name, () -> type);
+        return type;
     }
 
-    public void registerEntityType(EntityType.IFactory<Entity> entity, EntityClassification classifi, String name, EntityTrackerType type)
+    public <T extends MobEntity> void registerEntityPlacement(EntityType<T> type, EntitySpawnPlacementRegistry.PlacementType placementType, Heightmap.Type heightMapType, EntitySpawnPlacementRegistry.IPlacementPredicate<T> predicate)
     {
-        this.registerEntityType(entity, classifi, name, type.getTrackingRange(), type.getUpdateFrequency(), type.sendsVelocityUpdates());
+        EntitySpawnPlacementRegistry.register(type, placementType, heightMapType, predicate);
     }
 
-    public void registerEntityType(EntityType.IFactory<Entity> entity, EntityClassification classifi, String name, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates)
+    public void registerEntityAttributes(EntityType<? extends LivingEntity> type, AttributeModifierMap.MutableAttribute mutableAttribute)
     {
-        CommonRegistryUtils.ENTITY_TYPES.register(name, () -> EntityType.Builder.create(entity, classifi).setTrackingRange(trackingRange).setUpdateInterval(updateFrequency).setShouldReceiveVelocityUpdates(sendsVelocityUpdates).build(name));
+        GlobalEntityTypeAttributes.put(type, mutableAttribute.create());
     }
 
-    public void registerEntityPlacement(EntityType<MobEntity> entity, EntitySpawnPlacementRegistry.PlacementType placementType, Heightmap.Type heightMapType, EntitySpawnPlacementRegistry.IPlacementPredicate<MobEntity> predicate)
-    {
-        EntitySpawnPlacementRegistry.register(entity, placementType, heightMapType, predicate);
-    }
-
-    public void registerMemoryModuleType(MemoryModuleType<?> memoryModule, String name)
+    public MemoryModuleType<?> registerMemoryModuleType(String name, MemoryModuleType<?> memoryModule)
     {
         CommonRegistryUtils.MEMORY_MODULE_TYPES.register(name, () -> memoryModule);
+        return memoryModule;
     }
 
-    public void registerEntityActivity(Activity activity, String name)
+    public Activity registerEntityActivity(String name, Activity activity)
     {
         CommonRegistryUtils.ACTIVITIES.register(name, () -> activity);
+        return activity;
     }
 
-    public void registerEntitySchedule(Schedule schedule, String name)
+    public Schedule registerEntitySchedule(String name, Schedule schedule)
     {
         CommonRegistryUtils.SCHEDULES.register(name, () -> schedule);
+        return schedule;
     }
 
-    public void registerEntitySensorType(SensorType<?> sensorType, String name)
+    public <U extends Sensor<?>> SensorType<U> registerEntitySensorType(String name, SensorType<U> sensorType)
     {
         CommonRegistryUtils.SENSOR_TYPES.register(name, () -> sensorType);
+        return sensorType;
     }
 
-    public void registerVillagerProfession(VillagerProfession profession, String name)
+    public VillagerProfession registerVillagerProfession(String name, VillagerProfession profession)
     {
         CommonRegistryUtils.VILLAGER_PROFESSIONS.register(name, () -> profession);
+        return profession;
     }
 
-    public void registerFluid(Fluid fluid, String name)
+    public Fluid registerFluid(String name, Fluid fluid)
     {
         CommonRegistryUtils.FLUIDS.register(name, () -> fluid);
+        return fluid;
     }
 
-    public void registerContainerType(ContainerType<?> type, String name)
+    public <T extends Container> ContainerType<T> registerContainerType(String name, ContainerType<T> type)
     {
         CommonRegistryUtils.CONTAINER_TYPES.register(name, () -> type);
+        return type;
     }
 
-    public void registerItem(Item item, String name)
+    public Item registerItem(String name, Item item)
     {
         CommonRegistryUtils.ITEMS.register(name, () -> item);
+        return item;
     }
 
-    public void registerRecipeSerializer(IRecipeSerializer<?> recipe, String name)
+    public <T extends IRecipe<?>> IRecipeSerializer<T> registerRecipeSerializer(String name, IRecipeSerializer<T> recipe)
     {
         CommonRegistryUtils.RECIPE_SERIALIZERS.register(name, () -> recipe);
+        return recipe;
     }
 
-    public void registerParticleType(ParticleType<?> type, String name)
+    public <T extends IParticleData> ParticleType<T> registerParticleType(String name, ParticleType<T> type)
     {
         CommonRegistryUtils.PARTICLE_TYPES.register(name, () -> type);
+        return type;
     }
 
-    public void registerEffect(Effect effect, String name)
+    public Effect registerEffect(String name, Effect effect)
     {
         CommonRegistryUtils.EFFECTS.register(name, () -> effect);
+        return effect;
     }
 
-    public void registerPotion(Potion potion, String name)
+    public Potion registerPotion(String name, Potion potion)
     {
         CommonRegistryUtils.POTIONS.register(name, () -> potion);
+        return potion;
     }
 
-    public void registerTileEntityType(TileEntityType<?> type, String name)
+    public <T extends TileEntity> TileEntityType<T> registerTileEntityType(String name, TileEntityType<T> type)
     {
         CommonRegistryUtils.TILE_ENTITY_TYPES.register(name, () -> type);
+        return type;
     }
 
-    public void registerSound(SoundEvent event, String name)
+    public SoundEvent registerSound(String name, SoundEvent event)
     {
         CommonRegistryUtils.SOUND_EVENTS.register(name, () -> event);
+        return event;
     }
 
     public SoundEvent createSound(String name)
@@ -260,64 +292,75 @@ public class CommonRegistryUtils
         return new SoundEvent(new ResourceLocation(this.modId, name));
     }
 
-    public void registerMusicDisc(SoundEvent event, String name)
+    public void registerMusicDisc(String name, SoundEvent event)
     {
-        this.registerSound(event, "music_disc." + name);
+        this.registerSound("music_disc." + name, event);
     }
 
-    public void registerPointOfInterestType(PointOfInterestType type, String name)
+    public PointOfInterestType registerPointOfInterestType(String name, PointOfInterestType type)
     {
         CommonRegistryUtils.POINT_OF_INTEREST_TYPES.register(name, () -> type);
+        return type;
     }
 
-    public void registerWorldCarver(WorldCarver<?> worldCarver, String name)
+    public <C extends ICarverConfig> WorldCarver<C> registerWorldCarver(String name, WorldCarver<C> worldCarver)
     {
         CommonRegistryUtils.WORLD_CARVERS.register(name, () -> worldCarver);
+        return worldCarver;
     }
 
-    public void registerWorldFeature(Feature<?> feature, String name)
+    public <C extends IFeatureConfig> Feature<C> registerWorldFeature(String name, Feature<C> feature)
     {
         CommonRegistryUtils.FEATURES.register(name, () -> feature);
+        return feature;
     }
 
-    public void registerWorldPlacement(Placement<?> placement, String name)
+    public <C extends IPlacementConfig> Placement<C> registerWorldPlacement(String name, Placement<C> placement)
     {
         CommonRegistryUtils.PLACEMENTS.register(name, () -> placement);
+        return placement;
     }
 
-    public void registerSurfaceBuilder(SurfaceBuilder<?> builder, String name)
+    public <C extends ISurfaceBuilderConfig> SurfaceBuilder<C> registerSurfaceBuilder(String name, SurfaceBuilder<C> builder)
     {
         CommonRegistryUtils.SURFACE_BUILDERS.register(name, () -> builder);
+        return builder;
     }
 
-    public void registerDataSerializer(DataSerializerEntry data, String name)
+    public DataSerializerEntry registerDataSerializer(String name, DataSerializerEntry data)
     {
         CommonRegistryUtils.DATA_SERIALIZERS.register(name, () -> data);
+        return data;
     }
 
-    public void registerAttribute(Attribute attribute, String name)
+    public Attribute registerAttribute(String name, Attribute attribute)
     {
         CommonRegistryUtils.ATTRIBUTES.register(name, () -> attribute);
+        return attribute;
     }
 
-    public void registerBlockStateProviderType(BlockStateProviderType<?> type, String name)
+    public <P extends BlockStateProvider> BlockStateProviderType<P> registerBlockStateProviderType(String name, BlockStateProviderType<P> type)
     {
         CommonRegistryUtils.BLOCK_STATE_PROVIDER_TYPES.register(name, () -> type);
+        return type;
     }
 
-    public void registerBlockPlacerType(BlockPlacerType<?> type, String name)
+    public <P extends BlockPlacer> BlockPlacerType<P> registerBlockPlacerType(String name, BlockPlacerType<P> type)
     {
         CommonRegistryUtils.BLOCK_PLACER_TYPES.register(name, () -> type);
+        return type;
     }
 
-    public void registerFoliagePlacerType(FoliagePlacerType<?> type, String name)
+    public <P extends FoliagePlacer> FoliagePlacerType<P> registerFoliagePlacerType(String name, FoliagePlacerType<P> type)
     {
         CommonRegistryUtils.FOLIAGE_PLACER_TYPES.register(name, () -> type);
+        return type;
     }
 
-    public void registerTreeDecoratorType(TreeDecoratorType<?> type, String name)
+    public <P extends TreeDecorator> TreeDecoratorType<P> registerTreeDecoratorType(String name, TreeDecoratorType<P> type)
     {
         CommonRegistryUtils.TREE_DECORATOR_TYPES.register(name, () -> type);
+        return type;
     }
 
     // Others
