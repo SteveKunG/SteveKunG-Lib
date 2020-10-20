@@ -1,7 +1,8 @@
 package com.stevekung.stevekungslib.utils;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import com.google.common.collect.Lists;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.DispenserBlock;
@@ -57,139 +58,139 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class CommonRegistryUtils
 {
-    private static final List<DeferredRegister<?>> ALL_REGISTRIES = new ArrayList<>();
+    private final List<DeferredRegister<?>> deferredRegistries = Lists.newArrayList();
     private final String modId;
 
-    private static DeferredRegister<Block> BLOCKS;
-    private static DeferredRegister<Enchantment> ENCHANTMENTS;
-    private static DeferredRegister<EntityType<?>> ENTITY_TYPES;
-    private static DeferredRegister<MemoryModuleType<?>> MEMORY_MODULE_TYPES;
-    private static DeferredRegister<Activity> ACTIVITIES;
-    private static DeferredRegister<Schedule> SCHEDULES;
-    private static DeferredRegister<SensorType<?>> SENSOR_TYPES;
-    private static DeferredRegister<VillagerProfession> VILLAGER_PROFESSIONS;
-    private static DeferredRegister<Fluid> FLUIDS;
-    private static DeferredRegister<ContainerType<?>> CONTAINER_TYPES;
-    private static DeferredRegister<Item> ITEMS;
-    private static DeferredRegister<IRecipeSerializer<?>> RECIPE_SERIALIZERS;
-    private static DeferredRegister<ParticleType<?>> PARTICLE_TYPES;
-    private static DeferredRegister<Effect> EFFECTS;
-    private static DeferredRegister<Potion> POTIONS;
-    private static DeferredRegister<TileEntityType<?>> TILE_ENTITY_TYPES;
-    private static DeferredRegister<SoundEvent> SOUND_EVENTS;
-    private static DeferredRegister<PointOfInterestType> POINT_OF_INTEREST_TYPES;
-    private static DeferredRegister<WorldCarver<?>> WORLD_CARVERS;
-    private static DeferredRegister<Feature<?>> FEATURES;
-    private static DeferredRegister<Placement<?>> PLACEMENTS;
-    private static DeferredRegister<SurfaceBuilder<?>> SURFACE_BUILDERS;
-    private static DeferredRegister<DataSerializerEntry> DATA_SERIALIZERS;
-    private static DeferredRegister<Attribute> ATTRIBUTES;
-    private static DeferredRegister<BlockStateProviderType<?>> BLOCK_STATE_PROVIDER_TYPES;
-    private static DeferredRegister<BlockPlacerType<?>> BLOCK_PLACER_TYPES;
-    private static DeferredRegister<FoliagePlacerType<?>> FOLIAGE_PLACER_TYPES;
-    private static DeferredRegister<TreeDecoratorType<?>> TREE_DECORATOR_TYPES;
+    private final DeferredRegister<Block> blocks;
+    private final DeferredRegister<Enchantment> enchantments;
+    private final DeferredRegister<EntityType<?>> entityTypes;
+    private final DeferredRegister<MemoryModuleType<?>> memoryModuleTypes;
+    private final DeferredRegister<Activity> activities;
+    private final DeferredRegister<Schedule> schedules;
+    private final DeferredRegister<SensorType<?>> sensorTypes;
+    private final DeferredRegister<VillagerProfession> villagerProfessions;
+    private final DeferredRegister<Fluid> fluids;
+    private final DeferredRegister<ContainerType<?>> containerTypes;
+    private final DeferredRegister<Item> items;
+    private final DeferredRegister<IRecipeSerializer<?>> recipeSerializers;
+    private final DeferredRegister<ParticleType<?>> particleTypes;
+    private final DeferredRegister<Effect> effects;
+    private final DeferredRegister<Potion> potions;
+    private final DeferredRegister<TileEntityType<?>> tileEntityTypes;
+    private final DeferredRegister<SoundEvent> soundEvents;
+    private final DeferredRegister<PointOfInterestType> pointOfInterestTypes;
+    private final DeferredRegister<WorldCarver<?>> worldCarvers;
+    private final DeferredRegister<Feature<?>> features;
+    private final DeferredRegister<Placement<?>> placements;
+    private final DeferredRegister<SurfaceBuilder<?>> surfaceBuilders;
+    private final DeferredRegister<DataSerializerEntry> dataSerializers;
+    private final DeferredRegister<Attribute> attributes;
+    private final DeferredRegister<BlockStateProviderType<?>> blockStateProviderTypes;
+    private final DeferredRegister<BlockPlacerType<?>> blockPlacerTypes;
+    private final DeferredRegister<FoliagePlacerType<?>> foliagePlacerTypes;
+    private final DeferredRegister<TreeDecoratorType<?>> treeDecoratorTypes;
 
     public CommonRegistryUtils(String modId)
     {
         this.modId = modId;
-        CommonRegistryUtils.BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, modId);
-        CommonRegistryUtils.ENCHANTMENTS = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, modId);
-        CommonRegistryUtils.ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES, modId);
-        CommonRegistryUtils.MEMORY_MODULE_TYPES = DeferredRegister.create(ForgeRegistries.MEMORY_MODULE_TYPES, modId);
-        CommonRegistryUtils.ACTIVITIES = DeferredRegister.create(ForgeRegistries.ACTIVITIES, modId);
-        CommonRegistryUtils.SCHEDULES = DeferredRegister.create(ForgeRegistries.SCHEDULES, modId);
-        CommonRegistryUtils.SENSOR_TYPES = DeferredRegister.create(ForgeRegistries.SENSOR_TYPES, modId);
-        CommonRegistryUtils.VILLAGER_PROFESSIONS = DeferredRegister.create(ForgeRegistries.PROFESSIONS, modId);
-        CommonRegistryUtils.FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, modId);
-        CommonRegistryUtils.CONTAINER_TYPES = DeferredRegister.create(ForgeRegistries.CONTAINERS, modId);
-        CommonRegistryUtils.ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, modId);
-        CommonRegistryUtils.RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, modId);
-        CommonRegistryUtils.PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, modId);
-        CommonRegistryUtils.EFFECTS = DeferredRegister.create(ForgeRegistries.POTIONS, modId);
-        CommonRegistryUtils.POTIONS = DeferredRegister.create(ForgeRegistries.POTION_TYPES, modId);
-        CommonRegistryUtils.TILE_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, modId);
-        CommonRegistryUtils.SOUND_EVENTS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, modId);
-        CommonRegistryUtils.POINT_OF_INTEREST_TYPES = DeferredRegister.create(ForgeRegistries.POI_TYPES, modId);
-        CommonRegistryUtils.WORLD_CARVERS = DeferredRegister.create(ForgeRegistries.WORLD_CARVERS, modId);
-        CommonRegistryUtils.FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, modId);
-        CommonRegistryUtils.PLACEMENTS = DeferredRegister.create(ForgeRegistries.DECORATORS, modId);
-        CommonRegistryUtils.SURFACE_BUILDERS = DeferredRegister.create(ForgeRegistries.SURFACE_BUILDERS, modId);
-        CommonRegistryUtils.DATA_SERIALIZERS = DeferredRegister.create(ForgeRegistries.DATA_SERIALIZERS, modId);
-        CommonRegistryUtils.ATTRIBUTES = DeferredRegister.create(ForgeRegistries.ATTRIBUTES, modId);
-        CommonRegistryUtils.BLOCK_STATE_PROVIDER_TYPES = DeferredRegister.create(ForgeRegistries.BLOCK_STATE_PROVIDER_TYPES, modId);
-        CommonRegistryUtils.BLOCK_PLACER_TYPES = DeferredRegister.create(ForgeRegistries.BLOCK_PLACER_TYPES, modId);
-        CommonRegistryUtils.FOLIAGE_PLACER_TYPES = DeferredRegister.create(ForgeRegistries.FOLIAGE_PLACER_TYPES, modId);
-        CommonRegistryUtils.TREE_DECORATOR_TYPES = DeferredRegister.create(ForgeRegistries.TREE_DECORATOR_TYPES, modId);
+        this.blocks = DeferredRegister.create(ForgeRegistries.BLOCKS, modId);
+        this.enchantments = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, modId);
+        this.entityTypes = DeferredRegister.create(ForgeRegistries.ENTITIES, modId);
+        this.memoryModuleTypes = DeferredRegister.create(ForgeRegistries.MEMORY_MODULE_TYPES, modId);
+        this.activities = DeferredRegister.create(ForgeRegistries.ACTIVITIES, modId);
+        this.schedules = DeferredRegister.create(ForgeRegistries.SCHEDULES, modId);
+        this.sensorTypes = DeferredRegister.create(ForgeRegistries.SENSOR_TYPES, modId);
+        this.villagerProfessions = DeferredRegister.create(ForgeRegistries.PROFESSIONS, modId);
+        this.fluids = DeferredRegister.create(ForgeRegistries.FLUIDS, modId);
+        this.containerTypes = DeferredRegister.create(ForgeRegistries.CONTAINERS, modId);
+        this.items = DeferredRegister.create(ForgeRegistries.ITEMS, modId);
+        this.recipeSerializers = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, modId);
+        this.particleTypes = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, modId);
+        this.effects = DeferredRegister.create(ForgeRegistries.POTIONS, modId);
+        this.potions = DeferredRegister.create(ForgeRegistries.POTION_TYPES, modId);
+        this.tileEntityTypes = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, modId);
+        this.soundEvents = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, modId);
+        this.pointOfInterestTypes = DeferredRegister.create(ForgeRegistries.POI_TYPES, modId);
+        this.worldCarvers = DeferredRegister.create(ForgeRegistries.WORLD_CARVERS, modId);
+        this.features = DeferredRegister.create(ForgeRegistries.FEATURES, modId);
+        this.placements = DeferredRegister.create(ForgeRegistries.DECORATORS, modId);
+        this.surfaceBuilders = DeferredRegister.create(ForgeRegistries.SURFACE_BUILDERS, modId);
+        this.dataSerializers = DeferredRegister.create(ForgeRegistries.DATA_SERIALIZERS, modId);
+        this.attributes = DeferredRegister.create(ForgeRegistries.ATTRIBUTES, modId);
+        this.blockStateProviderTypes = DeferredRegister.create(ForgeRegistries.BLOCK_STATE_PROVIDER_TYPES, modId);
+        this.blockPlacerTypes = DeferredRegister.create(ForgeRegistries.BLOCK_PLACER_TYPES, modId);
+        this.foliagePlacerTypes = DeferredRegister.create(ForgeRegistries.FOLIAGE_PLACER_TYPES, modId);
+        this.treeDecoratorTypes = DeferredRegister.create(ForgeRegistries.TREE_DECORATOR_TYPES, modId);
 
-        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.BLOCKS);
-        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.ENCHANTMENTS);
-        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.ENTITY_TYPES);
-        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.MEMORY_MODULE_TYPES);
-        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.ACTIVITIES);
-        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.SCHEDULES);
-        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.SENSOR_TYPES);
-        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.VILLAGER_PROFESSIONS);
-        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.FLUIDS);
-        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.CONTAINER_TYPES);
-        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.ITEMS);
-        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.RECIPE_SERIALIZERS);
-        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.PARTICLE_TYPES);
-        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.EFFECTS);
-        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.POTIONS);
-        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.TILE_ENTITY_TYPES);
-        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.SOUND_EVENTS);
-        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.POINT_OF_INTEREST_TYPES);
-        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.WORLD_CARVERS);
-        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.FEATURES);
-        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.PLACEMENTS);
-        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.SURFACE_BUILDERS);
-        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.DATA_SERIALIZERS);
-        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.ATTRIBUTES);
-        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.BLOCK_STATE_PROVIDER_TYPES);
-        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.BLOCK_PLACER_TYPES);
-        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.FOLIAGE_PLACER_TYPES);
-        CommonRegistryUtils.ALL_REGISTRIES.add(CommonRegistryUtils.TREE_DECORATOR_TYPES);
+        this.deferredRegistries.add(this.blocks);
+        this.deferredRegistries.add(this.enchantments);
+        this.deferredRegistries.add(this.entityTypes);
+        this.deferredRegistries.add(this.memoryModuleTypes);
+        this.deferredRegistries.add(this.activities);
+        this.deferredRegistries.add(this.schedules);
+        this.deferredRegistries.add(this.sensorTypes);
+        this.deferredRegistries.add(this.villagerProfessions);
+        this.deferredRegistries.add(this.fluids);
+        this.deferredRegistries.add(this.containerTypes);
+        this.deferredRegistries.add(this.items);
+        this.deferredRegistries.add(this.recipeSerializers);
+        this.deferredRegistries.add(this.particleTypes);
+        this.deferredRegistries.add(this.effects);
+        this.deferredRegistries.add(this.potions);
+        this.deferredRegistries.add(this.tileEntityTypes);
+        this.deferredRegistries.add(this.soundEvents);
+        this.deferredRegistries.add(this.pointOfInterestTypes);
+        this.deferredRegistries.add(this.worldCarvers);
+        this.deferredRegistries.add(this.features);
+        this.deferredRegistries.add(this.placements);
+        this.deferredRegistries.add(this.surfaceBuilders);
+        this.deferredRegistries.add(this.dataSerializers);
+        this.deferredRegistries.add(this.attributes);
+        this.deferredRegistries.add(this.blockStateProviderTypes);
+        this.deferredRegistries.add(this.blockPlacerTypes);
+        this.deferredRegistries.add(this.foliagePlacerTypes);
+        this.deferredRegistries.add(this.treeDecoratorTypes);
     }
 
     // Game Object
-    public Block registerBlock(String name, Block block, ItemGroup group)
+    public <B extends Block> B registerBlock(String name, B block, ItemGroup group)
     {
         return this.registerBlock(name, block, group, true);
     }
 
-    public Block registerBlock(String name, Block block)
+    public <B extends Block> B registerBlock(String name, B block)
     {
         return this.registerBlock(name, block, null, false);
     }
 
-    public Block registerBlock(String name, Block block, ItemGroup group, boolean useBlockItem)
+    public <B extends Block> B registerBlock(String name, B block, ItemGroup group, boolean useBlockItem)
     {
-        CommonRegistryUtils.BLOCKS.register(name, () -> block);
+        this.blocks.register(name, () -> block);
 
         if (useBlockItem)
         {
-            CommonRegistryUtils.ITEMS.register(name, () -> new BlockItem(block, new Item.Properties().group(group)));
+            this.items.register(name, () -> new BlockItem(block, new Item.Properties().group(group)));
         }
         return block;
     }
 
-    public Block registerBlock(String name, Block block, BlockItem itemBlock)
+    public <B extends Block> B registerBlock(String name, B block, BlockItem itemBlock)
     {
-        CommonRegistryUtils.BLOCKS.register(name, () -> block);
-        CommonRegistryUtils.ITEMS.register(name, () -> itemBlock);
+        this.blocks.register(name, () -> block);
+        this.items.register(name, () -> itemBlock);
         return block;
     }
 
     public Enchantment registerEnchantment(String name, Enchantment enchantment)
     {
-        CommonRegistryUtils.ENCHANTMENTS.register(name, () -> enchantment);
+        this.enchantments.register(name, () -> enchantment);
         return enchantment;
     }
 
     public <E extends Entity> EntityType<E> registerEntityType(String name, EntityType.Builder<E> builder)
     {
         EntityType<E> type = builder.build(name);
-        CommonRegistryUtils.ENTITY_TYPES.register(name, () -> type);
+        this.entityTypes.register(name, () -> type);
         return type;
     }
 
@@ -205,85 +206,85 @@ public class CommonRegistryUtils
 
     public MemoryModuleType<?> registerMemoryModuleType(String name, MemoryModuleType<?> memoryModule)
     {
-        CommonRegistryUtils.MEMORY_MODULE_TYPES.register(name, () -> memoryModule);
+        this.memoryModuleTypes.register(name, () -> memoryModule);
         return memoryModule;
     }
 
     public Activity registerEntityActivity(String name, Activity activity)
     {
-        CommonRegistryUtils.ACTIVITIES.register(name, () -> activity);
+        this.activities.register(name, () -> activity);
         return activity;
     }
 
     public Schedule registerEntitySchedule(String name, Schedule schedule)
     {
-        CommonRegistryUtils.SCHEDULES.register(name, () -> schedule);
+        this.schedules.register(name, () -> schedule);
         return schedule;
     }
 
     public <U extends Sensor<?>> SensorType<U> registerEntitySensorType(String name, SensorType<U> sensorType)
     {
-        CommonRegistryUtils.SENSOR_TYPES.register(name, () -> sensorType);
+        this.sensorTypes.register(name, () -> sensorType);
         return sensorType;
     }
 
     public VillagerProfession registerVillagerProfession(String name, VillagerProfession profession)
     {
-        CommonRegistryUtils.VILLAGER_PROFESSIONS.register(name, () -> profession);
+        this.villagerProfessions.register(name, () -> profession);
         return profession;
     }
 
-    public Fluid registerFluid(String name, Fluid fluid)
+    public <T extends Fluid> T registerFluid(String name, T fluid)
     {
-        CommonRegistryUtils.FLUIDS.register(name, () -> fluid);
+        this.fluids.register(name, () -> fluid);
         return fluid;
     }
 
     public <T extends Container> ContainerType<T> registerContainerType(String name, ContainerType<T> type)
     {
-        CommonRegistryUtils.CONTAINER_TYPES.register(name, () -> type);
+        this.containerTypes.register(name, () -> type);
         return type;
     }
 
     public Item registerItem(String name, Item item)
     {
-        CommonRegistryUtils.ITEMS.register(name, () -> item);
+        this.items.register(name, () -> item);
         return item;
     }
 
     public <T extends IRecipe<?>> IRecipeSerializer<T> registerRecipeSerializer(String name, IRecipeSerializer<T> recipe)
     {
-        CommonRegistryUtils.RECIPE_SERIALIZERS.register(name, () -> recipe);
+        this.recipeSerializers.register(name, () -> recipe);
         return recipe;
     }
 
     public <T extends IParticleData> ParticleType<T> registerParticleType(String name, ParticleType<T> type)
     {
-        CommonRegistryUtils.PARTICLE_TYPES.register(name, () -> type);
+        this.particleTypes.register(name, () -> type);
         return type;
     }
 
     public Effect registerEffect(String name, Effect effect)
     {
-        CommonRegistryUtils.EFFECTS.register(name, () -> effect);
+        this.effects.register(name, () -> effect);
         return effect;
     }
 
     public Potion registerPotion(String name, Potion potion)
     {
-        CommonRegistryUtils.POTIONS.register(name, () -> potion);
+        this.potions.register(name, () -> potion);
         return potion;
     }
 
     public <T extends TileEntity> TileEntityType<T> registerTileEntityType(String name, TileEntityType<T> type)
     {
-        CommonRegistryUtils.TILE_ENTITY_TYPES.register(name, () -> type);
+        this.tileEntityTypes.register(name, () -> type);
         return type;
     }
 
     public SoundEvent registerSound(String name, SoundEvent event)
     {
-        CommonRegistryUtils.SOUND_EVENTS.register(name, () -> event);
+        this.soundEvents.register(name, () -> event);
         return event;
     }
 
@@ -299,67 +300,67 @@ public class CommonRegistryUtils
 
     public PointOfInterestType registerPointOfInterestType(String name, PointOfInterestType type)
     {
-        CommonRegistryUtils.POINT_OF_INTEREST_TYPES.register(name, () -> type);
+        this.pointOfInterestTypes.register(name, () -> type);
         return type;
     }
 
     public <C extends ICarverConfig> WorldCarver<C> registerWorldCarver(String name, WorldCarver<C> worldCarver)
     {
-        CommonRegistryUtils.WORLD_CARVERS.register(name, () -> worldCarver);
+        this.worldCarvers.register(name, () -> worldCarver);
         return worldCarver;
     }
 
     public <C extends IFeatureConfig> Feature<C> registerWorldFeature(String name, Feature<C> feature)
     {
-        CommonRegistryUtils.FEATURES.register(name, () -> feature);
+        this.features.register(name, () -> feature);
         return feature;
     }
 
     public <C extends IPlacementConfig> Placement<C> registerWorldPlacement(String name, Placement<C> placement)
     {
-        CommonRegistryUtils.PLACEMENTS.register(name, () -> placement);
+        this.placements.register(name, () -> placement);
         return placement;
     }
 
     public <C extends ISurfaceBuilderConfig> SurfaceBuilder<C> registerSurfaceBuilder(String name, SurfaceBuilder<C> builder)
     {
-        CommonRegistryUtils.SURFACE_BUILDERS.register(name, () -> builder);
+        this.surfaceBuilders.register(name, () -> builder);
         return builder;
     }
 
     public DataSerializerEntry registerDataSerializer(String name, DataSerializerEntry data)
     {
-        CommonRegistryUtils.DATA_SERIALIZERS.register(name, () -> data);
+        this.dataSerializers.register(name, () -> data);
         return data;
     }
 
     public Attribute registerAttribute(String name, Attribute attribute)
     {
-        CommonRegistryUtils.ATTRIBUTES.register(name, () -> attribute);
+        this.attributes.register(name, () -> attribute);
         return attribute;
     }
 
     public <P extends BlockStateProvider> BlockStateProviderType<P> registerBlockStateProviderType(String name, BlockStateProviderType<P> type)
     {
-        CommonRegistryUtils.BLOCK_STATE_PROVIDER_TYPES.register(name, () -> type);
+        this.blockStateProviderTypes.register(name, () -> type);
         return type;
     }
 
     public <P extends BlockPlacer> BlockPlacerType<P> registerBlockPlacerType(String name, BlockPlacerType<P> type)
     {
-        CommonRegistryUtils.BLOCK_PLACER_TYPES.register(name, () -> type);
+        this.blockPlacerTypes.register(name, () -> type);
         return type;
     }
 
     public <P extends FoliagePlacer> FoliagePlacerType<P> registerFoliagePlacerType(String name, FoliagePlacerType<P> type)
     {
-        CommonRegistryUtils.FOLIAGE_PLACER_TYPES.register(name, () -> type);
+        this.foliagePlacerTypes.register(name, () -> type);
         return type;
     }
 
     public <P extends TreeDecorator> TreeDecoratorType<P> registerTreeDecoratorType(String name, TreeDecoratorType<P> type)
     {
-        CommonRegistryUtils.TREE_DECORATOR_TYPES.register(name, () -> type);
+        this.treeDecoratorTypes.register(name, () -> type);
         return type;
     }
 
@@ -371,7 +372,7 @@ public class CommonRegistryUtils
 
     public void registerAll()
     {
-        for (DeferredRegister<?> registry : CommonRegistryUtils.ALL_REGISTRIES)
+        for (DeferredRegister<?> registry : this.deferredRegistries)
         {
             registry.register(CommonUtils.getModEventBus());
         }

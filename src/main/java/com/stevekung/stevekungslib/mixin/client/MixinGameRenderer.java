@@ -22,4 +22,10 @@ public class MixinGameRenderer
     {
         EventHooksClient.onCameraTransform(this.rendererUpdateCount, partialTicks, matrixStack);
     }
+
+    @Inject(method = "updateCameraAndRender(FJZ)V", at = @At(value = "INVOKE", target = "net/minecraft/util/math/MathHelper.lerp(FFF)F", shift = At.Shift.AFTER))
+    private void updateCameraAndRender(float partialTicks, long nanoTime, boolean renderWorld, CallbackInfo info)
+    {
+        EventHooksClient.onRenderOverlayScreen(partialTicks);
+    }
 }

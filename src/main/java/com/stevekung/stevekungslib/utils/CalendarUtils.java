@@ -1,43 +1,37 @@
 package com.stevekung.stevekungslib.utils;
 
-import java.util.Calendar;
+import java.time.LocalDate;
+import java.time.temporal.ChronoField;
 
 public class CalendarUtils
 {
     public static boolean isHalloweenDay()
     {
-        return CalendarUtils.getMonth(10) && CalendarUtils.getDay(31, 0);
+        return month() == 10 && day() == 31;
     }
 
     public static boolean isChristmasDay()
     {
-        return CalendarUtils.getMonth(12) && CalendarUtils.getDay(24, 1);
+        return month() == 12 && day() >= 24 && day() <= 26;
     }
 
     public static boolean isMorePlanetsBirthDay()
     {
-        return CalendarUtils.getMonth(3) && CalendarUtils.getDay(31, 1);
+        return month() == 3 && day() == 31;
     }
 
-    public static boolean isSteveKunGBirthDay()
+    public static boolean isMyBirthDay()
     {
-        return CalendarUtils.getMonth(2) && CalendarUtils.getDay(1, 1);
+        return month() == 2 && day() >= 1 && day() <= 3;
     }
 
-    private static boolean getMonth(int month)
+    public static int month()
     {
-        return Calendar.getInstance().get(Calendar.MONTH) + 1 == month;
+        return LocalDate.now().get(ChronoField.MONTH_OF_YEAR);
     }
 
-    private static boolean getDay(int day, int flag)
+    public static int day()
     {
-        if (flag == 0)
-        {
-            return Calendar.getInstance().get(Calendar.DATE) == day;
-        }
-        else
-        {
-            return Calendar.getInstance().get(Calendar.DATE) >= day && Calendar.getInstance().get(Calendar.DATE) <= day + 2;
-        }
+        return LocalDate.now().get(ChronoField.DAY_OF_MONTH);
     }
 }

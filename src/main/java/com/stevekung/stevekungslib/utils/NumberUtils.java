@@ -3,11 +3,12 @@ package com.stevekung.stevekungslib.utils;
 import java.text.DecimalFormat;
 import java.util.Map;
 import java.util.NavigableMap;
-import java.util.TreeMap;
+
+import com.google.common.collect.Maps;
 
 public class NumberUtils
 {
-    private static final NavigableMap<Long, String> SUFFIXES = new TreeMap<>();
+    private static final NavigableMap<Long, String> SUFFIXES = Maps.newTreeMap();
 
     public static final DecimalFormat NUMBER_FORMAT = new DecimalFormat("#,###");
     public static final DecimalFormat NUMBER_FORMAT_WITH_DECIMAL = new DecimalFormat("#,###.#");

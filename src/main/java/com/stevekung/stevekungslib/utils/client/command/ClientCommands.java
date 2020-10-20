@@ -1,9 +1,9 @@
 package com.stevekung.stevekungslib.utils.client.command;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.google.common.collect.Lists;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -13,7 +13,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 public class ClientCommands
 {
     private static final CommandDispatcher<IClientSuggestionProvider> DISPATCHER = new CommandDispatcher<>();
-    private static final List<IClientCommand> CLIENT_COMMANDS = new ArrayList<>();
+    private static final List<IClientCommand> CLIENT_COMMANDS = Lists.newArrayList();
 
     public static void register(IClientCommand command)
     {

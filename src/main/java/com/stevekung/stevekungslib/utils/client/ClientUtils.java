@@ -2,11 +2,11 @@ package com.stevekung.stevekungslib.utils.client;
 
 import org.lwjgl.glfw.GLFW;
 
-import com.stevekung.stevekungslib.utils.JsonUtils;
+import com.stevekung.stevekungslib.utils.TextComponentUtils;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -17,7 +17,7 @@ import net.minecraftforge.fml.loading.FMLLoader;
 
 public class ClientUtils
 {
-    public static FontRenderer unicodeFontRenderer;
+    public static final ResourceLocation UNICODE = new ResourceLocation("uniform");
 
     public static boolean isClient()
     {
@@ -51,12 +51,12 @@ public class ClientUtils
 
     public static void setOverlayMessage(String message)
     {
-        Minecraft.getInstance().ingameGUI.setOverlayMessage(JsonUtils.create(message), false);
+        Minecraft.getInstance().ingameGUI.setOverlayMessage(TextComponentUtils.component(message), false);
     }
 
     public static void setOverlayMessage(String message, int delay)
     {
-        Minecraft.getInstance().ingameGUI.setOverlayMessage(JsonUtils.create(message), false);
+        Minecraft.getInstance().ingameGUI.setOverlayMessage(TextComponentUtils.component(message), false);
         Minecraft.getInstance().ingameGUI.overlayMessageTime = delay;
     }
 
@@ -73,12 +73,12 @@ public class ClientUtils
 
     public static void printClientMessage(String text)
     {
-        ClientUtils.printClientMessage(JsonUtils.create(text));
+        ClientUtils.printClientMessage(TextComponentUtils.component(text));
     }
 
     public static void printClientMessage(String text, TextFormatting color)
     {
-        ClientUtils.printClientMessage(JsonUtils.create(text).mergeStyle(color));
+        ClientUtils.printClientMessage(TextComponentUtils.formatted(text, color));
     }
 
     public static void printClientMessage(ITextComponent component)

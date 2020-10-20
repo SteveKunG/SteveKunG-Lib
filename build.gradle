@@ -41,11 +41,13 @@ minecraft {
             workingDirectory project.file("run")
             source sourceSets.main
             args "--mixin", "mixins.stevekung's_lib.json", "--username", username, "--password", password
+            jvmArgs "-Dmixin.debug.export=true"
         }
         server {
             workingDirectory project.file("run")
             source sourceSets.main
             args "--mixin", "mixins.stevekung's_lib.json"
+            jvmArgs "-Dmixin.debug.export=true"
         }
     }
 }
