@@ -117,6 +117,18 @@ public class ColorUtils
         return Color.fromHex(color).getColor();
     }
 
+    public static String decimalToRgb(int color)
+    {
+        ColorUtils utils = new ColorUtils(color);
+        StringBuilder builder = new StringBuilder();
+        builder.append(utils.packedRed());
+        builder.append(",");
+        builder.append(utils.packedGreen());
+        builder.append(",");
+        builder.append(utils.packedBlue());
+        return builder.toString();
+    }
+
     public static int rgbToDecimal(String color)
     {
         try
