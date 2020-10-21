@@ -1,11 +1,10 @@
 package com.stevekung.stevekungslib.utils.client;
 
-import org.lwjgl.glfw.GLFW;
-
 import com.stevekung.stevekungslib.utils.TextComponentUtils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.util.InputMappings;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
 import net.minecraft.util.text.ITextComponent;
@@ -31,12 +30,7 @@ public class ClientUtils
 
     public static boolean isKeyDown(int key)
     {
-        return GLFW.glfwGetKey(Minecraft.getInstance().getMainWindow().getHandle(), key) == GLFW.GLFW_PRESS;
-    }
-
-    public static boolean isMouseDown(int button)
-    {
-        return GLFW.glfwGetMouseButton(Minecraft.getInstance().getMainWindow().getHandle(), button) == GLFW.GLFW_PRESS;
+        return InputMappings.isKeyDown(Minecraft.getInstance().getMainWindow().getHandle(), key);
     }
 
     public static boolean isShiftKeyDown()
