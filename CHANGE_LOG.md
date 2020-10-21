@@ -1,4 +1,5 @@
 # Change Log
 
-* * Update NumberUtils for compact number format
-* * Clean up some class
+* * Update to 1.16.3
+* * Huge update to internal stuff
+* * Bug fixes
