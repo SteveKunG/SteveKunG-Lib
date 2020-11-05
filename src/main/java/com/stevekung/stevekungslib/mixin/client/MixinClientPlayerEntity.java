@@ -20,7 +20,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 
 @Mixin(ClientPlayerEntity.class)
-public abstract class MixinClientPlayerEntity
+public class MixinClientPlayerEntity
 {
     private final ClientPlayerEntity that = (ClientPlayerEntity) (Object) this;
 

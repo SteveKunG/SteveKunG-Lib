@@ -14,7 +14,7 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.server.ServerWorld;
 
 @Mixin(ServerWorld.class)
-public abstract class MixinServerWorld
+public class MixinServerWorld
 {
     private final ServerWorld that = (ServerWorld) (Object) this;
 
