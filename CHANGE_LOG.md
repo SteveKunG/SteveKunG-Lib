@@ -1,3 +1,3 @@
 # Change Log
 
-* * Update to 1.16.4
+* * Internal class and utilities updated
