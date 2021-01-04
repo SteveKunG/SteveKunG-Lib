@@ -1,4 +1,4 @@
-package com.stevekung.stevekungslib.client.event;
+package com.stevekung.stevekungslib.utils.client.event;
 
 import java.util.List;
 

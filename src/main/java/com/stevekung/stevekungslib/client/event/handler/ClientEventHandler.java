@@ -1,4 +1,4 @@
-package com.stevekung.stevekungslib.client.event;
+package com.stevekung.stevekungslib.client.event.handler;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.MainMenuScreen;

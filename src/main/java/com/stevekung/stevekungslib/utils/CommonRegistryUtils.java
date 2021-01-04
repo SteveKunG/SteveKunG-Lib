@@ -23,7 +23,6 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.particles.IParticleData;
@@ -153,9 +152,9 @@ public class CommonRegistryUtils
     }
 
     // Game Object
-    public <B extends Block> B registerBlock(String name, B block, ItemGroup group)
+    public <B extends Block> B registerBlock(String name, B block, Item.Properties properties)
     {
-        return this.registerBlock(name, block, group, true);
+        return this.registerBlock(name, block, properties, true);
     }
 
     public <B extends Block> B registerBlock(String name, B block)
@@ -163,13 +162,13 @@ public class CommonRegistryUtils
         return this.registerBlock(name, block, null, false);
     }
 
-    public <B extends Block> B registerBlock(String name, B block, ItemGroup group, boolean useBlockItem)
+    public <B extends Block> B registerBlock(String name, B block, Item.Properties properties, boolean useBlockItem)
     {
         this.blocks.register(name, () -> block);
 
         if (useBlockItem)
         {
-            this.items.register(name, () -> new BlockItem(block, new Item.Properties().group(group)));
+            this.items.register(name, () -> new BlockItem(block, properties));
         }
         return block;
     }
