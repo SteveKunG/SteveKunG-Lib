@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[34,)"
+loaderVersion="[35,)"
 license="MIT License"
 updateJSONURL="https://raw.githubusercontent.com/SteveKunG/VersionCheckLibrary/master/stevekung's_lib_version.json"
 issueTrackerURL="https://github.com/SteveKunG/SteveKunG-Lib/issues"
@@ -16,13 +16,13 @@ authors="SteveKunG"
 [[dependencies.stevekungs_lib]]
     modId="forge"
     mandatory=true
-    versionRange="[34.1.0,)"
+    versionRange="[35.1.0,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.stevekungs_lib]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16.3,)"
+    versionRange="[1.16.4,)"
     ordering="NONE"
     side="BOTH"
