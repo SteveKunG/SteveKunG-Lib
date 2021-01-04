@@ -6,13 +6,18 @@ import net.minecraft.data.loot.EntityLootTables;
 import net.minecraft.entity.EntityType;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public abstract class EntityLootTablesBase extends EntityLootTables
+public class EntityLootTablesBase extends EntityLootTables
 {
+    private final String modId;
+
+    public EntityLootTablesBase(String modId)
+    {
+        this.modId = modId;
+    }
+
     @Override
     protected Iterable<EntityType<?>> getKnownEntities()
     {
-        return ForgeRegistries.ENTITIES.getValues().stream().filter(type -> type.getRegistryName().getNamespace().equals(this.getModId())).collect(Collectors.toList());
+        return ForgeRegistries.ENTITIES.getValues().stream().filter(type -> type.getRegistryName().getNamespace().equals(this.modId)).collect(Collectors.toList());
     }
-
-    protected abstract String getModId();
 }

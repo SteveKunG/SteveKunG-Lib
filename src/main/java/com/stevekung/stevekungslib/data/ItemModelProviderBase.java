@@ -4,6 +4,8 @@ import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.Item;
 import net.minecraft.util.IItemProvider;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -15,19 +17,29 @@ public abstract class ItemModelProviderBase extends ItemModelProvider
         super(generator, modid, helper);
     }
 
-    protected void parentedBlock(Block block, String model)
+    protected ItemModelBuilder parentedBlock(Block block)
     {
-        this.getBuilder(block.getRegistryName().getPath()).parent(new ModelFile.UncheckedModelFile(this.modLoc(model)));
+        return this.getBuilder(block.getRegistryName().getPath()).parent(new ModelFile.UncheckedModelFile(this.modLoc("block/" + block.getRegistryName().getPath())));
     }
 
-    protected void parentedItem(Item item, String model)
+    protected ItemModelBuilder parentedBlock(Block block, String model)
     {
-        this.getBuilder(item.getRegistryName().getPath()).parent(new ModelFile.UncheckedModelFile(this.modLoc(model)));
+        return this.getBuilder(block.getRegistryName().getPath()).parent(new ModelFile.UncheckedModelFile(this.modLoc(model)));
+    }
+
+    protected ItemModelBuilder parentedBlock(Block block, ResourceLocation resource)
+    {
+        return this.getBuilder(block.getRegistryName().getPath()).parent(new ModelFile.UncheckedModelFile(resource));
+    }
+
+    protected ItemModelBuilder parentedItem(Item item, String model)
+    {
+        return this.getBuilder(item.getRegistryName().getPath()).parent(new ModelFile.UncheckedModelFile(this.modLoc(model)));
     }
 
     protected void itemGenerated(Block block)
     {
-        this.itemGenerated(block, this.itemToString(block));
+        this.itemGenerated(block, this.toString(block));
     }
 
     protected void itemGenerated(Block block, String texture)
@@ -37,12 +49,17 @@ public abstract class ItemModelProviderBase extends ItemModelProvider
 
     protected void itemGenerated(Item item)
     {
-        this.itemGenerated(item, this.itemToString(item));
+        this.itemGenerated(item, this.toString(item));
     }
 
     protected void itemGenerated(Item item, String texture)
     {
         this.getBuilder(item.getRegistryName().getPath()).parent(this.getExistingFile(this.mcLoc("item/generated"))).texture("layer0", "item/" + texture);
+    }
+
+    protected ItemModelBuilder itemGenerated(Item item, ResourceLocation model)
+    {
+        return this.getBuilder(item.getRegistryName().getPath()).parent(this.getExistingFile(model));
     }
 
     protected void spawnEgg(Item item)
@@ -55,7 +72,7 @@ public abstract class ItemModelProviderBase extends ItemModelProvider
         this.getBuilder(item.getRegistryName().getPath()).parent(this.getExistingFile(this.mcLoc("item/handheld"))).texture("layer0", "item/" + texture);
     }
 
-    protected String itemToString(IItemProvider base)
+    protected String toString(IItemProvider base)
     {
         return base.asItem().getRegistryName().getPath();
     }

@@ -16,42 +16,52 @@ public class RecipeProviderBase extends RecipeProvider
         this.modid = modid;
     }
 
-    protected String itemToCriterion(IItemProvider provider)
+    protected String toCriterion(IItemProvider provider)
     {
-        return "has_" + provider.asItem().getRegistryName().getPath();
+        return "has_" + this.toString(provider);
     }
 
-    protected String tagToCriterion(ITag.INamedTag<?> tag)
+    protected String toCriterion(ITag.INamedTag<?> tag)
     {
         return "has_" + tag.getName().getPath() + "_tag";
     }
 
-    protected String itemToString(IItemProvider base)
+    protected ResourceLocation toSmelting(IItemProvider provider)
+    {
+        return this.modLoc(this.toString(provider) + "_from_smelting");
+    }
+
+    protected ResourceLocation toBlasting(IItemProvider provider)
+    {
+        return this.modLoc(this.toString(provider) + "_from_blasting");
+    }
+
+    protected ResourceLocation from(IItemProvider base, IItemProvider required)
+    {
+        return this.modLoc(this.toString(base) + "_from_" + this.toString(required));
+    }
+
+    protected ResourceLocation from(ITag.INamedTag<?> base, IItemProvider required)
+    {
+        return this.modLoc(base.getName().getPath() + "_from_" + this.toString(required));
+    }
+
+    protected ResourceLocation from(IItemProvider base, ITag.INamedTag<?> required)
+    {
+        return this.modLoc(this.toString(base) + "_from_" + required.getName().getPath());
+    }
+
+    protected ResourceLocation from(ITag.INamedTag<?> base, ITag.INamedTag<?> required)
+    {
+        return this.modLoc(required.getName().getPath() + "_from_" + required.getName().getPath());
+    }
+
+    protected String toString(IItemProvider base)
     {
         return base.asItem().getRegistryName().getPath();
     }
 
-    protected ResourceLocation itemToStringFrom(IItemProvider base, IItemProvider required)
-    {
-        return this.modLocation(this.itemToString(base) + "_from_" + this.itemToString(required));
-    }
-
-    protected ResourceLocation itemToStringFrom(ITag.INamedTag<?> base, IItemProvider required)
-    {
-        return this.modLocation(base.getName().getPath() + "_from_" + this.itemToString(required));
-    }
-
-    protected ResourceLocation itemToStringFrom(IItemProvider base, ITag.INamedTag<?> required)
-    {
-        return this.modLocation(this.itemToString(base) + "_from_" + required.getName().getPath());
-    }
-
-    protected ResourceLocation itemToStringFrom(ITag.INamedTag<?> base, ITag.INamedTag<?> required)
-    {
-        return this.modLocation(required.getName().getPath() + "_from_" + required.getName().getPath());
-    }
-
-    protected ResourceLocation modLocation(String name)
+    protected ResourceLocation modLoc(String name)
     {
         return new ResourceLocation(this.modid, name);
     }

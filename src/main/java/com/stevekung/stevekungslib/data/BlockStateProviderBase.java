@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.DoublePlantBlock;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.state.properties.DoubleBlockHalf;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
@@ -12,12 +13,9 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 
 public abstract class BlockStateProviderBase extends BlockStateProvider
 {
-    private final String modid;
-
     public BlockStateProviderBase(DataGenerator generator, String modid, ExistingFileHelper helper)
     {
         super(generator, modid, helper);
-        this.modid = modid;
     }
 
     protected void simpleCross(Block block)
@@ -40,6 +38,22 @@ public abstract class BlockStateProviderBase extends BlockStateProvider
         this.getVariantBuilder(block).partialState().setModels(new ConfiguredModel(this.models().getBuilder(this.toString(block)).texture("particle", "minecraft:" + block.getFluid().getAttributes().getStillTexture().getPath())));
     }
 
+    protected void simpleTorch(Block block, Block wallBlock)
+    {
+        this.simpleBlock(block, this.models().torch(this.toString(block), this.modLoc("block/" + this.toString(block))));
+        this.horizontalBlock(wallBlock, this.models().torchWall(this.toString(wallBlock), this.modLoc("block/" + this.toString(block))), 90);
+    }
+
+    protected void simpleCake(Block block)
+    {
+        this.getVariantBuilder(block).forAllStates(state ->
+        {
+            int slice = state.get(BlockStateProperties.BITES_0_6);
+            String model = slice > 0 ? this.toString(block) + "_slice" + slice : this.toString(block);
+            return ConfiguredModel.builder().modelFile(this.models().getExistingFile(this.modLoc("block/" + model))).build();
+        });
+    }
+
     protected String toString(Block block)
     {
         return block.getRegistryName().getPath();
@@ -47,6 +61,11 @@ public abstract class BlockStateProviderBase extends BlockStateProvider
 
     protected ResourceLocation getBlockTexture(String name)
     {
-        return new ResourceLocation(this.modid, "block/" + name);
+        return this.modLoc("block/" + name);
+    }
+
+    protected ResourceLocation getGeneratedModel(Block block)
+    {
+        return this.models().generatedModels.get(this.modLoc("block/" + this.toString(block))).getLocation();
     }
 }

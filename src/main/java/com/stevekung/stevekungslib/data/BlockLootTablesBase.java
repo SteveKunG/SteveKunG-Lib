@@ -6,13 +6,18 @@ import net.minecraft.block.Block;
 import net.minecraft.data.loot.BlockLootTables;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public abstract class BlockLootTablesBase extends BlockLootTables
+public class BlockLootTablesBase extends BlockLootTables
 {
+    private final String modId;
+
+    public BlockLootTablesBase(String modId)
+    {
+        this.modId = modId;
+    }
+
     @Override
     protected Iterable<Block> getKnownBlocks()
     {
-        return ForgeRegistries.BLOCKS.getValues().stream().filter(type -> type.getRegistryName().getNamespace().equals(this.getModId())).collect(Collectors.toList());
+        return ForgeRegistries.BLOCKS.getValues().stream().filter(type -> type.getRegistryName().getNamespace().equals(this.modId)).collect(Collectors.toList());
     }
-
-    protected abstract String getModId();
 }
