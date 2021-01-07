@@ -41,13 +41,13 @@ minecraft {
             workingDirectory project.file("run")
             source sourceSets.main
             args "--mixin", "mixins.stevekung's_lib.json", "--username", username, "--password", password
-            jvmArgs "-Dmixin.debug.export=true"
+            jvmArgs "-Dmixin.debug.export=true -Dmixin.debug.verbose=true"
         }
         server {
             workingDirectory project.file("run")
             source sourceSets.main
             args "--mixin", "mixins.stevekung's_lib.json"
-            jvmArgs "-Dmixin.debug.export=true"
+            jvmArgs "-Dmixin.debug.export=true -Dmixin.debug.verbose=true"
         }
     }
 }
@@ -107,7 +107,6 @@ curseforge {
             changelogType = "markdown"
             releaseType = "release"
             addGameVersion mcVersion
-            addGameVersion "1.16.3"
 
             mainArtifact(jar) {
                 displayName = "SteveKunG's-Lib-" + mcVersion + "-" + version
