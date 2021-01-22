@@ -6,7 +6,7 @@ issueTrackerURL="https://github.com/SteveKunG/SteveKunG-Lib/issues"
 
 [[mods]]
 modId="stevekungs_lib"
-version="4.0.2"
+version="${file.jarVersion}"
 displayName="SteveKunG's Lib"
 description="Code and Utilities for SteveKunG's mods!"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/stevekungs-lib"

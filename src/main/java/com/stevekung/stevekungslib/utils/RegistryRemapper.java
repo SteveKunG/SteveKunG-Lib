@@ -16,7 +16,7 @@ public class RegistryRemapper<T extends IForgeRegistryEntry<T>>
 
     public void remapRegistry(String modId, String oldName, T remapObj)
     {
-        for (RegistryEvent.MissingMappings.Mapping<T> mappings : this.event.getMappings())
+        for (RegistryEvent.MissingMappings.Mapping<T> mappings : this.event.getMappings(modId))
         {
             if (mappings.key.getNamespace().equals(modId) && mappings.key.getPath().equals(oldName))
             {

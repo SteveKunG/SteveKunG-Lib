@@ -71,8 +71,12 @@ sourceSets {
 
 jar {
     manifest {
-        attributes("MixinConnector": "com.stevekung.stevekungslib.core.SteveKunGLibMixinConnector"
-        )
+        attributes([
+            "MixinConnector": "com.stevekung.stevekungslib.core.SteveKunGLibMixinConnector",
+            "Implementation-Title": "${archivesBaseName}",
+            "Implementation-Version": "${version}",
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
     }
     baseName = "SteveKunG's-Lib-" + mcVersion
 }
@@ -86,8 +90,12 @@ task sourcesJar(type: Jar) {
 task deobfJar(type: Jar) {
     from sourceSets.main.output
     manifest {
-        attributes("MixinConnector": "com.stevekung.stevekungslib.core.SteveKunGLibMixinConnector"
-        )
+        attributes([
+            "MixinConnector": "com.stevekung.stevekungslib.core.SteveKunGLibMixinConnector",
+            "Implementation-Title": "${archivesBaseName}",
+            "Implementation-Version": "${version}",
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
     }
     baseName = "SteveKunG's-Lib-" + mcVersion
     classifier = "deobf"
