@@ -6,17 +6,17 @@
     "refmap": "mixins.stevekung's_lib.refmap.json",
     "target": "@env(DEFAULT)",
     "mixins": [
-        "MixinServerWorld"
+        "world.server.MixinServerWorld"
     ],
     "client": [
-        "client.MixinChatScreen",
-        "client.MixinClientPlayerEntity",
-        "client.MixinClientPlayNetHandler",
-        "client.MixinClientSuggestionProvider",
-        "client.MixinEntityRendererManager",
-        "client.MixinGameRenderer",
-        "client.MixinOverlayRenderer",
-        "client.MixinWorldRenderer"
+        "client.entity.player.MixinClientPlayerEntity",
+        "client.gui.screen.MixinChatScreen",
+        "client.multiplayer.MixinClientSuggestionProvider",
+        "client.network.play.MixinClientPlayNetHandler",
+        "client.renderer.MixinGameRenderer",
+        "client.renderer.MixinOverlayRenderer",
+        "client.renderer.MixinWorldRenderer",
+        "client.renderer.entity.MixinEntityRendererManager"
     ],
     "injectors": {
         "defaultRequire": 1

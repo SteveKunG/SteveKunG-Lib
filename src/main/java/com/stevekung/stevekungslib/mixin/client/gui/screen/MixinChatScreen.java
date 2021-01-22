@@ -1,4 +1,4 @@
-package com.stevekung.stevekungslib.mixin.client;
+package com.stevekung.stevekungslib.mixin.client.gui.screen;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
