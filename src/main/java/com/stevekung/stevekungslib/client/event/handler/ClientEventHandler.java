@@ -1,5 +1,7 @@
 package com.stevekung.stevekungslib.client.event.handler;
 
+import com.stevekung.stevekungslib.core.SteveKunGLib;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.MainMenuScreen;
 import net.minecraftforge.client.event.GuiOpenEvent;
@@ -30,6 +32,15 @@ public class ClientEventHandler
             if (!this.mc.isGamePaused())
             {
                 ClientEventHandler.ticksPaused++;
+            }
+        }
+        if (this.mc.player != null)
+        {
+            if (!SteveKunGLib.CHECKER.hasChecked())
+            {
+                SteveKunGLib.CHECKER.checkFail();
+                SteveKunGLib.CHECKER.printInfo();
+                SteveKunGLib.CHECKER.setChecked(true);
             }
         }
     }
