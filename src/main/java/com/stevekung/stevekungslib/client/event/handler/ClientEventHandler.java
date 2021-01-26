@@ -1,5 +1,6 @@
 package com.stevekung.stevekungslib.client.event.handler;
 
+import com.stevekung.stevekungslib.config.SteveKunGsLibConfig;
 import com.stevekung.stevekungslib.core.SteveKunGLib;
 
 import net.minecraft.client.Minecraft;
@@ -34,7 +35,7 @@ public class ClientEventHandler
                 ClientEventHandler.ticksPaused++;
             }
         }
-        if (this.mc.player != null)
+        if (this.mc.player != null && SteveKunGsLibConfig.GENERAL.enableVersionChecker.get())
         {
             if (!SteveKunGLib.CHECKER.hasChecked())
             {

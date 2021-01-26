@@ -1,0 +1,5 @@
+{
+    "_comment": "CONFIG",
+    "stevekungs_lib.configgui.debug_log": "Enable Debug Info",
+    "stevekungs_lib.configgui.enable_version_checker": "Enable Version Checker",
+}

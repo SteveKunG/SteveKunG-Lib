@@ -32,6 +32,9 @@ public class SteveKunGLib
 
     private void phaseFour(FMLLoadCompleteEvent event)
     {
-        SteveKunGLib.CHECKER.startCheck();
+        if (SteveKunGsLibConfig.GENERAL.enableVersionChecker.get())
+        {
+            SteveKunGLib.CHECKER.startCheck();
+        }
     }
 }
