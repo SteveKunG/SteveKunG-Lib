@@ -1,3 +1,4 @@
 # Change Log
 
-* * Internal class and utilities updated
+* * Update to 1.16.5
+* * Internal update
