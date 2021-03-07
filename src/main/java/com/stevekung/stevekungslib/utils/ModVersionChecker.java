@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.apache.maven.artifact.versioning.ComparableVersion;
 
+import com.stevekung.stevekungslib.core.SteveKunGLib;
 import com.stevekung.stevekungslib.utils.client.ClientUtils;
 
 import net.minecraftforge.fml.ModContainer;
@@ -38,6 +39,7 @@ public class ModVersionChecker
             {
                 this.latestVersion = version.toString();
                 this.url = result.url;
+                SteveKunGLib.LOGGER.debug("Mod {} latest version is {} with URL {}", this.modId, this.latestVersion, this.url);
             }
         }
     }
