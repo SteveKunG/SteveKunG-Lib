@@ -8,10 +8,11 @@ import net.minecraft.block.Block;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.IDispenseItemBehavior;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntitySpawnPlacementRegistry;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.entity.ai.brain.memory.MemoryModuleType;
 import net.minecraft.entity.ai.brain.schedule.Activity;
 import net.minecraft.entity.ai.brain.schedule.Schedule;
@@ -196,11 +197,6 @@ public class CommonRegistryUtils
     public <T extends MobEntity> void registerEntityPlacement(EntityType<T> type, EntitySpawnPlacementRegistry.PlacementType placementType, Heightmap.Type heightMapType, EntitySpawnPlacementRegistry.IPlacementPredicate<T> predicate)
     {
         EntitySpawnPlacementRegistry.register(type, placementType, heightMapType, predicate);
-    }
-
-    public void registerEntityAttributes(EntityType<? extends LivingEntity> type, AttributeModifierMap.MutableAttribute mutableAttribute)
-    {
-        GlobalEntityTypeAttributes.put(type, mutableAttribute.create());
     }
 
     public MemoryModuleType<?> registerMemoryModuleType(String name, MemoryModuleType<?> memoryModule)
