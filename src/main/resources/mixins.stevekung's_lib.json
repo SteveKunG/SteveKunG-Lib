@@ -4,7 +4,6 @@
     "compatibilityLevel": "JAVA_8",
     "package": "com.stevekung.stevekungslib.mixin",
     "refmap": "mixins.stevekung's_lib.refmap.json",
-    "target": "@env(DEFAULT)",
     "mixins": [
         "world.server.MixinServerWorld"
     ],
