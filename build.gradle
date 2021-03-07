@@ -46,7 +46,7 @@ repositories {
         url "https://plugins.gradle.org/m2/"
     }
     maven {
-        url "http://repo.spongepowered.org/maven/"
+        url "https://repo.spongepowered.org/maven/"
     }
 }
 
