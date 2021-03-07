@@ -1,3 +1,3 @@
 # Change Log
 
-* * Fixed crash with spongeforge
+* * Fixed crash with vivecraft, closed #8

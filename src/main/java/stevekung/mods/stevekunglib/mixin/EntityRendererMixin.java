@@ -24,8 +24,8 @@ public class EntityRendererMixin
     @Final
     private Minecraft mc;
 
-    @Inject(method = "setupCameraTransform(FI)V", cancellable = true, at = @At(value = "INVOKE", target = "net/minecraft/client/renderer/EntityRenderer.orientCamera(F)V", shift = At.Shift.BEFORE))
-    private void injectCameraEvent(float partialTicks, int pass, CallbackInfo info)
+    @Inject(method = "orientCamera(F)V", at = @At("HEAD"))
+    private void injectCameraEvent(float partialTicks, CallbackInfo info)
     {
         EventHooksClient.onCameraTransform(this.rendererUpdateCount, partialTicks);
     }
