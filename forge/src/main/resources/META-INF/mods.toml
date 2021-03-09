@@ -1,35 +1,28 @@
-modLoader = "javafml"
-loaderVersion = "[35,)"
-#issueTrackerURL = ""
-license = "Insert License Here"
+modLoader="javafml"
+loaderVersion="[35,)"
+license="MIT License"
+issueTrackerURL="https://github.com/SteveKunG/SteveKunG-Lib/issues"
 
 [[mods]]
-modId = "examplemod"
-version = "${version}"
-displayName = "Example Mod"
-authors = "Me!"
-description = '''
-This is an example description! Tell everyone what your mod is about!
-'''
-#logoFile = ""
+modId="stevekungs_lib"
+version="${version}"
+displayName="SteveKunG's Lib"
+description="Code and Utilities for SteveKunG's mods!"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/stevekungs-lib"
+updateJSONURL="https://raw.githubusercontent.com/SteveKunG/VersionCheckLibrary/master/stevekung's_lib_version.json"
+logoFile="logo.png"
+authors="SteveKunG"
 
-[[dependencies.examplemod]]
-modId = "forge"
-mandatory = true
-versionRange = "[35,)"
-ordering = "NONE"
-side = "BOTH"
+[[dependencies.stevekungs_lib]]
+    modId="forge"
+    mandatory=true
+    versionRange="[35.1.0,)"
+    ordering="NONE"
+    side="BOTH"
 
-[[dependencies.examplemod]]
-modId = "minecraft"
-mandatory = true
-versionRange = "[1.16.2,)"
-ordering = "NONE"
-side = "BOTH"
-
-[[dependencies.examplemod]]
-modId = "architectury"
-mandatory = true
-versionRange = "[1.1.55,)"
-ordering = "AFTER"
-side = "BOTH"
+[[dependencies.stevekungs_lib]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16.4,)"
+    ordering="NONE"
+    side="BOTH"

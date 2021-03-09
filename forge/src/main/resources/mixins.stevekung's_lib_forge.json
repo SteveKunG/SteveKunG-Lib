@@ -4,13 +4,13 @@
     "compatibilityLevel": "JAVA_8",
     "package": "com.stevekung.stevekungslib.mixin",
     "mixins": [
-        "InvokerFireBlock"
+        "world.server.MixinServerWorld"
     ],
     "client": [
-        "client.InvokerGui",
-        "client.entity.player.MixinClientPlayerEntity",
-        "client.multiplayer.MixinClientSuggestionProvider",
-        "client.network.play.MixinClientPlayNetHandler"
+        "client.gui.screen.MixinChatScreen",
+        "client.renderer.MixinGameRenderer",
+        "client.renderer.MixinOverlayRenderer",
+        "client.renderer.MixinWorldRenderer"
     ],
     "injectors": {
         "defaultRequire": 1

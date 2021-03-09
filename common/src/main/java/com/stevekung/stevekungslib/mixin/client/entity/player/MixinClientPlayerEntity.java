@@ -25,10 +25,10 @@ public class MixinClientPlayerEntity
 
     @Shadow
     @Final
-    protected Minecraft mc;
+    protected Minecraft minecraft;
 
-    @Inject(method = "sendMessage(Lnet/minecraft/network/chat/Component;Ljava/util/UUID;)V", at = @At("HEAD"), cancellable = true)
-    private void sendMessage(String message, CallbackInfo info)
+    @Inject(method = "chat(Ljava/lang/String;)V", at = @At("HEAD"), cancellable = true)
+    private void chat(String message, CallbackInfo info)
     {
         if (message.length() < 2 || !message.startsWith("/"))
         {
@@ -42,7 +42,7 @@ public class MixinClientPlayerEntity
         try
         {
             // The game freezes when using heavy commands. Run your heavy code somewhere else pls
-            int result = ClientCommands.execute(message.substring(1), (IClientSuggestionProvider) new ClientSuggestionProvider(this.that.connection, this.mc));
+            int result = ClientCommands.execute(message.substring(1), (IClientSuggestionProvider) new ClientSuggestionProvider(this.that.connection, this.minecraft));
 
             if (result != 0)
             {

@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "id": "examplemod",
+  "id": "stevekungs_lib",
   "version": "${version}",
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "SteveKunG's Lib",
+  "description": "Code and Utilities for SteveKunG's mods!",
   "authors": [
-    "Me!"
+    "SteveKunG"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/stevekungs-lib",
+    "sources": "https://github.com/SteveKunG/SteveKunG-Lib"
   },
-  "license": "Insert License Here",
-  "icon": "assets/examplemod/icon.png",
+  "license": "MIT License",
+  "icon": "logo.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.examplemod.fabric.ExampleModFabric"
+      "com.stevekung.stevekungslib.core.SteveKunGLibFabric"
     ]
   },
   "depends": {
@@ -26,7 +26,7 @@
     "architectury": ">=1.1.55"
   },
   "mixins": [
-    "mixins.examplemod.json"
+    "mixins.stevekung's_lib.json"
   ],
   "suggests": {
     "flamingo": "*"

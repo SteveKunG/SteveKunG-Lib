@@ -2,8 +2,6 @@ package com.stevekung.stevekungslib.utils;
 
 import net.minecraft.network.chat.TextColor;
 
-import java.util.Objects;
-
 public class ColorUtils
 {
     private final float red;
@@ -116,7 +114,7 @@ public class ColorUtils
 
     public static int hexToDecimal(String color)
     {
-        return Objects.requireNonNull(TextColor.parseColor(color)).getValue();
+        return TextColor.parseColor(color).getValue();
     }
 
     public static String decimalToRgb(int color)

@@ -1,8 +1,9 @@
 package com.stevekung.stevekungslib.utils;
 
-import java.util.List;
-
 import com.google.common.collect.Lists;
+import com.stevekung.stevekungslib.mixin.InvokerSpawnPlacements;
+import me.shedaniel.architectury.registry.DeferredRegister;
+import net.minecraft.core.Registry;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
@@ -51,9 +52,8 @@ import net.minecraft.world.level.levelgen.placement.FeatureDecorator;
 import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilder;
 import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilderConfiguration;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.registries.DataSerializerEntry;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.List;
 
 public class CommonRegistryUtils
 {
@@ -82,7 +82,6 @@ public class CommonRegistryUtils
     private final DeferredRegister<Feature<?>> features;
     private final DeferredRegister<FeatureDecorator<?>> placements;
     private final DeferredRegister<SurfaceBuilder<?>> surfaceBuilders;
-    private final DeferredRegister<DataSerializerEntry> dataSerializers;
     private final DeferredRegister<Attribute> attributes;
     private final DeferredRegister<BlockStateProviderType<?>> blockStateProviderTypes;
     private final DeferredRegister<BlockPlacerType<?>> blockPlacerTypes;
@@ -92,34 +91,33 @@ public class CommonRegistryUtils
     public CommonRegistryUtils(String modId)
     {
         this.modId = modId;
-        this.blocks = DeferredRegister.create(ForgeRegistries.BLOCKS, modId);
-        this.enchantments = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, modId);
-        this.entityTypes = DeferredRegister.create(ForgeRegistries.ENTITIES, modId);
-        this.memoryModuleTypes = DeferredRegister.create(ForgeRegistries.MEMORY_MODULE_TYPES, modId);
-        this.activities = DeferredRegister.create(ForgeRegistries.ACTIVITIES, modId);
-        this.schedules = DeferredRegister.create(ForgeRegistries.SCHEDULES, modId);
-        this.sensorTypes = DeferredRegister.create(ForgeRegistries.SENSOR_TYPES, modId);
-        this.villagerProfessions = DeferredRegister.create(ForgeRegistries.PROFESSIONS, modId);
-        this.fluids = DeferredRegister.create(ForgeRegistries.FLUIDS, modId);
-        this.containerTypes = DeferredRegister.create(ForgeRegistries.CONTAINERS, modId);
-        this.items = DeferredRegister.create(ForgeRegistries.ITEMS, modId);
-        this.recipeSerializers = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, modId);
-        this.particleTypes = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, modId);
-        this.effects = DeferredRegister.create(ForgeRegistries.POTIONS, modId);
-        this.potions = DeferredRegister.create(ForgeRegistries.POTION_TYPES, modId);
-        this.tileEntityTypes = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, modId);
-        this.soundEvents = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, modId);
-        this.pointOfInterestTypes = DeferredRegister.create(ForgeRegistries.POI_TYPES, modId);
-        this.worldCarvers = DeferredRegister.create(ForgeRegistries.WORLD_CARVERS, modId);
-        this.features = DeferredRegister.create(ForgeRegistries.FEATURES, modId);
-        this.placements = DeferredRegister.create(ForgeRegistries.DECORATORS, modId);
-        this.surfaceBuilders = DeferredRegister.create(ForgeRegistries.SURFACE_BUILDERS, modId);
-        this.dataSerializers = DeferredRegister.create(ForgeRegistries.DATA_SERIALIZERS, modId);
-        this.attributes = DeferredRegister.create(ForgeRegistries.ATTRIBUTES, modId);
-        this.blockStateProviderTypes = DeferredRegister.create(ForgeRegistries.BLOCK_STATE_PROVIDER_TYPES, modId);
-        this.blockPlacerTypes = DeferredRegister.create(ForgeRegistries.BLOCK_PLACER_TYPES, modId);
-        this.foliagePlacerTypes = DeferredRegister.create(ForgeRegistries.FOLIAGE_PLACER_TYPES, modId);
-        this.treeDecoratorTypes = DeferredRegister.create(ForgeRegistries.TREE_DECORATOR_TYPES, modId);
+        this.blocks = DeferredRegister.create(modId, Registry.BLOCK_REGISTRY);
+        this.enchantments = DeferredRegister.create(modId, Registry.ENCHANTMENT_REGISTRY);
+        this.entityTypes = DeferredRegister.create(modId, Registry.ENTITY_TYPE_REGISTRY);
+        this.memoryModuleTypes = DeferredRegister.create(modId, Registry.MEMORY_MODULE_TYPE_REGISTRY);
+        this.activities = DeferredRegister.create(modId, Registry.ACTIVITY_REGISTRY);
+        this.schedules = DeferredRegister.create(modId, Registry.SCHEDULE_REGISTRY);
+        this.sensorTypes = DeferredRegister.create(modId, Registry.SENSOR_TYPE_REGISTRY);
+        this.villagerProfessions = DeferredRegister.create(modId, Registry.VILLAGER_PROFESSION_REGISTRY);
+        this.fluids = DeferredRegister.create(modId, Registry.FLUID_REGISTRY);
+        this.containerTypes = DeferredRegister.create(modId, Registry.MENU_REGISTRY);
+        this.items = DeferredRegister.create(modId, Registry.ITEM_REGISTRY);
+        this.recipeSerializers = DeferredRegister.create(modId, Registry.RECIPE_SERIALIZER_REGISTRY);
+        this.particleTypes = DeferredRegister.create(modId, Registry.PARTICLE_TYPE_REGISTRY);
+        this.effects = DeferredRegister.create(modId, Registry.MOB_EFFECT_REGISTRY);
+        this.potions = DeferredRegister.create(modId, Registry.POTION_REGISTRY);
+        this.tileEntityTypes = DeferredRegister.create(modId, Registry.BLOCK_ENTITY_TYPE_REGISTRY);
+        this.soundEvents = DeferredRegister.create(modId, Registry.SOUND_EVENT_REGISTRY);
+        this.pointOfInterestTypes = DeferredRegister.create(modId, Registry.POINT_OF_INTEREST_TYPE_REGISTRY);
+        this.worldCarvers = DeferredRegister.create(modId, Registry.CARVER_REGISTRY);
+        this.features = DeferredRegister.create(modId, Registry.FEATURE_REGISTRY);
+        this.placements = DeferredRegister.create(modId, Registry.DECORATOR_REGISTRY);
+        this.surfaceBuilders = DeferredRegister.create(modId, Registry.SURFACE_BUILDER_REGISTRY);
+        this.attributes = DeferredRegister.create(modId, Registry.ATTRIBUTE_REGISTRY);
+        this.blockStateProviderTypes = DeferredRegister.create(modId, Registry.BLOCK_STATE_PROVIDER_TYPE_REGISTRY);
+        this.blockPlacerTypes = DeferredRegister.create(modId, Registry.BLOCK_PLACER_TYPE_REGISTRY);
+        this.foliagePlacerTypes = DeferredRegister.create(modId, Registry.FOLIAGE_PLACER_TYPE_REGISTRY);
+        this.treeDecoratorTypes = DeferredRegister.create(modId, Registry.TREE_DECORATOR_TYPE_REGISTRY);
 
         this.deferredRegistries.add(this.blocks);
         this.deferredRegistries.add(this.enchantments);
@@ -143,7 +141,6 @@ public class CommonRegistryUtils
         this.deferredRegistries.add(this.features);
         this.deferredRegistries.add(this.placements);
         this.deferredRegistries.add(this.surfaceBuilders);
-        this.deferredRegistries.add(this.dataSerializers);
         this.deferredRegistries.add(this.attributes);
         this.deferredRegistries.add(this.blockStateProviderTypes);
         this.deferredRegistries.add(this.blockPlacerTypes);
@@ -195,7 +192,7 @@ public class CommonRegistryUtils
 
     public <T extends Mob> void registerEntityPlacement(EntityType<T> type, SpawnPlacements.Type placementType, Heightmap.Types heightMapType, SpawnPlacements.SpawnPredicate<T> predicate)
     {
-        SpawnPlacements.register(type, placementType, heightMapType, predicate);
+        InvokerSpawnPlacements.invokeRegister(type, placementType, heightMapType, predicate);
     }
 
     public MemoryModuleType<?> registerMemoryModuleType(String name, MemoryModuleType<?> memoryModule)
@@ -322,12 +319,6 @@ public class CommonRegistryUtils
         return builder;
     }
 
-    public DataSerializerEntry registerDataSerializer(String name, DataSerializerEntry data)
-    {
-        this.dataSerializers.register(name, () -> data);
-        return data;
-    }
-
     public Attribute registerAttribute(String name, Attribute attribute)
     {
         this.attributes.register(name, () -> attribute);
@@ -368,7 +359,7 @@ public class CommonRegistryUtils
     {
         for (DeferredRegister<?> registry : this.deferredRegistries)
         {
-            registry.register(CommonUtils.getModEventBus());
+            registry.register();
         }
     }
 }

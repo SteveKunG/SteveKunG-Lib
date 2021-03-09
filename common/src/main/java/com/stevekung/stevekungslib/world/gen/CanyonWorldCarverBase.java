@@ -51,7 +51,7 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityFeatureConfigu
         float f1 = (rand.nextFloat() - 0.5F) * 2.0F / 8.0F;
         float f2 = (rand.nextFloat() * 2.0F + rand.nextFloat()) * 2.0F;
         int j = i - rand.nextInt(i / 4);
-        this.carveTunnel(chunk, biomeGetter, rand.nextLong(), seaLevel, originalX, originalZ, d0, d1, d2, f2, f, f1, 0, j, 3.0D, carvingMask);
+        this.carveTunnel(chunk, biomeGetter, rand.nextLong(), seaLevel, originalX, originalZ, d0, d1, d2, f2, f, f1, j, carvingMask);
         return true;
     }
 
@@ -111,7 +111,7 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityFeatureConfigu
         }
     }
 
-    private void carveTunnel(ChunkAccess chunk, Function<BlockPos, Biome> biomeGetter, long seed, int seaLevel, int originalX, int originalZ, double x, double y, double z, float radius, float p_222729_14_, float p_222729_15_, int p_222729_16_, int maxY, double p_222729_18_, BitSet bitSet)
+    private void carveTunnel(ChunkAccess chunk, Function<BlockPos, Biome> biomeGetter, long seed, int seaLevel, int originalX, int originalZ, double x, double y, double z, float radius, float p_222729_14_, float p_222729_15_, int maxY, BitSet bitSet)
     {
         Random rand = new Random(seed);
         float f = 1.0F;
@@ -128,10 +128,10 @@ public class CanyonWorldCarverBase extends WorldCarver<ProbabilityFeatureConfigu
         float f4 = 0.0F;
         float f1 = 0.0F;
 
-        for (int j = p_222729_16_; j < maxY; ++j)
+        for (int j = 0; j < maxY; ++j)
         {
             double d0 = 1.5D + Mth.sin(j * (float)Math.PI / maxY) * radius;
-            double d1 = d0 * p_222729_18_;
+            double d1 = d0 * 3.0D;
             d0 = d0 * (rand.nextFloat() * 0.25D + 0.75D);
             d1 = d1 * (rand.nextFloat() * 0.25D + 0.75D);
             float f2 = Mth.cos(p_222729_15_);
