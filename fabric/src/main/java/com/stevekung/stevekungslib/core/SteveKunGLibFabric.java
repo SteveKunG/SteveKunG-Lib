@@ -8,5 +8,8 @@ public class SteveKunGLibFabric implements ModInitializer
     public static final ConfigHandlerLib CONFIG = new ConfigHandlerLib();
 
     @Override
-    public void onInitialize() {}
+    public void onInitialize()
+    {
+        SteveKunGLib.LOGGER.setDebug(SteveKunGLibFabric.CONFIG.getConfig().enableDebugLog);
+    }
 }
