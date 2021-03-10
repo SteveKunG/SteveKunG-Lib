@@ -99,7 +99,7 @@ public class ColorUtils
 
     public static float[] toFloatArray(int red, int green, int blue)
     {
-        return new float[] { red / 255.0F, green / 255.0F, blue / 255.0F };
+        return new float[]{red / 255.0F, green / 255.0F, blue / 255.0F};
     }
 
     public static int toDecimal(int red, int green, int blue)

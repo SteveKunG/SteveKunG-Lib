@@ -1,10 +1,10 @@
 package com.stevekung.stevekungslib.data;
 
+import java.util.stream.Collectors;
+
 import net.minecraft.data.loot.EntityLoot;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.registries.ForgeRegistries;
-
-import java.util.stream.Collectors;
 
 public class EntityLootTablesBase extends EntityLoot
 {

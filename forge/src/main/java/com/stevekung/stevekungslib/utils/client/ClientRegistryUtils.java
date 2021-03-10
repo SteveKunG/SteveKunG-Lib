@@ -1,7 +1,8 @@
 package com.stevekung.stevekungslib.utils.client;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import java.util.function.Function;
+
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;

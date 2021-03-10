@@ -2,10 +2,10 @@ package com.stevekung.stevekungslib.utils.config;
 
 import java.util.List;
 import java.util.Optional;
+
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.stevekung.stevekungslib.utils.client.ClientUtils;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.Button;

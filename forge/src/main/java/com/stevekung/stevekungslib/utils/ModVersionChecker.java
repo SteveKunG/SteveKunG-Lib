@@ -3,11 +3,9 @@ package com.stevekung.stevekungslib.utils;
 import java.util.Map;
 import java.util.Optional;
 
+import org.apache.maven.artifact.versioning.ComparableVersion;
 import com.stevekung.stevekungslib.core.SteveKunGLib;
 import com.stevekung.stevekungslib.utils.client.ClientUtils;
-import com.stevekung.stevekungslib.utils.client.ClientUtilsImpl;
-import org.apache.maven.artifact.versioning.ComparableVersion;
-
 import net.minecraftforge.fml.ModContainer;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.VersionChecker;

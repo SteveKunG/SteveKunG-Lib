@@ -1,15 +1,15 @@
 package com.stevekung.stevekungslib.mixin.client.gui.screen;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.stevekung.stevekungslib.utils.ForgeCommonUtils;
-import com.stevekung.stevekungslib.utils.client.event.ChatScreenEvent;
-import net.minecraft.client.gui.screens.ChatScreen;
-import net.minecraft.client.gui.screens.Screen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.stevekung.stevekungslib.utils.ForgeCommonUtils;
+import com.stevekung.stevekungslib.utils.client.event.ChatScreenEvent;
+import net.minecraft.client.gui.screens.ChatScreen;
+import net.minecraft.client.gui.screens.Screen;
 
 @Mixin(ChatScreen.class)
 public abstract class MixinChatScreen extends Screen

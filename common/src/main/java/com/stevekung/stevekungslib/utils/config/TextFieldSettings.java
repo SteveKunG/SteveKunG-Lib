@@ -2,6 +2,7 @@ package com.stevekung.stevekungslib.utils.config;
 
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+
 import net.minecraft.client.gui.components.AbstractWidget;
 
 public class TextFieldSettings<T extends Settings> extends AbstractSettings<T>

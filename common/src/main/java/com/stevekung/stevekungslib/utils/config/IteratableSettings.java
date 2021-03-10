@@ -2,6 +2,7 @@ package com.stevekung.stevekungslib.utils.config;
 
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
+
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.network.chat.Component;
 

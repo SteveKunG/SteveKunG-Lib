@@ -1,9 +1,9 @@
 package com.stevekung.stevekungslib.mixin.client.multiplayer;
 
-import com.stevekung.stevekungslib.utils.client.command.IClientSuggestionProvider;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import com.stevekung.stevekungslib.utils.client.command.IClientSuggestionProvider;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientSuggestionProvider;

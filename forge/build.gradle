@@ -4,7 +4,7 @@ plugins {
 }
 
 configurations {
-    shadowCommon
+    shadow
 }
 
 architectury {
@@ -27,7 +27,7 @@ dependencies {
     developmentForge(project(path: ":common")) {
         transitive = false
     }
-    shadowCommon(project(path: ":common", configuration: "transformProductionForge")) {
+    shadow(project(path: ":common", configuration: "transformProductionForge")) {
         transitive = false
     }
 }
@@ -43,26 +43,12 @@ processResources {
 shadowJar {
     exclude "fabric.mod.json"
 
-    configurations = [project.configurations.shadowCommon]
-    classifier "dev-shadow"
+    configurations = [project.configurations.shadow]
+    classifier "dev"
 }
 
 remapJar {
     input.set shadowJar.archiveFile
     dependsOn shadowJar
     classifier "forge"
-}
-
-jar {
-    classifier "dev"
-}
-
-java {
-    withSourcesJar()
-}
-
-sourcesJar {
-    def commonSources = project(":common").remapSourcesJar
-    dependsOn commonSources
-    from zipTree(commonSources.output)
 }

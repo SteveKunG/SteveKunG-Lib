@@ -2,6 +2,7 @@ package com.stevekung.stevekungslib.utils.config;
 
 import java.util.List;
 import java.util.Optional;
+
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;

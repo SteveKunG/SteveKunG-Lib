@@ -1,5 +1,8 @@
 package com.stevekung.stevekungslib.utils;
 
+import java.io.Writer;
+import java.lang.reflect.Type;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
@@ -8,9 +11,6 @@ import com.google.gson.internal.Streams;
 import com.google.gson.stream.JsonWriter;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.*;
-
-import java.io.Writer;
-import java.lang.reflect.Type;
 
 public class TextComponentUtils
 {

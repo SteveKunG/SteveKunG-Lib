@@ -4,6 +4,8 @@ import java.util.BitSet;
 import java.util.Random;
 import java.util.Set;
 import java.util.function.Function;
+
+import org.apache.commons.lang3.mutable.MutableBoolean;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
@@ -15,7 +17,6 @@ import net.minecraft.world.level.levelgen.carver.WorldCarver;
 import net.minecraft.world.level.levelgen.feature.configurations.ProbabilityFeatureConfiguration;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
-import org.apache.commons.lang3.mutable.MutableBoolean;
 
 public class CanyonWorldCarverBase extends WorldCarver<ProbabilityFeatureConfiguration>
 {

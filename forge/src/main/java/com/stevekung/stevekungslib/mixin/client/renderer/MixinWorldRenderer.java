@@ -3,7 +3,6 @@ package com.stevekung.stevekungslib.mixin.client.renderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
-
 import com.stevekung.stevekungslib.utils.client.EventHooksClient;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.LevelRenderer;

@@ -1,10 +1,10 @@
 package com.stevekung.stevekungslib.data;
 
+import java.util.function.Consumer;
+
 import net.minecraft.advancements.Advancement;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
-
-import java.util.function.Consumer;
 
 public abstract class AdvancementsBase implements Consumer<Consumer<Advancement>>
 {

@@ -1,10 +1,10 @@
 package com.stevekung.stevekungslib.data;
 
+import java.util.stream.Collectors;
+
 import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
-
-import java.util.stream.Collectors;
 
 public class BlockLootTablesBase extends BlockLoot
 {
