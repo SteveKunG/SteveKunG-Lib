@@ -9,7 +9,8 @@
   ],
   "contact": {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/stevekungs-lib",
-    "sources": "https://github.com/SteveKunG/SteveKunG-Lib"
+    "sources": "https://github.com/SteveKunG/SteveKunG-Lib",
+    "issues": "https://github.com/SteveKunG/SteveKunG-Lib/issues"
   },
   "license": "MIT License",
   "icon": "logo.png",
@@ -28,7 +29,12 @@
   "mixins": [
     "mixins.stevekung's_lib.json"
   ],
-  "suggests": {
-    "flamingo": "*"
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.discord": "https://discord.gg/6JhEjeY"
+      },
+      "badges": [ "library" ]
+    }
   }
 }
