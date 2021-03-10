@@ -20,7 +20,7 @@ public class SteveKunGsLibConfig
             this.enableDebugLog = builder
                     .comment("Display debug log, useful to find bugs.")
                     .translation("stevekungs_lib.configgui.debug_log")
-                    .define("enableDebugLog", true);
+                    .define("enableDebugLog", false);
             this.enableVersionChecker = builder
                     .translation("stevekungs_lib.configgui.enable_version_checker")
                     .define("enableVersionChecker", true);

@@ -18,6 +18,9 @@
   "entrypoints": {
     "main": [
       "com.stevekung.stevekungslib.core.SteveKunGLibFabric"
+    ],
+    "modmenu": [
+      "com.stevekung.stevekungslib.modmenu.ModMenuIntegrationLib"
     ]
   },
   "depends": {
