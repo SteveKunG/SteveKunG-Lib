@@ -12,9 +12,6 @@
     "client": [
         "client.InvokerGui",
         "client.gui.screens.MixinChatScreen",
-        "client.multiplayer.MixinClientPacketListener",
-        "client.multiplayer.MixinClientSuggestionProvider",
-        "client.player.MixinLocalPlayer",
         "client.renderer.MixinGameRenderer",
         "client.renderer.MixinLevelRenderer",
         "client.renderer.MixinScreenEffectRenderer",

@@ -1,0 +1,16 @@
+{
+    "required": true,
+    "minVersion": "0.8.2",
+    "compatibilityLevel": "JAVA_8",
+    "package": "com.stevekung.stevekungslib.mixin",
+    "mixins": [
+    ],
+    "client": [
+        "client.multiplayer.MixinClientPacketListener",
+        "client.multiplayer.MixinClientSuggestionProvider",
+        "client.player.MixinLocalPlayer"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}
