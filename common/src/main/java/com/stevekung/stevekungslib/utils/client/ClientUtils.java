@@ -3,7 +3,9 @@ package com.stevekung.stevekungslib.utils.client;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.stevekung.stevekungslib.mixin.client.InvokerGui;
 import com.stevekung.stevekungslib.utils.TextComponentUtils;
-import me.shedaniel.architectury.annotations.ExpectPlatform;
+import me.shedaniel.architectury.platform.Platform;
+import me.shedaniel.architectury.utils.Env;
+import net.fabricmc.api.EnvType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
@@ -15,16 +17,14 @@ public class ClientUtils
 {
     public static final ResourceLocation UNICODE = new ResourceLocation("uniform");
 
-    @ExpectPlatform
     public static boolean isClient()
     {
-        throw new Error();
+        return Platform.getEnvironment() == Env.CLIENT;
     }
 
-    @ExpectPlatform
     public static boolean isEffectiveClient()
     {
-        throw new Error();
+        return Platform.getEnv() == EnvType.CLIENT;
     }
 
     public static boolean isKeyDown(int key)
