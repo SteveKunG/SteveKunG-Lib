@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.stevekung.stevekungslib.utils.client.EventHooksClient;
+import com.stevekung.stevekungslib.client.event.RenderEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ScreenEffectRenderer;
 
@@ -21,7 +21,7 @@ public class MixinScreenEffectRenderer
 
         if (!mc.player.isSpectator())
         {
-            EventHooksClient.onRenderOverlayFirstPersonView(poseStack);
+            RenderEvents.FIRST_PERSON_VIEW_RENDER.invoker().firstPersonViewRender(poseStack);
         }
 
         RenderSystem.enableAlphaTest();

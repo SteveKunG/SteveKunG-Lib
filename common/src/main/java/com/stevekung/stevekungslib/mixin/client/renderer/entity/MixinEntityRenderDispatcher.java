@@ -5,7 +5,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.stevekung.stevekungslib.utils.client.EventHooksClient;
+import com.stevekung.stevekungslib.client.event.RenderEvents;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.world.entity.Entity;
@@ -18,7 +18,7 @@ public class MixinEntityRenderDispatcher
     {
         if (!entity.isSpectator())
         {
-            EventHooksClient.onRenderEntityOverlay(entity, x, y, z, partialTicks, stack, buffer);
+            RenderEvents.RENDER_ENTITY_OVERLAY.invoker().renderEntityOverlay(entity, x, y, z, partialTicks, stack, buffer);
         }
     }
 }

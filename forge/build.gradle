@@ -13,7 +13,7 @@ architectury {
 }
 
 loom {
-    mixinConfigs = ["mixins.stevekung's_lib.json", "mixins.stevekung's_lib_forge.json"]
+    mixinConfig "mixins.stevekung's_lib.json"
     useFabricMixin = true
 }
 
