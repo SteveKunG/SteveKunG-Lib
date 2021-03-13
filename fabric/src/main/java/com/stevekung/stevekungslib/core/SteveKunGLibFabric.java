@@ -10,6 +10,7 @@ public class SteveKunGLibFabric implements ModInitializer
     @Override
     public void onInitialize()
     {
+        SteveKunGLib.init();
         SteveKunGLib.LOGGER.setDebug(SteveKunGLibFabric.CONFIG.getConfig().enableDebugLog);
     }
 }

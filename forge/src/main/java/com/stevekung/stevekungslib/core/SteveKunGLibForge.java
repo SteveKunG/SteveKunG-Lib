@@ -19,6 +19,7 @@ public class SteveKunGLibForge
 
     public SteveKunGLibForge()
     {
+        SteveKunGLib.init();
         EventBuses.registerModEventBus(SteveKunGLib.MOD_ID, ForgeCommonUtils.getModEventBus());
         ForgeCommonUtils.addModListener(this::phaseFour);
         ForgeCommonUtils.registerConfig(ModConfig.Type.COMMON, SteveKunGsLibConfig.GENERAL_BUILDER);
