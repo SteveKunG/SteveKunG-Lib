@@ -4,6 +4,8 @@ import com.stevekung.stevekungslib.client.event.handler.ClientEventHandler;
 import com.stevekung.stevekungslib.utils.LoggerBase;
 import me.shedaniel.architectury.event.events.GuiEvent;
 import me.shedaniel.architectury.event.events.client.ClientTickEvent;
+import me.shedaniel.architectury.utils.Env;
+import me.shedaniel.architectury.utils.EnvExecutor;
 
 public class SteveKunGLib
 {
@@ -12,7 +14,10 @@ public class SteveKunGLib
 
     public static void init()
     {
-        GuiEvent.SET_SCREEN.register(ClientEventHandler::onScreenOpen);
-        ClientTickEvent.CLIENT_PRE.register(ClientEventHandler::onClientTick);
+        EnvExecutor.runInEnv(Env.CLIENT, () -> () ->
+        {
+            GuiEvent.SET_SCREEN.register(ClientEventHandler::onScreenOpen);
+            ClientTickEvent.CLIENT_PRE.register(ClientEventHandler::onClientTick);
+        });
     }
 }
