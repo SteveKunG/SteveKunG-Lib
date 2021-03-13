@@ -1,4 +1,4 @@
-package com.stevekung.stevekungslib.mixin.client.network.play;
+package com.stevekung.stevekungslib.mixin.client.multiplayer;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -16,7 +16,7 @@ import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundCommandsPacket;
 
 @Mixin(ClientPacketListener.class)
-public class MixinClientPlayNetHandler
+public class MixinClientPacketListener
 {
     @Shadow
     private CommandDispatcher<SharedSuggestionProvider> commands;

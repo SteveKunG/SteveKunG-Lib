@@ -16,9 +16,9 @@ public class MixinGameRenderer
     private int tick;
 
     @Inject(method = "renderLevel(FJLcom/mojang/blaze3d/vertex/PoseStack;)V", at = @At(value = "INVOKE", target = "net/minecraft/client/renderer/GameRenderer.bobHurt(Lcom/mojang/blaze3d/vertex/PoseStack;F)V", shift = At.Shift.AFTER))
-    private void injectCameraEvent(float partialTicks, long finishTimeNano, PoseStack matrixStack, CallbackInfo info)
+    private void injectCameraEvent(float partialTicks, long finishTimeNano, PoseStack poseStack, CallbackInfo info)
     {
-        EventHooksClient.onCameraTransform(this.tick, partialTicks, matrixStack);
+        EventHooksClient.onCameraTransform(this.tick, partialTicks, poseStack);
     }
 
     @Inject(method = "render(FJZ)V", at = @At(value = "INVOKE", target = "net/minecraft/util/Mth.lerp(FFF)F", shift = At.Shift.AFTER))

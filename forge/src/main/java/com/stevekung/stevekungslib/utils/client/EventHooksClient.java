@@ -17,14 +17,14 @@ public class EventHooksClient
         MinecraftForge.EVENT_BUS.post(new CameraTransformEvent(rendererUpdateCount, partialTicks, stack));
     }
 
-    public static boolean onAddRainParticle(Level world, double x, double y, double z)
+    public static boolean onAddRainParticle(Level level, double x, double y, double z)
     {
-        return MinecraftForge.EVENT_BUS.post(new AddRainParticleEvent(world, x, y, z));
+        return MinecraftForge.EVENT_BUS.post(new AddRainParticleEvent(level, x, y, z));
     }
 
-    public static void onRenderOverlayFirstPersonView(PoseStack stack)
+    public static void onRenderOverlayFirstPersonView(PoseStack poseStack)
     {
-        MinecraftForge.EVENT_BUS.post(new RenderOverlayEvent.FirstPersonView(stack));
+        MinecraftForge.EVENT_BUS.post(new RenderOverlayEvent.FirstPersonView(poseStack));
     }
 
     public static void onRenderOverlayScreen(float partialTicks)
@@ -32,8 +32,8 @@ public class EventHooksClient
         MinecraftForge.EVENT_BUS.post(new RenderOverlayEvent.Screen(partialTicks));
     }
 
-    public static void onRenderEntityOverlay(Entity entity, double x, double y, double z, float partialTicks, PoseStack stack, MultiBufferSource buffer)
+    public static void onRenderEntityOverlay(Entity entity, double x, double y, double z, float partialTicks, PoseStack poseStack, MultiBufferSource buffer)
     {
-        MinecraftForge.EVENT_BUS.post(new RenderEntityOverlayEvent(entity, x, y, z, partialTicks, stack, buffer));
+        MinecraftForge.EVENT_BUS.post(new RenderEntityOverlayEvent(entity, x, y, z, partialTicks, poseStack, buffer));
     }
 }

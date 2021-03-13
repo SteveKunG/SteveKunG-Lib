@@ -13,22 +13,22 @@ public abstract class LanguageProviderBase extends LanguageProvider
         super(generator, modid, locale);
     }
 
-    protected void add(MobEffect key, String name, boolean hasPotion)
+    protected void add(MobEffect effect, String name, boolean hasPotion)
     {
-        this.add(key.getDescriptionId(), name);
+        this.add(effect.getDescriptionId(), name);
 
         if (hasPotion)
         {
-            this.addPotionSet(key, name);
+            this.addPotionSet(effect, name);
         }
     }
 
-    protected void addPotionSet(MobEffect key, String name)
+    protected void addPotionSet(MobEffect effect, String name)
     {
-        this.add(Items.POTION.getDescriptionId() + ".effect." + key.getRegistryName().getPath(), "Potion of " + name);
-        this.add(Items.SPLASH_POTION.getDescriptionId() + ".effect." + key.getRegistryName().getPath(), "Splash Potion of " + name);
-        this.add(Items.LINGERING_POTION.getDescriptionId() + ".effect." + key.getRegistryName().getPath(), "Lingering Potion of " + name);
-        this.add(Items.TIPPED_ARROW.getDescriptionId() + ".effect." + key.getRegistryName().getPath(), "Arrow of " + name);
+        this.add(Items.POTION.getDescriptionId() + ".effect." + effect.getRegistryName().getPath(), "Potion of " + name);
+        this.add(Items.SPLASH_POTION.getDescriptionId() + ".effect." + effect.getRegistryName().getPath(), "Splash Potion of " + name);
+        this.add(Items.LINGERING_POTION.getDescriptionId() + ".effect." + effect.getRegistryName().getPath(), "Lingering Potion of " + name);
+        this.add(Items.TIPPED_ARROW.getDescriptionId() + ".effect." + effect.getRegistryName().getPath(), "Arrow of " + name);
     }
 
     protected void add(DamageSource source, String name)

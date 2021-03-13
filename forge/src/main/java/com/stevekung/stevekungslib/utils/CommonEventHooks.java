@@ -7,8 +7,8 @@ import net.minecraftforge.common.MinecraftForge;
 
 public class CommonEventHooks
 {
-    public static void onWeatherTick(Level world, BlockPos strikePos)
+    public static void onWeatherTick(Level level, BlockPos strikePos)
     {
-        MinecraftForge.EVENT_BUS.post(new WeatherTickEvent(world, strikePos));
+        MinecraftForge.EVENT_BUS.post(new WeatherTickEvent(level, strikePos));
     }
 }

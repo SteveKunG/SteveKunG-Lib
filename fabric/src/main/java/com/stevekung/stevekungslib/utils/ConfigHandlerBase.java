@@ -9,7 +9,6 @@ import java.nio.file.Paths;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.stevekung.stevekungslib.core.SteveKunGLib;
-
 import net.fabricmc.loader.api.FabricLoader;
 
 public abstract class ConfigHandlerBase

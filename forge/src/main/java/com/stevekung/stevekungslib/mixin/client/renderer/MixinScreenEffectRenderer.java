@@ -11,17 +11,17 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ScreenEffectRenderer;
 
 @Mixin(ScreenEffectRenderer.class)
-public class MixinOverlayRenderer
+public class MixinScreenEffectRenderer
 {
     @SuppressWarnings("deprecation")
     @Inject(method = "renderScreenEffect(Lnet/minecraft/client/Minecraft;Lcom/mojang/blaze3d/vertex/PoseStack;)V", at = @At("HEAD"))
-    private static void renderFirstPersonViewOverlayEvent(Minecraft mc, PoseStack stack, CallbackInfo info)
+    private static void renderFirstPersonViewOverlayEvent(Minecraft mc, PoseStack poseStack, CallbackInfo info)
     {
         RenderSystem.disableAlphaTest();
 
         if (!mc.player.isSpectator())
         {
-            EventHooksClient.onRenderOverlayFirstPersonView(stack);
+            EventHooksClient.onRenderOverlayFirstPersonView(poseStack);
         }
 
         RenderSystem.enableAlphaTest();

@@ -26,7 +26,7 @@ public class SettingsSlider<T extends Settings> extends AbstractSettingsSlider<T
 
     @Override
     @SuppressWarnings("deprecation")
-    public void renderButton(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks)
+    public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTicks)
     {
         MutableComponent component = this.getMessage().copy();
         Minecraft mc = Minecraft.getInstance();
@@ -36,16 +36,16 @@ public class SettingsSlider<T extends Settings> extends AbstractSettingsSlider<T
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.enableDepthTest();
-        this.blit(matrixStack, this.x, this.y, 0, 46 + i * 20, this.width / 2, this.height);
-        this.blit(matrixStack, this.x + this.width / 2, this.y, 200 - this.width / 2, 46 + i * 20, this.width / 2, this.height);
-        this.renderBg(matrixStack, mc, mouseX, mouseY);
+        this.blit(poseStack, this.x, this.y, 0, 46 + i * 20, this.width / 2, this.height);
+        this.blit(poseStack, this.x + this.width / 2, this.y, 200 - this.width / 2, 46 + i * 20, this.width / 2, this.height);
+        this.renderBg(poseStack, mc, mouseX, mouseY);
         int j = this.active ? 16777215 : 10526880;
 
         if (component.getString().length() > 30)
         {
             component.setStyle(component.getStyle().withFont(ClientUtils.UNICODE));
         }
-        GuiComponent.drawCenteredString(matrixStack, mc.font, component, this.x + this.width / 2, this.y + (this.height - 8) / 2, j | Mth.ceil(this.alpha * 255.0F) << 24);
+        GuiComponent.drawCenteredString(poseStack, mc.font, component, this.x + this.width / 2, this.y + (this.height - 8) / 2, j | Mth.ceil(this.alpha * 255.0F) << 24);
     }
 
     @Override

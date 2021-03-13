@@ -12,17 +12,17 @@ public class RenderEntityOverlayEvent extends Event
     private final double y;
     private final double z;
     private final float partialTicks;
-    private final PoseStack stack;
+    private final PoseStack poseStack;
     private final MultiBufferSource buffer;
 
-    public RenderEntityOverlayEvent(Entity entity, double x, double y, double z, float partialTicks, PoseStack stack, MultiBufferSource buffer)
+    public RenderEntityOverlayEvent(Entity entity, double x, double y, double z, float partialTicks, PoseStack poseStack, MultiBufferSource buffer)
     {
         this.entity = entity;
         this.x = x;
         this.y = y;
         this.z = z;
         this.partialTicks = partialTicks;
-        this.stack = stack;
+        this.poseStack = poseStack;
         this.buffer = buffer;
     }
 
@@ -51,12 +51,12 @@ public class RenderEntityOverlayEvent extends Event
         return this.partialTicks;
     }
 
-    public PoseStack getMatrixStack()
+    public PoseStack getPoseStack()
     {
-        return this.stack;
+        return this.poseStack;
     }
 
-    public MultiBufferSource getRenderTypeBuffer()
+    public MultiBufferSource getMultiBufferSource()
     {
         return this.buffer;
     }

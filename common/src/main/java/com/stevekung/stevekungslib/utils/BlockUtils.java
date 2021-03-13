@@ -13,8 +13,8 @@ public class BlockUtils
         ((InvokerFireBlock)Blocks.FIRE).invokeSetFlammable(block, encouragement, flammability);
     }
 
-    public static boolean isFluid(Level world, BlockPos pos)
+    public static boolean isFluid(Level level, BlockPos pos)
     {
-        return world.getBlockState(pos.above()).getMaterial().isLiquid();
+        return level.getBlockState(pos.above()).getMaterial().isLiquid();
     }
 }

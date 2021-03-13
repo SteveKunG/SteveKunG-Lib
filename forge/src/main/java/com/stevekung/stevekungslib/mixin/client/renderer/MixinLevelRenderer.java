@@ -9,14 +9,14 @@ import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.core.particles.ParticleOptions;
 
 @Mixin(LevelRenderer.class)
-public class MixinWorldRenderer
+public class MixinLevelRenderer
 {
     @Redirect(method = "tickRain(Lnet/minecraft/client/Camera;)V", at = @At(value = "INVOKE", target = "net/minecraft/client/multiplayer/ClientLevel.addParticle(Lnet/minecraft/core/particles/ParticleOptions;DDDDDD)V"))
-    private void replaceRainParticles(ClientLevel world, ParticleOptions data, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed)
+    private void replaceRainParticles(ClientLevel level, ParticleOptions options, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed)
     {
-        if (!EventHooksClient.onAddRainParticle(world, x, y, z))
+        if (!EventHooksClient.onAddRainParticle(level, x, y, z))
         {
-            world.addParticle(data, x, y, z, 0.0D, 0.0D, 0.0D);
+            level.addParticle(options, x, y, z, 0.0D, 0.0D, 0.0D);
         }
     }
 }

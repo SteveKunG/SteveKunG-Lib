@@ -6,6 +6,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.jetbrains.annotations.NotNull;
 import net.minecraft.Util;
 
 public class CommonUtils
@@ -15,7 +16,7 @@ public class CommonUtils
         private final AtomicInteger counter = new AtomicInteger(0);
 
         @Override
-        public Thread newThread(Runnable runnable)
+        public Thread newThread(@NotNull Runnable runnable)
         {
             return new Thread(runnable, String.format("Thread %s", this.counter.incrementAndGet()));
         }

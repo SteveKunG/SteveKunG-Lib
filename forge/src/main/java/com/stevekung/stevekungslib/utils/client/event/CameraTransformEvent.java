@@ -7,13 +7,13 @@ public class CameraTransformEvent extends Event
 {
     private final int rendererUpdateCount;
     private final float partialTicks;
-    private final PoseStack stack;
+    private final PoseStack poseStack;
 
-    public CameraTransformEvent(int rendererUpdateCount, float partialTicks, PoseStack stack)
+    public CameraTransformEvent(int rendererUpdateCount, float partialTicks, PoseStack poseStack)
     {
         this.rendererUpdateCount = rendererUpdateCount;
         this.partialTicks = partialTicks;
-        this.stack = stack;
+        this.poseStack = poseStack;
     }
 
     public int getRendererUpdateCount()
@@ -26,8 +26,8 @@ public class CameraTransformEvent extends Event
         return this.partialTicks;
     }
 
-    public PoseStack getMatrixStack()
+    public PoseStack getPoseStack()
     {
-        return this.stack;
+        return this.poseStack;
     }
 }

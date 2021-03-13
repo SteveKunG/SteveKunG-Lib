@@ -9,5 +9,5 @@ import net.minecraft.world.level.block.FireBlock;
 public interface InvokerFireBlock
 {
     @Invoker
-    void invokeSetFlammable(Block block, int i, int j);
+    void invokeSetFlammable(Block block, int encouragement, int flammability);
 }

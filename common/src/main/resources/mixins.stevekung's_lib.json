@@ -8,9 +8,9 @@
     ],
     "client": [
         "client.InvokerGui",
-        "client.entity.player.MixinClientPlayerEntity",
+        "client.multiplayer.MixinClientPacketListener",
         "client.multiplayer.MixinClientSuggestionProvider",
-        "client.network.play.MixinClientPlayNetHandler"
+        "client.player.MixinLocalPlayer"
     ],
     "injectors": {
         "defaultRequire": 1

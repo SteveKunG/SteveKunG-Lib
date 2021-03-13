@@ -6,18 +6,18 @@ import net.minecraftforge.eventbus.api.Event;
 
 public class WeatherTickEvent extends Event
 {
-    private final Level world;
+    private final Level level;
     private final BlockPos strikePos;
 
-    public WeatherTickEvent(Level world, BlockPos strikePos)
+    public WeatherTickEvent(Level level, BlockPos strikePos)
     {
-        this.world = world;
+        this.level = level;
         this.strikePos = strikePos;
     }
 
-    public Level getWorld()
+    public Level getLevel()
     {
-        return this.world;
+        return this.level;
     }
 
     public BlockPos getStrikePos()

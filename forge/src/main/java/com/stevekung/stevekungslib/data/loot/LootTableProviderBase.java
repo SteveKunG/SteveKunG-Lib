@@ -1,4 +1,4 @@
-package com.stevekung.stevekungslib.data;
+package com.stevekung.stevekungslib.data.loot;
 
 import java.util.Collections;
 import java.util.List;
@@ -33,9 +33,9 @@ public class LootTableProviderBase extends LootTableProvider
     }
 
     @Override
-    protected void validate(Map<ResourceLocation, LootTable> map, ValidationContext tracker)
+    protected void validate(Map<ResourceLocation, LootTable> map, ValidationContext context)
     {
-        map.forEach((resource, loot) -> LootTables.validate(tracker, resource, loot));
+        map.forEach((resource, loot) -> LootTables.validate(context, resource, loot));
     }
 
     public LootTableProviderBase addTable(Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootContextParamSet> table)

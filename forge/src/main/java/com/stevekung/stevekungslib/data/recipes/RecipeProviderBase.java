@@ -1,4 +1,4 @@
-package com.stevekung.stevekungslib.data;
+package com.stevekung.stevekungslib.data.recipes;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.RecipeProvider;
@@ -16,9 +16,9 @@ public class RecipeProviderBase extends RecipeProvider
         this.modid = modid;
     }
 
-    protected String toCriterion(ItemLike provider)
+    protected String toCriterion(ItemLike item)
     {
-        return "has_" + this.toString(provider);
+        return "has_" + this.toString(item);
     }
 
     protected String toCriterion(Tag.Named<?> tag)
@@ -26,14 +26,14 @@ public class RecipeProviderBase extends RecipeProvider
         return "has_" + tag.getName().getPath() + "_tag";
     }
 
-    protected ResourceLocation toSmelting(ItemLike provider)
+    protected ResourceLocation toSmelting(ItemLike item)
     {
-        return this.modLoc(this.toString(provider) + "_from_smelting");
+        return this.modLoc(this.toString(item) + "_from_smelting");
     }
 
-    protected ResourceLocation toBlasting(ItemLike provider)
+    protected ResourceLocation toBlasting(ItemLike item)
     {
-        return this.modLoc(this.toString(provider) + "_from_blasting");
+        return this.modLoc(this.toString(item) + "_from_blasting");
     }
 
     protected ResourceLocation from(ItemLike base, ItemLike required)
@@ -56,9 +56,9 @@ public class RecipeProviderBase extends RecipeProvider
         return this.modLoc(required.getName().getPath() + "_from_" + required.getName().getPath());
     }
 
-    protected String toString(ItemLike base)
+    protected String toString(ItemLike item)
     {
-        return base.asItem().getRegistryName().getPath();
+        return item.asItem().getRegistryName().getPath();
     }
 
     protected ResourceLocation modLoc(String name)

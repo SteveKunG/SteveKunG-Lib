@@ -1,15 +1,15 @@
-package com.stevekung.stevekungslib.client.gui;
+package com.stevekung.stevekungslib.client.gui.components;
 
 import com.stevekung.stevekungslib.utils.NumberUtils;
 import com.stevekung.stevekungslib.utils.TextComponentUtils;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.EditBox;
 
-public class NumberWidget extends EditBox
+public class NumberEditBox extends EditBox
 {
-    public NumberWidget(Font font, int x, int y, int width, int height)
+    public NumberEditBox(Font font, int x, int y, int width, int height)
     {
-        super(font, x, y, width, height, TextComponentUtils.component("Number Field"));
+        super(font, x, y, width, height, TextComponentUtils.component("Number Edit Box"));
     }
 
     @Override

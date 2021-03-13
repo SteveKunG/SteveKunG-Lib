@@ -1,4 +1,4 @@
-package com.stevekung.stevekungslib.mixin.client.gui.screen;
+package com.stevekung.stevekungslib.mixin.client.gui.screens;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -33,15 +33,15 @@ public abstract class MixinChatScreen extends Screen
     }
 
     @Inject(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;IIF)V", at = @At("HEAD"))
-    private void renderPre(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks, CallbackInfo info)
+    private void renderPre(PoseStack poseStack, int mouseX, int mouseY, float partialTicks, CallbackInfo info)
     {
-        ForgeCommonUtils.post(new ChatScreenEvent.RenderPre(this.buttons, this.children, matrixStack, mouseX, mouseY, partialTicks));
+        ForgeCommonUtils.post(new ChatScreenEvent.RenderPre(this.buttons, this.children, poseStack, mouseX, mouseY, partialTicks));
     }
 
     @Inject(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;IIF)V", at = @At("RETURN"))
-    private void renderPost(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks, CallbackInfo info)
+    private void renderPost(PoseStack poseStack, int mouseX, int mouseY, float partialTicks, CallbackInfo info)
     {
-        ForgeCommonUtils.post(new ChatScreenEvent.RenderPost(this.buttons, this.children, matrixStack, mouseX, mouseY, partialTicks));
+        ForgeCommonUtils.post(new ChatScreenEvent.RenderPost(this.buttons, this.children, poseStack, mouseX, mouseY, partialTicks));
     }
 
     @Inject(method = "tick()V", at = @At("RETURN"))

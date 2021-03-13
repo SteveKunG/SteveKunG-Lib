@@ -1,4 +1,4 @@
-package com.stevekung.stevekungslib.mixin.world.server;
+package com.stevekung.stevekungslib.mixin.server.level;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -12,7 +12,7 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.chunk.LevelChunk;
 
 @Mixin(ServerLevel.class)
-public class MixinServerWorld
+public class MixinServerLevel
 {
     private final ServerLevel that = (ServerLevel)(Object)this;
 

@@ -1,4 +1,4 @@
-package com.stevekung.stevekungslib.data;
+package com.stevekung.stevekungslib.data.loot;
 
 import java.util.stream.Collectors;
 
@@ -6,11 +6,11 @@ import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class BlockLootTablesBase extends BlockLoot
+public class BlockLootBase extends BlockLoot
 {
     private final String modId;
 
-    public BlockLootTablesBase(String modId)
+    public BlockLootBase(String modId)
     {
         this.modId = modId;
     }

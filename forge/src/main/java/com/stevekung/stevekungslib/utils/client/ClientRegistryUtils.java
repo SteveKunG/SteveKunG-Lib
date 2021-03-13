@@ -23,19 +23,19 @@ public class ClientRegistryUtils
         RenderingRegistry.registerEntityRenderingHandler(entity, render);
     }
 
-    public static <T extends BlockEntity> void registerTileEntityRendering(BlockEntityType<T> tile, Function<? super BlockEntityRenderDispatcher, ? extends BlockEntityRenderer<? super T>> render)
+    public static <T extends BlockEntity> void registerTileEntityRendering(BlockEntityType<T> be, Function<? super BlockEntityRenderDispatcher, ? extends BlockEntityRenderer<? super T>> render)
     {
-        ClientRegistry.bindTileEntityRenderer(tile, render);
+        ClientRegistry.bindTileEntityRenderer(be, render);
     }
 
-    public static void renderTESR(BlockEntity tile, PoseStack stack, MultiBufferSource renderType)
+    public static void renderTESR(BlockEntity be, PoseStack poseStack, MultiBufferSource renderType)
     {
-        ClientRegistryUtils.renderTESR(tile, stack, renderType, 0, 0);
+        ClientRegistryUtils.renderTESR(be, poseStack, renderType, 0, 0);
     }
 
-    public static void renderTESR(BlockEntity tile, PoseStack stack, MultiBufferSource renderType, int color1, int color2)
+    public static void renderTESR(BlockEntity be, PoseStack poseStack, MultiBufferSource buffer, int color1, int color2)
     {
-        BlockEntityRenderDispatcher.instance.renderItem(tile, stack, renderType, color1, color2);
+        BlockEntityRenderDispatcher.instance.renderItem(be, poseStack, buffer, color1, color2);
     }
 
     public static synchronized void registerKeyBinding(KeyMapping key)

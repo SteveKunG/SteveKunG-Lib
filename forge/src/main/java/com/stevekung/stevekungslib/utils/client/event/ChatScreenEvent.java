@@ -123,23 +123,23 @@ public class ChatScreenEvent extends Event
 
     public static class RenderPre extends ChatScreenEvent
     {
-        private final PoseStack matrixStack;
+        private final PoseStack poseStack;
         private final int mouseX;
         private final int mouseY;
         private final float partialTicks;
 
-        public RenderPre(List<AbstractWidget> buttons, List<GuiEventListener> children, PoseStack matrixStack, int mouseX, int mouseY, float partialTicks)
+        public RenderPre(List<AbstractWidget> buttons, List<GuiEventListener> children, PoseStack poseStack, int mouseX, int mouseY, float partialTicks)
         {
             super(buttons, children);
-            this.matrixStack = matrixStack;
+            this.poseStack = poseStack;
             this.mouseX = mouseX;
             this.mouseY = mouseY;
             this.partialTicks = partialTicks;
         }
 
-        public PoseStack getMatrixStack()
+        public PoseStack getPoseStack()
         {
-            return this.matrixStack;
+            return this.poseStack;
         }
 
         public int getMouseX()
@@ -160,23 +160,23 @@ public class ChatScreenEvent extends Event
 
     public static class RenderPost extends ChatScreenEvent
     {
-        private final PoseStack matrixStack;
+        private final PoseStack poseStack;
         private final int mouseX;
         private final int mouseY;
         private final float partialTicks;
 
-        public RenderPost(List<AbstractWidget> buttons, List<GuiEventListener> children, PoseStack matrixStack, int mouseX, int mouseY, float partialTicks)
+        public RenderPost(List<AbstractWidget> buttons, List<GuiEventListener> children, PoseStack poseStack, int mouseX, int mouseY, float partialTicks)
         {
             super(buttons, children);
-            this.matrixStack = matrixStack;
+            this.poseStack = poseStack;
             this.mouseX = mouseX;
             this.mouseY = mouseY;
             this.partialTicks = partialTicks;
         }
 
-        public PoseStack getMatrixStack()
+        public PoseStack getPoseStack()
         {
-            return this.matrixStack;
+            return this.poseStack;
         }
 
         public int getMouseX()

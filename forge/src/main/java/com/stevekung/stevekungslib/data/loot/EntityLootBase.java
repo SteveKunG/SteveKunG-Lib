@@ -1,4 +1,4 @@
-package com.stevekung.stevekungslib.data;
+package com.stevekung.stevekungslib.data.loot;
 
 import java.util.stream.Collectors;
 
@@ -6,11 +6,11 @@ import net.minecraft.data.loot.EntityLoot;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class EntityLootTablesBase extends EntityLoot
+public class EntityLootBase extends EntityLoot
 {
     private final String modId;
 
-    public EntityLootTablesBase(String modId)
+    public EntityLootBase(String modId)
     {
         this.modId = modId;
     }

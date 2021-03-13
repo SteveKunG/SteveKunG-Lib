@@ -13,7 +13,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 @SuppressWarnings("unchecked")
 public class ClientCommands
 {
-    private static final CommandDispatcher<IClientSuggestionProvider> DISPATCHER = new CommandDispatcher<>();
+    private static final CommandDispatcher<IClientSharedSuggestionProvider> DISPATCHER = new CommandDispatcher<>();
     private static final List<IClientCommand> CLIENT_COMMANDS = Lists.newArrayList();
 
     public static void register(IClientCommand command)
@@ -26,12 +26,12 @@ public class ClientCommands
         return ClientCommands.CLIENT_COMMANDS;
     }
 
-    public static LiteralArgumentBuilder<IClientSuggestionProvider> literal(String name)
+    public static LiteralArgumentBuilder<IClientSharedSuggestionProvider> literal(String name)
     {
         return LiteralArgumentBuilder.literal(name);
     }
 
-    public static <T> RequiredArgumentBuilder<IClientSuggestionProvider, T> argument(String name, ArgumentType<T> type)
+    public static <T> RequiredArgumentBuilder<IClientSharedSuggestionProvider, T> argument(String name, ArgumentType<T> type)
     {
         return RequiredArgumentBuilder.argument(name, type);
     }
@@ -46,7 +46,7 @@ public class ClientCommands
         ClientCommands.getCommands().forEach(command -> command.register(dispatcher));
     }
 
-    public static int execute(String input, IClientSuggestionProvider provider) throws CommandSyntaxException
+    public static int execute(String input, IClientSharedSuggestionProvider provider) throws CommandSyntaxException
     {
         return DISPATCHER.execute(input, provider);
     }

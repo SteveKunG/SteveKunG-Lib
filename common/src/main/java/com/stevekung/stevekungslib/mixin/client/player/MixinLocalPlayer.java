@@ -1,4 +1,4 @@
-package com.stevekung.stevekungslib.mixin.client.entity.player;
+package com.stevekung.stevekungslib.mixin.client.player;
 
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.stevekung.stevekungslib.utils.client.command.ClientCommands;
-import com.stevekung.stevekungslib.utils.client.command.IClientSuggestionProvider;
+import com.stevekung.stevekungslib.utils.client.command.IClientSharedSuggestionProvider;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientSuggestionProvider;
@@ -18,7 +18,7 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 
 @Mixin(LocalPlayer.class)
-public class MixinClientPlayerEntity
+public class MixinLocalPlayer
 {
     private final LocalPlayer that = (LocalPlayer)(Object)this;
 
@@ -41,7 +41,7 @@ public class MixinClientPlayerEntity
         try
         {
             // The game freezes when using heavy commands. Run your heavy code somewhere else pls
-            int result = ClientCommands.execute(message.substring(1), (IClientSuggestionProvider)new ClientSuggestionProvider(this.that.connection, this.minecraft));
+            int result = ClientCommands.execute(message.substring(1), (IClientSharedSuggestionProvider)new ClientSuggestionProvider(this.that.connection, this.minecraft));
 
             if (result != 0)
             {

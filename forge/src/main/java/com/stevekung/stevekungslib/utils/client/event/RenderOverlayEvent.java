@@ -7,16 +7,16 @@ public class RenderOverlayEvent extends Event
 {
     public static class FirstPersonView extends RenderOverlayEvent
     {
-        private final PoseStack stack;
+        private final PoseStack poseStack;
 
-        public FirstPersonView(PoseStack stack)
+        public FirstPersonView(PoseStack poseStack)
         {
-            this.stack = stack;
+            this.poseStack = poseStack;
         }
 
-        public PoseStack getMatrixStack()
+        public PoseStack getPoseStack()
         {
-            return this.stack;
+            return this.poseStack;
         }
     }
 

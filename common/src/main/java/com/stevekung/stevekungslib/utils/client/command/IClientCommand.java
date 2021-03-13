@@ -4,5 +4,5 @@ import com.mojang.brigadier.CommandDispatcher;
 
 public interface IClientCommand
 {
-    void register(CommandDispatcher<IClientSuggestionProvider> dispatcher);
+    void register(CommandDispatcher<IClientSharedSuggestionProvider> dispatcher);
 }
