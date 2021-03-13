@@ -1,6 +1,8 @@
 package com.stevekung.stevekungslib.utils;
 
 import me.shedaniel.architectury.annotations.ExpectPlatform;
+import me.shedaniel.architectury.hooks.TagHooks;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.Tag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.alchemy.Potion;
@@ -10,16 +12,14 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 
 public class TagUtils
 {
-    @ExpectPlatform
     public static Tag.Named<Block> createBlockTag(String modid, String name)
     {
-        throw new Error();
+        return TagHooks.getBlockOptional(new ResourceLocation(modid, name));
     }
 
-    @ExpectPlatform
     public static Tag.Named<Item> createItemTag(String modid, String name)
     {
-        throw new Error();
+        return TagHooks.getItemOptional(new ResourceLocation(modid, name));
     }
 
     @ExpectPlatform

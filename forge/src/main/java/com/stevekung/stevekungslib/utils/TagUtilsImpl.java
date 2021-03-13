@@ -12,16 +12,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class TagUtilsImpl
 {
-    public static Tag.Named<Block> createBlockTag(String modid, String name)
-    {
-        return ForgeTagHandler.makeWrapperTag(ForgeRegistries.BLOCKS, new ResourceLocation(modid, name));
-    }
-
-    public static Tag.Named<Item> createItemTag(String modid, String name)
-    {
-        return ForgeTagHandler.makeWrapperTag(ForgeRegistries.ITEMS, new ResourceLocation(modid, name));
-    }
-
     public static Tag.Named<Enchantment> createEnchantmentTag(String modid, String name)
     {
         return ForgeTagHandler.makeWrapperTag(ForgeRegistries.ENCHANTMENTS, new ResourceLocation(modid, name));
