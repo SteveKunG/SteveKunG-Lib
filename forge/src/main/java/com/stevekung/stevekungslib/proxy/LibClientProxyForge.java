@@ -1,26 +1,28 @@
 package com.stevekung.stevekungslib.proxy;
 
-import com.stevekung.stevekungslib.config.SteveKunGsLibConfig;
-import com.stevekung.stevekungslib.core.SteveKunGLib;
+import com.stevekung.stevekungslib.client.event.handler.ClientEventHandler;
 import com.stevekung.stevekungslib.utils.ForgeCommonUtils;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
-public class LibCommonProxy
+public class LibClientProxyForge extends LibCommonProxyForge
 {
+    @Override
     public void init()
     {
-        ForgeCommonUtils.registerModEventBus(this);
-        ForgeCommonUtils.addModListener(this::commonSetup);
-        ForgeCommonUtils.addModListener(this::clientSetup);
+        super.init();
+        ForgeCommonUtils.registerEventHandler(new ClientEventHandler());
     }
 
+    @Override
     public void commonSetup(FMLCommonSetupEvent event)
     {
-        SteveKunGLib.LOGGER.setDebug(SteveKunGsLibConfig.GENERAL.enableDebugLog.get());
+        super.commonSetup(event);
     }
 
+    @Override
     public void clientSetup(FMLClientSetupEvent event)
     {
+        super.clientSetup(event);
     }
 }
