@@ -1,6 +1,6 @@
 plugins {
     id "com.github.johnrengelman.shadow" version "5.0.0"
-    id "com.matthewprenger.cursegradle" version "1.4.0"
+    id "com.matthewprenger.cursegradle"
 }
 
 configurations {
@@ -51,13 +51,63 @@ processResources {
     }
 }
 
+jar {
+    version "v${project.version}"
+    baseName "SteveKunG's-Lib-mc${rootProject.mc_version}"
+}
+
 shadowJar {
     configurations = [project.configurations.shadow]
     classifier "dev"
+    version "v${project.version}"
+    baseName "SteveKunG's-Lib-mc${rootProject.mc_version}"
+}
+
+sourcesJar {
+    classifier "source"
+    version "v${project.version}"
+    baseName "SteveKunG's-Lib-mc${rootProject.mc_version}"
 }
 
 remapJar {
     input.set shadowJar.archiveFile
     dependsOn shadowJar
     classifier "fabric"
+    version "v${project.version}"
+    baseName "SteveKunG's-Lib-mc${rootProject.mc_version}"
+}
+
+artifacts {
+    archives sourcesJar
+    archives shadowJar
+}
+
+curseforge {
+    if (project.hasProperty("upload_api_key")) {
+        apiKey = project.upload_api_key
+        project {
+            id = "296019"
+            changelog = file("CHANGE_LOG.md")
+            changelogType = "markdown"
+            releaseType = "beta"
+            addGameVersion "Fabric"
+            addGameVersion rootProject.mc_version
+
+            mainArtifact(remapJar.archiveFile) {
+                displayName = "[Fabric] " + remapJar.archiveFileName
+            }
+            relations {
+                requiredDependency 'architectury-fabric'
+            }
+            addArtifact sourcesJar
+            addArtifact shadowJar
+        }
+        options {
+            forgeGradleIntegration = false
+        }
+    }
+}
+
+afterEvaluate {
+    tasks.curseforge296019.dependsOn remapJar
 }
