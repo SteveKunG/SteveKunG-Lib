@@ -1,28 +1,35 @@
-modLoader="javafml"
-loaderVersion="[35,)"
-license="MIT License"
-issueTrackerURL="https://github.com/SteveKunG/SteveKunG-Lib/issues"
+modLoader = "javafml"
+loaderVersion = "[35,)"
+license = "MIT License"
+issueTrackerURL = "https://github.com/SteveKunG/SteveKunG-Lib/issues"
 
 [[mods]]
-modId="stevekungs_lib"
-version="${version}"
-displayName="SteveKunG's Lib"
-description="Code and Utilities for SteveKunG's mods!"
-displayURL="https://www.curseforge.com/minecraft/mc-mods/stevekungs-lib"
-updateJSONURL="https://raw.githubusercontent.com/SteveKunG/VersionCheckLibrary/master/stevekung's_lib_version.json"
-logoFile="logo.png"
-authors="SteveKunG"
+modId = "stevekungs_lib"
+version = "${version}"
+displayName = "SteveKunG's Lib"
+description = "Code and Utilities for SteveKunG's mods!"
+displayURL = "https://www.curseforge.com/minecraft/mc-mods/stevekungs-lib"
+updateJSONURL = "https://raw.githubusercontent.com/SteveKunG/VersionCheckLibrary/master/stevekung's_lib_version.json"
+logoFile = "logo.png"
+authors = "SteveKunG"
 
 [[dependencies.stevekungs_lib]]
-    modId="forge"
-    mandatory=true
-    versionRange="[35.1.0,)"
-    ordering="NONE"
-    side="BOTH"
+modId = "forge"
+mandatory = true
+versionRange = "[35.1.0,)"
+ordering = "NONE"
+side = "BOTH"
 
 [[dependencies.stevekungs_lib]]
-    modId="minecraft"
-    mandatory=true
-    versionRange="[1.16.4,)"
-    ordering="NONE"
-    side="BOTH"
+modId = "architectury"
+mandatory = true
+versionRange = "[1.8.131,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.stevekungs_lib]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.16.4,)"
+ordering = "NONE"
+side = "BOTH"

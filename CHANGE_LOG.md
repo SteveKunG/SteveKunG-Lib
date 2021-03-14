@@ -1,6 +1,5 @@
 # Change Log
 
-* + Added version checker config
-* * Rewrite ModVersionChecker
-* * Fix mod version check
-* * Remove deprecated function
+### Please report if you found the issues!
+
+* * Now using Architectury API

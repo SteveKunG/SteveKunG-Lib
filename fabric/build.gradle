@@ -87,17 +87,21 @@ curseforge {
         apiKey = project.upload_api_key
         project {
             id = "296019"
-            changelog = file("CHANGE_LOG.md")
+            changelog = file("../CHANGE_LOG.md")
             changelogType = "markdown"
             releaseType = "beta"
             addGameVersion "Fabric"
             addGameVersion rootProject.mc_version
 
             mainArtifact(remapJar.archiveFile) {
-                displayName = "[Fabric] " + remapJar.archiveFileName
+                displayName = "[Fabric] ${rootProject.archives_base_name}-mc${rootProject.mc_version}-v${project.version}"
             }
             relations {
                 requiredDependency 'architectury-fabric'
+                requiredDependency "fabric-api"
+            }
+            afterEvaluate {
+                uploadTask.dependsOn(remapJar)
             }
             addArtifact sourcesJar
             addArtifact shadowJar
