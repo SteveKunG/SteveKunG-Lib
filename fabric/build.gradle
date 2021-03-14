@@ -99,7 +99,7 @@ curseforge {
                 displayName = "[Fabric] ${rootProject.archives_base_name}-mc${rootProject.mc_version}-v${project.version}"
             }
             relations {
-                requiredDependency 'architectury-fabric'
+                requiredDependency "architectury-fabric"
                 requiredDependency "fabric-api"
             }
             afterEvaluate {
