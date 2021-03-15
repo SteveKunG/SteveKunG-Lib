@@ -1,4 +1,4 @@
-package com.stevekung.stevekungslib.utils;
+package com.stevekung.stevekungslib.utils.forge;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.Tag;
