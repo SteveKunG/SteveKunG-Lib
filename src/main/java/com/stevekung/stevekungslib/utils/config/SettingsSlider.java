@@ -27,7 +27,7 @@ public class SettingsSlider<T extends Settings> extends AbstractSettingsSlider<T
 
     @Override
     @SuppressWarnings("deprecation")
-    public void renderButton(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks)
+    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks)
     {
         IFormattableTextComponent component = this.getMessage().deepCopy();
         Minecraft mc = Minecraft.getInstance();

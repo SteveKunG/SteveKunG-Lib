@@ -28,7 +28,7 @@ public class SettingsButton<T extends Settings> extends Button implements IBidiT
 
     @Override
     @SuppressWarnings("deprecation")
-    public void renderButton(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks)
+    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks)
     {
         IFormattableTextComponent component = this.getMessage().deepCopy();
         Minecraft mc = Minecraft.getInstance();
