@@ -24,7 +24,8 @@ public class SteveKunGLibForge
         ForgeCommonUtils.addModListener(this::phaseFour);
         ForgeCommonUtils.registerConfig(ModConfig.Type.COMMON, SteveKunGsLibConfig.GENERAL_BUILDER);
         ForgeCommonUtils.registerModEventBus(SteveKunGsLibConfig.class);
-        //CommonUtils.registerConfigScreen(() -> (mc, parent) -> new VideoSettingsScreen(parent, mc.gameSettings)); TODO Waiting for forge
+        ForgeCommonUtils.registerConfigScreen(() -> (mc, parent) -> ForgeCommonUtils.openConfigFile(parent, SteveKunGLib.MOD_ID, ModConfig.Type.COMMON));
+
         PROXY = DistExecutor.safeRunForDist(() -> LibClientProxyForge::new, () -> LibCommonProxyForge::new);
         PROXY.init();
     }
