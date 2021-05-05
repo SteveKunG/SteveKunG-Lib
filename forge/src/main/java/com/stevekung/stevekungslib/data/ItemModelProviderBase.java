@@ -67,9 +67,9 @@ public abstract class ItemModelProviderBase extends ItemModelProvider
         this.getBuilder(item.getRegistryName().getPath()).parent(this.getExistingFile(this.mcLoc("item/template_spawn_egg")));
     }
 
-    protected void itemHandheld(Item item, String texture)
+    protected void itemHandheld(Item item)
     {
-        this.getBuilder(item.getRegistryName().getPath()).parent(this.getExistingFile(this.mcLoc("item/handheld"))).texture("layer0", "item/" + texture);
+        this.getBuilder(item.getRegistryName().getPath()).parent(this.getExistingFile(this.mcLoc("item/handheld"))).texture("layer0", "item/" + this.toString(item));
     }
 
     protected String toString(ItemLike base)
