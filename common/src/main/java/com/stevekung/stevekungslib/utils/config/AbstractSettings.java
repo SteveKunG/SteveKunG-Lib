@@ -12,7 +12,7 @@ import net.minecraft.util.FormattedCharSequence;
 public abstract class AbstractSettings<T extends Settings>
 {
     private final Component translatedBaseMessage;
-    private Optional<List<FormattedCharSequence>> optionValues = Optional.empty();
+    private List<FormattedCharSequence> optionValues;
 
     public AbstractSettings(String translationKey)
     {
@@ -23,12 +23,12 @@ public abstract class AbstractSettings<T extends Settings>
 
     public void setOptionValues(List<FormattedCharSequence> values)
     {
-        this.optionValues = Optional.of(values);
+        this.optionValues = values;
     }
 
     public Optional<List<FormattedCharSequence>> getSettingValues()
     {
-        return this.optionValues;
+        return Optional.of(this.optionValues);
     }
 
     public Component getBaseMessageTranslation()
