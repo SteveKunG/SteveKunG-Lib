@@ -10,7 +10,7 @@ public class KeyMappingBase extends KeyMapping
         super(description, inputType, keyCode, "key.categories." + modId);
     }
 
-    public KeyMappingBase(String description, String modId, int keyCode)
+    public KeyMappingBase(String description, int keyCode, String modId)
     {
         super(description, keyCode, "key.categories." + modId);
     }
