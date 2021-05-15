@@ -24,7 +24,7 @@ public class ClientRegistryUtils
         EntityRenderers.register(entity, render);
     }
 
-    public static <T extends BlockEntity> void registerTileEntityRendering(BlockEntityType<T> be, Function<BlockEntityRenderDispatcher, BlockEntityRenderer<T>> render)
+    public static <T extends BlockEntity> void registerTileEntityRendering(BlockEntityType<T> be, Function<BlockEntityRenderDispatcher, BlockEntityRenderer<? super T>> render)
     {
         BlockEntityRenderers.registerRenderer(be, render);
     }
