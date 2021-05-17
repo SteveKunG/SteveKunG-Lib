@@ -19,7 +19,7 @@ public class SettingsSlider<T extends Settings> extends AbstractSettingsSlider<T
 
     public SettingsSlider(T settings, int x, int y, int width, int height, SliderPercentageSettings<T> setting)
     {
-        super(settings, x, y, width, height, (float)setting.normalizeValue(setting.get(settings)));
+        super(settings, x, y, width, height, (float) setting.normalizeValue(setting.get(settings)));
         this.setting = setting;
         this.updateMessage();
     }

@@ -50,7 +50,7 @@ public class ClientUtils
     public static void setOverlayMessage(String message, int delay)
     {
         Minecraft.getInstance().gui.setOverlayMessage(TextComponentUtils.component(message), false);
-        ((InvokerGui)Minecraft.getInstance().gui).setOverlayMessageTime(delay);
+        ((InvokerGui) Minecraft.getInstance().gui).setOverlayMessageTime(delay);
     }
 
     public static void setOverlayMessage(Component component)
@@ -61,7 +61,7 @@ public class ClientUtils
     public static void setOverlayMessage(Component component, int delay)
     {
         Minecraft.getInstance().gui.setOverlayMessage(component, false);
-        ((InvokerGui)Minecraft.getInstance().gui).setOverlayMessageTime(delay);
+        ((InvokerGui) Minecraft.getInstance().gui).setOverlayMessageTime(delay);
     }
 
     public static void printClientMessage(String text)

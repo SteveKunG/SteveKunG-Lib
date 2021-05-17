@@ -38,7 +38,7 @@ public abstract class AbstractSettings<T extends Settings>
 
     public Component getPercentValueComponent(double percentage)
     {
-        return new TranslatableComponent("options.percent_value", this.getBaseMessageTranslation(), (int)(percentage * 100.0D));
+        return new TranslatableComponent("options.percent_value", this.getBaseMessageTranslation(), (int) (percentage * 100.0D));
     }
 
     public Component getGenericValueComponent(Component valueMessage)

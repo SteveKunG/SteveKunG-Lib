@@ -66,7 +66,7 @@ public class ItemUtils
         UUID uuid = UUID.fromString(id);
         long uuidMost = uuid.getMostSignificantBits();
         long uuidLeast = uuid.getLeastSignificantBits();
-        return new int[]{(int)(uuidMost >> 32), (int)uuidMost, (int)(uuidLeast >> 32), (int)uuidLeast};
+        return new int[] {(int) (uuidMost >> 32), (int) uuidMost, (int) (uuidLeast >> 32), (int) uuidLeast};
     }
 
     public static String decodeTextureURL(String source)

@@ -34,22 +34,22 @@ public class ColorUtils
 
     public int packedRed()
     {
-        return (int)(this.red * 255);
+        return (int) (this.red * 255);
     }
 
     public int packedGreen()
     {
-        return (int)(this.green * 255);
+        return (int) (this.green * 255);
     }
 
     public int packedBlue()
     {
-        return (int)(this.blue * 255);
+        return (int) (this.blue * 255);
     }
 
     public int packedAlpha()
     {
-        return (int)(this.alpha * 255);
+        return (int) (this.alpha * 255);
     }
 
     public float floatRed()
@@ -74,22 +74,22 @@ public class ColorUtils
 
     public int red()
     {
-        return (int)this.red;
+        return (int) this.red;
     }
 
     public int green()
     {
-        return (int)this.green;
+        return (int) this.green;
     }
 
     public int blue()
     {
-        return (int)this.blue;
+        return (int) this.blue;
     }
 
     public int alpha()
     {
-        return (int)this.alpha;
+        return (int) this.alpha;
     }
 
     public static int to32Bit(int red, int green, int blue, int alpha)
@@ -99,7 +99,7 @@ public class ColorUtils
 
     public static float[] toFloatArray(int red, int green, int blue)
     {
-        return new float[]{red / 255.0F, green / 255.0F, blue / 255.0F};
+        return new float[] {red / 255.0F, green / 255.0F, blue / 255.0F};
     }
 
     public static int toDecimal(int red, int green, int blue)

@@ -14,16 +14,10 @@ public class SteveKunGsLibConfig
 
         private General(ForgeConfigSpec.Builder builder)
         {
-            builder.comment("General settings")
-            .push("general");
+            builder.comment("General settings").push("general");
 
-            this.enableDebugLog = builder
-                    .comment("Display debug log, useful to find bugs.")
-                    .translation("stevekungs_lib.configgui.debug_log")
-                    .define("enableDebugLog", false);
-            this.enableVersionChecker = builder
-                    .translation("stevekungs_lib.configgui.enable_version_checker")
-                    .define("enableVersionChecker", true);
+            this.enableDebugLog = builder.comment("Display debug log, useful to find bugs.").translation("stevekungs_lib.configgui.debug_log").define("enableDebugLog", false);
+            this.enableVersionChecker = builder.translation("stevekungs_lib.configgui.enable_version_checker").define("enableVersionChecker", true);
             builder.pop();
         }
     }

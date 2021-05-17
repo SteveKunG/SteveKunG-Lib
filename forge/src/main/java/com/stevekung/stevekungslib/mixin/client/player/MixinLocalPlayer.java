@@ -20,7 +20,7 @@ import net.minecraft.network.chat.TranslatableComponent;
 @Mixin(LocalPlayer.class)
 public class MixinLocalPlayer
 {
-    private final LocalPlayer that = (LocalPlayer)(Object)this;
+    private final LocalPlayer that = (LocalPlayer) (Object) this;
 
     @Shadow
     @Final
@@ -41,7 +41,7 @@ public class MixinLocalPlayer
         try
         {
             // The game freezes when using heavy commands. Run your heavy code somewhere else pls
-            int result = ClientCommands.execute(message.substring(1), (IClientSharedSuggestionProvider)new ClientSuggestionProvider(this.that.connection, this.minecraft));
+            int result = ClientCommands.execute(message.substring(1), (IClientSharedSuggestionProvider) new ClientSuggestionProvider(this.that.connection, this.minecraft));
 
             if (result != 0)
             {
