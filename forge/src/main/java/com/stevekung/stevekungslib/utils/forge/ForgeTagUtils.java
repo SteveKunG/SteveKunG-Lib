@@ -8,7 +8,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.common.ForgeTagHandler;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class TagUtilsImpl
+public class ForgeTagUtils
 {
     public static Tag.Named<Enchantment> createEnchantmentTag(String modid, String name)
     {

@@ -23,7 +23,7 @@ side = "BOTH"
 [[dependencies.stevekungs_lib]]
 modId = "architectury"
 mandatory = true
-versionRange = "[1.12,)"
+versionRange = "[1.17,)"
 ordering = "NONE"
 side = "BOTH"
 

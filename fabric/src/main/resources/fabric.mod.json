@@ -27,7 +27,7 @@
         "fabricloader": ">=0.11",
         "fabric": "*",
         "minecraft": ">=1.16.5",
-        "architectury": ">=1.12"
+        "architectury": ">=1.17"
     },
     "mixins": [
         "mixins.stevekung's_lib.json"

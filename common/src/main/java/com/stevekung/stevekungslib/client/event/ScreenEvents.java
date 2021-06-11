@@ -5,18 +5,18 @@ import java.util.List;
 import com.mojang.blaze3d.vertex.PoseStack;
 import me.shedaniel.architectury.event.Event;
 import me.shedaniel.architectury.event.EventFactory;
+import me.shedaniel.architectury.event.EventResult;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
-import net.minecraft.world.InteractionResult;
 
 public interface ScreenEvents
 {
     Event<ChatScreenInitEvent> CHAT_SCREEN_INIT = EventFactory.createLoop();
     Event<ChatScreenCloseEvent> CHAT_SCREEN_CLOSE = EventFactory.createLoop();
     Event<ChatScreenTickEvent> CHAT_SCREEN_TICK = EventFactory.createLoop();
-    Event<ChatScreenMouseScrollEvent> CHAT_SCREEN_MOUSE_SCROLL = EventFactory.createInteractionResult();
+    Event<ChatScreenMouseScrollEvent> CHAT_SCREEN_MOUSE_SCROLL = EventFactory.createEventResult();
     Event<ChatScreenRenderPreEvent> CHAT_SCREEN_RENDER_PRE = EventFactory.createLoop();
     Event<ChatScreenRenderPostEvent> CHAT_SCREEN_RENDER_POST = EventFactory.createLoop();
 
@@ -41,7 +41,7 @@ public interface ScreenEvents
     @Environment(EnvType.CLIENT)
     interface ChatScreenMouseScrollEvent
     {
-        InteractionResult mouseScroll(List<AbstractWidget> buttons, List<GuiEventListener> children, double mouseX, double mouseY, double scrollDelta);
+        EventResult mouseScroll(List<AbstractWidget> buttons, List<GuiEventListener> children, double mouseX, double mouseY, double scrollDelta);
     }
 
     @Environment(EnvType.CLIENT)

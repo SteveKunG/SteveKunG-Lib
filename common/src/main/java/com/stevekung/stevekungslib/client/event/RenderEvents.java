@@ -3,16 +3,16 @@ package com.stevekung.stevekungslib.client.event;
 import com.mojang.blaze3d.vertex.PoseStack;
 import me.shedaniel.architectury.event.Event;
 import me.shedaniel.architectury.event.EventFactory;
+import me.shedaniel.architectury.event.EventResult;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 
 public interface RenderEvents
 {
-    Event<AddRainParticleEvent> RAIN_PARTICLE = EventFactory.createInteractionResult();
+    Event<AddRainParticleEvent> RAIN_PARTICLE = EventFactory.createEventResult();
     Event<CameraTransformEvent> CAMERA_TRANSFORM = EventFactory.createLoop();
     Event<FirstPersonViewRenderEvent> FIRST_PERSON_VIEW_RENDER = EventFactory.createLoop();
     Event<RenderScreenOverlay> RENDER_SCREEN_OVERLAY = EventFactory.createLoop();
@@ -21,7 +21,7 @@ public interface RenderEvents
     @Environment(EnvType.CLIENT)
     interface AddRainParticleEvent
     {
-        InteractionResult addRainParticle(Level level, double x, double y, double z);
+        EventResult addRainParticle(Level level, double x, double y, double z);
     }
 
     @Environment(EnvType.CLIENT)
