@@ -1,5 +1,7 @@
 package com.stevekung.stevekungslib.utils;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -38,5 +40,18 @@ public class CommonUtils
     public static void runAsync(Runnable runnable)
     {
         CompletableFuture.runAsync(runnable, CommonUtils.POOL);
+    }
+
+    public static void schedule(Runnable runnable, long delay)
+    {
+        TimerTask task = new TimerTask()
+        {
+            @Override
+            public void run()
+            {
+                runnable.run();
+            }
+        };
+        new Timer().schedule(task, delay);
     }
 }
