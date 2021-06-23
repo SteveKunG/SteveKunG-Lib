@@ -14,7 +14,6 @@ architectury {
 
 loom {
     mixinConfigs = ["mixins.stevekung's_lib.json", "mixins.stevekung's_lib_forge.json"]
-    useFabricMixin = true
 }
 
 dependencies {
@@ -85,7 +84,7 @@ curseforge {
             id = "296019"
             changelog = file("../CHANGE_LOG.md")
             changelogType = "markdown"
-            releaseType = "beta"
+            releaseType = "release"
             addGameVersion "Forge"
             addGameVersion rootProject.mc_version
 
