@@ -15,6 +15,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ExtensionPoint;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ConfigTracker;
 import net.minecraftforge.fml.config.ModConfig;
@@ -58,14 +59,23 @@ public class ForgeCommonUtils
         return FMLJavaModLoadingContext.get().getModEventBus();
     }
 
+    @Deprecated
     public static void registerConfig(ModConfig.Type type, ForgeConfigSpec.Builder builder)
     {
         ModLoadingContext.get().registerConfig(type, builder.build());
     }
 
+    public static void registerConfig(ModConfig.Type type, ForgeConfigSpec builder)
+    {
+        ModLoadingContext.get().registerConfig(type, builder);
+    }
+
     public static void registerConfigScreen(Supplier<BiFunction<Minecraft, Screen, Screen>> supplier)
     {
-        ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY, supplier);
+        if (!ModList.get().isLoaded("configured"))
+        {
+            ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY, supplier);
+        }
     }
 
     public static void registerClientOnly()

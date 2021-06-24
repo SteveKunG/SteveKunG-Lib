@@ -22,7 +22,7 @@ public class SteveKunGLibForge
         SteveKunGLib.init();
         EventBuses.registerModEventBus(SteveKunGLib.MOD_ID, ForgeCommonUtils.getModEventBus());
         ForgeCommonUtils.addModListener(this::phaseFour);
-        ForgeCommonUtils.registerConfig(ModConfig.Type.COMMON, SteveKunGsLibConfig.GENERAL_BUILDER);
+        ForgeCommonUtils.registerConfig(ModConfig.Type.COMMON, SteveKunGsLibConfig.GENERAL_SPEC);
         ForgeCommonUtils.registerModEventBus(SteveKunGsLibConfig.class);
         ForgeCommonUtils.registerConfigScreen(() -> (mc, parent) -> ForgeCommonUtils.openConfigFile(parent, SteveKunGLib.MOD_ID, ModConfig.Type.COMMON));
 
