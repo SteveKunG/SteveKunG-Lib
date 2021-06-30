@@ -4,13 +4,9 @@
     "compatibilityLevel": "JAVA_8",
     "package": "com.stevekung.stevekungslib.mixin",
     "mixins": [
-        "InvokerFireBlock",
-        "InvokerServerLevel",
-        "InvokerSpawnPlacements",
         "server.level.MixinServerLevel"
     ],
     "client": [
-        "client.InvokerGui",
         "client.gui.screens.MixinChatScreen",
         "client.renderer.MixinGameRenderer",
         "client.renderer.MixinLevelRenderer",
