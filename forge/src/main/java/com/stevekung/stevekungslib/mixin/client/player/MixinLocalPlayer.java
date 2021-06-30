@@ -20,8 +20,6 @@ import net.minecraft.network.chat.TranslatableComponent;
 @Mixin(LocalPlayer.class)
 public class MixinLocalPlayer
 {
-    private final LocalPlayer that = (LocalPlayer) (Object) this;
-
     @Shadow
     @Final
     protected Minecraft minecraft;
@@ -29,6 +27,8 @@ public class MixinLocalPlayer
     @Inject(method = "chat(Ljava/lang/String;)V", at = @At("HEAD"), cancellable = true)
     private void chat(String message, CallbackInfo info)
     {
+        LocalPlayer player = (LocalPlayer) (Object) this;
+
         if (message.length() < 2 || !message.startsWith("/"))
         {
             return;
@@ -41,7 +41,7 @@ public class MixinLocalPlayer
         try
         {
             // The game freezes when using heavy commands. Run your heavy code somewhere else pls
-            int result = ClientCommands.execute(message.substring(1), (IClientSharedSuggestionProvider) new ClientSuggestionProvider(this.that.connection, this.minecraft));
+            int result = ClientCommands.execute(message.substring(1), (IClientSharedSuggestionProvider) new ClientSuggestionProvider(player.connection, this.minecraft));
 
             if (result != 0)
             {
@@ -50,17 +50,17 @@ public class MixinLocalPlayer
         }
         catch (CommandRuntimeException e)
         {
-            this.that.displayClientMessage(e.getComponent().copy().withStyle(ChatFormatting.RED), false);
+            player.displayClientMessage(e.getComponent().copy().withStyle(ChatFormatting.RED), false);
             info.cancel();
         }
         catch (CommandSyntaxException e)
         {
-            this.that.displayClientMessage(new TextComponent(e.getContext()).withStyle(ChatFormatting.RED), false);
+            player.displayClientMessage(new TextComponent(e.getContext()).withStyle(ChatFormatting.RED), false);
             info.cancel();
         }
         catch (Exception e)
         {
-            this.that.displayClientMessage(new TranslatableComponent("command.failed").withStyle(ChatFormatting.RED), false);
+            player.displayClientMessage(new TranslatableComponent("command.failed").withStyle(ChatFormatting.RED), false);
             info.cancel();
         }
     }

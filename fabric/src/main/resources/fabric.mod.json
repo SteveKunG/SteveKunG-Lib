@@ -41,5 +41,6 @@
                 "library"
             ]
         }
-    }
+    },
+    "accessWidener": "stevekungslib.accesswidener"
 }

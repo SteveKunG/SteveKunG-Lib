@@ -1,7 +1,6 @@
 package com.stevekung.stevekungslib.utils.client;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import com.stevekung.stevekungslib.mixin.client.InvokerGui;
 import com.stevekung.stevekungslib.utils.TextComponentUtils;
 import me.shedaniel.architectury.platform.Platform;
 import me.shedaniel.architectury.utils.Env;
@@ -50,7 +49,7 @@ public class ClientUtils
     public static void setOverlayMessage(String message, int delay)
     {
         Minecraft.getInstance().gui.setOverlayMessage(TextComponentUtils.component(message), false);
-        ((InvokerGui) Minecraft.getInstance().gui).setOverlayMessageTime(delay);
+        Minecraft.getInstance().gui.overlayMessageTime = delay;
     }
 
     public static void setOverlayMessage(Component component)
@@ -61,7 +60,7 @@ public class ClientUtils
     public static void setOverlayMessage(Component component, int delay)
     {
         Minecraft.getInstance().gui.setOverlayMessage(component, false);
-        ((InvokerGui) Minecraft.getInstance().gui).setOverlayMessageTime(delay);
+        Minecraft.getInstance().gui.overlayMessageTime = delay;
     }
 
     public static void printClientMessage(String text)

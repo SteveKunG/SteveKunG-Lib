@@ -3,7 +3,6 @@ package com.stevekung.stevekungslib.utils;
 import java.util.List;
 
 import com.google.common.collect.Lists;
-import com.stevekung.stevekungslib.mixin.InvokerSpawnPlacements;
 import me.shedaniel.architectury.registry.DeferredRegister;
 import net.minecraft.core.Registry;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
@@ -192,7 +191,7 @@ public class CommonRegistryUtils
 
     public <T extends Mob> void registerEntityPlacement(EntityType<T> type, SpawnPlacements.Type placementType, Heightmap.Types heightMapType, SpawnPlacements.SpawnPredicate<T> predicate)
     {
-        InvokerSpawnPlacements.invokeRegister(type, placementType, heightMapType, predicate);
+        SpawnPlacements.register(type, placementType, heightMapType, predicate);
     }
 
     public MemoryModuleType<?> registerMemoryModuleType(String name, MemoryModuleType<?> memoryModule)
