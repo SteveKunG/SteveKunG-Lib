@@ -1,0 +1,6 @@
+{
+    "schemaVersion": 1,
+    "id": "stevekungs_lib_temp",
+    "version": "${version}",
+    "accessWidener": "stevekungs_lib.accesswidener"
+}

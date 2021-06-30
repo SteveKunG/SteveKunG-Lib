@@ -4,7 +4,7 @@ dependencies {
 }
 
 minecraft {
-    accessWidener = file("../fabric/src/main/resources/stevekungslib.accesswidener")
+    accessWidener = file("../fabric/src/main/resources/stevekungs_lib.accesswidener")
 }
 
 architectury {
