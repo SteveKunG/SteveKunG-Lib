@@ -2,5 +2,4 @@
 
 ### Please report if you found the issues!
 
-* + Added 'schedule' method to CommonUtils
-* * Update Architectury API to 1.17
+* * Disable open config file when 'Configurated' mod is present (Forge)
