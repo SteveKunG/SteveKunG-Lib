@@ -103,8 +103,9 @@ curseforge {
             relations {
                 requiredDependency "architectury-fabric"
                 requiredDependency "fabric-api"
-                embeddedLibrary 'auto-config-updated-api'
-                embeddedLibrary 'cloth-config'
+                embeddedLibrary "auto-config-updated-api"
+                embeddedLibrary "cloth-config"
+                optionalDependency "modmenu"
             }
             afterEvaluate {
                 uploadTask.dependsOn(remapJar)
