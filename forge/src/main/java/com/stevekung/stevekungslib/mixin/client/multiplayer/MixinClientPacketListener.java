@@ -21,14 +21,14 @@ public class MixinClientPacketListener
     @Shadow
     private CommandDispatcher<SharedSuggestionProvider> commands;
 
-    @Inject(method = "<init>(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/gui/screens/Screen;Lnet/minecraft/network/Connection;Lcom/mojang/authlib/GameProfile;)V", at = @At("RETURN"))
+    @Inject(method = "<init>(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/gui/screens/Screen;Lnet/minecraft/network/Connection;Lcom/mojang/authlib/GameProfile;)V", at = @At("TAIL"))
     private void init(Minecraft mc, Screen screen, Connection connection, GameProfile profile, CallbackInfo info)
     {
         ClientCommands.buildSuggestion(this.commands);
         ClientCommands.buildDispatcher();
     }
 
-    @Inject(method = "handleCommands(Lnet/minecraft/network/protocol/game/ClientboundCommandsPacket;)V", at = @At("RETURN"))
+    @Inject(method = "handleCommands(Lnet/minecraft/network/protocol/game/ClientboundCommandsPacket;)V", at = @At("TAIL"))
     private void handleCommands(ClientboundCommandsPacket packet, CallbackInfo info)
     {
         ClientCommands.buildSuggestion(this.commands);

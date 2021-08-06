@@ -1,5 +1,5 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "5.2.0"
+    id "com.github.johnrengelman.shadow" version "7.0.0"
     id "com.matthewprenger.cursegradle"
 }
 
@@ -24,7 +24,7 @@ loom {
 }
 
 minecraft {
-    accessWidener = file("../fabric/src/main/resources/stevekungs_lib.accesswidener")
+    accessWidener = file("../common/src/main/resources/stevekungs_lib.accesswidener")
 }
 
 dependencies {
@@ -33,9 +33,11 @@ dependencies {
     modApi "me.shedaniel:architectury-fabric:${rootProject.architectury_version}"
     modApi "com.terraformersmc:modmenu:${rootProject.modmenu_version}"
 
-    modApi("me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config_version}") {
+    modImplementation("me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
+    include "me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config_version}"
+
     implementation(project(path: ":common")) {
         transitive = false
     }
@@ -44,14 +46,6 @@ dependencies {
     }
     shadow(project(path: ":common", configuration: "transformProductionFabric")) {
         transitive = false
-    }
-}
-
-processResources {
-    inputs.property "version", project.version
-
-    filesMatching("fabric.mod.json") {
-        expand "version": project.version
     }
 }
 

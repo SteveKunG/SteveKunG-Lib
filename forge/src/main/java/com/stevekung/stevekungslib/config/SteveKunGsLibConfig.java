@@ -25,8 +25,8 @@ public class SteveKunGsLibConfig
             builder.comment("General settings");
             builder.push("general");
 
-            this.enableDebugLog = builder.comment("Display debug log, useful to find bugs.").translation("stevekungs_lib.configgui.debug_log").define("enableDebugLog", false);
-            this.enableVersionChecker = builder.translation("stevekungs_lib.configgui.enable_version_checker").define("enableVersionChecker", true);
+            this.enableDebugLog = builder.comment("Display debug log, useful to find bugs.").translation("text.autoconfig.stevekungs_lib.option.general.enableDebugLog").define("enableDebugLog", false);
+            this.enableVersionChecker = builder.translation("text.autoconfig.stevekungs_lib.option.general.enableVersionChecker").define("enableVersionChecker", true);
 
             builder.pop();
         }

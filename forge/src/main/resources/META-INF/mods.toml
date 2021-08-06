@@ -16,7 +16,7 @@ authors = "SteveKunG"
 [[dependencies.stevekungs_lib]]
 modId = "forge"
 mandatory = true
-versionRange = "[36.1.0,)"
+versionRange = "[36.2.0,)"
 ordering = "NONE"
 side = "BOTH"
 

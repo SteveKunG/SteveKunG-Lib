@@ -26,7 +26,7 @@ public abstract class MixinChatScreen extends Screen
         ScreenEvents.CHAT_SCREEN_CLOSE.invoker().close(this.buttons, this.children);
     }
 
-    @Inject(method = "init()V", at = @At("RETURN"))
+    @Inject(method = "init()V", at = @At("TAIL"))
     private void init(CallbackInfo info)
     {
         ScreenEvents.CHAT_SCREEN_INIT.invoker().init(this.buttons, this.children, this.width, this.height);
@@ -38,13 +38,13 @@ public abstract class MixinChatScreen extends Screen
         ScreenEvents.CHAT_SCREEN_RENDER_PRE.invoker().renderPre(this.buttons, this.children, poseStack, mouseX, mouseY, partialTicks);
     }
 
-    @Inject(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;IIF)V", at = @At("RETURN"))
+    @Inject(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;IIF)V", at = @At("TAIL"))
     private void renderPost(PoseStack poseStack, int mouseX, int mouseY, float partialTicks, CallbackInfo info)
     {
         ScreenEvents.CHAT_SCREEN_RENDER_POST.invoker().renderPost(this.buttons, this.children, poseStack, mouseX, mouseY, partialTicks);
     }
 
-    @Inject(method = "tick()V", at = @At("RETURN"))
+    @Inject(method = "tick()V", at = @At("TAIL"))
     private void tick(CallbackInfo info)
     {
         ScreenEvents.CHAT_SCREEN_TICK.invoker().tick(this.buttons, this.children, this.width, this.height);

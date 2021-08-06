@@ -4,9 +4,17 @@ dependencies {
 }
 
 minecraft {
-    accessWidener = file("../fabric/src/main/resources/stevekungs_lib.accesswidener")
+    accessWidener = file("../common/src/main/resources/stevekungs_lib.accesswidener")
 }
 
 architectury {
     common()
+}
+
+processResources {
+    inputs.property "version", project.version
+
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version
+    }
 }

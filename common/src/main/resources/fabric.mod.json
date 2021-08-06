@@ -1,6 +1,46 @@
 {
     "schemaVersion": 1,
-    "id": "stevekungs_lib_temp",
+    "id": "stevekungs_lib",
     "version": "${version}",
+    "name": "SteveKunG's Lib",
+    "description": "Code and Utilities for SteveKunG's mods!",
+    "authors": [
+        "SteveKunG"
+    ],
+    "contact": {
+        "homepage": "https://www.curseforge.com/minecraft/mc-mods/stevekungs-lib",
+        "sources": "https://github.com/SteveKunG/SteveKunG-Lib",
+        "issues": "https://github.com/SteveKunG/SteveKunG-Lib/issues"
+    },
+    "license": "MIT License",
+    "icon": "logo.png",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "com.stevekung.stevekungslib.core.SteveKunGLibFabric"
+        ],
+        "modmenu": [
+            "com.stevekung.stevekungslib.modmenu.ModMenuIntegrationLib"
+        ]
+    },
+    "depends": {
+        "fabricloader": ">=0.11",
+        "fabric": "*",
+        "minecraft": ">=1.16.5",
+        "architectury": ">=1.17"
+    },
+    "mixins": [
+        "mixins.stevekung's_lib.json"
+    ],
+    "custom": {
+        "modmenu": {
+            "links": {
+                "modmenu.discord": "https://discord.gg/6JhEjeY"
+            },
+            "badges": [
+                "library"
+            ]
+        }
+    },
     "accessWidener": "stevekungs_lib.accesswidener"
 }
