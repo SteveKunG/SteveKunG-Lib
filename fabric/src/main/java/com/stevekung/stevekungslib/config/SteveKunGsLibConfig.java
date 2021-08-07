@@ -22,6 +22,7 @@ public final class SteveKunGsLibConfig implements ConfigData
     {
         @Comment("Display debug log, useful to find bugs.\n" + "(default value: false)")
         public boolean enableDebugLog = false;
+        @ConfigEntry.Gui.RequiresRestart
         public boolean enableVersionChecker = true;
     }
 }
