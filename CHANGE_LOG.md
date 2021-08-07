@@ -2,4 +2,5 @@
 
 ### Please report if you found the issues!
 
-* * Disable open config file when 'Configurated' mod is present (Forge)
+* + Added AutoConfig embedded library (Fabric)
+* * Rewrite config to use AutoConfig system (Fabric)
