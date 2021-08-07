@@ -119,7 +119,7 @@ public class ColorUtils
 
     public static String decimalToRgb(int color)
     {
-        ColorUtils utils = new ColorUtils(color);
+        var utils = new ColorUtils(color);
         return utils.packedRed() + "," + utils.packedGreen() + "," + utils.packedBlue();
     }
 
@@ -127,15 +127,15 @@ public class ColorUtils
     {
         try
         {
-            String[] colorArray = color.split(",");
-            int red = Integer.parseInt(colorArray[0]);
-            int green = Integer.parseInt(colorArray[1]);
-            int blue = Integer.parseInt(colorArray[2]);
-            boolean hasAlpha = colorArray.length == 4;
+            var colorArray = color.split(",");
+            var red = Integer.parseInt(colorArray[0]);
+            var green = Integer.parseInt(colorArray[1]);
+            var blue = Integer.parseInt(colorArray[2]);
+            var hasAlpha = colorArray.length == 4;
 
             if (hasAlpha)
             {
-                int alpha = Integer.parseInt(colorArray[3]);
+                var alpha = Integer.parseInt(colorArray[3]);
                 return alpha << 24 | red << 16 | green << 8 | blue;
             }
             else
@@ -159,15 +159,15 @@ public class ColorUtils
         {
             try
             {
-                String[] colorArray = color.split(",");
-                int red = Integer.parseInt(colorArray[0]);
-                int green = Integer.parseInt(colorArray[1]);
-                int blue = Integer.parseInt(colorArray[2]);
-                boolean hasAlpha = colorArray.length == 4;
+                var colorArray = color.split(",");
+                var red = Integer.parseInt(colorArray[0]);
+                var green = Integer.parseInt(colorArray[1]);
+                var blue = Integer.parseInt(colorArray[2]);
+                var hasAlpha = colorArray.length == 4;
 
                 if (hasAlpha)
                 {
-                    int alpha = Integer.parseInt(colorArray[3]);
+                    var alpha = Integer.parseInt(colorArray[3]);
                     return alpha << 24 | red << 16 | green << 8 | blue;
                 }
                 else

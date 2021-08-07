@@ -9,7 +9,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.TooltipAccessor;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 
@@ -28,19 +27,19 @@ public class SettingsSlider<T extends Settings> extends AbstractSettingsSlider<T
     @SuppressWarnings("deprecation")
     public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTicks)
     {
-        MutableComponent component = this.getMessage().copy();
-        Minecraft mc = Minecraft.getInstance();
+        var component = this.getMessage().copy();
+        var mc = Minecraft.getInstance();
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderTexture(0, WIDGETS_LOCATION);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.alpha);
-        int i = this.getYImage(this.isHovered());
+        var i = this.getYImage(this.isHovered());
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.enableDepthTest();
         this.blit(poseStack, this.x, this.y, 0, 46 + i * 20, this.width / 2, this.height);
         this.blit(poseStack, this.x + this.width / 2, this.y, 200 - this.width / 2, 46 + i * 20, this.width / 2, this.height);
         this.renderBg(poseStack, mc, mouseX, mouseY);
-        int j = this.active ? 16777215 : 10526880;
+        var j = this.active ? 16777215 : 10526880;
 
         if (component.getString().length() > 30)
         {

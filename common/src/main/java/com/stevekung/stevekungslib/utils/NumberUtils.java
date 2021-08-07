@@ -1,7 +1,6 @@
 package com.stevekung.stevekungslib.utils;
 
 import java.text.DecimalFormat;
-import java.util.Map;
 import java.util.NavigableMap;
 
 import com.google.common.collect.Maps;
@@ -38,19 +37,19 @@ public class NumberUtils
         {
             return Long.toString(value);
         }
-        Map.Entry<Long, String> entry = NumberUtils.SUFFIXES.floorEntry(value);
-        Long divideBy = entry.getKey();
-        String suffix = entry.getValue();
-        long truncated = value / (divideBy / 10);
-        boolean hasDecimal = truncated < 100 && truncated / 10D != truncated / 10D;
+        var entry = NumberUtils.SUFFIXES.floorEntry(value);
+        var divideBy = entry.getKey();
+        var suffix = entry.getValue();
+        var truncated = value / (divideBy / 10);
+        var hasDecimal = truncated < 100 && truncated / 10D != truncated / 10D;
         return hasDecimal ? truncated / 10D + suffix : truncated / 10 + suffix;
     }
 
     public static boolean isNumeric(CharSequence cs)
     {
-        int sz = cs.length();
+        var sz = cs.length();
 
-        for (int i = 0; i < sz; i++)
+        for (var i = 0; i < sz; i++)
         {
             if (!Character.isDigit(cs.charAt(i)) && cs.charAt(i) != '.')
             {
@@ -62,12 +61,12 @@ public class NumberUtils
 
     public static String intToRoman(int num)
     {
-        StringBuilder sb = new StringBuilder();
-        int times = 0;
-        String[] romans = new String[] {"I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M"};
-        int[] ints = new int[] {1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000};
+        var sb = new StringBuilder();
+        var times = 0;
+        var romans = new String[] {"I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M"};
+        var ints = new int[] {1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000};
 
-        for (int i = ints.length - 1; i >= 0; i--)
+        for (var i = ints.length - 1; i >= 0; i--)
         {
             times = num / ints[i];
             num %= ints[i];

@@ -53,7 +53,7 @@ public abstract class MixinChatScreen extends Screen
     @Inject(method = "mouseScrolled(DDD)Z", cancellable = true, at = @At("HEAD"))
     private void mouseScrolled(double mouseX, double mouseY, double scrollDelta, CallbackInfoReturnable<Boolean> info)
     {
-        EventResult event = ScreenEvents.CHAT_SCREEN_MOUSE_SCROLL.invoker().mouseScroll(this.renderables, this.children, mouseX, mouseY, scrollDelta);
+        var event = ScreenEvents.CHAT_SCREEN_MOUSE_SCROLL.invoker().mouseScroll(this.renderables, this.children, mouseX, mouseY, scrollDelta);
 
         if (event == EventResult.interruptTrue())
         {

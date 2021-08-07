@@ -84,14 +84,14 @@ public class ForgeCommonUtils
 
     public static Screen openConfigFile(Screen parent, String modId, ModConfig.Type type)
     {
-        String configPath = ConfigTracker.INSTANCE.getConfigFileName(modId, type);
+        var configPath = ConfigTracker.INSTANCE.getConfigFileName(modId, type);
 
         if (configPath == null)
         {
             SteveKunGLib.LOGGER.error("Couldn't open {} config!", modId);
             return parent;
         }
-        File config = new File(configPath);
+        var config = new File(configPath);
         Util.getPlatform().openUri(config.toURI());
         return parent;
     }

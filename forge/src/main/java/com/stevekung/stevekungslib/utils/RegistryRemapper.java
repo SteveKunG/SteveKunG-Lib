@@ -8,7 +8,7 @@ public record RegistryRemapper<T extends IForgeRegistryEntry<T>>(RegistryEvent.M
 {
     public void remapRegistry(String modId, String oldName, T remapObj)
     {
-        for (RegistryEvent.MissingMappings.Mapping<T> mappings : this.event.getMappings(modId))
+        for (var mappings : this.event.getMappings(modId))
         {
             if (mappings.key.getNamespace().equals(modId) && mappings.key.getPath().equals(oldName))
             {

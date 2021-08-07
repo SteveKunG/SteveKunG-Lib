@@ -48,8 +48,8 @@ public abstract class BlockStateProviderBase extends BlockStateProvider
     {
         this.getVariantBuilder(block).forAllStates(state ->
         {
-            int slice = state.getValue(BlockStateProperties.BITES);
-            String model = slice > 0 ? this.toString(block) + "_slice" + slice : this.toString(block);
+            var slice = state.getValue(BlockStateProperties.BITES);
+            var model = slice > 0 ? this.toString(block) + "_slice" + slice : this.toString(block);
             return ConfiguredModel.builder().modelFile(this.models().getExistingFile(this.modLoc("block/" + model))).build();
         });
     }

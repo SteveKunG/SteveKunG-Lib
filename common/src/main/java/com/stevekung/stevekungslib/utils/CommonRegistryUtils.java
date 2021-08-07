@@ -184,7 +184,7 @@ public class CommonRegistryUtils
 
     public <E extends Entity> EntityType<E> registerEntityType(String name, EntityType.Builder<E> builder)
     {
-        EntityType<E> type = builder.build(name);
+        var type = builder.build(name);
         this.entityTypes.register(name, () -> type);
         return type;
     }
@@ -356,7 +356,7 @@ public class CommonRegistryUtils
 
     public void registerAll()
     {
-        for (DeferredRegister<?> registry : this.deferredRegistries)
+        for (var registry : this.deferredRegistries)
         {
             registry.register();
         }

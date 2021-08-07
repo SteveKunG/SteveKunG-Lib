@@ -20,7 +20,7 @@ public class TextFieldSettings<T extends Settings> extends AbstractSettings<T>
     @Override
     public AbstractWidget createWidget(T settings, int x, int y, int width)
     {
-        TextFieldSettingsWidget<T> textField = new TextFieldSettingsWidget<>(x, y, width, this);
+        var textField = new TextFieldSettingsWidget<>(x, y, width, this);
         this.set(settings, this.get(settings));
         textField.setValue(this.get(settings));
         textField.setDisplayName(this.getBaseMessageTranslation());

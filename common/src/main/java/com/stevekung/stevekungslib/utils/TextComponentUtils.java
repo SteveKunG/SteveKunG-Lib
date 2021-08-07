@@ -44,25 +44,25 @@ public class TextComponentUtils
 
     public static MutableComponent formatted(String text, String hex)
     {
-        MutableComponent component = TextComponentUtils.formatted(text);
+        var component = TextComponentUtils.formatted(text);
         return component.setStyle(component.getStyle().withColor(TextColor.parseColor(hex)));
     }
 
     public static MutableComponent formatted(String text, int color)
     {
-        MutableComponent component = TextComponentUtils.formatted(text);
+        var component = TextComponentUtils.formatted(text);
         return component.setStyle(component.getStyle().withColor(TextColor.fromRgb(color)));
     }
 
     public static MutableComponent formatted(String text, String hex, Style style)
     {
-        MutableComponent component = TextComponentUtils.formatted(text);
+        var component = TextComponentUtils.formatted(text);
         return component.setStyle(style.withColor(TextColor.parseColor(hex)));
     }
 
     public static MutableComponent formatted(String text, int color, Style style)
     {
-        MutableComponent component = TextComponentUtils.formatted(text);
+        var component = TextComponentUtils.formatted(text);
         return component.setStyle(style.withColor(TextColor.fromRgb(color)));
     }
 
@@ -117,7 +117,7 @@ public class TextComponentUtils
     {
         try
         {
-            JsonWriter jsonWriter = newJsonWriter(Streams.writerForAppendable(writer));
+            var jsonWriter = newJsonWriter(Streams.writerForAppendable(writer));
             GSON_BUILDER.toJson(src, typeOfSrc, jsonWriter);
         }
         catch (JsonIOException e)
@@ -128,7 +128,7 @@ public class TextComponentUtils
 
     private static JsonWriter newJsonWriter(Writer writer)
     {
-        JsonWriter jsonWriter = new JsonWriter(writer);
+        var jsonWriter = new JsonWriter(writer);
         jsonWriter.setIndent("    ");
         jsonWriter.setSerializeNulls(GSON_BUILDER.serializeNulls());
         return jsonWriter;

@@ -37,25 +37,25 @@ public class LangUtils
 
     public static MutableComponent formatted(String text, String hex)
     {
-        MutableComponent component = LangUtils.formatted(text);
+        var component = LangUtils.formatted(text);
         return component.setStyle(component.getStyle().withColor(TextColor.parseColor(hex)));
     }
 
     public static MutableComponent formatted(String text, int color)
     {
-        MutableComponent component = LangUtils.formatted(text);
+        var component = LangUtils.formatted(text);
         return component.setStyle(component.getStyle().withColor(TextColor.fromRgb(color)));
     }
 
     public static MutableComponent formatted(String text, String hex, Style style, Object... obj)
     {
-        MutableComponent component = LangUtils.formatted(text, obj);
+        var component = LangUtils.formatted(text, obj);
         return component.setStyle(style.withColor(TextColor.parseColor(hex)));
     }
 
     public static MutableComponent formatted(String text, int color, Style style, Object... obj)
     {
-        MutableComponent component = LangUtils.formatted(text, obj);
+        var component = LangUtils.formatted(text, obj);
         return component.setStyle(style.withColor(TextColor.fromRgb(color)));
     }
 

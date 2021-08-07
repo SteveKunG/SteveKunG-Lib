@@ -15,7 +15,7 @@ public class MixinLevelRenderer
     @Redirect(method = "tickRain(Lnet/minecraft/client/Camera;)V", at = @At(value = "INVOKE", target = "net/minecraft/client/multiplayer/ClientLevel.addParticle(Lnet/minecraft/core/particles/ParticleOptions;DDDDDD)V"))
     private void replaceRainParticles(ClientLevel level, ParticleOptions options, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed)
     {
-        EventResult event = RenderEvents.RAIN_PARTICLE.invoker().addRainParticle(level, x, y, z);
+        var event = RenderEvents.RAIN_PARTICLE.invoker().addRainParticle(level, x, y, z);
 
         if (event == EventResult.interruptTrue())
         {

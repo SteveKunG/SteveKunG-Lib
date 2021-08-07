@@ -27,7 +27,7 @@
 //    @Inject(method = "chat(Ljava/lang/String;)V", at = @At("HEAD"), cancellable = true)
 //    private void chat(String message, CallbackInfo info)
 //    {
-//        LocalPlayer player = (LocalPlayer) (Object) this;
+//        var player = (LocalPlayer) (Object) this;
 //
 //        if (message.length() < 2 || !message.startsWith("/"))
 //        {
@@ -41,7 +41,7 @@
 //        try
 //        {
 //            // The game freezes when using heavy commands. Run your heavy code somewhere else pls
-//            int result = ClientCommands.execute(message.substring(1), (IClientSharedSuggestionProvider) new ClientSuggestionProvider(player.connection, this.minecraft));
+//            var result = ClientCommands.execute(message.substring(1), (IClientSharedSuggestionProvider) new ClientSuggestionProvider(player.connection, this.minecraft));
 //
 //            if (result != 0)
 //            {

@@ -1,9 +1,5 @@
 package com.stevekung.stevekungslib.utils;
 
-import java.util.Map;
-import java.util.Optional;
-
-import org.apache.maven.artifact.versioning.ComparableVersion;
 import com.stevekung.stevekungslib.core.SteveKunGLib;
 import com.stevekung.stevekungslib.utils.client.ClientUtils;
 import net.minecraftforge.fml.ModContainer;
@@ -26,13 +22,13 @@ public class ModVersionChecker
 
     public void startCheck()
     {
-        Optional<? extends ModContainer> container = ModList.get().getModContainerById(this.modId);
+        var container = ModList.get().getModContainerById(this.modId);
         container.ifPresent(modContainer -> this.container = modContainer);
-        VersionChecker.CheckResult result = VersionChecker.getResult(this.container.getModInfo());
+        var result = VersionChecker.getResult(this.container.getModInfo());
 
-        for (Map.Entry<ComparableVersion, String> entry : result.changes().entrySet())
+        for (var entry : result.changes().entrySet())
         {
-            ComparableVersion version = entry.getKey();
+            var version = entry.getKey();
 
             if (result.status() == VersionChecker.Status.OUTDATED)
             {
@@ -45,16 +41,16 @@ public class ModVersionChecker
 
     public void checkFail()
     {
-        VersionChecker.CheckResult result = VersionChecker.getResult(this.container.getModInfo());
+        var result = VersionChecker.getResult(this.container.getModInfo());
         this.failed = result.status() == VersionChecker.Status.FAILED;
     }
 
     public void printInfo()
     {
-        String event = ",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"" + this.url + "\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":[\"Check out \",{\"text\":\"" + this.container.getModInfo().getDisplayName() + "\",\"color\":\"green\"},\" download page\"]}";
-        String title = "[\"[\",{\"text\":\"" + this.container.getModInfo().getDisplayName() + "\",\"color\":\"green\"" + event + "},\"]\"";
-        String unableToCheck = title + ",{\"text\":\" Unable to check latest version! Please check logs to see more info.\",\"color\":\"red\"}]";
-        String newVersion = title + ",{\"text\":\" v" + this.latestVersion + " is now available! \"},{\"text\":\"[Click Here]\",\"color\":\"yellow\"" + event + "}]";
+        var event = ",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"" + this.url + "\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":[\"Check out \",{\"text\":\"" + this.container.getModInfo().getDisplayName() + "\",\"color\":\"green\"},\" download page\"]}";
+        var title = "[\"[\",{\"text\":\"" + this.container.getModInfo().getDisplayName() + "\",\"color\":\"green\"" + event + "},\"]\"";
+        var unableToCheck = title + ",{\"text\":\" Unable to check latest version! Please check logs to see more info.\",\"color\":\"red\"}]";
+        var newVersion = title + ",{\"text\":\" v" + this.latestVersion + " is now available! \"},{\"text\":\"[Click Here]\",\"color\":\"yellow\"" + event + "}]";
 
         if (this.failed)
         {

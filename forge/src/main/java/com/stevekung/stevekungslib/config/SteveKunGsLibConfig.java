@@ -1,6 +1,5 @@
 package com.stevekung.stevekungslib.config;
 
-import org.apache.commons.lang3.tuple.Pair;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class SteveKunGsLibConfig
@@ -10,7 +9,7 @@ public class SteveKunGsLibConfig
 
     static
     {
-        Pair<General, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(General::new);
+        var specPair = new ForgeConfigSpec.Builder().configure(General::new);
         GENERAL_SPEC = specPair.getRight();
         GENERAL = specPair.getLeft();
     }

@@ -15,6 +15,7 @@ public class MixinScreenEffectRenderer
     @Inject(method = "renderScreenEffect(Lnet/minecraft/client/Minecraft;Lcom/mojang/blaze3d/vertex/PoseStack;)V", at = @At("HEAD"))
     private static void renderFirstPersonViewOverlayEvent(Minecraft mc, PoseStack poseStack, CallbackInfo info)
     {
+        //TODO Renderer?
         if (!mc.player.isSpectator())
         {
             RenderEvents.FIRST_PERSON_VIEW_RENDER.invoker().firstPersonViewRender(poseStack);

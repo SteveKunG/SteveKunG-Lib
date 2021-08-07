@@ -26,8 +26,8 @@ public class CommonUtils
 
     public static String ticksToElapsedTime(int ticks)
     {
-        int seconds = ticks / 20;
-        int minutes = seconds / 60;
+        var seconds = ticks / 20;
+        var minutes = seconds / 60;
         seconds = seconds % 60;
         return seconds < 10 ? minutes + ":0" + seconds : minutes + ":" + seconds;
     }
@@ -44,7 +44,7 @@ public class CommonUtils
 
     public static void schedule(Runnable runnable, long delay)
     {
-        TimerTask task = new TimerTask()
+        var task = new TimerTask()
         {
             @Override
             public void run()

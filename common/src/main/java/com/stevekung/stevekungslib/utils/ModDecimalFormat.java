@@ -9,7 +9,7 @@ public class ModDecimalFormat extends DecimalFormat
     public ModDecimalFormat(String pattern)
     {
         super(pattern);
-        DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(Locale.ENGLISH);
+        var symbols = DecimalFormatSymbols.getInstance(Locale.ENGLISH);
         symbols.setDecimalSeparator('.');
         symbols.setGroupingSeparator('.');
         this.setDecimalFormatSymbols(symbols);
