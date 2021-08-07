@@ -14,7 +14,7 @@ public abstract class MixinClientSuggestionProvider implements IClientSharedSugg
 {
     @Shadow
     @Final
-    private Minecraft minecraft;
+    Minecraft minecraft;
 
     @Override
     public void sendFeedback(Component component)

@@ -19,7 +19,7 @@ import net.minecraft.network.protocol.game.ClientboundCommandsPacket;
 public class MixinClientPacketListener
 {
     @Shadow
-    private CommandDispatcher<SharedSuggestionProvider> commands;
+    CommandDispatcher<SharedSuggestionProvider> commands;
 
     @Inject(method = "<init>(Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/gui/screens/Screen;Lnet/minecraft/network/Connection;Lcom/mojang/authlib/GameProfile;)V", at = @At("TAIL"))
     private void init(Minecraft mc, Screen screen, Connection connection, GameProfile profile, CallbackInfo info)
