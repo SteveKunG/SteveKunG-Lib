@@ -2,8 +2,8 @@ package com.stevekung.stevekungslib.utils.client;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import com.stevekung.stevekungslib.utils.TextComponentUtils;
-import me.shedaniel.architectury.platform.Platform;
-import me.shedaniel.architectury.utils.Env;
+import dev.architectury.platform.Platform;
+import dev.architectury.utils.Env;
 import net.fabricmc.api.EnvType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;

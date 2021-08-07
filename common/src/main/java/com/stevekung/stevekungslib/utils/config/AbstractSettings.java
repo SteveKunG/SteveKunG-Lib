@@ -1,7 +1,6 @@
 package com.stevekung.stevekungslib.utils.config;
 
 import java.util.List;
-import java.util.Optional;
 
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.network.chat.Component;
@@ -26,9 +25,9 @@ public abstract class AbstractSettings<T extends Settings>
         this.optionValues = values;
     }
 
-    public Optional<List<FormattedCharSequence>> getSettingValues()
+    public List<FormattedCharSequence> getSettingValues()
     {
-        return Optional.of(this.optionValues);
+        return this.optionValues;
     }
 
     public Component getBaseMessageTranslation()

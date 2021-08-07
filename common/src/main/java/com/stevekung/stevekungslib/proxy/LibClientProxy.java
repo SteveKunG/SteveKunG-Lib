@@ -1,11 +1,11 @@
 package com.stevekung.stevekungslib.proxy;
 
-import me.shedaniel.architectury.event.events.GuiEvent;
-import me.shedaniel.architectury.event.events.client.ClientTickEvent;
+import dev.architectury.event.CompoundEventResult;
+import dev.architectury.event.events.client.ClientGuiEvent;
+import dev.architectury.event.events.client.ClientTickEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
-import net.minecraft.world.InteractionResultHolder;
 
 public class LibClientProxy extends LibCommonProxy
 {
@@ -15,7 +15,7 @@ public class LibClientProxy extends LibCommonProxy
 
     public LibClientProxy()
     {
-        GuiEvent.SET_SCREEN.register(this::onScreenOpen);
+        ClientGuiEvent.SET_SCREEN.register(this::onScreenOpen);
         ClientTickEvent.CLIENT_PRE.register(this::onClientTick);
     }
 
@@ -30,13 +30,13 @@ public class LibClientProxy extends LibCommonProxy
         }
     }
 
-    private InteractionResultHolder<Screen> onScreenOpen(Screen screen)
+    private CompoundEventResult<Screen> onScreenOpen(Screen screen)
     {
         if (screen instanceof TitleScreen)
         {
             ticks = 0;
             ticksPaused = 0;
         }
-        return InteractionResultHolder.pass(screen);
+        return CompoundEventResult.pass();
     }
 }

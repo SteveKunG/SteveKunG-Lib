@@ -3,9 +3,7 @@ package com.stevekung.stevekungslib.utils;
 import java.io.File;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
-import org.apache.commons.lang3.tuple.Pair;
 import com.stevekung.stevekungslib.core.SteveKunGLib;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
@@ -14,13 +12,13 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.ExtensionPoint;
+import net.minecraftforge.fml.IExtensionPoint;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ConfigTracker;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.network.FMLNetworkConstants;
+import net.minecraftforge.fmllegacy.network.FMLNetworkConstants;
 
 public class ForgeCommonUtils
 {
@@ -70,17 +68,18 @@ public class ForgeCommonUtils
         ModLoadingContext.get().registerConfig(type, builder);
     }
 
-    public static void registerConfigScreen(Supplier<BiFunction<Minecraft, Screen, Screen>> supplier)
+    public static void registerConfigScreen(BiFunction<Minecraft, Screen, Screen> screenFunction)
     {
         if (!ModList.get().isLoaded("configured"))
         {
-            ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY, supplier);
+            //TODO
+            //            ModLoadingContext.get().registerExtensionPoint(ConfigGuiHandler.ConfigGuiFactory.class, new ConfigGuiHandler.ConfigGuiFactory((mc, parent) -> new VideoSettingsScreen(parent, mc.options)));
         }
     }
 
     public static void registerClientOnly()
     {
-        ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST, () -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (s, b) -> true));
+        ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class, () -> new IExtensionPoint.DisplayTest(() -> FMLNetworkConstants.IGNORESERVERONLY, (remote, isServer) -> true));
     }
 
     public static Screen openConfigFile(Screen parent, String modId, ModConfig.Type type)

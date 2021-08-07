@@ -1,7 +1,6 @@
 package com.stevekung.stevekungslib.utils.config;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -9,6 +8,7 @@ import com.stevekung.stevekungslib.utils.client.ClientUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.TooltipAccessor;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
@@ -30,8 +30,9 @@ public class SettingsSlider<T extends Settings> extends AbstractSettingsSlider<T
     {
         MutableComponent component = this.getMessage().copy();
         Minecraft mc = Minecraft.getInstance();
-        mc.getTextureManager().bind(WIDGETS_LOCATION);
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, this.alpha);
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderTexture(0, WIDGETS_LOCATION);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.alpha);
         int i = this.getYImage(this.isHovered());
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
@@ -62,7 +63,7 @@ public class SettingsSlider<T extends Settings> extends AbstractSettingsSlider<T
     }
 
     @Override
-    public Optional<List<FormattedCharSequence>> getTooltip()
+    public List<FormattedCharSequence> getTooltip()
     {
         return this.setting.getSettingValues();
     }

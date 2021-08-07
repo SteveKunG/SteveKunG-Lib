@@ -54,9 +54,10 @@ public class ItemUtils
     {
         ItemStack itemStack = new ItemStack(Items.PLAYER_HEAD);
         CompoundTag compound = new CompoundTag();
-        GameProfile profile = SkullBlockEntity.updateGameprofile(new GameProfile(null, name));
-        compound.remove("SkullOwner");
-        compound.put("SkullOwner", NbtUtils.writeGameProfile(new CompoundTag(), profile));
+        SkullBlockEntity.updateGameprofile(new GameProfile(null, name), gameProfilex -> {
+            compound.remove("SkullOwner");
+            compound.put("SkullOwner", NbtUtils.writeGameProfile(new CompoundTag(), gameProfilex));
+        });
         itemStack.setTag(compound);
         return itemStack;
     }

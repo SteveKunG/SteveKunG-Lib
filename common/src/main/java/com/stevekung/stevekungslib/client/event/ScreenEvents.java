@@ -3,12 +3,12 @@ package com.stevekung.stevekungslib.client.event;
 import java.util.List;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import me.shedaniel.architectury.event.Event;
-import me.shedaniel.architectury.event.EventFactory;
-import me.shedaniel.architectury.event.EventResult;
+import dev.architectury.event.Event;
+import dev.architectury.event.EventFactory;
+import dev.architectury.event.EventResult;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 
 public interface ScreenEvents
@@ -23,36 +23,36 @@ public interface ScreenEvents
     @Environment(EnvType.CLIENT)
     interface ChatScreenInitEvent
     {
-        void init(List<AbstractWidget> buttons, List<GuiEventListener> children, int width, int height);
+        void init(List<Widget> renderables, List<GuiEventListener> children, int width, int height);
     }
 
     @Environment(EnvType.CLIENT)
     interface ChatScreenCloseEvent
     {
-        void close(List<AbstractWidget> buttons, List<GuiEventListener> children);
+        void close(List<Widget> renderables, List<GuiEventListener> children);
     }
 
     @Environment(EnvType.CLIENT)
     interface ChatScreenTickEvent
     {
-        void tick(List<AbstractWidget> buttons, List<GuiEventListener> children, int width, int height);
+        void tick(List<Widget> renderables, List<GuiEventListener> children, int width, int height);
     }
 
     @Environment(EnvType.CLIENT)
     interface ChatScreenMouseScrollEvent
     {
-        EventResult mouseScroll(List<AbstractWidget> buttons, List<GuiEventListener> children, double mouseX, double mouseY, double scrollDelta);
+        EventResult mouseScroll(List<Widget> renderables, List<GuiEventListener> children, double mouseX, double mouseY, double scrollDelta);
     }
 
     @Environment(EnvType.CLIENT)
     interface ChatScreenRenderPreEvent
     {
-        void renderPre(List<AbstractWidget> buttons, List<GuiEventListener> children, PoseStack poseStack, int mouseX, int mouseY, float partialTicks);
+        void renderPre(List<Widget> renderables, List<GuiEventListener> children, PoseStack poseStack, int mouseX, int mouseY, float partialTicks);
     }
 
     @Environment(EnvType.CLIENT)
     interface ChatScreenRenderPostEvent
     {
-        void renderPost(List<AbstractWidget> buttons, List<GuiEventListener> children, PoseStack poseStack, int mouseX, int mouseY, float partialTicks);
+        void renderPost(List<Widget> renderables, List<GuiEventListener> children, PoseStack poseStack, int mouseX, int mouseY, float partialTicks);
     }
 }

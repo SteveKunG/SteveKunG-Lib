@@ -2,7 +2,7 @@ package com.stevekung.stevekungslib.utils.client;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fmlclient.registry.ClientRegistry;
 
 public class ForgeClientRegistryUtils
 {

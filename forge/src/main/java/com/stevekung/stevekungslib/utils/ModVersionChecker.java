@@ -30,14 +30,14 @@ public class ModVersionChecker
         container.ifPresent(modContainer -> this.container = modContainer);
         VersionChecker.CheckResult result = VersionChecker.getResult(this.container.getModInfo());
 
-        for (Map.Entry<ComparableVersion, String> entry : result.changes.entrySet())
+        for (Map.Entry<ComparableVersion, String> entry : result.changes().entrySet())
         {
             ComparableVersion version = entry.getKey();
 
-            if (result.status == VersionChecker.Status.OUTDATED)
+            if (result.status() == VersionChecker.Status.OUTDATED)
             {
                 this.latestVersion = version.toString();
-                this.url = result.url;
+                this.url = result.url();
                 SteveKunGLib.LOGGER.debug("Mod {} latest version is {} with URL {}", this.modId, this.latestVersion, this.url);
             }
         }
@@ -46,7 +46,7 @@ public class ModVersionChecker
     public void checkFail()
     {
         VersionChecker.CheckResult result = VersionChecker.getResult(this.container.getModInfo());
-        this.failed = result.status == VersionChecker.Status.FAILED;
+        this.failed = result.status() == VersionChecker.Status.FAILED;
     }
 
     public void printInfo()

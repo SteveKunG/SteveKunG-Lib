@@ -17,11 +17,11 @@ public class ForgeTagUtils
 
     public static Tag.Named<Potion> createPotionTag(String modid, String name)
     {
-        return ForgeTagHandler.makeWrapperTag(ForgeRegistries.POTION_TYPES, new ResourceLocation(modid, name));
+        return ForgeTagHandler.makeWrapperTag(ForgeRegistries.POTIONS, new ResourceLocation(modid, name));
     }
 
     public static Tag.Named<BlockEntityType<?>> createTileEntityTag(String modid, String name)
     {
-        return ForgeTagHandler.makeWrapperTag(ForgeRegistries.TILE_ENTITIES, new ResourceLocation(modid, name));
+        return ForgeTagHandler.makeWrapperTag(ForgeRegistries.BLOCK_ENTITIES, new ResourceLocation(modid, name));
     }
 }

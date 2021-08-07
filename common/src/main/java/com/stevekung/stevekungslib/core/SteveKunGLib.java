@@ -3,7 +3,7 @@ package com.stevekung.stevekungslib.core;
 import com.stevekung.stevekungslib.proxy.LibClientProxy;
 import com.stevekung.stevekungslib.proxy.LibCommonProxy;
 import com.stevekung.stevekungslib.utils.LoggerBase;
-import me.shedaniel.architectury.utils.EnvExecutor;
+import dev.architectury.utils.EnvExecutor;
 
 public class SteveKunGLib
 {

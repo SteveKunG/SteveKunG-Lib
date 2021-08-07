@@ -1,9 +1,9 @@
 package com.stevekung.stevekungslib.client.event;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import me.shedaniel.architectury.event.Event;
-import me.shedaniel.architectury.event.EventFactory;
-import me.shedaniel.architectury.event.EventResult;
+import dev.architectury.event.Event;
+import dev.architectury.event.EventFactory;
+import dev.architectury.event.EventResult;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.MultiBufferSource;

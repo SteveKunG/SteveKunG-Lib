@@ -18,6 +18,6 @@ public class MixinServerLevel
     private void injectWeatherTickEvent(LevelChunk chunk, int randomTickSpeed, CallbackInfo info, ChunkPos chunkpos, boolean flag, int i, int j)
     {
         ServerLevel level = (ServerLevel) (Object) this;
-        WorldEvents.WEATHER_TICK.invoker().tick(level, level.findLightingTargetAround(level.getBlockRandomPos(i, 0, j, 15)));
+        WorldEvents.WEATHER_TICK.invoker().tick(level, level.findLightningTargetAround(level.getBlockRandomPos(i, 0, j, 15)));
     }
 }
