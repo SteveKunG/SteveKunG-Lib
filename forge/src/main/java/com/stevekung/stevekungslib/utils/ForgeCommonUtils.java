@@ -18,6 +18,7 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ConfigTracker;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fmlclient.ConfigGuiHandler;
 import net.minecraftforge.fmllegacy.network.FMLNetworkConstants;
 
 public class ForgeCommonUtils
@@ -72,8 +73,7 @@ public class ForgeCommonUtils
     {
         if (!ModList.get().isLoaded("configured"))
         {
-            //TODO
-            //            ModLoadingContext.get().registerExtensionPoint(ConfigGuiHandler.ConfigGuiFactory.class, new ConfigGuiHandler.ConfigGuiFactory((mc, parent) -> new VideoSettingsScreen(parent, mc.options)));
+            ModLoadingContext.get().registerExtensionPoint(ConfigGuiHandler.ConfigGuiFactory.class, () -> new ConfigGuiHandler.ConfigGuiFactory(screenFunction));
         }
     }
 

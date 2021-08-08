@@ -17,7 +17,7 @@
 //import net.minecraft.network.chat.TextComponent;
 //import net.minecraft.network.chat.TranslatableComponent;
 //
-//@Mixin(LocalPlayer.class)
+//@Mixin(LocalPlayer.class)TODO
 //public class MixinLocalPlayer
 //{
 //    @Shadow

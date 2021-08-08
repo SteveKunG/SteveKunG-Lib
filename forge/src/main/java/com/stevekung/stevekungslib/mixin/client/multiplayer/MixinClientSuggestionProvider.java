@@ -9,7 +9,7 @@
 //import net.minecraft.client.multiplayer.ClientSuggestionProvider;
 //import net.minecraft.network.chat.Component;
 //
-//@Mixin(ClientSuggestionProvider.class)
+//@Mixin(ClientSuggestionProvider.class)TODO
 //public abstract class MixinClientSuggestionProvider implements IClientSharedSuggestionProvider
 //{
 //    @Shadow

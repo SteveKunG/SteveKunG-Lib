@@ -7,6 +7,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import org.jetbrains.annotations.NotNull;
 import com.google.common.collect.Lists;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.data.DataGenerator;
@@ -27,13 +28,14 @@ public class LootTableProviderBase extends LootTableProvider
     }
 
     @Override
+    @NotNull
     protected List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootContextParamSet>> getTables()
     {
         return Collections.unmodifiableList(this.tables);
     }
 
     @Override
-    protected void validate(Map<ResourceLocation, LootTable> map, ValidationContext context)
+    protected void validate(Map<ResourceLocation, LootTable> map, @NotNull ValidationContext context)
     {
         map.forEach((resource, loot) -> LootTables.validate(context, resource, loot));
     }

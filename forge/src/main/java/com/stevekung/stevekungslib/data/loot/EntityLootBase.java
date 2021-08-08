@@ -2,6 +2,7 @@ package com.stevekung.stevekungslib.data.loot;
 
 import java.util.stream.Collectors;
 
+import org.jetbrains.annotations.NotNull;
 import net.minecraft.data.loot.EntityLoot;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -16,6 +17,7 @@ public class EntityLootBase extends EntityLoot
     }
 
     @Override
+    @NotNull
     protected Iterable<EntityType<?>> getKnownEntities()
     {
         return ForgeRegistries.ENTITIES.getValues().stream().filter(type -> type.getRegistryName().getNamespace().equals(this.modId)).collect(Collectors.toList());
