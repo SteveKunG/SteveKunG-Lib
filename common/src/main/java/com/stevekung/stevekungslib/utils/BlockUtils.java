@@ -10,7 +10,7 @@ public class BlockUtils
 {
     public static void setFireBurn(Block block, int encouragement, int flammability)
     {
-        ((FireBlock)Blocks.FIRE).setFlammable(block, encouragement, flammability);
+        ((FireBlock) Blocks.FIRE).setFlammable(block, encouragement, flammability);
     }
 
     public static boolean isFluid(Level level, BlockPos pos)
