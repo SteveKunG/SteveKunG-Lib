@@ -81,12 +81,12 @@ public class ClientRegistryUtils
         ClientRegistryUtils.registerStateMapper(block, new StateMap.Builder().ignore(mapper.getProperty()).build());
     }
 
-    public static void registerStateMapperSplitVariants(Block block, IProperty property)
+    public static void registerStateMapperSplitVariants(Block block, IProperty<?> property)
     {
         ClientRegistryUtils.registerStateMapper(block, new StateMap.Builder().withName(property).build());
     }
 
-    public static void registerStateMapper(Block block, IProperty... property)
+    public static void registerStateMapper(Block block, IProperty<?>... property)
     {
         ClientRegistryUtils.registerStateMapper(block, new StateMap.Builder().ignore(property).build());
     }

@@ -19,14 +19,14 @@ public enum EnumStateMapper
     LEAVES(BlockStateProperty.CHECK_DECAY, BlockStateProperty.DECAYABLE),
     PLANT_AGE_15(BlockStateProperty.AGE_15);
 
-    private final IProperty[] property;
+    private final IProperty<?>[] property;
 
-    private EnumStateMapper(IProperty... property)
+    private EnumStateMapper(IProperty<?>... property)
     {
         this.property = property;
     }
 
-    public IProperty[] getProperty()
+    public IProperty<?>[] getProperty()
     {
         return this.property;
     }
