@@ -8,7 +8,6 @@ buildscript {
         classpath group: "net.minecraftforge.gradle", name: "ForgeGradle", version: "5.1.+", changing: true
         classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
         classpath "org.spongepowered:mixingradle:0.7-SNAPSHOT"
-        classpath "com.github.jengelman.gradle.plugins:shadow:6.1.0"
     }
 }
 
@@ -18,14 +17,12 @@ plugins {
 
 apply plugin: "net.minecraftforge.gradle"
 apply plugin: "org.spongepowered.mixin"
-apply plugin: "com.github.johnrengelman.shadow"
 
 def mcVersion = project.mc_version
 
 version = project.version
 group = "stevekung.mods.stevekunglib"
 archivesBaseName = "SteveKunG's-Lib"
-
 java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
 minecraft {
