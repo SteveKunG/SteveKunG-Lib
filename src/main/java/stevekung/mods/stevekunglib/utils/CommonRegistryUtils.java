@@ -45,7 +45,7 @@ public class CommonRegistryUtils
 
     public void registerBlock(Block block, @Nullable Function<Block, ItemBlock> itemBlock)
     {
-        String name = block.getUnlocalizedName().substring(5);
+        String name = block.getTranslationKey().substring(5);
         ForgeRegistries.BLOCKS.register(block.setRegistryName(name));
 
         if (itemBlock != null)
@@ -56,7 +56,7 @@ public class CommonRegistryUtils
 
     public void registerItem(Item item)
     {
-        String name = item.getUnlocalizedName().substring(5);
+        String name = item.getTranslationKey().substring(5);
         ForgeRegistries.ITEMS.register(item.setRegistryName(name));
     }
 

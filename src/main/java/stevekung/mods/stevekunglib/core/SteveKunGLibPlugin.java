@@ -19,6 +19,7 @@ public class SteveKunGLibPlugin implements IFMLLoadingPlugin
     {
         LoggerSL.info("Initializing SteveKunG's Lib plugin!");
         MixinBootstrap.init();
+        Mixins.addConfiguration("mixins.stevekung's_lib.json");
         Mixins.addConfiguration("mixins.stevekung's_lib.gui_screen.json");
     }
 

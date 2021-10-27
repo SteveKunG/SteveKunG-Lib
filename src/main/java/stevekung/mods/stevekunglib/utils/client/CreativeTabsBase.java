@@ -21,14 +21,14 @@ public class CreativeTabsBase extends CreativeTabs
 
     @Override
     @SideOnly(Side.CLIENT)
-    public ItemStack getIconItemStack()
+    public ItemStack getIcon()
     {
         return this.itemStack;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
-    public ItemStack getTabIconItem()
+    public ItemStack createIcon()
     {
         return this.itemStack;
     }

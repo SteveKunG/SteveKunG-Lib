@@ -1,13 +1,14 @@
 buildscript {
     repositories {
-        jcenter()
+        gradlePluginPortal()
         maven { url = "https://files.minecraftforge.net/maven" }
-        maven { url = "https://repo.spongepowered.org/maven" }
+        maven { url = "https://repo.spongepowered.org/repository/maven-public/" }
     }
     dependencies {
-        classpath "net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT"
+        classpath group: "net.minecraftforge.gradle", name: "ForgeGradle", version: "5.1.+", changing: true
         classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
-        classpath "org.spongepowered:mixingradle:0.6-SNAPSHOT"
+        classpath "org.spongepowered:mixingradle:0.7-SNAPSHOT"
+        classpath "com.github.jengelman.gradle.plugins:shadow:6.1.0"
     }
 }
 
@@ -15,56 +16,87 @@ plugins {
     id "com.matthewprenger.cursegradle" version "1.4.0"
 }
 
-def mcVersion = project.mc_version
-
-apply plugin: "net.minecraftforge.gradle.forge"
+apply plugin: "net.minecraftforge.gradle"
 apply plugin: "org.spongepowered.mixin"
+apply plugin: "com.github.johnrengelman.shadow"
+
+def mcVersion = project.mc_version
 
 version = project.version
 group = "stevekung.mods.stevekunglib"
 archivesBaseName = "SteveKunG's-Lib"
-sourceCompatibility = targetCompatibility = 1.8
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
 minecraft {
-    version = "${forge_version}"
-    runDir = "run"
-    mappings = "${mcp_mapping}"
-    makeObfSourceJar = false
-}
+    mappings channel: "stable", version: "${mcp_mapping}"
+    accessTransformer = file("src/main/resources/META-INF/stevekunglib_at.cfg")
 
-configurations {
-    embed
-    implementation.extendsFrom(embed)
-}
+    def args = [
+            "-Dfml.coreMods.load=stevekung.mods.stevekunglib.core.SteveKunGLibPlugin",
+            "-Dmixin.hotSwap=true",
+            "-Dmixin.checks.interfaces=true",
+            "-Dmixin.debug.export=true",
+            "-Dmixin.debug.verbose=true",
+            "-javaagent:E:/Development Tools/Gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.2/1cf212283d26f706fd3074318870bebd14d2a9ed/mixin-0.8.2.jar"
+    ]
 
-dependencies {
-    embed("org.spongepowered:mixin:0.7.11-SNAPSHOT") { transitive = false }
+    runs {
+        client {
+            workingDirectory project.file("run")
+            jvmArgs.addAll(args)
+            environment "MC_VERSION", mcVersion
+
+            mods {
+                stevekungs_lib {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file("run")
+            jvmArgs.addAll(args)
+            environment "MC_VERSION", mcVersion
+
+            mods {
+                stevekungs_lib {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
 }
 
 repositories {
-    maven {
-        url "https://plugins.gradle.org/m2/"
-    }
-    maven {
-        url "https://repo.spongepowered.org/maven/"
+	maven {
+		name = "SpongePowered"
+		url = "https://repo.spongepowered.org/repository/maven-public/"
+	}
+	maven {
+        url "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
     }
 }
 
-sourceSets {
-    main {
-        ext.refMap = "mixins.stevekung's_lib.refmap.json"
-    }
+dependencies {
+    minecraft "net.minecraftforge:forge:${forge_version}"
+    implementation "curse.maven:mixinBooter-419286:3321174"
+    implementation "org.spongepowered:mixin:0.8.+"
+    annotationProcessor "org.spongepowered:mixin:0.8.+:processor"
+}
+
+mixin {
+	add sourceSets.main, "mixins.stevekung's_lib.refmap.json"
 }
 
 jar {
-    from(configurations.embed.collect { it.isDirectory() ? it : zipTree(it) }) {
-        exclude "LICENSE.txt", "META-INF/*.txt", "META-INF/MANIFSET.MF", "META-INF/maven/**", "META-INF/*.RSA", "META-INF/*.SF"
-    }
     manifest {
         attributes("FMLAT": "stevekunglib_at.cfg",
                    "FMLCorePluginContainsFMLMod": "true",
                    "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
-                   "MixinConfigs": "mixins.stevekung's_lib.json",
                    "FMLCorePlugin": "stevekung.mods.stevekunglib.core.SteveKunGLibPlugin",
                    "ForceLoadAsMod": "true"
         )
@@ -80,14 +112,10 @@ task sourcesJar(type: Jar) {
 
 task deobfJar(type: Jar) {
     from sourceSets.main.output
-    from(configurations.embed.collect { it.isDirectory() ? it : zipTree(it) }) {
-        exclude "LICENSE.txt", "META-INF/*.txt", "META-INF/MANIFSET.MF", "META-INF/maven/**", "META-INF/*.RSA", "META-INF/*.SF"
-    }
     manifest {
         attributes("FMLAT": "stevekunglib_at.cfg",
                    "FMLCorePluginContainsFMLMod": "true",
                    "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
-                   "MixinConfigs": "mixins.stevekung's_lib.json",
                    "FMLCorePlugin": "stevekung.mods.stevekunglib.core.SteveKunGLibPlugin",
                    "ForceLoadAsMod": "true"
         )
@@ -102,7 +130,7 @@ artifacts {
 }
 
 curseforge {
-    if (project.hasProperty('upload_api_key')) {
+    if (project.hasProperty("upload_api_key")) {
         apiKey = project.upload_api_key
         project {
             id = "296019"
@@ -121,3 +149,4 @@ curseforge {
 }
 
 tasks.curseforge.dependsOn(build)
+jar.finalizedBy("reobfJar")
