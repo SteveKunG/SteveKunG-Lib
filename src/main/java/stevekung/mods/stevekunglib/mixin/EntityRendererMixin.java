@@ -18,11 +18,11 @@ import stevekung.mods.stevekunglib.utils.client.EventHooksClient;
 public class EntityRendererMixin
 {
     @Shadow
-    private int rendererUpdateCount;
+    int rendererUpdateCount;
 
     @Shadow
     @Final
-    private Minecraft mc;
+    Minecraft mc;
 
     @Inject(method = "orientCamera(F)V", at = @At("HEAD"))
     private void injectCameraEvent(float partialTicks, CallbackInfo info)

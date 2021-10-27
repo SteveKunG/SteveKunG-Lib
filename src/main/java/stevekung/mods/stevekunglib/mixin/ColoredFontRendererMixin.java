@@ -20,41 +20,40 @@ public abstract class ColoredFontRendererMixin
     private static final int MARKER = 59136;
 
     @Shadow
-    private float alpha;
+    float alpha;
 
     @Shadow
-    protected abstract void setColor(float r, float g, float b, float a);
+    abstract void setColor(float r, float g, float b, float a);
 
     @Shadow
-    protected abstract void enableAlpha();
+    abstract void enableAlpha();
 
     @Shadow
-    protected abstract void resetStyles();
+    abstract void resetStyles();
 
     @Shadow
-    protected abstract int renderString(String text, float x, float y, int color, boolean dropShadow);
+    abstract int renderString(String text, float x, float y, int color, boolean dropShadow);
 
     @Shadow
-    private static boolean isFormatColor(char colorChar)
+    static boolean isFormatColor(char colorChar)
     {
         return false;
     }
 
     @Shadow
-    private static boolean isFormatSpecial(char formatChar)
+    static boolean isFormatSpecial(char formatChar)
     {
         return false;
     }
 
     @Inject(method = "renderString(Ljava/lang/String;FFIZ)I", at = @At("HEAD"))
-    private int renderString(String text, float x, float y, int color, boolean dropShadow, CallbackInfoReturnable info)
+    private void renderString(String text, float x, float y, int color, boolean dropShadow, CallbackInfoReturnable<Integer> info)
     {
         this.dropShadow = dropShadow;
-        return 0;
     }
 
     @Inject(method = "renderDefaultChar(IZ)F", at = @At("HEAD"))
-    private float renderDefaultChar(int charac, boolean italic, CallbackInfoReturnable info)
+    private float renderDefaultChar(int charac, boolean italic, CallbackInfoReturnable<Float> info)
     {
         if (charac >= MARKER && charac <= MARKER + 255)
         {
@@ -99,7 +98,7 @@ public abstract class ColoredFontRendererMixin
     }
 
     @Inject(method = "renderUnicodeChar(CZ)F", at = @At("HEAD"))
-    private float renderUnicodeChar(char charac, boolean italic, CallbackInfoReturnable info)
+    private float renderUnicodeChar(char charac, boolean italic, CallbackInfoReturnable<Float> info)
     {
         if (charac >= MARKER && charac <= MARKER + 255)
         {

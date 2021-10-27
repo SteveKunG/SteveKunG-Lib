@@ -16,7 +16,7 @@ public class ItemRendererMixin
 {
     @Shadow
     @Final
-    private Minecraft mc;
+    Minecraft mc;
 
     @Inject(method = "renderOverlays(F)V", cancellable = true, at = @At(value = "INVOKE", target = "net/minecraft/client/entity/EntityPlayerSP.isSpectator()Z", shift = At.Shift.AFTER))
     private void injectPersonViewOverlayEvent(float partialTicks, CallbackInfo info)

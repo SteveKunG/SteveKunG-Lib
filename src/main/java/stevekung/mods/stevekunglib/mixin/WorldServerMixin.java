@@ -16,23 +16,23 @@ import stevekung.mods.stevekunglib.utils.EventHooksCommon;
 @Mixin(value = WorldServer.class, priority = 10000)
 public abstract class WorldServerMixin
 {
-    private final WorldServer that = (WorldServer) (Object) this;
-
     @Shadow
-    protected abstract BlockPos adjustPosToNearbyEntity(BlockPos pos);
+    abstract BlockPos adjustPosToNearbyEntity(BlockPos pos);
 
     @Inject(method = "updateBlocks()V", at = @At(value = "INVOKE", target = "net/minecraft/profiler/Profiler.startSection(Ljava/lang/String;)V", shift = At.Shift.AFTER, ordinal = 0))
     private void injectWeatherTickEvent(CallbackInfo info)
     {
-        for (Iterator<Chunk> iterator = this.that.getPersistentChunkIterable(this.that.getPlayerChunkMap().getChunkIterator()); iterator.hasNext();)
+        WorldServer world = (WorldServer) (Object) this;
+
+        for (Iterator<Chunk> iterator = world.getPersistentChunkIterable(world.getPlayerChunkMap().getChunkIterator()); iterator.hasNext();)
         {
             Chunk chunk = iterator.next();
             int j = chunk.x * 16;
             int k = chunk.z * 16;
-            this.that.updateLCG = this.that.updateLCG * 3 + 1013904223;
-            int l = this.that.updateLCG >> 2;
+            world.updateLCG = world.updateLCG * 3 + 1013904223;
+            int l = world.updateLCG >> 2;
             BlockPos strikePos = this.adjustPosToNearbyEntity(new BlockPos(j + (l & 15), 0, k + (l >> 8 & 15)));
-            EventHooksCommon.onWeatherTick(this.that, chunk, strikePos);
+            EventHooksCommon.onWeatherTick(world, chunk, strikePos);
         }
     }
 }
