@@ -1,10 +1,10 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "7.0.0"
+    id "com.github.johnrengelman.shadow" version "7.1.0"
     id "com.matthewprenger.cursegradle"
 }
 
-configurations {
-    shadow
+loom {
+    accessWidenerPath = file("../common/src/main/resources/stevekungs_lib.accesswidener")
 }
 
 architectury {
@@ -12,20 +12,19 @@ architectury {
     fabric()
 }
 
+configurations {
+    common
+    shadowCommon
+    compileClasspath.extendsFrom common
+    runtimeClasspath.extendsFrom common
+    developmentFabric.extendsFrom common
+}
+
 repositories {
     maven {
         name "ModMenu Maven"
         url "https://maven.terraformersmc.com/releases/"
     }
-    maven { url 'https://jitpack.io' }
-}
-
-loom {
-    mixinConfig "mixins.stevekung's_lib.json"
-}
-
-minecraft {
-    accessWidener = file("../common/src/main/resources/stevekungs_lib.accesswidener")
 }
 
 dependencies {
@@ -38,16 +37,11 @@ dependencies {
         exclude(group: "net.fabricmc.fabric-api")
     }
     include "me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config_version}"
-    implementation("com.github.i-am-cal:antisteal:${rootProject.antisteal_version}")
-    include "com.github.i-am-cal:antisteal:${rootProject.antisteal_version}"
 
-    implementation(project(path: ":common")) {
+    common(project(path: ":common", configuration: "dev")) {
         transitive = false
     }
-    developmentFabric(project(path: ":common")) {
-        transitive = false
-    }
-    shadow(project(path: ":common", configuration: "transformProductionFabric")) {
+    shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) {
         transitive = false
     }
 }
@@ -55,13 +49,14 @@ dependencies {
 String fileName = "${rootProject.archives_base_name}-mc${rootProject.mc_version}"
 
 jar {
+    classifier "dev"
     version "v${project.version}"
     baseName fileName
 }
 
 shadowJar {
-    configurations = [project.configurations.shadow]
-    classifier "dev"
+    configurations = [project.configurations.shadowCommon]
+    classifier "dev-shadow"
     version "v${project.version}"
     baseName fileName
 }
@@ -123,5 +118,5 @@ curseforge {
 }
 
 afterEvaluate {
-    tasks.curseforge296019.dependsOn remapJar
+    tasks.curseforge.dependsOn remapJar
 }

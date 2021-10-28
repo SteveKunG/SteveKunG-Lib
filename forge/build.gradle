@@ -1,10 +1,6 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "7.0.0"
+    id "com.github.johnrengelman.shadow" version "7.1.0"
     id "com.matthewprenger.cursegradle"
-}
-
-configurations {
-    shadow
 }
 
 architectury {
@@ -12,21 +8,28 @@ architectury {
     forge()
 }
 
+configurations {
+    common
+    shadowCommon
+    compileClasspath.extendsFrom common
+    runtimeClasspath.extendsFrom common
+    developmentForge.extendsFrom common
+}
+
 loom {
-    mixinConfigs = ["mixins.stevekung's_lib.json", "mixins.stevekung's_lib_forge.json"]
+    forge {
+        mixinConfigs = ["mixins.stevekung's_lib.json", "mixins.stevekung's_lib_forge.json"]
+    }
 }
 
 dependencies {
     forge "net.minecraftforge:forge:${rootProject.mc_version}-${rootProject.forge_version}"
     modApi "dev.architectury:architectury-forge:${rootProject.architectury_version}"
 
-    implementation(project(path: ":common")) {
+    common(project(path: ":common", configuration: "dev")) {
         transitive = false
     }
-    developmentForge(project(path: ":common")) {
-        transitive = false
-    }
-    shadow(project(path: ":common", configuration: "transformProductionForge")) {
+    shadowCommon(project(path: ":common", configuration: "transformProductionForge")) {
         transitive = false
     }
 }
@@ -42,6 +45,7 @@ processResources {
 String fileName = "${rootProject.archives_base_name}-mc${rootProject.mc_version}"
 
 jar {
+    classifier "dev"
     version "v${project.version}"
     baseName fileName
 }
@@ -49,8 +53,8 @@ jar {
 shadowJar {
     exclude "fabric.mod.json"
     exclude "stevekungs_lib.accesswidener"
-    configurations = [project.configurations.shadow]
-    classifier "dev"
+    configurations = [project.configurations.shadowCommon]
+    classifier "dev-shadow"
     version "v${project.version}"
     baseName fileName
 }
@@ -71,6 +75,12 @@ remapJar {
     classifier "forge"
     version "v${project.version}"
     baseName fileName
+}
+
+components.java {
+    withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
+        skip()
+    }
 }
 
 artifacts {
