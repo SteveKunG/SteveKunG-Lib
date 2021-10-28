@@ -1,4 +1,4 @@
-package com.stevekung.stevekungslib.utils;
+package com.stevekung.stevekungslib.utils.forge;
 
 import java.io.File;
 import java.util.function.BiFunction;

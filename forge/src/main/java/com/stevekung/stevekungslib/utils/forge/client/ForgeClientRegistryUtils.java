@@ -1,4 +1,4 @@
-package com.stevekung.stevekungslib.utils.client;
+package com.stevekung.stevekungslib.utils.forge.client;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;

@@ -1,4 +1,4 @@
-package com.stevekung.stevekungslib.utils.client.command;
+package com.stevekung.stevekungslib.utils.forge.client.command;
 
 import java.util.Collections;
 import java.util.List;

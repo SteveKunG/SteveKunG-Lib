@@ -1,7 +1,7 @@
-package com.stevekung.stevekungslib.proxy;
+package com.stevekung.stevekungslib.proxy.forge;
 
-import com.stevekung.stevekungslib.client.event.handler.ClientEventHandler;
-import com.stevekung.stevekungslib.utils.ForgeCommonUtils;
+import com.stevekung.stevekungslib.client.forge.event.handler.ClientEventHandler;
+import com.stevekung.stevekungslib.utils.forge.ForgeCommonUtils;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 

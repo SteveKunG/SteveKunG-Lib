@@ -1,4 +1,4 @@
-package com.stevekung.stevekungslib.client;
+package com.stevekung.stevekungslib.client.forge;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;

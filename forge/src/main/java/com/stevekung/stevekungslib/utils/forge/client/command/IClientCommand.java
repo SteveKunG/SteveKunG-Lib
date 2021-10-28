@@ -1,4 +1,4 @@
-package com.stevekung.stevekungslib.utils.client.command;
+package com.stevekung.stevekungslib.utils.forge.client.command;
 
 import com.mojang.brigadier.CommandDispatcher;
 

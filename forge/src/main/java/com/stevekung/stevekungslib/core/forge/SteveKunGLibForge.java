@@ -1,10 +1,11 @@
-package com.stevekung.stevekungslib.core;
+package com.stevekung.stevekungslib.core.forge;
 
 import com.stevekung.stevekungslib.config.SteveKunGsLibConfig;
-import com.stevekung.stevekungslib.proxy.LibClientProxyForge;
-import com.stevekung.stevekungslib.proxy.LibCommonProxyForge;
-import com.stevekung.stevekungslib.utils.ForgeCommonUtils;
-import com.stevekung.stevekungslib.utils.ModVersionChecker;
+import com.stevekung.stevekungslib.core.SteveKunGLib;
+import com.stevekung.stevekungslib.proxy.forge.LibClientProxyForge;
+import com.stevekung.stevekungslib.proxy.forge.LibCommonProxyForge;
+import com.stevekung.stevekungslib.utils.forge.ForgeCommonUtils;
+import com.stevekung.stevekungslib.utils.forge.ModVersionChecker;
 import dev.architectury.platform.forge.EventBuses;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;

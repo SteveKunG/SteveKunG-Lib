@@ -1,4 +1,4 @@
-package com.stevekung.stevekungslib.utils;
+package com.stevekung.stevekungslib.utils.forge;
 
 import com.stevekung.stevekungslib.core.SteveKunGLib;
 import net.minecraftforge.event.RegistryEvent;

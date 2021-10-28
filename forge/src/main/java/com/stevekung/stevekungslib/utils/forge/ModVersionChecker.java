@@ -1,6 +1,7 @@
-package com.stevekung.stevekungslib.utils;
+package com.stevekung.stevekungslib.utils.forge;
 
 import com.stevekung.stevekungslib.core.SteveKunGLib;
+import com.stevekung.stevekungslib.utils.TextComponentUtils;
 import com.stevekung.stevekungslib.utils.client.ClientUtils;
 import net.minecraftforge.fml.ModContainer;
 import net.minecraftforge.fml.ModList;

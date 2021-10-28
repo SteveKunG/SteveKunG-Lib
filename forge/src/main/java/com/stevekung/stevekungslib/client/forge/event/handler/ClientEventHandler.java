@@ -1,7 +1,7 @@
-package com.stevekung.stevekungslib.client.event.handler;
+package com.stevekung.stevekungslib.client.forge.event.handler;
 
 import com.stevekung.stevekungslib.config.SteveKunGsLibConfig;
-import com.stevekung.stevekungslib.core.SteveKunGLibForge;
+import com.stevekung.stevekungslib.core.forge.SteveKunGLibForge;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
