@@ -19,12 +19,6 @@
         "main": [
             "com.stevekung.stevekungslib.core.SteveKunGLibFabric"
         ],
-        "client": [
-            "com.stevekung.stevekungslib.core.SteveKunGLibClientFabric"
-        ],
-        "server": [
-            "com.stevekung.stevekungslib.core.SteveKunGLibServerFabric"
-        ],
         "modmenu": [
             "com.stevekung.stevekungslib.modmenu.ModMenuIntegrationLib"
         ]

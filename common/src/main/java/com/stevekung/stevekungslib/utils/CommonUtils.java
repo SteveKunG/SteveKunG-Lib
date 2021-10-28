@@ -9,10 +9,6 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.jetbrains.annotations.NotNull;
-import com.google.common.collect.Maps;
-import com.stevekung.stevekungslib.core.SteveKunGLib;
-import dev.architectury.platform.Platform;
-import i.am.cal.antisteal.Antisteal;
 import net.minecraft.Util;
 
 public class CommonUtils
@@ -57,21 +53,5 @@ public class CommonUtils
             }
         };
         new Timer().schedule(task, delay);
-    }
-
-    public static void initAntisteal(String name, Class<?> modClass, Runnable close)
-    {
-        var mod = Platform.getMod(name);
-        var path = mod.getFilePath();
-        var domainMaps = Maps.<String, String>newHashMap();
-        SteveKunGLib.LOGGER.debug(path.toUri().toString());
-        domainMaps.put("Curseforge", "curseforge.com");
-        domainMaps.put("Modrinth", "modrinth.com");
-        domainMaps.put("GitHub", "github.com");
-        Antisteal.check(path, () ->
-        {
-            SteveKunGLib.LOGGER.error("Get official mod download here: {}", mod.getHomepage().get());
-            close.run();
-        }, domainMaps, modClass);
     }
 }
