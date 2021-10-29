@@ -118,5 +118,5 @@ curseforge {
 }
 
 afterEvaluate {
-    tasks.curseforge.dependsOn remapJar
+    tasks.curseforge296019.dependsOn remapJar
 }

@@ -17,10 +17,10 @@
     "environment": "*",
     "entrypoints": {
         "main": [
-            "com.stevekung.stevekungslib.core.SteveKunGLibFabric"
+            "com.stevekung.stevekungslib.fabric.core.SteveKunGLibFabric"
         ],
         "modmenu": [
-            "com.stevekung.stevekungslib.modmenu.ModMenuIntegrationLib"
+            "com.stevekung.stevekungslib.fabric.modmenu.ModMenuIntegrationLib"
         ]
     },
     "depends": {
