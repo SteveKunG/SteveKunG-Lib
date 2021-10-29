@@ -27,15 +27,18 @@ public class ModVersionChecker
         container.ifPresent(modContainer -> this.container = modContainer);
         var result = VersionChecker.getResult(this.container.getModInfo());
 
-        for (var entry : result.changes().entrySet())
+        if (result.changes() != null && result.changes().size() > 0)
         {
-            var version = entry.getKey();
-
-            if (result.status() == VersionChecker.Status.OUTDATED)
+            for (var entry : result.changes().entrySet())
             {
-                this.latestVersion = version.toString();
-                this.url = result.url();
-                SteveKunGLib.LOGGER.debug("Mod {} latest version is {} with URL {}", this.modId, this.latestVersion, this.url);
+                var version = entry.getKey();
+
+                if (result.status() == VersionChecker.Status.OUTDATED)
+                {
+                    this.latestVersion = version.toString();
+                    this.url = result.url();
+                    SteveKunGLib.LOGGER.debug("Mod {} latest version is {} with URL {}", this.modId, this.latestVersion, this.url);
+                }
             }
         }
     }
