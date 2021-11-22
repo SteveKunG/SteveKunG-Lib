@@ -15,14 +15,14 @@ public class MixinGameRenderer
     @Shadow
     int tick;
 
-    @Inject(method = "renderLevel(FJLcom/mojang/blaze3d/vertex/PoseStack;)V", at = @At(value = "INVOKE", target = "net/minecraft/client/renderer/GameRenderer.bobHurt(Lcom/mojang/blaze3d/vertex/PoseStack;F)V", shift = At.Shift.AFTER))
-    private void injectCameraEvent(float partialTicks, long finishTimeNano, PoseStack poseStack, CallbackInfo info)
+    @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "net/minecraft/client/renderer/GameRenderer.bobHurt(Lcom/mojang/blaze3d/vertex/PoseStack;F)V", shift = At.Shift.AFTER))
+    private void stevekung_lib$addCameraEvent(float partialTicks, long finishTimeNano, PoseStack poseStack, CallbackInfo info)
     {
         RenderEvents.CAMERA_TRANSFORM.invoker().cameraTransform(this.tick, partialTicks, poseStack);
     }
 
-    @Inject(method = "render(FJZ)V", at = @At(value = "INVOKE", target = "net/minecraft/util/Mth.lerp(FFF)F", shift = At.Shift.AFTER))
-    private void render(float partialTicks, long nanoTime, boolean renderWorld, CallbackInfo info)
+    @Inject(method = "render", at = @At(value = "INVOKE", target = "net/minecraft/util/Mth.lerp(FFF)F", shift = At.Shift.AFTER))
+    private void stevekung_lib$renderScreenOverlayEvent(float partialTicks, long nanoTime, boolean renderWorld, CallbackInfo info)
     {
         RenderEvents.RENDER_SCREEN_OVERLAY.invoker().renderScreenOverlay(partialTicks);
     }

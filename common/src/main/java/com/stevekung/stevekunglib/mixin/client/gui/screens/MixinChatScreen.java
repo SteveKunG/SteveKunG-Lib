@@ -26,32 +26,32 @@ public class MixinChatScreen extends Screen
         ScreenEvents.CHAT_SCREEN_CLOSE.invoker().close(this.renderables, this.children);
     }
 
-    @Inject(method = "init()V", at = @At("TAIL"))
-    private void init(CallbackInfo info)
+    @Inject(method = "init", at = @At("TAIL"))
+    private void stevekung_lib$init(CallbackInfo info)
     {
         ScreenEvents.CHAT_SCREEN_INIT.invoker().init(this.renderables, this.children, this.width, this.height);
     }
 
-    @Inject(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;IIF)V", at = @At("HEAD"))
-    private void renderPre(PoseStack poseStack, int mouseX, int mouseY, float partialTicks, CallbackInfo info)
+    @Inject(method = "render", at = @At("HEAD"))
+    private void stevekung_lib$renderPre(PoseStack poseStack, int mouseX, int mouseY, float partialTicks, CallbackInfo info)
     {
         ScreenEvents.CHAT_SCREEN_RENDER_PRE.invoker().renderPre(this.renderables, this.children, poseStack, mouseX, mouseY, partialTicks);
     }
 
-    @Inject(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;IIF)V", at = @At("TAIL"))
-    private void renderPost(PoseStack poseStack, int mouseX, int mouseY, float partialTicks, CallbackInfo info)
+    @Inject(method = "render", at = @At("TAIL"))
+    private void stevekung_lib$renderPost(PoseStack poseStack, int mouseX, int mouseY, float partialTicks, CallbackInfo info)
     {
         ScreenEvents.CHAT_SCREEN_RENDER_POST.invoker().renderPost(this.renderables, this.children, poseStack, mouseX, mouseY, partialTicks);
     }
 
-    @Inject(method = "tick()V", at = @At("TAIL"))
-    private void tick(CallbackInfo info)
+    @Inject(method = "tick", at = @At("TAIL"))
+    private void stevekung_lib$tick(CallbackInfo info)
     {
         ScreenEvents.CHAT_SCREEN_TICK.invoker().tick(this.renderables, this.children, this.width, this.height);
     }
 
-    @Inject(method = "mouseScrolled(DDD)Z", cancellable = true, at = @At("HEAD"))
-    private void mouseScrolled(double mouseX, double mouseY, double scrollDelta, CallbackInfoReturnable<Boolean> info)
+    @Inject(method = "mouseScrolled", cancellable = true, at = @At("HEAD"))
+    private void stevekung_lib$mouseScrolled(double mouseX, double mouseY, double scrollDelta, CallbackInfoReturnable<Boolean> info)
     {
         var event = ScreenEvents.CHAT_SCREEN_MOUSE_SCROLL.invoker().mouseScroll(this.renderables, this.children, mouseX, mouseY, scrollDelta);
 

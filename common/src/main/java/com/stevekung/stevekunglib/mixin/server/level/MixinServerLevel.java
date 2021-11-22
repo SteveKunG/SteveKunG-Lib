@@ -14,8 +14,8 @@ import net.minecraft.world.level.chunk.LevelChunk;
 @Mixin(ServerLevel.class)
 public class MixinServerLevel
 {
-    @Inject(method = "tickChunk(Lnet/minecraft/world/level/chunk/LevelChunk;I)V", at = @At(value = "INVOKE", target = "net/minecraft/server/level/ServerLevel.getProfiler()Lnet/minecraft/util/profiling/ProfilerFiller;", shift = Shift.BEFORE), locals = LocalCapture.CAPTURE_FAILHARD)
-    private void injectWeatherTickEvent(LevelChunk chunk, int randomTickSpeed, CallbackInfo info, ChunkPos chunkpos, boolean flag, int i, int j)
+    @Inject(method = "tickChunk", at = @At(value = "INVOKE", target = "net/minecraft/server/level/ServerLevel.getProfiler()Lnet/minecraft/util/profiling/ProfilerFiller;", shift = Shift.BEFORE), locals = LocalCapture.CAPTURE_FAILHARD)
+    private void stevekung_lib$addWeatherTickEvent(LevelChunk chunk, int randomTickSpeed, CallbackInfo info, ChunkPos chunkpos, boolean flag, int i, int j)
     {
         WorldEvents.WEATHER_TICK.invoker().tick((ServerLevel) (Object) this, i, j);
     }

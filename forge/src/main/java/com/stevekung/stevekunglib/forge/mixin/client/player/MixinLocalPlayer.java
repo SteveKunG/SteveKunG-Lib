@@ -24,8 +24,8 @@ public class MixinLocalPlayer
     @Final
     Minecraft minecraft;
 
-    @Inject(method = "chat(Ljava/lang/String;)V", at = @At("HEAD"), cancellable = true)
-    private void chat(String message, CallbackInfo info)
+    @Inject(method = "chat", at = @At("HEAD"), cancellable = true)
+    private void stevekung_lib$chat(String message, CallbackInfo info)
     {
         var player = (LocalPlayer) (Object) this;
 

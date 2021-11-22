@@ -14,8 +14,8 @@ import net.minecraft.client.renderer.ScreenEffectRenderer;
 @Mixin(ScreenEffectRenderer.class)
 public class MixinScreenEffectRenderer
 {
-    @Inject(method = "renderScreenEffect(Lnet/minecraft/client/Minecraft;Lcom/mojang/blaze3d/vertex/PoseStack;)V", at = @At("HEAD"))
-    private static void renderFirstPersonViewOverlayEvent(Minecraft mc, PoseStack poseStack, CallbackInfo info)
+    @Inject(method = "renderScreenEffect", at = @At("HEAD"))
+    private static void stevekung_lib$renderFirstPersonViewOverlayEvent(Minecraft mc, PoseStack poseStack, CallbackInfo info)
     {
         if (!mc.player.isSpectator())
         {
