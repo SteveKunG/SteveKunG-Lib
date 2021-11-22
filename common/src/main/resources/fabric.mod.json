@@ -1,6 +1,6 @@
 {
     "schemaVersion": 1,
-    "id": "stevekungs_lib",
+    "id": "stevekung_lib",
     "version": "${version}",
     "name": "SteveKunG's Lib",
     "description": "Code and Utilities for SteveKunG's mods!",
@@ -12,25 +12,25 @@
         "sources": "https://github.com/SteveKunG/SteveKunG-Lib",
         "issues": "https://github.com/SteveKunG/SteveKunG-Lib/issues"
     },
-    "license": "MIT License",
+    "license": "MIT",
     "icon": "logo.png",
     "environment": "*",
     "entrypoints": {
         "main": [
-            "com.stevekung.stevekungslib.fabric.core.SteveKunGLibFabric"
+            "com.stevekung.stevekunglib.fabric.core.SteveKunGLibFabric"
         ],
         "modmenu": [
-            "com.stevekung.stevekungslib.fabric.modmenu.ModMenuIntegrationLib"
+            "com.stevekung.stevekunglib.fabric.modmenu.ModMenuIntegrationLib"
         ]
     },
     "depends": {
         "fabricloader": ">=0.11",
         "fabric": "*",
         "minecraft": ">=1.17.1",
-        "architectury": ">=2.3"
+        "architectury": ">=2.6"
     },
     "mixins": [
-        "mixins.stevekung's_lib.json"
+        "mixins.stevekung_lib.json"
     ],
     "custom": {
         "modmenu": {
@@ -42,5 +42,5 @@
             ]
         }
     },
-    "accessWidener": "stevekungs_lib.accesswidener"
+    "accessWidener": "stevekung_lib.accesswidener"
 }

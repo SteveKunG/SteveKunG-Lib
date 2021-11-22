@@ -4,7 +4,7 @@ plugins {
 }
 
 loom {
-    accessWidenerPath = file("../common/src/main/resources/stevekungs_lib.accesswidener")
+    accessWidenerPath = file("../common/src/main/resources/stevekung_lib.accesswidener")
 }
 
 architectury {

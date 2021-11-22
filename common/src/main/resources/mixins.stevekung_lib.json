@@ -1,0 +1,19 @@
+{
+    "required": true,
+    "minVersion": "0.8.4",
+    "compatibilityLevel": "JAVA_8",
+    "package": "com.stevekung.stevekunglib.mixin",
+    "mixins": [
+        "server.level.MixinServerLevel"
+    ],
+    "client": [
+        "client.gui.screens.MixinChatScreen",
+        "client.renderer.MixinGameRenderer",
+        "client.renderer.MixinLevelRenderer",
+        "client.renderer.MixinScreenEffectRenderer",
+        "client.renderer.entity.MixinEntityRenderDispatcher"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

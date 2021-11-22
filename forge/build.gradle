@@ -18,7 +18,11 @@ configurations {
 
 loom {
     forge {
-        mixinConfigs = ["mixins.stevekung's_lib.json", "mixins.stevekung's_lib_forge.json"]
+        mixinConfigs = ["mixins.stevekung_lib.json", "mixins.stevekung_lib_forge.json"]
+    }
+
+    mixin {
+        defaultRefmapName = "mixins.stevekung_lib_forge.refmap.json"
     }
 }
 
@@ -48,7 +52,7 @@ jar {
 
 shadowJar {
     exclude "fabric.mod.json"
-    exclude "stevekungs_lib.accesswidener"
+    exclude "stevekung_lib.accesswidener"
     configurations = [project.configurations.shadowCommon]
     classifier "dev-shadow"
     version "v${project.version}"
@@ -107,6 +111,9 @@ curseforge {
             }
             addArtifact sourcesJar
             addArtifact shadowJar
+        }
+        options {
+            forgeGradleIntegration = false
         }
     }
 }
