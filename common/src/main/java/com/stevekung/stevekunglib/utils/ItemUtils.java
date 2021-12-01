@@ -72,7 +72,7 @@ public class ItemUtils
 
     public static String decodeTextureURL(String source)
     {
-        var obj = new JsonParser().parse(new String(Base64.getDecoder().decode(source))).getAsJsonObject();
+        var obj = JsonParser.parseString(new String(Base64.getDecoder().decode(source))).getAsJsonObject();
         var textureurl = obj.get("textures").getAsJsonObject().get("SKIN").getAsJsonObject().get("url").getAsString();
         return textureurl.substring(textureurl.lastIndexOf("/") + 1);
     }

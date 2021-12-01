@@ -39,9 +39,6 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.carver.CarverConfiguration;
 import net.minecraft.world.level.levelgen.carver.WorldCarver;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.blockplacers.BlockPlacer;
-import net.minecraft.world.level.levelgen.feature.blockplacers.BlockPlacerType;
-import net.minecraft.world.level.levelgen.feature.configurations.DecoratorConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
@@ -49,9 +46,6 @@ import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvi
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProviderType;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType;
-import net.minecraft.world.level.levelgen.placement.FeatureDecorator;
-import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilder;
-import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilderConfiguration;
 import net.minecraft.world.level.material.Fluid;
 
 public class CommonRegistryUtils
@@ -79,11 +73,8 @@ public class CommonRegistryUtils
     private final DeferredRegister<PoiType> pointOfInterestTypes;
     private final DeferredRegister<WorldCarver<?>> worldCarvers;
     private final DeferredRegister<Feature<?>> features;
-    private final DeferredRegister<FeatureDecorator<?>> placements;
-    private final DeferredRegister<SurfaceBuilder<?>> surfaceBuilders;
     private final DeferredRegister<Attribute> attributes;
     private final DeferredRegister<BlockStateProviderType<?>> blockStateProviderTypes;
-    private final DeferredRegister<BlockPlacerType<?>> blockPlacerTypes;
     private final DeferredRegister<FoliagePlacerType<?>> foliagePlacerTypes;
     private final DeferredRegister<TreeDecoratorType<?>> treeDecoratorTypes;
 
@@ -110,11 +101,8 @@ public class CommonRegistryUtils
         this.pointOfInterestTypes = DeferredRegister.create(modId, Registry.POINT_OF_INTEREST_TYPE_REGISTRY);
         this.worldCarvers = DeferredRegister.create(modId, Registry.CARVER_REGISTRY);
         this.features = DeferredRegister.create(modId, Registry.FEATURE_REGISTRY);
-        this.placements = DeferredRegister.create(modId, Registry.DECORATOR_REGISTRY);
-        this.surfaceBuilders = DeferredRegister.create(modId, Registry.SURFACE_BUILDER_REGISTRY);
         this.attributes = DeferredRegister.create(modId, Registry.ATTRIBUTE_REGISTRY);
         this.blockStateProviderTypes = DeferredRegister.create(modId, Registry.BLOCK_STATE_PROVIDER_TYPE_REGISTRY);
-        this.blockPlacerTypes = DeferredRegister.create(modId, Registry.BLOCK_PLACER_TYPE_REGISTRY);
         this.foliagePlacerTypes = DeferredRegister.create(modId, Registry.FOLIAGE_PLACER_TYPE_REGISTRY);
         this.treeDecoratorTypes = DeferredRegister.create(modId, Registry.TREE_DECORATOR_TYPE_REGISTRY);
 
@@ -138,11 +126,8 @@ public class CommonRegistryUtils
         this.deferredRegistries.add(this.pointOfInterestTypes);
         this.deferredRegistries.add(this.worldCarvers);
         this.deferredRegistries.add(this.features);
-        this.deferredRegistries.add(this.placements);
-        this.deferredRegistries.add(this.surfaceBuilders);
         this.deferredRegistries.add(this.attributes);
         this.deferredRegistries.add(this.blockStateProviderTypes);
-        this.deferredRegistries.add(this.blockPlacerTypes);
         this.deferredRegistries.add(this.foliagePlacerTypes);
         this.deferredRegistries.add(this.treeDecoratorTypes);
     }
@@ -306,18 +291,6 @@ public class CommonRegistryUtils
         return feature;
     }
 
-    public <C extends DecoratorConfiguration> FeatureDecorator<C> registerWorldPlacement(String name, FeatureDecorator<C> placement)
-    {
-        this.placements.register(name, () -> placement);
-        return placement;
-    }
-
-    public <C extends SurfaceBuilderConfiguration> SurfaceBuilder<C> registerSurfaceBuilder(String name, SurfaceBuilder<C> builder)
-    {
-        this.surfaceBuilders.register(name, () -> builder);
-        return builder;
-    }
-
     public Attribute registerAttribute(String name, Attribute attribute)
     {
         this.attributes.register(name, () -> attribute);
@@ -327,12 +300,6 @@ public class CommonRegistryUtils
     public <P extends BlockStateProvider> BlockStateProviderType<P> registerBlockStateProviderType(String name, BlockStateProviderType<P> type)
     {
         this.blockStateProviderTypes.register(name, () -> type);
-        return type;
-    }
-
-    public <P extends BlockPlacer> BlockPlacerType<P> registerBlockPlacerType(String name, BlockPlacerType<P> type)
-    {
-        this.blockPlacerTypes.register(name, () -> type);
         return type;
     }
 
