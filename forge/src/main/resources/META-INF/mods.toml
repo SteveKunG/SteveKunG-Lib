@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[37,)"
+loaderVersion = "[38,)"
 license = "MIT"
 issueTrackerURL = "https://github.com/SteveKunG/SteveKunG-Lib/issues"
 
@@ -16,20 +16,20 @@ authors = "SteveKunG"
 [[dependencies.stevekung_lib]]
 modId = "forge"
 mandatory = true
-versionRange = "[37.0.0,)"
+versionRange = "[38.0.6,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.stevekung_lib]]
 modId = "architectury"
 mandatory = true
-versionRange = "[2.6,)"
+versionRange = "[3.0,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.stevekung_lib]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.17.1,)"
+versionRange = "[1.18,)"
 ordering = "NONE"
 side = "BOTH"
