@@ -1,7 +1,7 @@
 buildscript {
     repositories {
         gradlePluginPortal()
-        maven { url "https://files.minecraftforge.net/maven" }
+        maven { url "https://maven.minecraftforge.net" }
         maven { url "https://repo.spongepowered.org/repository/maven-public/" }
     }
     dependencies {
@@ -26,22 +26,22 @@ archivesBaseName = "SteveKunG's-Lib"
 java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
 minecraft {
-    mappings channel: "snapshot", version: "${mcp_mapping}"
+    mappings channel: "stable", version: "${mcp_mapping}"
     accessTransformer = file("src/main/resources/META-INF/stevekunglib_at.cfg")
 
-    def args = [
+    def customJvms = [
             "-Dfml.coreMods.load=stevekung.mods.stevekunglib.core.SteveKunGLibPlugin",
             "-Dmixin.hotSwap=true",
             "-Dmixin.checks.interfaces=true",
             "-Dmixin.debug.export=true",
-            "-Dmixin.debug.verbose=true",
-            "-javaagent:E:/Development Tools/Gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.2/1cf212283d26f706fd3074318870bebd14d2a9ed/mixin-0.8.2.jar"
+            "-Dmixin.debug.verbose=true"
     ]
 
     runs {
         client {
             workingDirectory project.file("run")
-            jvmArgs.addAll(args)
+            args "--username", "${username}", "--uuid", "${uuid}"
+            jvmArgs.addAll(customJvms)
             environment "MC_VERSION", mcVersion
 
             mods {
@@ -53,7 +53,7 @@ minecraft {
 
         server {
             workingDirectory project.file("run")
-            jvmArgs.addAll(args)
+            jvmArgs.addAll(customJvms)
             environment "MC_VERSION", mcVersion
 
             mods {
@@ -66,11 +66,11 @@ minecraft {
 }
 
 repositories {
-	maven {
-		name "SpongePowered"
-		url "https://repo.spongepowered.org/repository/maven-public/"
-	}
-	maven {
+    maven {
+        name "SpongePowered"
+        url "https://repo.spongepowered.org/repository/maven-public/"
+    }
+    maven {
         url "https://www.cursemaven.com"
         content {
             includeGroup "curse.maven"
@@ -81,12 +81,12 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${forge_version}"
     implementation "curse.maven:mixinBooter-419286:3321174"
-    implementation "org.spongepowered:mixin:0.8.+"
-    annotationProcessor "org.spongepowered:mixin:0.8.+:processor"
+    implementation "org.spongepowered:mixin:0.8.4"
+    annotationProcessor "org.spongepowered:mixin:0.8.4:processor"
 }
 
 mixin {
-	add sourceSets.main, "mixins.stevekung's_lib.refmap.json"
+    add sourceSets.main, "mixins.stevekung's_lib.refmap.json"
 }
 
 jar {
@@ -103,7 +103,7 @@ jar {
 
 task sourcesJar(type: Jar) {
     from sourceSets.main.allSource
-	baseName = "SteveKunG's-Lib-" + mcVersion
+    baseName = "SteveKunG's-Lib-" + mcVersion
     classifier = "sources"
 }
 

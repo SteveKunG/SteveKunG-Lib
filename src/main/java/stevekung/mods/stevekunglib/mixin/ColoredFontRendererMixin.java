@@ -22,10 +22,10 @@ public abstract class ColoredFontRendererMixin
     @Shadow
     float alpha;
 
-    @Shadow
+    @Shadow(remap = false)
     abstract void setColor(float r, float g, float b, float a);
 
-    @Shadow
+    @Shadow(remap = false)
     abstract void enableAlpha();
 
     @Shadow
@@ -142,6 +142,11 @@ public abstract class ColoredFontRendererMixin
         return 0.0F;
     }
 
+    /**
+     * 
+     * @reason Add color marker
+     * @author SteveKunG
+     */
     @Overwrite
     public static String getFormatFromString(String text)
     {
