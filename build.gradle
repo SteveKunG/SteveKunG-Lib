@@ -26,7 +26,7 @@ archivesBaseName = "SteveKunG's-Lib"
 java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
 minecraft {
-    mappings channel: "stable", version: "${mcp_mapping}"
+    mappings channel: "snapshot", version: "${mcp_mapping}"
     accessTransformer = file("src/main/resources/META-INF/stevekunglib_at.cfg")
 
     def customJvms = [
