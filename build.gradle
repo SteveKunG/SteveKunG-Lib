@@ -138,6 +138,9 @@ curseforge {
 
             mainArtifact(jar) {
                 displayName = "SteveKunG's-Lib-" + mcVersion + "-" + version
+                relations {
+                    requiredLibrary "mixin-booter"
+                }
             }
             addArtifact sourcesJar
             addArtifact deobfJar

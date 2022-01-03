@@ -1,3 +1,4 @@
 # Change Log
 
-* * Fixed crash with vivecraft, closed #8
+* Required MixinBooter
+* Internal updates
