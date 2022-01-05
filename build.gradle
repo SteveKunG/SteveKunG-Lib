@@ -80,7 +80,7 @@ repositories {
 
 dependencies {
     minecraft "net.minecraftforge:forge:${forge_version}"
-    implementation "curse.maven:mixinBooter-419286:3321174"
+    implementation "curse.maven:mixinBooter-419286:3575119"
     implementation "org.spongepowered:mixin:0.8.4"
     annotationProcessor "org.spongepowered:mixin:0.8.4:processor"
 }
