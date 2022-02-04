@@ -65,6 +65,11 @@ minecraft {
     }
 }
 
+configurations {
+    embed
+    implementation.extendsFrom(embed)
+}
+
 repositories {
     maven {
         name "SpongePowered"
@@ -81,8 +86,8 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${forge_version}"
     implementation "curse.maven:mixinBooter-419286:3575119"
-    implementation "org.spongepowered:mixin:0.8.4"
-    annotationProcessor "org.spongepowered:mixin:0.8.4:processor"
+    embed "org.spongepowered:mixin:0.8.3"
+    annotationProcessor "org.spongepowered:mixin:0.8.3:processor"
 }
 
 mixin {
@@ -90,6 +95,9 @@ mixin {
 }
 
 jar {
+    from(configurations.embed.collect { it.isDirectory() ? it : zipTree(it) }) {
+        exclude "LICENSE.txt", "META-INF/*.txt", "META-INF/MANIFSET.MF", "META-INF/maven/**", "META-INF/*.RSA", "META-INF/*.SF"
+    }
     manifest {
         attributes("FMLAT": "stevekunglib_at.cfg",
                    "FMLCorePluginContainsFMLMod": "true",

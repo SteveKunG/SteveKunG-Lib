@@ -1,4 +1,3 @@
 # Change Log
 
-* Required MixinBooter
-* Internal updates
+* Include Mixin into the mod
