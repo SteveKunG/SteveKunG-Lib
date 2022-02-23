@@ -1,0 +1,6 @@
+{
+    "_comment": "CONFIG",
+    "text.autoconfig.stevekung_lib.title": "Конфигурация SteveKunG's Lib",
+    "text.autoconfig.stevekung_lib.option.general.enableDebugLog": "Включить информацию отладки",
+    "text.autoconfig.stevekung_lib.option.general.enableVersionChecker": "Включить проверку версии"
+}
