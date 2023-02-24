@@ -162,7 +162,7 @@ public abstract class ColoredFontRendererMixin
     @Overwrite
     public static String getFormatFromString(String text)
     {
-        StringBuilder builder = new StringBuilder();
+        String s = "";
         int i = -1;
         int j = text.length();
 
@@ -174,19 +174,19 @@ public abstract class ColoredFontRendererMixin
 
                 if (isFormatColor(c0))
                 {
-                    builder = new StringBuilder("§" + c0);
+                    s = "§" + c0;
                 }
                 else if (isFormatSpecial(c0))
                 {
-                    builder.append("§").append(c0);
+                    s = s + "§" + c0;
                 }
                 else if (c0 >= MARKER && c0 <= MARKER + 255)
                 {
-                    builder = new StringBuilder(String.format("%s%s%s", c0, text.charAt(i + 1), text.charAt(i + 2)));
+                    s = String.format("%s%s%s", c0, text.charAt(i + 1), text.charAt(i + 2));
                     i += 2;
                 }
             }
         }
-        return builder.toString();
+        return s;
     }
 }

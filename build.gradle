@@ -114,6 +114,10 @@ jar {
     archiveVersion = "v" + project.version
 }
 
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = "UTF-8"
+}
+
 tasks.register("sourcesJar", Jar) {
     from sourceSets.main.allSource
     archiveBaseName = fileName
