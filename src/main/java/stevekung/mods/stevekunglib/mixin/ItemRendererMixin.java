@@ -19,7 +19,7 @@ public class ItemRendererMixin
     Minecraft mc;
 
     @Inject(method = "renderOverlays(F)V", cancellable = true, at = @At(value = "INVOKE", target = "net/minecraft/client/entity/EntityPlayerSP.isSpectator()Z", shift = At.Shift.AFTER))
-    private void injectPersonViewOverlayEvent(float partialTicks, CallbackInfo info)
+    private void stevekunglib$injectFirstPersonViewOverlayEvent(float partialTicks, CallbackInfo info)
     {
         if (!this.mc.player.isSpectator())
         {

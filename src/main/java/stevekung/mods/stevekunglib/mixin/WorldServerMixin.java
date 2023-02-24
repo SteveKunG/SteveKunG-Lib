@@ -20,9 +20,9 @@ public abstract class WorldServerMixin
     abstract BlockPos adjustPosToNearbyEntity(BlockPos pos);
 
     @Inject(method = "updateBlocks()V", at = @At(value = "INVOKE", target = "net/minecraft/profiler/Profiler.startSection(Ljava/lang/String;)V", shift = At.Shift.AFTER, ordinal = 0))
-    private void injectWeatherTickEvent(CallbackInfo info)
+    private void stevekunglib$injectWeatherTickEvent(CallbackInfo info)
     {
-        WorldServer world = (WorldServer) (Object) this;
+        WorldServer world = WorldServer.class.cast(this);
 
         for (Iterator<Chunk> iterator = world.getPersistentChunkIterable(world.getPlayerChunkMap().getChunkIterator()); iterator.hasNext();)
         {

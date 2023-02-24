@@ -12,13 +12,13 @@ import stevekung.mods.stevekunglib.client.gui.GuiChatRegistry;
 public class GuiScreenMixin
 {
     @Inject(method = "mouseReleased(III)V", at = @At("TAIL"))
-    private void mouseReleased(int mouseX, int mouseY, int mouseButton, CallbackInfo info)
+    private void stevekunglib$mouseReleased(int mouseX, int mouseY, int mouseButton, CallbackInfo info)
     {
         GuiChatRegistry.getGuiChatList().forEach(gui -> gui.mouseReleased(mouseX, mouseY, mouseButton));
     }
 
     @Inject(method = "mouseClickMove(IIIJ)V", at = @At("TAIL"))
-    private void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick, CallbackInfo info)
+    private void stevekunglib$mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick, CallbackInfo info)
     {
         GuiChatRegistry.getGuiChatList().forEach(gui -> gui.mouseClickMove(mouseX, mouseY, clickedMouseButton, timeSinceLastClick));
     }

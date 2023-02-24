@@ -3,6 +3,7 @@ package stevekung.mods.stevekunglib.mixin;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -12,13 +13,6 @@ import net.minecraft.client.gui.FontRenderer;
 @Mixin(FontRenderer.class)
 public abstract class ColoredFontRendererMixin
 {
-    private boolean dropShadow;
-    private int state;
-    private int redN;
-    private int greenN;
-    private int blueN;
-    private static final int MARKER = 59136;
-
     @Shadow
     float alpha;
 
@@ -37,23 +31,41 @@ public abstract class ColoredFontRendererMixin
     @Shadow
     static boolean isFormatColor(char colorChar)
     {
-        return false;
+        throw new AssertionError();
     }
 
     @Shadow
     static boolean isFormatSpecial(char formatChar)
     {
-        return false;
+        throw new AssertionError();
     }
 
+    @Unique
+    private boolean dropShadow;
+
+    @Unique
+    private int state;
+
+    @Unique
+    private int redN;
+
+    @Unique
+    private int greenN;
+
+    @Unique
+    private int blueN;
+
+    @Unique
+    private static final int MARKER = 59136;
+
     @Inject(method = "renderString(Ljava/lang/String;FFIZ)I", at = @At("HEAD"))
-    private void renderString(String text, float x, float y, int color, boolean dropShadow, CallbackInfoReturnable<Integer> info)
+    private void stevekunglib$renderString(String text, float x, float y, int color, boolean dropShadow, CallbackInfoReturnable<Integer> info)
     {
         this.dropShadow = dropShadow;
     }
 
     @Inject(method = "renderDefaultChar(IZ)F", at = @At("HEAD"))
-    private float renderDefaultChar(int charac, boolean italic, CallbackInfoReturnable<Float> info)
+    private float stevekunglib$renderDefaultChar(int charac, boolean italic, CallbackInfoReturnable<Float> info)
     {
         if (charac >= MARKER && charac <= MARKER + 255)
         {
@@ -98,7 +110,7 @@ public abstract class ColoredFontRendererMixin
     }
 
     @Inject(method = "renderUnicodeChar(CZ)F", at = @At("HEAD"))
-    private float renderUnicodeChar(char charac, boolean italic, CallbackInfoReturnable<Float> info)
+    private float stevekunglib$renderUnicodeChar(char charac, boolean italic, CallbackInfoReturnable<Float> info)
     {
         if (charac >= MARKER && charac <= MARKER + 255)
         {
@@ -150,7 +162,7 @@ public abstract class ColoredFontRendererMixin
     @Overwrite
     public static String getFormatFromString(String text)
     {
-        StringBuilder s = new StringBuilder();
+        StringBuilder builder = new StringBuilder();
         int i = -1;
         int j = text.length();
 
@@ -162,19 +174,19 @@ public abstract class ColoredFontRendererMixin
 
                 if (isFormatColor(c0))
                 {
-                    s = new StringBuilder("§" + c0);
+                    builder = new StringBuilder("§" + c0);
                 }
                 else if (isFormatSpecial(c0))
                 {
-                    s.append("§").append(c0);
+                    builder.append("§").append(c0);
                 }
                 else if (c0 >= MARKER && c0 <= MARKER + 255)
                 {
-                    s = new StringBuilder(String.format("%s%s%s", c0, text.charAt(i + 1), text.charAt(i + 2)));
+                    builder = new StringBuilder(String.format("%s%s%s", c0, text.charAt(i + 1), text.charAt(i + 2)));
                     i += 2;
                 }
             }
         }
-        return s.toString();
+        return builder.toString();
     }
 }
