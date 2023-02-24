@@ -1,24 +1,18 @@
 buildscript {
     repositories {
-        gradlePluginPortal()
-        maven { url "https://maven.minecraftforge.net" }
         maven { url "https://repo.spongepowered.org/repository/maven-public/" }
     }
     dependencies {
-        classpath group: "net.minecraftforge.gradle", name: "ForgeGradle", version: "5.1.+", changing: true
-        classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
         classpath "org.spongepowered:mixingradle:0.7-SNAPSHOT"
     }
 }
 
 plugins {
-    id "com.matthewprenger.cursegradle" version "1.4.0"
+    id "net.minecraftforge.gradle" version "5.1.+"
+    id "io.github.CDAGaming.cursegradle" version "1.6.0"
 }
 
-apply plugin: "net.minecraftforge.gradle"
 apply plugin: "org.spongepowered.mixin"
-
-def mcVersion = project.mc_version
 
 version = project.version
 group = "stevekung.mods.stevekunglib"
@@ -40,9 +34,13 @@ minecraft {
     runs {
         client {
             workingDirectory project.file("run")
-            args "--username", "${username}", "--uuid", "${uuid}"
+
+            if (project.hasProperty("username") && project.hasProperty("uuid")) {
+                args "--username", "${username}", "--uuid", "${uuid}"
+            }
+
             jvmArgs.addAll(customJvms)
-            environment "MC_VERSION", mcVersion
+            environment "MC_VERSION", project.mc_version
 
             mods {
                 stevekungs_lib {
@@ -54,7 +52,7 @@ minecraft {
         server {
             workingDirectory project.file("run")
             jvmArgs.addAll(customJvms)
-            environment "MC_VERSION", mcVersion
+            environment "MC_VERSION", project.mc_version
 
             mods {
                 stevekungs_lib {
@@ -74,18 +72,22 @@ repositories {
     maven {
         name "SpongePowered"
         url "https://repo.spongepowered.org/repository/maven-public/"
+        content {
+            includeGroup "org.spongepowered"
+        }
     }
     maven {
-        url "https://www.cursemaven.com"
+        name "MixinBooter"
+        url "https://maven.cleanroommc.com/"
         content {
-            includeGroup "curse.maven"
+            includeGroup "zone.rong"
         }
     }
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${forge_version}"
-    implementation "curse.maven:mixinBooter-419286:3575119"
+    implementation "zone.rong:mixinbooter:7.0"
     embed "org.spongepowered:mixin:0.8.3"
     annotationProcessor "org.spongepowered:mixin:0.8.3:processor"
 }
@@ -93,6 +95,8 @@ dependencies {
 mixin {
     add sourceSets.main, "mixins.stevekung's_lib.refmap.json"
 }
+
+String fileName = "${archivesBaseName}-mc${mc_version}"
 
 jar {
     from(configurations.embed.collect { it.isDirectory() ? it : zipTree(it) }) {
@@ -106,27 +110,27 @@ jar {
                    "ForceLoadAsMod": "true"
         )
     }
-    baseName = "SteveKunG's-Lib-" + mcVersion
+    archiveBaseName = fileName
 }
 
-task sourcesJar(type: Jar) {
+tasks.register("sourcesJar", Jar) {
     from sourceSets.main.allSource
-    baseName = "SteveKunG's-Lib-" + mcVersion
-    classifier = "sources"
+    archiveBaseName = fileName
+    archiveClassifier = "sources"
 }
 
-task deobfJar(type: Jar) {
+tasks.register("deobfJar", Jar) {
     from sourceSets.main.output
     manifest {
         attributes("FMLAT": "stevekunglib_at.cfg",
-                   "FMLCorePluginContainsFMLMod": "true",
-                   "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
-                   "FMLCorePlugin": "stevekung.mods.stevekunglib.core.SteveKunGLibPlugin",
-                   "ForceLoadAsMod": "true"
+                "FMLCorePluginContainsFMLMod": "true",
+                "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
+                "FMLCorePlugin": "stevekung.mods.stevekunglib.core.SteveKunGLibPlugin",
+                "ForceLoadAsMod": "true"
         )
     }
-    baseName = "SteveKunG's-Lib-" + mcVersion
-    classifier = "deobf"
+    archiveBaseName = fileName
+    archiveClassifier = "deobf"
 }
 
 artifacts {
@@ -142,12 +146,12 @@ curseforge {
             changelog = file("CHANGE_LOG.md")
             changelogType = "markdown"
             releaseType = "release"
-            addGameVersion mcVersion
+            addGameVersion project.mc_version
 
             mainArtifact(jar) {
-                displayName = "SteveKunG's-Lib-" + mcVersion + "-" + version
+                displayName = fileName
                 relations {
-                    requiredLibrary "mixin-booter"
+                    it.requiredDependency "mixin-booter"
                 }
             }
             addArtifact sourcesJar
