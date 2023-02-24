@@ -38,7 +38,7 @@ public class BlockStateProperty
     public static final PropertyInteger AGE_7 = PropertyInteger.create("age", 0, 7);
     public static final PropertyInteger AGE_15 = PropertyInteger.create("age", 0, 15);
 
-    public static enum EnumAxis implements IStringSerializable
+    public enum EnumAxis implements IStringSerializable
     {
         X,
         Y,

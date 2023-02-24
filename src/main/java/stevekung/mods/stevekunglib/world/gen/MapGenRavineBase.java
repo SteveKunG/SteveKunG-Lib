@@ -18,10 +18,10 @@ public class MapGenRavineBase extends MapGenBase
 {
     protected static final IBlockState FLOWING_LAVA = Blocks.FLOWING_LAVA.getDefaultState();
     private IBlockState top = Blocks.GRASS.getDefaultState();
-    private IBlockState lava = Blocks.LAVA.getDefaultState();
+    private final IBlockState lava;
     private Set<Block> topBlock = new HashSet<>();
-    private Set<Block> digBlock = new HashSet<>();
-    private Set<Block> fluidBlock = new HashSet<>();
+    private final Set<Block> digBlock;
+    private final Set<Block> fluidBlock;
     private final float[] rs = new float[1024];
 
     public MapGenRavineBase(Set<Block> topBlock, IBlockState lava, Set<Block> digBlock, Set<Block> fluidBlock)

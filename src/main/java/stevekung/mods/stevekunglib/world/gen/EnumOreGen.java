@@ -20,7 +20,7 @@ public enum EnumOreGen
     private final int minHeight;
     private final int maxHeight;
 
-    private EnumOreGen(int genCount, int blockCount, int minHeight, int maxHeight)
+    EnumOreGen(int genCount, int blockCount, int minHeight, int maxHeight)
     {
         this.genCount = genCount;
         this.blockCount = blockCount;

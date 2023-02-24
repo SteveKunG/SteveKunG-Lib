@@ -1,12 +1,9 @@
 package stevekung.mods.stevekunglib.mixin;
 
-import java.io.IOException;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiScreen;
 import stevekung.mods.stevekunglib.client.gui.GuiChatRegistry;
@@ -64,7 +61,7 @@ public class GuiChatMixin extends GuiScreen
     }
 
     @Inject(method = "handleMouseInput()V", at = @At("TAIL"))
-    private void handleMouseInput(CallbackInfo info) throws IOException
+    private void handleMouseInput(CallbackInfo info)
     {
         GuiChatRegistry.getGuiChatList().forEach(gui -> gui.handleMouseInput(this.width, this.height));
     }

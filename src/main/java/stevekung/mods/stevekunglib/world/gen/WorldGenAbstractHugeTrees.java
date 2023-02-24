@@ -10,7 +10,7 @@ public abstract class WorldGenAbstractHugeTrees extends WorldGenAbstractTree
 {
     protected final int baseHeight;
     private final IBlockState leaves;
-    private int extraRandomHeight;
+    private final int extraRandomHeight;
 
     public WorldGenAbstractHugeTrees(int baseHeight, int extraRandomHeight, IBlockState leaves)
     {
@@ -89,7 +89,7 @@ public abstract class WorldGenAbstractHugeTrees extends WorldGenAbstractTree
         }
     }
 
-    protected boolean ensureGrowable(World world, Random rand, BlockPos treePos, int height)
+    protected boolean ensureGrowable(World world, BlockPos treePos, int height)
     {
         return this.isSpaceAt(world, treePos, height) && this.ensureDirtsUnderneath(treePos, world);
     }

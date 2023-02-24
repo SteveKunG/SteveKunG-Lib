@@ -86,7 +86,7 @@ public abstract class ColoredFontRendererMixin
             {
                 color = (color & 16579836) >> 2 | color & -16777216;
             }
-            this.setColor((color >> 16 & 255) / 255.0F, (color >> 8 & 255) / 255.0F, (color >> 0 & 255) / 255.0F, this.alpha);
+            this.setColor((color >> 16 & 255) / 255.0F, (color >> 8 & 255) / 255.0F, (color & 255) / 255.0F, this.alpha);
             return 0.0F;
         }
         if (this.state != 0)
@@ -131,7 +131,7 @@ public abstract class ColoredFontRendererMixin
             {
                 color = (color & 16579836) >> 2 | color & -16777216;
             }
-            this.setColor((color >> 16 & 255) / 255.0F, (color >> 8 & 255) / 255.0F, (color >> 0 & 255) / 255.0F, this.alpha);
+            this.setColor((color >> 16 & 255) / 255.0F, (color >> 8 & 255) / 255.0F, (color & 255) / 255.0F, this.alpha);
             return 0.0F;
         }
         if (this.state != 0)
@@ -150,7 +150,7 @@ public abstract class ColoredFontRendererMixin
     @Overwrite
     public static String getFormatFromString(String text)
     {
-        String s = "";
+        StringBuilder s = new StringBuilder();
         int i = -1;
         int j = text.length();
 
@@ -162,19 +162,19 @@ public abstract class ColoredFontRendererMixin
 
                 if (isFormatColor(c0))
                 {
-                    s = "\u00a7" + c0;
+                    s = new StringBuilder("§" + c0);
                 }
                 else if (isFormatSpecial(c0))
                 {
-                    s = s + "\u00a7" + c0;
+                    s.append("§").append(c0);
                 }
                 else if (c0 >= MARKER && c0 <= MARKER + 255)
                 {
-                    s = String.format("%s%s%s", c0, text.charAt(i + 1), text.charAt(i + 2));
+                    s = new StringBuilder(String.format("%s%s%s", c0, text.charAt(i + 1), text.charAt(i + 2)));
                     i += 2;
                 }
             }
         }
-        return s;
+        return s.toString();
     }
 }

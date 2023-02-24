@@ -6,16 +6,16 @@ import net.minecraft.client.gui.GuiButton;
 
 public interface IGuiChat
 {
-    public void initGui(List<GuiButton> buttonList, int width, int height);
-    public void drawScreen(List<GuiButton> buttonList, int mouseX, int mouseY, float partialTicks);
-    public void updateScreen(List<GuiButton> buttonList, int width, int height);
-    public void pageUp();
-    public void pageDown();
-    public void mouseClicked(int mouseX, int mouseY, int mouseButton);
-    public void mouseReleased(int mouseX, int mouseY, int state);
-    public void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick);
-    public void actionPerformed(GuiButton button);
-    public void onGuiClosed();
-    public void handleMouseInput(int width, int height);
-    public void getSentHistory(int msgPos);
+    void initGui(List<GuiButton> buttonList, int width, int height);
+    void drawScreen(List<GuiButton> buttonList, int mouseX, int mouseY, float partialTicks);
+    void updateScreen(List<GuiButton> buttonList, int width, int height);
+    void pageUp();
+    void pageDown();
+    void mouseClicked(int mouseX, int mouseY, int mouseButton);
+    void mouseReleased(int mouseX, int mouseY, int state);
+    void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick);
+    void actionPerformed(GuiButton button);
+    void onGuiClosed();
+    void handleMouseInput(int width, int height);
+    void getSentHistory(int msgPos);
 }

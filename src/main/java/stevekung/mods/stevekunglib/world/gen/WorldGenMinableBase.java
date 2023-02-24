@@ -12,7 +12,7 @@ public class WorldGenMinableBase extends WorldGenerator
 {
     private final IBlockState oreBlock;
     private final IBlockState fillBlock;
-    private int numberOfBlocks;
+    private final int numberOfBlocks;
 
     public WorldGenMinableBase(IBlockState oreBlock, IBlockState fillBlock, int numberOfBlocks)
     {

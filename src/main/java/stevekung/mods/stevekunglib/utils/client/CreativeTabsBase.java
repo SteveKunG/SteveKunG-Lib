@@ -1,6 +1,5 @@
 package stevekung.mods.stevekunglib.utils.client;
 
-import java.util.Collections;
 import java.util.Comparator;
 
 import net.minecraft.creativetab.CreativeTabs;
@@ -43,7 +42,7 @@ public class CreativeTabsBase extends CreativeTabs
         {
             try
             {
-                Collections.sort(list, this.tabSorter);
+                list.sort(this.tabSorter);
             }
             catch (Exception e)
             {

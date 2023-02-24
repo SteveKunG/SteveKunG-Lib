@@ -21,7 +21,7 @@ public enum EnumStateMapper
 
     private final IProperty<?>[] property;
 
-    private EnumStateMapper(IProperty<?>... property)
+    EnumStateMapper(IProperty<?>... property)
     {
         this.property = property;
     }

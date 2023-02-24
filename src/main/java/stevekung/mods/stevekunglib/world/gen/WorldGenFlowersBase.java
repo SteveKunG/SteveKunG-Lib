@@ -9,7 +9,7 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class WorldGenFlowersBase extends WorldGenerator
 {
-    private IBlockState flower;
+    private final IBlockState flower;
 
     public WorldGenFlowersBase(IBlockState flower)
     {

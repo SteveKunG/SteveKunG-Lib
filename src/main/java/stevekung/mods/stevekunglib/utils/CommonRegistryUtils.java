@@ -1,9 +1,6 @@
 package stevekung.mods.stevekunglib.utils;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.google.common.base.Function;
+import java.util.function.Function;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
@@ -27,6 +24,9 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import stevekung.mods.stevekunglib.utils.enums.EnumEntityTrackerType;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class CommonRegistryUtils
 {

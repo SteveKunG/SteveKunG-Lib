@@ -24,13 +24,13 @@ public abstract class WorldGenAbstractMegaJungle extends WorldGenAbstractHugeTre
     {
         int i = this.getHeight(rand);
 
-        if (!this.ensureGrowable(world, rand, pos, i))
+        if (!this.ensureGrowable(world, pos, i))
         {
             return false;
         }
         else
         {
-            this.createCrown(world, pos.up(i), 2);
+            this.createCrown(world, pos.up(i));
 
             for (int j = pos.getY() + i - 2 - rand.nextInt(4); j > pos.getY() + i / 2; j -= 2 + rand.nextInt(4))
             {
@@ -46,11 +46,10 @@ public abstract class WorldGenAbstractMegaJungle extends WorldGenAbstractHugeTre
                 }
 
                 int j2 = 1 + rand.nextInt(2);
-                int j1 = j;
 
-                for (int k1 = j - j2; k1 <= j1; ++k1)
+                for (int k1 = j - j2; k1 <= j; ++k1)
                 {
-                    int l1 = k1 - j1;
+                    int l1 = k1 - j;
                     this.growLeavesLayer(world, new BlockPos(k, k1, l), 1 - l1);
                 }
             }
@@ -124,11 +123,11 @@ public abstract class WorldGenAbstractMegaJungle extends WorldGenAbstractHugeTre
         }
     }
 
-    private void createCrown(World world, BlockPos pos, int size)
+    private void createCrown(World world, BlockPos pos)
     {
         for (int j = -2; j <= 0; ++j)
         {
-            this.growLeavesLayerStrict(world, pos.up(j), size + 1 - j);
+            this.growLeavesLayerStrict(world, pos.up(j), 3 - j);
         }
     }
 

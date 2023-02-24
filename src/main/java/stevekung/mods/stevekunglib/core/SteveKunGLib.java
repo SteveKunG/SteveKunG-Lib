@@ -1,6 +1,6 @@
 package stevekung.mods.stevekunglib.core;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.common.config.Config;
@@ -29,7 +29,7 @@ public class SteveKunGLib
     public static final String VERSION = SteveKunGLib.MAJOR_VERSION + "." + SteveKunGLib.MINOR_VERSION + "." + SteveKunGLib.BUILD_VERSION;
     protected static final String FORGE_VERSION = "required-after:mixinbooter; after:forge@[14.23.5.2847,);";
     protected static final String JSON_URL = "https://raw.githubusercontent.com/SteveKunG/VersionCheckLibrary/master/stevekung's_lib_version.json";
-    private static final String URL = "https://minecraft.curseforge.com/projects/stevekungs-lib";
+    private static final String URL = "https://www.curseforge.com/minecraft/mc-mods/stevekungs-lib";
     public static boolean isDevelopment;
 
     static
@@ -86,6 +86,6 @@ public class SteveKunGLib
         info.url = SteveKunGLib.URL;
         info.updateJSON = SteveKunGLib.JSON_URL;
         info.description = "Code and Utilities for SteveKunG's mods!";
-        info.authorList = Arrays.asList("SteveKunG");
+        info.authorList = Collections.singletonList("SteveKunG");
     }
 }

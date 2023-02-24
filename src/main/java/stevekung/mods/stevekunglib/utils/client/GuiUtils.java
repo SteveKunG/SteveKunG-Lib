@@ -1,7 +1,7 @@
 package stevekung.mods.stevekunglib.utils.client;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
@@ -13,7 +13,7 @@ public class GuiUtils
 {
     public static void drawHoveringSingleTextInGUI(String comment, int mouseX, int mouseY)
     {
-        List<String> textLines = Arrays.asList(comment);
+        List<String> textLines = Collections.singletonList(comment);
 
         if (!textLines.isEmpty())
         {

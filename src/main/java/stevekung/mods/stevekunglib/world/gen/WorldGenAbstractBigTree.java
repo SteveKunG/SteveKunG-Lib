@@ -16,8 +16,8 @@ public abstract class WorldGenAbstractBigTree extends WorldGenAbstractTree
     private Random rand;
     private World world;
     private BlockPos pos = BlockPos.ORIGIN;
-    private IBlockState leaves;
-    private IBlockState log;
+    private final IBlockState leaves;
+    private final IBlockState log;
     protected boolean genLeaves = true;
     int heightLimit;
     int height;
@@ -218,7 +218,7 @@ public abstract class WorldGenAbstractBigTree extends WorldGenAbstractTree
         }
         else
         {
-            return j > i ? j : i;
+            return Math.max(j, i);
         }
     }
 
@@ -292,11 +292,7 @@ public abstract class WorldGenAbstractBigTree extends WorldGenAbstractTree
         float f1 = (float)blockpos.getY() / (float)i;
         float f2 = (float)blockpos.getZ() / (float)i;
 
-        if (i == 0)
-        {
-            return -1;
-        }
-        else
+        if (i != 0)
         {
             for (int j = 0; j <= i; ++j)
             {
@@ -307,8 +303,8 @@ public abstract class WorldGenAbstractBigTree extends WorldGenAbstractTree
                     return j;
                 }
             }
-            return -1;
         }
+        return -1;
     }
 
     @Override

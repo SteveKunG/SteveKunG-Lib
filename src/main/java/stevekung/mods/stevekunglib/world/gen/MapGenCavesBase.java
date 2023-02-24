@@ -19,10 +19,10 @@ import net.minecraft.world.gen.MapGenBase;
 public class MapGenCavesBase extends MapGenBase
 {
     private IBlockState top = Blocks.GRASS.getDefaultState();
-    private IBlockState lava = Blocks.LAVA.getDefaultState();
+    private final IBlockState lava;
     private Set<Block> topBlock = new HashSet<>();
-    private Set<Block> digBlock = new HashSet<>();
-    private Set<Block> fluidBlock = new HashSet<>();
+    private final Set<Block> digBlock;
+    private final Set<Block> fluidBlock;
 
     public MapGenCavesBase(Set<Block> topBlock, IBlockState lava, Set<Block> digBlock, Set<Block> fluidBlock)
     {
