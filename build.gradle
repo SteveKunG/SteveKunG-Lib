@@ -111,12 +111,14 @@ jar {
         )
     }
     archiveBaseName = fileName
+    archiveVersion = "v" + project.version
 }
 
 tasks.register("sourcesJar", Jar) {
     from sourceSets.main.allSource
     archiveBaseName = fileName
     archiveClassifier = "sources"
+    archiveVersion = "v" + project.version
 }
 
 tasks.register("deobfJar", Jar) {
@@ -131,6 +133,7 @@ tasks.register("deobfJar", Jar) {
     }
     archiveBaseName = fileName
     archiveClassifier = "deobf"
+    archiveVersion = "v" + project.version
 }
 
 artifacts {
