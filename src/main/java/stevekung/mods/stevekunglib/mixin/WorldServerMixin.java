@@ -19,7 +19,7 @@ public abstract class WorldServerMixin
     @Shadow
     abstract BlockPos adjustPosToNearbyEntity(BlockPos pos);
 
-    @Inject(method = "updateBlocks()V", at = @At(value = "INVOKE", target = "net/minecraft/profiler/Profiler.startSection(Ljava/lang/String;)V", shift = At.Shift.AFTER, ordinal = 0))
+    @Inject(method = "updateBlocks", at = @At(value = "INVOKE", target = "net/minecraft/profiler/Profiler.startSection(Ljava/lang/String;)V", shift = At.Shift.AFTER, ordinal = 0))
     private void stevekunglib$injectWeatherTickEvent(CallbackInfo info)
     {
         WorldServer world = WorldServer.class.cast(this);

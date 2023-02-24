@@ -15,7 +15,7 @@ import stevekung.mods.stevekunglib.utils.IFireBlock;
 @Mixin(World.class)
 public class WorldMixin
 {
-    @Inject(method = "extinguishFire(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/EnumFacing;)Z", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "extinguishFire", at = @At("HEAD"), cancellable = true)
     private void stevekunglib$extinguishFire(EntityPlayer player, BlockPos pos, EnumFacing side, CallbackInfoReturnable<Boolean> info)
     {
         World world = World.class.cast(this);

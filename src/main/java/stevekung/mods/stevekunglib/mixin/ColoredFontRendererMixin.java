@@ -58,13 +58,13 @@ public abstract class ColoredFontRendererMixin
     @Unique
     private static final int MARKER = 59136;
 
-    @Inject(method = "renderString(Ljava/lang/String;FFIZ)I", at = @At("HEAD"))
+    @Inject(method = "renderString", at = @At("HEAD"))
     private void stevekunglib$renderString(String text, float x, float y, int color, boolean dropShadow, CallbackInfoReturnable<Integer> info)
     {
         this.dropShadow = dropShadow;
     }
 
-    @Inject(method = "renderDefaultChar(IZ)F", at = @At("HEAD"))
+    @Inject(method = "renderDefaultChar", at = @At("HEAD"))
     private float stevekunglib$renderDefaultChar(int charac, boolean italic, CallbackInfoReturnable<Float> info)
     {
         if (charac >= MARKER && charac <= MARKER + 255)
@@ -109,7 +109,7 @@ public abstract class ColoredFontRendererMixin
         return 0.0F;
     }
 
-    @Inject(method = "renderUnicodeChar(CZ)F", at = @At("HEAD"))
+    @Inject(method = "renderUnicodeChar", at = @At("HEAD"))
     private float stevekunglib$renderUnicodeChar(char charac, boolean italic, CallbackInfoReturnable<Float> info)
     {
         if (charac >= MARKER && charac <= MARKER + 255)
