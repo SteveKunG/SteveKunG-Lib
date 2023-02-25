@@ -1,26 +1,27 @@
 package stevekung.mods.stevekunglib.utils.event;
 
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
 public class WeatherTickEvent extends Event
 {
-    private final World world;
+    private final WorldServer worldServer;
     private final Chunk chunk;
-    private final BlockPos strikePos;
+    private final int chunkX;
+    private final int chunkZ;
 
-    public WeatherTickEvent(World world, Chunk chunk, BlockPos strikePos)
+    public WeatherTickEvent(WorldServer worldServer, Chunk chunk, int chunkX, int chunkZ)
     {
-        this.world = world;
+        this.worldServer = worldServer;
         this.chunk = chunk;
-        this.strikePos = strikePos;
+        this.chunkX = chunkX;
+        this.chunkZ = chunkZ;
     }
 
-    public World getWorld()
+    public WorldServer getWorldServer()
     {
-        return this.world;
+        return this.worldServer;
     }
 
     public Chunk getChunk()
@@ -28,8 +29,13 @@ public class WeatherTickEvent extends Event
         return this.chunk;
     }
 
-    public BlockPos getStrikePos()
+    public int getChunkX()
     {
-        return this.strikePos;
+        return this.chunkX;
+    }
+
+    public int getChunkZ()
+    {
+        return this.chunkZ;
     }
 }
