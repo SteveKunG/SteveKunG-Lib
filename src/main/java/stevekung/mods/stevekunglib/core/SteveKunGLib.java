@@ -24,7 +24,7 @@ public class SteveKunGLib
     protected static final String NAME = "SteveKunG's Lib";
     public static final String MOD_ID = "stevekung's_lib";
     protected static final int MAJOR_VERSION = 1;
-    protected static final int MINOR_VERSION = 2;
+    protected static final int MINOR_VERSION = 3;
     protected static final int BUILD_VERSION = 0;
     public static final String VERSION = SteveKunGLib.MAJOR_VERSION + "." + SteveKunGLib.MINOR_VERSION + "." + SteveKunGLib.BUILD_VERSION;
     protected static final String FORGE_VERSION = "required-after:mixinbooter; after:forge@[14.23.5.2847,);";

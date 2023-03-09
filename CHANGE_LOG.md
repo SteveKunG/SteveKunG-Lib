@@ -1,3 +1,3 @@
 # Change Log
 
-* Include Mixin into the mod
+* Attempt to fix https://github.com/SteveKunG/MorePlanets/issues/161
