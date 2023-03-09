@@ -107,10 +107,10 @@ jar {
     }
     manifest {
         attributes("FMLAT": "stevekunglib_at.cfg",
-                   "FMLCorePluginContainsFMLMod": "true",
-                   "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
-                   "FMLCorePlugin": "stevekung.mods.stevekunglib.core.SteveKunGLibPlugin",
-                   "ForceLoadAsMod": "true"
+                "FMLCorePluginContainsFMLMod": "true",
+                "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
+                "FMLCorePlugin": "stevekung.mods.stevekunglib.core.SteveKunGLibPlugin",
+                "ForceLoadAsMod": "true"
         )
     }
     archiveBaseName = fileName
@@ -148,25 +148,28 @@ artifacts {
     archives deobfJar
 }
 
-curseforge {
-    if (project.hasProperty("upload_api_key")) {
-        apiKey = project.upload_api_key
-        project {
-            id = "296019"
-            changelog = file("CHANGE_LOG.md")
-            changelogType = "markdown"
-            releaseType = "release"
-            addGameVersion project.mc_version
+def uploadDebug = true
 
-            mainArtifact(jar) {
-                displayName = fileName
-                relations {
-                    it.requiredDependency "mixin-booter"
-                }
+curseforge {
+    apiKey = project.hasProperty("curseforge_api_token") ? project.curseforge_api_token : ""
+    project {
+        id = "296019"
+        changelog = rootProject.file("CHANGE_LOG.md")
+        changelogType = "markdown"
+        releaseType = "release"
+        addGameVersion project.mc_version
+
+        mainArtifact(jar) {
+            it.displayName = fileName
+            relations {
+                it.requiredDependency "mixin-booter"
             }
-            addArtifact sourcesJar
-            addArtifact deobfJar
         }
+        addArtifact sourcesJar
+        addArtifact deobfJar
+    }
+    options {
+        debug uploadDebug
     }
 }
 
