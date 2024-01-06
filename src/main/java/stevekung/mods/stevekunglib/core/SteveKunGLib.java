@@ -27,7 +27,7 @@ public class SteveKunGLib
     protected static final int MINOR_VERSION = 3;
     protected static final int BUILD_VERSION = 0;
     public static final String VERSION = SteveKunGLib.MAJOR_VERSION + "." + SteveKunGLib.MINOR_VERSION + "." + SteveKunGLib.BUILD_VERSION;
-    protected static final String FORGE_VERSION = "required-after:mixinbooter; after:forge@[14.23.5.2847,);";
+    protected static final String FORGE_VERSION = "required-after:mixinbooter@[8.3,); after:forge@[14.23.5.2847,);";
     protected static final String JSON_URL = "https://raw.githubusercontent.com/SteveKunG/VersionCheckLibrary/master/stevekung's_lib_version.json";
     private static final String URL = "https://www.curseforge.com/minecraft/mc-mods/stevekungs-lib";
     public static boolean isDevelopment;
