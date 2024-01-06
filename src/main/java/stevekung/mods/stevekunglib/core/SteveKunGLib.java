@@ -25,7 +25,7 @@ public class SteveKunGLib
     public static final String MOD_ID = "stevekung's_lib";
     protected static final int MAJOR_VERSION = 1;
     protected static final int MINOR_VERSION = 3;
-    protected static final int BUILD_VERSION = 0;
+    protected static final int BUILD_VERSION = 1;
     public static final String VERSION = SteveKunGLib.MAJOR_VERSION + "." + SteveKunGLib.MINOR_VERSION + "." + SteveKunGLib.BUILD_VERSION;
     protected static final String FORGE_VERSION = "required-after:mixinbooter@[8.3,); after:forge@[14.23.5.2847,);";
     protected static final String JSON_URL = "https://raw.githubusercontent.com/SteveKunG/VersionCheckLibrary/master/stevekung's_lib_version.json";
