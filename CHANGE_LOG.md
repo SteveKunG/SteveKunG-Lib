@@ -1,3 +1,2 @@
-# Change Log
-
-* Attempt to fix https://github.com/SteveKunG/MorePlanets/issues/161
+* Requires MixinBooter 8.3
+* Use MixinExtras feature for capturing local variables and @WrapWithCondition
