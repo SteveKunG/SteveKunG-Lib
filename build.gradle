@@ -1,30 +1,37 @@
 import groovy.json.JsonBuilder
 import groovy.json.JsonSlurper
-
-buildscript {
-    repositories {
-        maven { url "https://repo.spongepowered.org/repository/maven-public/" }
-    }
-    dependencies {
-        classpath "org.spongepowered:mixingradle:0.7-SNAPSHOT"
-    }
-}
+import org.jetbrains.gradle.ext.Gradle
 
 plugins {
-    id "net.minecraftforge.gradle" version "5.1.+"
-    id "io.github.CDAGaming.cursegradle" version "1.6.0"
+    id "org.jetbrains.gradle.plugin.idea-ext" version "1.1.7"
+    id "com.gtnewhorizons.retrofuturagradle" version "1.3.26"
+    id "io.github.CDAGaming.cursegradle" version "1.6.1"
 }
 
-apply plugin: "org.spongepowered.mixin"
+version = project.mod_version
+group = project.maven_group
 
-version = project.version
-group = "stevekung.mods.stevekunglib"
-archivesBaseName = "SteveKunG's-Lib"
+base {
+    archivesName = project.archives_base_name
+}
+
 java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+java.toolchain.vendor.set(JvmVendorSpec.AZUL)
+
+configurations {
+    embed
+    implementation.extendsFrom(embed)
+}
 
 minecraft {
-    mappings channel: "stable", version: "${mcp_mapping}"
-    accessTransformer = file("src/main/resources/META-INF/stevekunglib_at.cfg")
+    mcVersion = project.minecraft_version
+
+    mcpMappingChannel = project.mcp_mapping_channel
+    mcpMappingVersion = project.mcp_mapping_version
+
+    if (project.hasProperty("username")) {
+        username = project.username
+    }
 
     def customJvms = [
             "-Dfml.coreMods.load=stevekung.mods.stevekunglib.core.SteveKunGLibPlugin",
@@ -34,41 +41,13 @@ minecraft {
             "-Dmixin.debug.verbose=true"
     ]
 
-    runs {
-        client {
-            workingDirectory project.file("run")
-
-            if (project.hasProperty("username") && project.hasProperty("uuid")) {
-                args "--username", "${username}", "--uuid", "${uuid}"
-            }
-
-            jvmArgs.addAll(customJvms)
-            environment "MC_VERSION", project.mc_version
-
-            mods {
-                stevekungs_lib {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        server {
-            workingDirectory project.file("run")
-            jvmArgs.addAll(customJvms)
-            environment "MC_VERSION", project.mc_version
-
-            mods {
-                stevekungs_lib {
-                    source sourceSets.main
-                }
-            }
-        }
-    }
+    extraRunJvmArguments.addAll(customJvms)
+    useDependencyAccessTransformers = true
 }
 
-configurations {
-    embed
-    implementation.extendsFrom(embed)
+// Generate a project.group.Tags class
+tasks.injectTags.configure {
+    outputClassName.set("${project.group}.Tags")
 }
 
 repositories {
@@ -86,25 +65,70 @@ repositories {
             includeGroup "zone.rong"
         }
     }
+    mavenLocal()
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${forge_version}"
-    implementation "zone.rong:mixinbooter:7.0"
-    embed "org.spongepowered:mixin:0.8.3"
-    annotationProcessor "org.spongepowered:mixin:0.8.3:processor"
+    // Mixin Booter beyond 8.3 doesn't work in dev
+    implementation(annotationProcessor("zone.rong:mixinbooter:${project.mixin_booter_version}"))
+
+    String mixin = modUtils.enableMixins("org.spongepowered:mixin:${project.mixin_version}", "mixins.stevekung's_lib.refmap.json")
+    annotationProcessor "org.ow2.asm:asm-debug-all:5.2"
+    annotationProcessor "com.google.guava:guava:32.0.0-android"
+    annotationProcessor "com.google.code.gson:gson:2.8.9"
+    annotationProcessor(api(mixin)) {
+        transitive = false
+    }
 }
 
-mixin {
-    add sourceSets.main, "mixins.stevekung's_lib.refmap.json"
+// Adds Access Transformer files to tasks
+for (File at : sourceSets.named("main").get().resources.files) {
+    if (at.name.toLowerCase().endsWith("_at.cfg")) {
+        tasks.deobfuscateMergedJarToSrg.accessTransformerFiles.from(at)
+        tasks.srgifyBinpatchedJar.accessTransformerFiles.from(at)
+    }
 }
 
-String fileName = "${archivesBaseName}-mc${mc_version}"
+idea {
+    module {
+        inheritOutputDirs = true
+    }
+    project {
+        settings {
+            runConfigurations {
+                "1. Run Client"(Gradle) {
+                    taskNames = ["runClient"]
+                }
+                "2. Run Server"(Gradle) {
+                    taskNames = ["runServer"]
+                }
+                "3. Run Obfuscated Client"(Gradle) {
+                    taskNames = ["runObfClient"]
+                }
+                "4. Run Obfuscated Server"(Gradle) {
+                    taskNames = ["runObfServer"]
+                }
+            }
+            compiler.javac {
+                afterEvaluate {
+                    javacAdditionalOptions = "-encoding utf8"
+                    moduleJavacAdditionalOptions = [
+                            (project.name + ".main"): tasks.compileJava.options.compilerArgs.collect { '"' + it + '"' }.join(' ')
+                    ]
+                }
+            }
+        }
+    }
+}
+
+tasks.named("processIdeaSettings").configure {
+    dependsOn("injectTags")
+}
+
+String fileName = "${project.archives_base_name}-mc${project.minecraft_version}"
 
 jar {
-    from(configurations.embed.collect { it.isDirectory() ? it : zipTree(it) }) {
-        exclude "LICENSE.txt", "META-INF/*.txt", "META-INF/MANIFSET.MF", "META-INF/maven/**", "META-INF/*.RSA", "META-INF/*.SF"
-    }
+    from(provider { configurations.embed.collect { it.isDirectory() ? it : zipTree(it) } })
     manifest {
         attributes("FMLAT": "stevekunglib_at.cfg",
                 "FMLCorePluginContainsFMLMod": "true",
@@ -114,7 +138,7 @@ jar {
         )
     }
     archiveBaseName = fileName
-    archiveVersion = "v" + project.version
+    archiveVersion = "v" + project.mod_version
 }
 
 tasks.withType(JavaCompile).configureEach {
@@ -125,7 +149,7 @@ tasks.register("sourcesJar", Jar) {
     from sourceSets.main.allSource
     archiveBaseName = fileName
     archiveClassifier = "sources"
-    archiveVersion = "v" + project.version
+    archiveVersion = "v" + project.mod_version
 }
 
 tasks.register("deobfJar", Jar) {
@@ -140,7 +164,7 @@ tasks.register("deobfJar", Jar) {
     }
     archiveBaseName = fileName
     archiveClassifier = "deobf"
-    archiveVersion = "v" + project.version
+    archiveVersion = "v" + project.mod_version
 }
 
 artifacts {
@@ -157,10 +181,10 @@ curseforge {
         changelog = rootProject.file("CHANGE_LOG.md")
         changelogType = "markdown"
         releaseType = "release"
-        addGameVersion project.mc_version
+        addGameVersion project.minecraft_version
 
         mainArtifact(jar) {
-            it.displayName = fileName + "-v" + project.version
+            it.displayName = fileName + "-v" + project.mod_version
             relations {
                 it.requiredDependency "mixin-booter"
             }
@@ -183,7 +207,7 @@ if (project.hasProperty("version_lib_dir")) {
         def jsonBuilder = new JsonBuilder(new JsonSlurper().parseText(versionFile.text))
         def jsonElement = jsonBuilder.content
         def formattedList = []
-        def modVersion = project.version.substring(0, 5)
+        def modVersion = project.mod_version.substring(0, 5)
 
         jsonElement.promos."${mc_version}-latest" = modVersion
         jsonElement.promos."${mc_version}-recommended" = modVersion
