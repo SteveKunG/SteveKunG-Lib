@@ -208,20 +208,18 @@ if (project.hasProperty("version_lib_dir")) {
         def jsonBuilder = new JsonBuilder(new JsonSlurper().parseText(versionFile.text))
         def jsonElement = jsonBuilder.content
         def formattedList = []
-        def modVersion = project.mod_version.substring(0, 5)
+        def modVersion = project.mod_version
 
-        jsonElement.promos."${mc_version}-latest" = modVersion
-        jsonElement.promos."${mc_version}-recommended" = modVersion
+        jsonElement.promos."${minecraft_version}-latest" = modVersion
+        jsonElement.promos."${minecraft_version}-recommended" = modVersion
 
         def reader = new BufferedReader(new FileReader(rootProject.file("CHANGE_LOG.md")))
         def line
         for (int ln = 0; (line = reader.readLine()) != null; ln++) {
-            if (ln >= 2) {
-                formattedList.add(line)
-            }
+            formattedList.add(line)
         }
 
-        jsonElement."${mc_version}"."${modVersion}" = formattedList.join("\n")
+        jsonElement."${minecraft_version}"."${modVersion}" = formattedList.join("\n")
         versionFile.text = jsonBuilder.toPrettyString()
     }
 }
