@@ -182,8 +182,9 @@ curseforge {
         changelogType = "markdown"
         releaseType = "release"
         addGameVersion project.minecraft_version
+        addGameVersion "Forge"
 
-        mainArtifact(jar) {
+        mainArtifact(reobfJar) {
             it.displayName = fileName + "-v" + project.mod_version
             relations {
                 it.requiredDependency "mixin-booter"
