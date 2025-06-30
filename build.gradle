@@ -4,6 +4,7 @@ plugins {
     id "org.jetbrains.gradle.plugin.idea-ext" version "1.1.9"
     id "com.gtnewhorizons.retrofuturagradle" version "1.4.1"
     id "io.github.CDAGaming.cursegradle" version "1.6.1"
+    id "maven-publish"
 }
 
 version = project.mod_version
@@ -121,7 +122,7 @@ jar {
         }
     }
 
-    archiveVersion = "v${version}"
+    archiveVersion = "v${mod_version}"
     archiveBaseName = fileName
     from sourceSets.main.output
 }
@@ -130,7 +131,7 @@ tasks.register("sourcesJar", Jar) {
     from sourceSets.main.allSource
     archiveBaseName = fileName
     archiveClassifier = "sources"
-    archiveVersion = "v" + project.mod_version
+    archiveVersion = "v${mod_version}"
 }
 
 tasks.register("deobfJar", Jar) {
@@ -140,10 +141,22 @@ tasks.register("deobfJar", Jar) {
     }
     archiveBaseName = fileName
     archiveClassifier = "deobf"
-    archiveVersion = "v" + project.mod_version
+    archiveVersion = "v${mod_version}"
 }
 
 artifacts {
     archives sourcesJar
     archives deobfJar
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = maven_group
+            artifactId = archives_base_name
+            version = "mc${minecraft_version}-v${mod_version}"
+
+            from components.java
+        }
+    }
 }
