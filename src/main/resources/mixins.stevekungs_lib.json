@@ -1,0 +1,23 @@
+{
+    "required": true,
+    "minVersion": "0.8",
+    "compatibilityLevel": "JAVA_8",
+    "package": "com.stevekung.lib.mixin",
+    "refmap": "mixins.stevekungs_lib.refmap.json",
+    "target": "@env(DEFAULT)",
+    "mixins": [
+        "WorldMixin",
+        "WorldServerMixin"
+    ],
+    "client": [
+        "client.EntityRendererMixin",
+        "client.FontRendererMixin",
+        "client.GuiChatMixin",
+        "client.GuiScreenMixin",
+        "client.ItemRendererMixin",
+        "client.RenderMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

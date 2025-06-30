@@ -1,10 +1,8 @@
-import groovy.json.JsonBuilder
-import groovy.json.JsonSlurper
 import org.jetbrains.gradle.ext.Gradle
 
 plugins {
-    id "org.jetbrains.gradle.plugin.idea-ext" version "1.1.7"
-    id "com.gtnewhorizons.retrofuturagradle" version "1.3.26"
+    id "org.jetbrains.gradle.plugin.idea-ext" version "1.1.9"
+    id "com.gtnewhorizons.retrofuturagradle" version "1.4.1"
     id "io.github.CDAGaming.cursegradle" version "1.6.1"
 }
 
@@ -24,68 +22,61 @@ configurations {
 }
 
 minecraft {
-    mcVersion = project.minecraft_version
+    mcVersion.set(minecraft_version)
 
-    mcpMappingChannel = project.mcp_mapping_channel
-    mcpMappingVersion = project.mcp_mapping_version
+    mcpMappingChannel.set(mapping_channel)
+    mcpMappingVersion.set(mapping_version)
 
     if (project.hasProperty("username")) {
-        username = project.username
+        username.set(username)
+    } else {
+        username.set("Developer")
     }
 
-    def customJvms = [
-            "-Dfml.coreMods.load=stevekung.mods.stevekunglib.core.SteveKunGLibPlugin",
-            "-Dmixin.hotSwap=true",
-            "-Dmixin.checks.interfaces=true",
-            "-Dmixin.debug.export=true",
-            "-Dmixin.debug.verbose=true"
-    ]
+    useDependencyAccessTransformers.set(true)
 
-    extraRunJvmArguments.addAll(customJvms)
-    useDependencyAccessTransformers = true
+    // Add various JVM arguments here for runtime
+    def args = ["-ea:" + group]
+
+    if (project.hasProperty("use_mixin") && use_mixin.toBoolean()) {
+        args << "-Dmixin.debug=true"
+        args << "-Dmixin.debug.verbose=true"
+        args << "-Dmixin.hotSwap=true"
+        args << "-Dmixin.checks.interfaces=true"
+        args << "-Dmixin.debug.export=true"
+    }
+    extraRunJvmArguments.addAll(args)
 }
 
-// Generate a project.group.Tags class
-tasks.injectTags.configure {
-    outputClassName.set("${project.group}.Tags")
+// Adds Access Transformer files to tasks
+def fileLocation = file("${projectDir}/src/main/resources/META-INF/stevekungs_lib_at.cfg")
+if (fileLocation.exists()) {
+    tasks.deobfuscateMergedJarToSrg.accessTransformerFiles.from(fileLocation)
+    tasks.srgifyBinpatchedJar.accessTransformerFiles.from(fileLocation)
+} else {
+    throw new GradleException("Access Transformer file [$fileLocation] does not exist!")
 }
 
 repositories {
     maven {
-        name "SpongePowered"
-        url "https://repo.spongepowered.org/repository/maven-public/"
-        content {
-            includeGroup "org.spongepowered"
-        }
-    }
-    maven {
-        name "MixinBooter"
-        url "https://maven.cleanroommc.com/"
-        content {
-            includeGroup "zone.rong"
-        }
+        name = "CleanroomMC Maven"
+        url = "https://maven.cleanroommc.com"
     }
     mavenLocal()
 }
 
 dependencies {
-    // Mixin Booter beyond 8.3 doesn't work in dev
-    implementation(annotationProcessor("zone.rong:mixinbooter:${project.mixin_booter_version}"))
-
-    String mixin = modUtils.enableMixins("org.spongepowered:mixin:${project.mixin_version}", "mixins.stevekung's_lib.refmap.json")
-    annotationProcessor "org.ow2.asm:asm-debug-all:5.2"
-    annotationProcessor "com.google.guava:guava:32.0.0-android"
-    annotationProcessor "com.google.code.gson:gson:2.8.9"
-    annotationProcessor(api(mixin)) {
-        transitive = false
-    }
-}
-
-// Adds Access Transformer files to tasks
-for (File at : sourceSets.named("main").get().resources.files) {
-    if (at.name.toLowerCase().endsWith("_at.cfg")) {
-        tasks.deobfuscateMergedJarToSrg.accessTransformerFiles.from(at)
-        tasks.srgifyBinpatchedJar.accessTransformerFiles.from(at)
+    if (project.hasProperty("use_mixin") && use_mixin.toBoolean()) {
+        String mixin = modUtils.enableMixins("zone.rong:mixinbooter:${mixin_booter_version}", "mixins.${mod_id}.refmap.json")
+        api(mixin) {
+            transitive = false
+        }
+        annotationProcessor "org.ow2.asm:asm-debug-all:5.2"
+        annotationProcessor "com.google.guava:guava:32.1.2-jre"
+        annotationProcessor "com.google.code.gson:gson:2.8.9"
+        annotationProcessor(mixin) {
+            transitive = false
+        }
     }
 }
 
@@ -102,12 +93,6 @@ idea {
                 "2. Run Server"(Gradle) {
                     taskNames = ["runServer"]
                 }
-                "3. Run Obfuscated Client"(Gradle) {
-                    taskNames = ["runObfClient"]
-                }
-                "4. Run Obfuscated Server"(Gradle) {
-                    taskNames = ["runObfServer"]
-                }
             }
             compiler.javac {
                 afterEvaluate {
@@ -121,28 +106,24 @@ idea {
     }
 }
 
-tasks.named("processIdeaSettings").configure {
-    dependsOn("injectTags")
-}
-
-String fileName = "${project.archives_base_name}-mc${project.minecraft_version}"
+String fileName = "${archives_base_name}-mc${minecraft_version}"
+Map<String, ?> customAttributes = [
+        "FMLAT": "stevekungs_lib_at.cfg",
+        "FMLCorePlugin": "com.stevekung.lib.core.SteveKunGLibPlugin",
+        "FMLCorePluginContainsFMLMod": true,
+        "ForceLoadAsMod": true
+]
 
 jar {
-    from(provider { configurations.embed.collect { it.isDirectory() ? it : zipTree(it) } })
-    manifest {
-        attributes("FMLAT": "stevekunglib_at.cfg",
-                "FMLCorePluginContainsFMLMod": "true",
-                "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
-                "FMLCorePlugin": "stevekung.mods.stevekunglib.core.SteveKunGLibPlugin",
-                "ForceLoadAsMod": "true"
-        )
+    if (project.hasProperty("use_mixin") && use_mixin.toBoolean()) {
+        manifest {
+            attributes(customAttributes)
+        }
     }
-    archiveBaseName = fileName
-    archiveVersion = "v" + project.mod_version
-}
 
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = "UTF-8"
+    archiveVersion = "v${version}"
+    archiveBaseName = fileName
+    from sourceSets.main.output
 }
 
 tasks.register("sourcesJar", Jar) {
@@ -155,12 +136,7 @@ tasks.register("sourcesJar", Jar) {
 tasks.register("deobfJar", Jar) {
     from sourceSets.main.output
     manifest {
-        attributes("FMLAT": "stevekunglib_at.cfg",
-                "FMLCorePluginContainsFMLMod": "true",
-                "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
-                "FMLCorePlugin": "stevekung.mods.stevekunglib.core.SteveKunGLibPlugin",
-                "ForceLoadAsMod": "true"
-        )
+        attributes(customAttributes)
     }
     archiveBaseName = fileName
     archiveClassifier = "deobf"
@@ -170,56 +146,4 @@ tasks.register("deobfJar", Jar) {
 artifacts {
     archives sourcesJar
     archives deobfJar
-}
-
-def uploadDebug = true
-
-curseforge {
-    apiKey = project.hasProperty("curseforge_api_token") ? project.curseforge_api_token : ""
-    project {
-        id = "296019"
-        changelog = rootProject.file("CHANGE_LOG.md")
-        changelogType = "markdown"
-        releaseType = "release"
-        addGameVersion project.minecraft_version
-        addGameVersion "Forge"
-
-        mainArtifact(reobfJar) {
-            it.displayName = fileName + "-v" + project.mod_version
-            relations {
-                it.requiredDependency "mixin-booter"
-            }
-        }
-        addArtifact sourcesJar
-        addArtifact deobfJar
-    }
-    options {
-        debug uploadDebug
-    }
-}
-
-tasks.curseforge.dependsOn(build)
-jar.finalizedBy("reobfJar")
-
-if (project.hasProperty("version_lib_dir")) {
-    tasks.register("updateVersionLib") {
-        group "upload"
-        def versionFile = file("${version_lib_dir}/stevekung's_lib_version.json")
-        def jsonBuilder = new JsonBuilder(new JsonSlurper().parseText(versionFile.text))
-        def jsonElement = jsonBuilder.content
-        def formattedList = []
-        def modVersion = project.mod_version
-
-        jsonElement.promos."${minecraft_version}-latest" = modVersion
-        jsonElement.promos."${minecraft_version}-recommended" = modVersion
-
-        def reader = new BufferedReader(new FileReader(rootProject.file("CHANGE_LOG.md")))
-        def line
-        for (int ln = 0; (line = reader.readLine()) != null; ln++) {
-            formattedList.add(line)
-        }
-
-        jsonElement."${minecraft_version}"."${modVersion}" = formattedList.join("\n")
-        versionFile.text = jsonBuilder.toPrettyString()
-    }
 }
