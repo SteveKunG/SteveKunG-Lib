@@ -1,10 +1,28 @@
+import com.gtnewhorizons.retrofuturagradle.mcp.InjectTagsTask
 import org.jetbrains.gradle.ext.Gradle
+import org.codehaus.groovy.runtime.MethodClosure
+import groovy.text.SimpleTemplateEngine
 
 plugins {
     id "org.jetbrains.gradle.plugin.idea-ext" version "1.1.9"
     id "com.gtnewhorizons.retrofuturagradle" version "1.4.1"
     id "io.github.CDAGaming.cursegradle" version "1.6.1"
     id "maven-publish"
+}
+
+ext.interpolate = this.&interpolate as MethodClosure
+
+String interpolate(String value) {
+    if (value.startsWith('${{') && value.endsWith('}}')) {
+        value = value.substring(3, value.length() - 2)
+        Binding newBinding = new Binding(this.binding.getVariables())
+        newBinding.setProperty('it', this)
+        return new GroovyShell(this.getClass().getClassLoader(), newBinding).evaluate(value)
+    }
+    if (value.contains('${')) {
+        return new SimpleTemplateEngine().createTemplate(value).make(project.properties).toString()
+    }
+    return value
 }
 
 version = project.mod_version
@@ -47,6 +65,14 @@ minecraft {
         args << "-Dmixin.debug.export=true"
     }
     extraRunJvmArguments.addAll(args)
+
+    if (file("tags.properties").exists()) {
+        Properties props = new Properties().tap {  it.load(file("tags.properties").newInputStream()); it }
+        println props
+        if (!props.isEmpty()) {
+            injectedTags.set(props.collectEntries { k, v -> [(k): interpolate(v)] })
+        }
+    }
 }
 
 // Adds Access Transformer files to tasks
@@ -81,6 +107,12 @@ dependencies {
     }
 }
 
+processResources {
+    inputs.property "mod_id", mod_id
+    inputs.property "mod_version", mod_version
+    inputs.property "display_name", display_name
+}
+
 idea {
     module {
         inheritOutputDirs = true
@@ -99,7 +131,7 @@ idea {
                 afterEvaluate {
                     javacAdditionalOptions = "-encoding utf8"
                     moduleJavacAdditionalOptions = [
-                            (project.name + ".main"): tasks.compileJava.options.compilerArgs.collect { '"' + it + '"' }.join(' ')
+                            (project.name + ".main"): tasks.compileJava.options.compilerArgs.collect { '"' + it + '"' }.join(" ")
                     ]
                 }
             }
@@ -142,6 +174,14 @@ tasks.register("deobfJar", Jar) {
     archiveBaseName = fileName
     archiveClassifier = "deobf"
     archiveVersion = "v${mod_version}"
+}
+
+tasks.named("injectTags", InjectTagsTask).configure {
+    onlyIf {
+        println it.getTags()
+        return !it.getTags().get().isEmpty()
+    }
+    it.outputClassName.set("${maven_group}.core.Tags")
 }
 
 artifacts {
