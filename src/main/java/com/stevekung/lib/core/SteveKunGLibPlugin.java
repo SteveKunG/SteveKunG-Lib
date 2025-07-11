@@ -49,6 +49,6 @@ public class SteveKunGLibPlugin implements IFMLLoadingPlugin, IEarlyMixinLoader
     @Override
     public List<String> getMixinConfigs()
     {
-        return ImmutableList.of("mixins.stevekungs_lib.json");
+        return ImmutableList.of("mixins.stevekung_lib.json");
     }
 }

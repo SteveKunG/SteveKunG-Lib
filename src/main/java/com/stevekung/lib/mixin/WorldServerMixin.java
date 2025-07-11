@@ -17,7 +17,7 @@ public class WorldServerMixin
             at = @At(
                     value = "CONSTANT",
                     args = "stringValue=thunder"))
-    private void stevekungs_lib$injectWeatherTickEvent(CallbackInfo info, @Local Chunk chunk, @Local(index = 6, ordinal = 1) int chunkX, @Local(index = 6, ordinal = 2) int chunkZ)
+    private void stevekung_lib$injectWeatherTickEvent(CallbackInfo info, @Local Chunk chunk, @Local(index = 6, ordinal = 1) int chunkX, @Local(index = 6, ordinal = 2) int chunkZ)
     {
         EventHooksCommon.onWeatherTick(WorldServer.class.cast(this), chunk, chunkX, chunkZ);
     }

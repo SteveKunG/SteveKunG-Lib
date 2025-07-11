@@ -7,52 +7,51 @@ import com.stevekung.lib.core.SteveKunGLib;
 
 public class LoggerSL
 {
-    private static final Logger LOG = LogManager.getLogger("SteveKunG's Lib");
-    private static final Logger LOG_DEBUG = LogManager.getLogger("SteveKunG's Lib Debug");
+    private static final Logger LOGGER = LogManager.getLogger("SteveKunG's Lib");
 
     public static void info(String message)
     {
-        LoggerSL.LOG.info(message);
+        LoggerSL.LOGGER.info(message);
     }
 
     public static void error(String message)
     {
-        LoggerSL.LOG.error(message);
+        LoggerSL.LOGGER.error(message);
     }
 
     public static void warning(String message)
     {
-        LoggerSL.LOG.warn(message);
+        LoggerSL.LOGGER.warn(message);
     }
 
     public static void debug(String message)
     {
         if (SteveKunGLib.isDevelopment)
         {
-            LoggerSL.LOG_DEBUG.info(message);
+            LoggerSL.LOGGER.info(message);
         }
     }
 
     public static void info(String message, Object... obj)
     {
-        LoggerSL.LOG.info(message, obj);
+        LoggerSL.LOGGER.info(message, obj);
     }
 
     public static void error(String message, Object... obj)
     {
-        LoggerSL.LOG.error(message, obj);
+        LoggerSL.LOGGER.error(message, obj);
     }
 
     public static void warning(String message, Object... obj)
     {
-        LoggerSL.LOG.warn(message, obj);
+        LoggerSL.LOGGER.warn(message, obj);
     }
 
     public static void debug(String message, Object... obj)
     {
         if (SteveKunGLib.isDevelopment)
         {
-            LoggerSL.LOG_DEBUG.info(message, obj);
+            LoggerSL.LOGGER.info(message, obj);
         }
     }
 }

@@ -11,7 +11,7 @@ import com.stevekung.lib.utils.client.EventHooksClient;
 public class ItemRendererMixin
 {
     @Inject(method = "renderOverlays", at = @At(value = "INVOKE", target = "net/minecraft/client/entity/EntityPlayerSP.isInsideOfMaterial(Lnet/minecraft/block/material/Material;)Z"))
-    private void stevekungs_lib$injectFirstPersonViewOverlayEvent(float partialTicks, CallbackInfo info)
+    private void stevekung_lib$injectFirstPersonViewOverlayEvent(float partialTicks, CallbackInfo info)
     {
         EventHooksClient.onRenderFirstPersonViewOverlay();
     }

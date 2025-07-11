@@ -1,4 +1,10 @@
-[![](http://cf.way2muchnoise.eu/full_stevekungs-lib_downloads.svg)](https://minecraft.curseforge.com/projects/stevekungs-lib) [![](http://cf.way2muchnoise.eu/versions/Minecraft_stevekungs-lib_all.svg)](https://minecraft.curseforge.com/projects/stevekungs-lib) [![Discord](https://img.shields.io/discord/356400329086205953.svg?color=%237289da&label=discord&logo=discord&logoColor=%237289da)](https://discord.gg/6JhEjeY)
+# **Introduction**
 
-# [SteveKunG-Lib](http://minecraft.curseforge.com/projects/stevekungs-lib)
+## [SteveKunG's Lib](https://www.curseforge.com/minecraft/mc-mods/stevekung-lib)
+
 A common library used by SteveKunG's mods
+
+[![Discord](https://img.shields.io/discord/356400329086205953?color=00dabc&label=discord&logo=discord&logoColor=00dabc&style=for-the-badge)](https://discord.gg/4bAj4mkGag)
+
+[![CurseForge](https://cf.way2muchnoise.eu/versions/296019.svg)](https://www.curseforge.com/minecraft/mc-mods/stevekung-lib)
+[![CurseForge](https://cf.way2muchnoise.eu/full_296019_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/stevekung-lib)

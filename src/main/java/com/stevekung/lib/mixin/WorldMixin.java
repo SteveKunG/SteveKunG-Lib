@@ -23,7 +23,7 @@ public class WorldMixin
                     target = "net/minecraft/world/World.getBlockState(Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/block/state/IBlockState;"
             ),
             cancellable = true)
-    private void stevekungs_lib$extinguishFire(@Nullable EntityPlayer player, BlockPos pos, EnumFacing side, CallbackInfoReturnable<Boolean> info)
+    private void stevekung_lib$extinguishFire(@Nullable EntityPlayer player, BlockPos pos, EnumFacing side, CallbackInfoReturnable<Boolean> info)
     {
         World world = World.class.cast(this);
 

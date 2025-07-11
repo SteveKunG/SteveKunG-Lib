@@ -25,7 +25,7 @@ public class EntityRendererMixin
     Minecraft mc;
 
     @Inject(method = "orientCamera", at = @At("HEAD"))
-    private void stevekungs_lib$injectCameraEvent(float partialTicks, CallbackInfo info)
+    private void stevekung_lib$injectCameraEvent(float partialTicks, CallbackInfo info)
     {
         EventHooksClient.onCameraTransform(this.rendererUpdateCount, partialTicks);
     }
@@ -36,7 +36,7 @@ public class EntityRendererMixin
                     value = "INVOKE",
                     target = "net/minecraft/client/multiplayer/WorldClient.spawnParticle(Lnet/minecraft/util/EnumParticleTypes;DDDDDD[I)V",
                     ordinal = 0))
-    private boolean stevekungs_lib$replaceRainParticles(WorldClient world, EnumParticleTypes particleType, double xCoord, double yCoord, double zCoord, double xSpeed, double ySpeed, double zSpeed, int... parameters)
+    private boolean stevekung_lib$replaceRainParticles(WorldClient world, EnumParticleTypes particleType, double xCoord, double yCoord, double zCoord, double xSpeed, double ySpeed, double zSpeed, int... parameters)
     {
         return !EventHooksClient.onAddRainParticle(world, xCoord, yCoord, zCoord);
     }

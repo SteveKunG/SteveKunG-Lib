@@ -13,7 +13,7 @@ import com.stevekung.lib.utils.client.EventHooksClient;
 public class RenderMixin
 {
     @Inject(method = "doRenderShadowAndFire", at = @At(value = "INVOKE", target = "net/minecraft/entity/Entity.canRenderOnFire()Z"))
-    private void stevekungs_lib$injectPersonViewOverlayEvent(Entity entity, double x, double y, double z, float yaw, float partialTicks, CallbackInfo info)
+    private void stevekung_lib$injectPersonViewOverlayEvent(Entity entity, double x, double y, double z, float yaw, float partialTicks, CallbackInfo info)
     {
         EventHooksClient.onRenderEntityOverlay(entity, x, y, z, partialTicks);
     }

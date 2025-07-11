@@ -59,13 +59,13 @@ public abstract class FontRendererMixin
     private static final int MARKER = 59136;
 
     @Inject(method = "renderString", at = @At("HEAD"))
-    private void stevekungs_lib$renderString(String text, float x, float y, int color, boolean dropShadow, CallbackInfoReturnable<Integer> info)
+    private void stevekung_lib$renderString(String text, float x, float y, int color, boolean dropShadow, CallbackInfoReturnable<Integer> info)
     {
         this.dropShadow = dropShadow;
     }
 
     @Inject(method = "renderDefaultChar", at = @At("HEAD"))
-    private void stevekungs_lib$renderDefaultChar(int charac, boolean italic, CallbackInfoReturnable<Float> info)
+    private void stevekung_lib$renderDefaultChar(int charac, boolean italic, CallbackInfoReturnable<Float> info)
     {
         if (charac >= MARKER && charac <= MARKER + 255)
         {
@@ -107,7 +107,7 @@ public abstract class FontRendererMixin
     }
 
     @Inject(method = "renderUnicodeChar", at = @At("HEAD"))
-    private void stevekungs_lib$renderUnicodeChar(char charac, boolean italic, CallbackInfoReturnable<Float> info)
+    private void stevekung_lib$renderUnicodeChar(char charac, boolean italic, CallbackInfoReturnable<Float> info)
     {
         if (charac >= MARKER && charac <= MARKER + 255)
         {

@@ -50,7 +50,7 @@ minecraft {
 }
 
 // Adds Access Transformer files to tasks
-def fileLocation = file("${projectDir}/src/main/resources/META-INF/stevekungs_lib_at.cfg")
+def fileLocation = file("${projectDir}/src/main/resources/META-INF/stevekung_lib_at.cfg")
 if (fileLocation.exists()) {
     tasks.deobfuscateMergedJarToSrg.accessTransformerFiles.from(fileLocation)
     tasks.srgifyBinpatchedJar.accessTransformerFiles.from(fileLocation)
@@ -109,7 +109,7 @@ idea {
 
 String fileName = "${archives_base_name}-mc${minecraft_version}"
 Map<String, ?> customAttributes = [
-        "FMLAT": "stevekungs_lib_at.cfg",
+        "FMLAT": "stevekung_lib_at.cfg",
         "FMLCorePlugin": "com.stevekung.lib.core.SteveKunGLibPlugin",
         "FMLCorePluginContainsFMLMod": true,
         "ForceLoadAsMod": true

@@ -3,7 +3,7 @@
     "minVersion": "0.8",
     "compatibilityLevel": "JAVA_8",
     "package": "com.stevekung.lib.mixin",
-    "refmap": "mixins.stevekungs_lib.refmap.json",
+    "refmap": "mixins.stevekung_lib.refmap.json",
     "target": "@env(DEFAULT)",
     "mixins": [
         "WorldMixin",
