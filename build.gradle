@@ -187,6 +187,59 @@ artifacts {
     archives deobfJar
 }
 
+curseforge {
+    apiKey = project.hasProperty("curseforge_api_token") ? curseforge_api_token : ""
+    project {
+        id = curseforge_project_id
+        changelog = rootProject.file("CHANGE_LOG.md")
+        changelogType = "markdown"
+        releaseType = release_type
+        addGameVersion "Forge"
+        addGameVersion minecraft_version
+
+        if (project.hasProperty("curseforge_additional_game_versions") && !curseforge_additional_game_versions.isEmpty()) {
+            curseforge_additional_game_versions.split(",").each {
+                String gameVersion -> addGameVersion gameVersion
+            }
+        }
+
+        mainArtifact(reobfJar) {
+            it.displayName = "[Forge ${minecraft_version}] ${display_name} v${mod_version}"
+        }
+
+        if (project.hasProperty("curseforge_forge_required_dependencies") && !curseforge_forge_required_dependencies.isEmpty()
+                || project.hasProperty("curseforge_forge_optional_dependencies") && !curseforge_forge_optional_dependencies.isEmpty()
+                || project.hasProperty("curseforge_forge_embedded_dependencies") && !curseforge_forge_embedded_dependencies.isEmpty()
+        ) {
+            relations {
+                if (project.hasProperty("curseforge_forge_required_dependencies") && !curseforge_forge_required_dependencies.isEmpty()) {
+                    curseforge_forge_required_dependencies.split(",").each {
+                        String dep -> it.requiredDependency dep
+                    }
+                }
+                if (project.hasProperty("curseforge_forge_optional_dependencies") && !curseforge_forge_optional_dependencies.isEmpty()) {
+                    curseforge_forge_optional_dependencies.split(",").each {
+                        String dep -> it.optionalDependency dep
+                    }
+                }
+                if (project.hasProperty("curseforge_forge_embedded_dependencies") && !curseforge_forge_embedded_dependencies.isEmpty()) {
+                    curseforge_forge_embedded_dependencies.split(",").each {
+                        String dep -> it.embeddedLibrary dep
+                    }
+                }
+            }
+        }
+
+        afterEvaluate {
+            uploadTask.dependsOn(reobfJar)
+        }
+    }
+    options {
+        debug = upload_debug.toBoolean()
+        forgeGradleIntegration = false
+    }
+}
+
 publishing {
     publications {
         maven(MavenPublication) {
