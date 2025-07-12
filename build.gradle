@@ -47,7 +47,7 @@ minecraft {
     mcpMappingVersion.set(mapping_version)
 
     if (project.hasProperty("username")) {
-        username.set(username)
+        username.set(project.username)
     } else {
         username.set("Developer")
     }
@@ -68,7 +68,6 @@ minecraft {
 
     if (file("tags.properties").exists()) {
         Properties props = new Properties().tap {  it.load(file("tags.properties").newInputStream()); it }
-        println props
         if (!props.isEmpty()) {
             injectedTags.set(props.collectEntries { k, v -> [(k): interpolate(v)] })
         }
@@ -178,7 +177,6 @@ tasks.register("deobfJar", Jar) {
 
 tasks.named("injectTags", InjectTagsTask).configure {
     onlyIf {
-        println it.getTags()
         return !it.getTags().get().isEmpty()
     }
     it.outputClassName.set("${maven_group}.core.Tags")
