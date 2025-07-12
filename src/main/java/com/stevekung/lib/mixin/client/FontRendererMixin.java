@@ -65,7 +65,7 @@ public abstract class FontRendererMixin
     }
 
     @Inject(method = "renderDefaultChar", at = @At("HEAD"))
-    private void stevekung_lib$renderDefaultChar(int charac, boolean italic, CallbackInfoReturnable<Float> info)
+    private float stevekung_lib$renderDefaultChar(int charac, boolean italic, CallbackInfoReturnable<Float> info)
     {
         if (charac >= MARKER && charac <= MARKER + 255)
         {
@@ -84,6 +84,7 @@ public abstract class FontRendererMixin
                 break;
             default:
                 this.setColor(1.0F, 1.0F, 1.0F, this.alpha);
+                return 0f;
             }
 
             this.state = ++this.state % 3;
@@ -98,16 +99,18 @@ public abstract class FontRendererMixin
                 color = (color & 16579836) >> 2 | color & -16777216;
             }
             this.setColor((color >> 16 & 255) / 255.0F, (color >> 8 & 255) / 255.0F, (color & 255) / 255.0F, this.alpha);
+            return 0f;
         }
         if (this.state != 0)
         {
             this.state = 0;
             this.setColor(1.0F, 1.0F, 1.0F, this.alpha);
         }
+        return 0f;
     }
 
     @Inject(method = "renderUnicodeChar", at = @At("HEAD"))
-    private void stevekung_lib$renderUnicodeChar(char charac, boolean italic, CallbackInfoReturnable<Float> info)
+    private float stevekung_lib$renderUnicodeChar(char charac, boolean italic, CallbackInfoReturnable<Float> info)
     {
         if (charac >= MARKER && charac <= MARKER + 255)
         {
@@ -126,6 +129,7 @@ public abstract class FontRendererMixin
                 break;
             default:
                 this.setColor(1.0F, 1.0F, 1.0F, this.alpha);
+                return 0f;
             }
 
             this.state = ++this.state % 3;
@@ -140,12 +144,14 @@ public abstract class FontRendererMixin
                 color = (color & 16579836) >> 2 | color & -16777216;
             }
             this.setColor((color >> 16 & 255) / 255.0F, (color >> 8 & 255) / 255.0F, (color & 255) / 255.0F, this.alpha);
+            return 0f;
         }
         if (this.state != 0)
         {
             this.state = 0;
             this.setColor(1.0F, 1.0F, 1.0F, this.alpha);
         }
+        return 0f;
     }
 
     /**
