@@ -188,7 +188,7 @@ artifacts {
 }
 
 curseforge {
-    apiKey = project.hasProperty("curseforge_api_token") ? curseforge_api_token : ""
+    apiKey = System.getenv("CURSEFORGE_API_TOKEN") ?: ""
     project {
         id = curseforge_project_id
         changelog = rootProject.file("CHANGE_LOG.md")
